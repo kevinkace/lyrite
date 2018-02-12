@@ -25,8 +25,8 @@ readFileP(`./${song}.txt`, "utf8")
     )
     .then((lines) =>
         writeFileP(
-            `./${song}.json`,
-            JSON.stringify(lines, null, 2)
+            `./lyrics.js`,
+            `const lyrics = ${JSON.stringify(lines, null, 2)};\n`
         )
     )
     .catch(console.log);

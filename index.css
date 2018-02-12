@@ -1,0 +1,11 @@
+.line {
+    padding : 0.5em;
+    margin: 0;
+
+    border: solid 1px transparent;
+    border-radius: 0.2em;
+}
+
+.selected {
+    border-color: #5555;
+}
