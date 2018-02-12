@@ -2,6 +2,11 @@
 
 const styles = [ "s0", "s1", "s2" ];
 
+const lyrics = require("./lyrics");
+const css = require("./index.css");
+
+const m = require("mithril");
+
 function addBr(text) {
     return text.replace(/\n/g, "<br>")
 }
@@ -11,13 +16,15 @@ m.mount(document.getElementById("mount"), {
         vnode.state.lyrics = lyrics || [];
     },
     view : (vnode) => [
-        m("div", { class : "lyrics" },
+        m("div", { class : css.lyrics },
             lyrics
             .map((part, idx) =>
                 m("p", {
                         class : [
-                                vnode.state.selected === idx ? "selected" : "",
-                                "line",
+                                vnode.state.selected === idx ?
+                                    css.selected :
+                                    "",
+                                css.line,
                                 part.hash,
                                 part.class || ""
                             ].join(" "),
@@ -32,17 +39,17 @@ m.mount(document.getElementById("mount"), {
             )
         ),
 
-        m("div", { class : "styles" },
+        m("div", { class : css.styles },
             styles.map((style, idx) =>
                 m("button", {
-                    class : style,
+                    class : css[style],
 
                     onclick : () => {
                         if(isNaN(vnode.state.selected)) {
                             return;
                         }
 
-                        vnode.state.lyrics[vnode.state.selected].class = style;
+                        vnode.state.lyrics[vnode.state.selected].class = css[style];
                     }
                 }, `Style ${idx}`)
             )

@@ -1,4 +1,4 @@
-const lyrics = [
+module.exports = [
   {
     "hash": "9bc11337e9a656b311961509ecd22cce",
     "text": "Load up on guns, Bring your friends\nIt's fun to lose and to pretend"
