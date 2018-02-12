@@ -1,0 +1,25 @@
+{
+  "name": "lyrite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server",
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinkace/lyrite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevinkace/lyrite/issues"
+  },
+  "homepage": "https://github.com/kevinkace/lyrite#readme",
+  "dependencies": {
+    "eol": "^0.9.1",
+    "http-server": "^0.11.1"
+  }
+}
