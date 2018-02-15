@@ -14,7 +14,7 @@ const exampleLyrics = require("./example-lyrics");
 m.mount(document.getElementById("mount"), {
     oninit : (vnode) => {
         state.lyrics = exampleLyrics;
-        state.styles = [ "s0", "s1", "s2" ];
+        state.styles = [ "s0", "s1", "s2", "s3", "s4", "s5" ];
     },
     view : (vnode) => [
         m(lyrics),

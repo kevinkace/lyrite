@@ -1,4 +1,13 @@
+@value * as colors from "./palette.css";
+
 html {
+    font: normal 1em /1.3 Lora, serif;
+    color: #fff;
+
+    background: colors.bg;
+}
+
+button {
     font: normal 1em /1.3 Lora, serif;
 }
 
@@ -9,6 +18,9 @@ html {
 
 .lyrics {
     flex: 1 0 70%;
+    
+    column-width: 20em;
+    column-gap: 1em;
 }
 
 .styles {
@@ -16,7 +28,7 @@ html {
 }
 
 .line {
-    padding : 0.5em;
+    padding : 0.5em 1em;
     margin: 0;
 
     border: solid 1px transparent;
@@ -24,29 +36,47 @@ html {
 }
 
 .selected {
-    border-color: #5555;
+    border-color: #ddd5;
 }
 
 .s0,
 .s1,
-.s2 {
-    font-size: 1.2em;
+.s2,
+.s3,
+.s4,
+.s5 {
     border-radius: 0.2em;
+    margin: 0.2em;
     padding: 0.5em 1em;
     background: transparent
 }
 
 .s0 {
-    border-color: #f00;
-    color: #f00;
+    border-color: colors.color0;
+    color: colors.color0;
 }
 
 .s1 {
-    border-color: #0f0;
-    color: #0f0;
+    border-color: colors.color1;
+    color: colors.color1;
 }
 
 .s2 {
-    border-color: #00f;
-    color: #00f;
+    border-color: colors.color2;
+    color: colors.color2;
+}
+
+.s3 {
+    border-color: colors.color3;
+    color: colors.color3;
+}
+
+.s4 {
+    border-color: colors.color4;
+    color: colors.color4;
+}
+
+.s5 {
+    border-color: colors.color5;
+    color: colors.color5;
 }
