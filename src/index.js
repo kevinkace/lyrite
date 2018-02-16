@@ -7,7 +7,7 @@ const state = require("./state");
 const css = require("./index.css");
 
 const lyrics = require("./lyrics");
-const buttons = require("./buttons");
+const styles = require("./styles");
 
 const exampleLyrics = require("./example-lyrics");
 
@@ -19,6 +19,6 @@ m.mount(document.getElementById("mount"), {
     view : (vnode) => [
         m(lyrics),
 
-        m(buttons)
+        m(styles)
     ]
 });

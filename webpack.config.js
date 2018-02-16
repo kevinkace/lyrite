@@ -4,9 +4,9 @@ const path = require("path"),
     CleanWebpackPlugin = require("clean-webpack-plugin"),
     HtmlWebpackIncludeAssetsPlugin = require("html-webpack-include-assets-plugin"),
     template = require("html-webpack-template"),
-    
+
     CSSPlugin = require("modular-css-webpack/plugin"),
-    
+
     // Bundling assets for HtmlWebpackIncludeAssetsPlugin
     assets = [
         { path : "https://fonts.googleapis.com/css?family=Lora", type : "css" },
@@ -27,6 +27,9 @@ module.exports = {
         }, {
             test   : /\.css$/,
             loader : "modular-css-webpack/loader"
+        }, {
+            test   : /\.(svg)$/,
+            loader : "file-loader"
         }]
     },
     plugins : [

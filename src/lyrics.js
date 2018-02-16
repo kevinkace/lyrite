@@ -15,12 +15,12 @@ module.exports = {
             state.lyrics
                 .map((part, idx) =>
                     m("p", {
+                            id    : part.hash,
                             class : [
                                 state.selected === idx ?
                                     css.selected :
                                     "",
                                 css.line,
-                                part.hash,
                                 part.class || ""
                             ].join(" "),
 

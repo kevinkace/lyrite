@@ -1,0 +1,47 @@
+@value * as colors from "../palette.css";
+
+.styles {
+    position: fixed;
+    top: 1em;
+    right: 0;
+}
+
+.buttons {
+    padding: 0.4em 1em 0.4em;
+    margin: 0 0.2em;
+
+    border: solid 2px var(--color);
+    border-radius: 0.3em;
+
+    font: normal 0.8em/1 Lora;
+    color: var(--color);
+    background: transparent;
+}
+
+.s0,
+.s1,
+.s2,
+.s3,
+.s4,
+.s5 {
+    composes: buttons;
+}
+
+.s0 {
+    --color: colors.color0;
+}
+.s1 {
+    --color: colors.color1;
+}
+.s2 {
+    --color: colors.color2;
+}
+.s3 {
+    --color: colors.color3;
+}
+.s4 {
+    --color: colors.color4;
+}
+.s5 {
+    --color: colors.color5;
+}

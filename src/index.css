@@ -18,7 +18,7 @@ button {
 
 .lyrics {
     flex: 1 0 70%;
-    
+
     column-width: 20em;
     column-gap: 1em;
 }
@@ -30,6 +30,7 @@ button {
 .line {
     padding : 0.5em 1em;
     margin: 0;
+    break-inside: avoid;
 
     border: solid 1px transparent;
     border-radius: 0.2em;
