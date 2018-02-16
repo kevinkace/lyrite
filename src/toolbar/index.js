@@ -9,9 +9,14 @@ const icons = require("../icons.svg");
 const state = require("../state");
 
 module.exports = {
-    view : () =>
-        m("div", { class : css.styles },
-            m("button",
+    view : (vnode) =>
+        m("div", { class : vnode.state.show ? css.styles : css.stylesHide },
+            m("button", {
+                    class : css.show,
+                    onclick : () => {
+                        vnode.state.show = !vnode.state.show;
+                    }
+                },
                 m("svg",
                     m("use", {
                         "xlink:href" : `${icons}#icon-quill`
@@ -30,7 +35,6 @@ module.exports = {
                         state.lyrics[state.selected].class = css[style];
                     }
                 }, `Style ${idx}`)
-            ),
-            icons
+            )
         )
 };
