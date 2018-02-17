@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --open",
-    "lyrics": "node genLyrics.js"
+    "lyrics": "node genSong.js"
   },
   "repository": {
     "type": "git",
