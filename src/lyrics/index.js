@@ -3,7 +3,7 @@
 const m = require("mithril");
 
 const css = require("./index.css");
-const state = require("./state");
+const state = require("../state");
 
 function addBr(text) {
     return text.replace(/\n/g, "<br>")
@@ -12,7 +12,7 @@ function addBr(text) {
 module.exports = {
     view : (vnode) =>
         m("div", { class : css.lyrics },
-            state.lyrics
+            state.song.lyrics
                 .map((part, idx) =>
                     m("p", {
                             id    : part.hash,

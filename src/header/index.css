@@ -1,8 +1,7 @@
 @value * as colors from "../palette.css";
 @value bgColor: colors.bg;
 
-.styles {
-    position: fixed;
+.tools {
     top: 1em;
     right: 0;
     padding: 0.2em 0;
@@ -11,8 +10,8 @@
     transition: transform 0.2s;
 }
 
-.stylesHide {
-    composes: styles;
+.toolsHide {
+    composes: tools;
 
     transform: translateX(100%);
 }

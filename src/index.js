@@ -6,19 +6,18 @@ const state = require("./state");
 
 const css = require("./index.css");
 
+const header = require("./header");
 const lyrics = require("./lyrics");
-const toolbar = require("./toolbar");
 
-const exampleLyrics = require("./example-lyrics");
+const exampleSong = require("./example-song");
 
 m.mount(document.getElementById("mount"), {
     oninit : (vnode) => {
-        state.lyrics = exampleLyrics;
+        state.song = exampleSong;
         state.styles = [ "s0", "s1", "s2", "s3", "s4", "s5" ];
     },
     view : (vnode) => [
-        m(lyrics),
-
-        m(toolbar)
+        m(header),
+        m(lyrics)
     ]
 });

@@ -1,4 +1,6 @@
-module.exports = [
+module.exports = {
+  title : "Smells Like Teen Spirit",
+  lyrics : [
   {
     "hash": "9bc11337e9a656b311961509ecd22cce",
     "text": "Load up on guns, Bring your friends\nIt's fun to lose and to pretend"
@@ -75,4 +77,4 @@ module.exports = [
     "hash": "2ffbe8f62c96cbf3675b3bade5267d5d",
     "text": "A denial, A denial, A denial, A denial, A denial\nA denial, A denial, A denial, A denial"
   }
-];
+]};
