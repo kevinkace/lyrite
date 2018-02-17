@@ -11,7 +11,8 @@ const state = require("../state");
 module.exports = {
     view : (vnode) =>
         m("div", { class : css.header },
-            m("h1", state.title ),
+            m("h1", state.song.title ),
+            m("div", "logo"),
             m("div", { class : vnode.state.show ? css.tools : css.toolsHide },
                 m("button", {
                         class : css.show,

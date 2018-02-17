@@ -1,6 +1,10 @@
 @value * as colors from "../palette.css";
 @value bgColor: colors.bg;
 
+.header {
+
+}
+
 .tools {
     top: 1em;
     right: 0;
