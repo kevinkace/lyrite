@@ -11,8 +11,8 @@ const state = require("../state");
 module.exports = {
     view : (vnode) =>
         m("div", { class : css.header },
-            m("h1", state.song.title ),
-            m("div", "logo"),
+            m("h1", { class : css.title }, state.song.title ),
+            m("div", {class : css.logo }, "logo"),
             m("div", { class : vnode.state.show ? css.tools : css.toolsHide },
                 m("button", {
                         class : css.show,
@@ -35,7 +35,7 @@ module.exports = {
                                 return;
                             }
 
-                            state.lyrics[state.selected].class = css[style];
+                            state.song.lyrics[state.selected].styleIdx = idx;
                         }
                     }, `Style ${idx}`)
                 )

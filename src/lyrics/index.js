@@ -21,7 +21,7 @@ module.exports = {
                                     css.selected :
                                     "",
                                 css.line,
-                                part.class || ""
+                                css[`s${part.styleIdx}`]
                             ].join(" "),
 
                             onclick : () => {

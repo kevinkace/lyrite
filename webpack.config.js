@@ -9,7 +9,7 @@ const path = require("path"),
 
     // Bundling assets for HtmlWebpackIncludeAssetsPlugin
     assets = [
-        { path : "https://fonts.googleapis.com/css?family=Lora", type : "css" },
+        { path : "https://fonts.googleapis.com/css?family=Barlow|Bitter|Titillium+Web:200", type : "css" },
         "/index.css"
     ];
 

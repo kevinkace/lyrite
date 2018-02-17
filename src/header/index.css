@@ -2,13 +2,27 @@
 @value bgColor: colors.bg;
 
 .header {
+    padding: 0.5em 0;
+    background: #fff1;
+}
 
+.logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.title {
+    text-align: center;
 }
 
 .tools {
-    top: 1em;
+    position: absolute;
+    top: 0;
     right: 0;
+
     padding: 0.2em 0;
+
     background: bgColor;
 
     transition: transform 0.2s;

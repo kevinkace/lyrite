@@ -1,8 +1,11 @@
+@value * as colors from "../palette.css";
+
 .lyrics {
     flex: 1 0 70%;
 
     column-width: 20em;
     column-gap: 1em;
+    font-size: 1.3em;
 }
 
 .styles {
@@ -16,6 +19,7 @@
 
     border: solid 1px transparent;
     border-radius: 0.2em;
+    color: var(--color);
 }
 
 .selected {
@@ -28,38 +32,29 @@
 .s3,
 .s4,
 .s5 {
-    border-radius: 0.2em;
-    margin: 0.2em;
-    padding: 0.5em 1em;
-    background: transparent
+    composes: line;
 }
 
 .s0 {
-    border-color: colors.color0;
-    color: colors.color0;
+    --color: colors.color0;
 }
 
 .s1 {
-    border-color: colors.color1;
-    color: colors.color1;
+    --color: colors.color1;
 }
 
 .s2 {
-    border-color: colors.color2;
-    color: colors.color2;
+    --color: colors.color2;
 }
 
 .s3 {
-    border-color: colors.color3;
-    color: colors.color3;
+    --color: colors.color3;
 }
 
 .s4 {
-    border-color: colors.color4;
-    color: colors.color4;
+    --color: colors.color4;
 }
 
 .s5 {
-    border-color: colors.color5;
-    color: colors.color5;
+    --color: colors.color5;
 }
