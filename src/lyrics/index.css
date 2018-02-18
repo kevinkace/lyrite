@@ -2,10 +2,14 @@
 
 .lyrics {
     flex: 1 0 70%;
+    padding: 0.5em;
 
     column-width: 20em;
     column-gap: 1em;
+
     font-size: 1.3em;
+
+    overflow-x: hidden;
 }
 
 .styles {
@@ -13,7 +17,7 @@
 }
 
 .line {
-    padding : 0.5em 1em;
+    padding : 0.3em 0.5em;
     margin: 0;
     break-inside: avoid;
 

@@ -12,12 +12,16 @@ module.exports = {
     view : (vnode) =>
         m("div", { class : css.header },
             m("h1", { class : css.title }, state.song.title ),
-            m("div", {class : css.logo }, "logo"),
+            m("div", { class : css.logo }, "logo"),
             m("div", { class : vnode.state.show ? css.tools : css.toolsHide },
                 m("button", {
                         class : css.show,
                         onclick : () => {
                             vnode.state.show = !vnode.state.show;
+                            
+                            if(!vnode.state.show) {
+                                state.selected = false;
+                            }
                         }
                     },
                     m("svg",

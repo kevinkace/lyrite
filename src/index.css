@@ -15,6 +15,13 @@ textarea {
     font: inherit;
 }
 
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+}
+
 :global(#mount) {
     display: flex;
     flex-flow: column nowrap;

@@ -2,8 +2,10 @@
 @value bgColor: colors.bg;
 
 .header {
-    padding: 0.5em 0;
+    position: relative;
+    padding: 0.8em 0;
     background: #fff1;
+    overflow-x: hidden;
 }
 
 .logo {
@@ -17,9 +19,11 @@
 }
 
 .tools {
+    display: flex;
     position: absolute;
-    top: 0;
+    top: 0.2em;
     right: 0;
+    bottom: 0.2em;
 
     padding: 0.2em 0;
 
