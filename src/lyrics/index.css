@@ -24,6 +24,8 @@
     border: solid 1px transparent;
     border-radius: 0.2em;
     color: var(--color);
+
+    cursor: default;
 }
 
 .selected {

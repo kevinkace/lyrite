@@ -5,6 +5,7 @@ const m = require("mithril");
 const state = require("./state");
 
 require("minireset.css");
+require("./index.css");
 
 const header = require("./header");
 const lyrics = require("./lyrics");

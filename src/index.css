@@ -22,6 +22,10 @@ textarea:focus {
     outline: none;
 }
 
+button {
+    cursor: pointer;
+}
+
 :global(#mount) {
     display: flex;
     flex-flow: column nowrap;
