@@ -1,0 +1,83 @@
+@value * as colors from "../palette.css";
+@value bgColor: colors.bg;
+
+.tools {
+    display: flex;
+    position: absolute;
+    top: 0.2em;
+    right: 0;
+    bottom: 0.2em;
+
+    padding: 0.2em 0;
+
+    background: bgColor;
+
+    transition: transform 0.2s;
+}
+
+.toolsHide {
+    composes: tools;
+
+    transform: translateX(100%);
+}
+
+.show {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    bottom: 0;
+    border: none;
+    border-radius: 0.2em;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    background: bgColor;
+}
+
+.show svg {
+    display: block;
+    height: 100%;
+    width: 1em;
+
+    fill: #fff;
+}
+
+.buttons {
+    padding: 0.4em 1em 0.4em;
+    margin: 0 0.2em;
+
+    border: solid 2px var(--color);
+    border-radius: 0.3em;
+
+    font: normal 0.8em/1 Lora;
+    color: var(--color);
+    background: transparent;
+}
+
+.s0,
+.s1,
+.s2,
+.s3,
+.s4,
+.s5 {
+    composes: buttons;
+}
+
+.s0 {
+    --color: colors.color0;
+}
+.s1 {
+    --color: colors.color1;
+}
+.s2 {
+    --color: colors.color2;
+}
+.s3 {
+    --color: colors.color3;
+}
+.s4 {
+    --color: colors.color4;
+}
+.s5 {
+    --color: colors.color5;
+}
