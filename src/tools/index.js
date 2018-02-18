@@ -4,6 +4,7 @@ const m = require("mithril");
 
 const icons = require("../icons.svg");
 const css = require("./index.css");
+const tooltipCss = require("./tooltip.css");
 
 const state = require("../state");
 
@@ -42,7 +43,10 @@ module.exports = {
 
             // Cursor color
             state.style ?
-                m("div", state.style.idx) :
+                m("div", {
+                    class : tooltipCss[`s${state.style.idx}`],
+                    style : state.tooltip.style
+                }) :
                 null
         )
 };
