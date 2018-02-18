@@ -10,7 +10,7 @@ function addBr(text) {
 }
 
 module.exports = {
-    view : (vnode) =>
+    view : () =>
         m("div", { class : css.lyrics },
             state.song.lyrics
                 .map((part, idx) =>
