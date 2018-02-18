@@ -1,28 +1,53 @@
 "use strict";
-const state = {};
+
+const State = {};
+
+const styles = [ "s0", "s1", "s2", "s3", "s4", "s5" ];
 
 const actions = {
     "CLICK LYRIC" : (idx) => {
-            if(state.selected === idx) {
-                delete state.selected;
+            if(State.selected === idx) {
+                delete State.selected;
 
                 return;
             }
 
-            state.selected = idx;
+            State.selected = idx;
 
             return;
     },
 
     "CLICK STYLE" : (idx) => {
-        if(!state.selected && state.selected !== 0) {
+        if(!State.selected && State.selected !== 0) {
             return;
         }
 
-        state.song.lyrics[state.selected].styleIdx = idx;
+        State.song.lyrics[State.selected].styleIdx = idx;
+    },
+
+    "HIDE TOOLS" : () => {
+        State.selected = false;
     }
 };
 
-state.action = (name, value) => actions[name](value);
+// State
 
-module.exports = state;
+State.styles = styles;
+
+State.action = (name, value) => actions[name](value);
+
+State.load   = (songObj) => {
+    if(songObj.action) {
+        State.error("NO ACTION");
+
+        return;
+    }
+
+    State.song = songObj.song;
+};
+
+State.error = (err) => {
+    console.error(err);
+}
+
+module.exports = State;

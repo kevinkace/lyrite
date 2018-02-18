@@ -16,7 +16,7 @@ module.exports = {
                         vnode.state.show = !vnode.state.show;
 
                         if(!vnode.state.show) {
-                            state.selected = false;
+                            state.action("HIDE TOOLS");
                         }
                     }
                 },
@@ -31,13 +31,7 @@ module.exports = {
                     class : css[style],
 
                     onclick : () => {
-
                         state.action("CLICK STYLE", idx);
-                        // if(!state.selected || state.selected !== 0) {
-                        //     return;
-                        // }
-
-                        // state.song.lyrics[state.selected].styleIdx = idx;
                     }
                 }, `Style ${idx}`)
             )

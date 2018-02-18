@@ -14,8 +14,7 @@ const exampleSong = require("./example-song");
 
 m.mount(document.getElementById("mount"), {
     oninit : () => {
-        state.song = exampleSong;
-        state.styles = [ "s0", "s1", "s2", "s3", "s4", "s5" ];
+        state.load({ song : exampleSong });
     },
     view : () => [
         m(header),
