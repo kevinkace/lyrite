@@ -18,6 +18,10 @@ const actions = {
     },
 
     "CLICK STYLE" : (idx) => {
+        State.style = {
+            idx
+        };
+
         if(!State.selected && State.selected !== 0) {
             return;
         }
@@ -26,7 +30,8 @@ const actions = {
     },
 
     "HIDE TOOLS" : () => {
-        State.selected = false;
+        delete State.selected;
+        delete State.style;
     }
 };
 

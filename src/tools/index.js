@@ -10,6 +10,8 @@ const state = require("../state");
 module.exports = {
     view : (vnode) =>
         m("div", { class : vnode.state.show ? css.tools : css.toolsHide },
+
+            // Show/hide tool button
             m("button", {
                     class : css.show,
                     onclick : () => {
@@ -26,6 +28,8 @@ module.exports = {
                     })
                 )
             ),
+
+            // Style buttons
             state.styles.map((style, idx) =>
                 m("button", {
                     class : css[style],
@@ -34,6 +38,11 @@ module.exports = {
                         state.action("CLICK STYLE", idx);
                     }
                 }, `Style ${idx}`)
-            )
+            ),
+
+            // Cursor color
+            state.style ?
+                m("div", state.style.idx) :
+                null
         )
 };
