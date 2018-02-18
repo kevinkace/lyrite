@@ -1,5 +1,28 @@
 "use strict";
+const state = {};
 
-const obj = {};
+const actions = {
+    "CLICK LYRIC" : (idx) => {
+            if(state.selected === idx) {
+                delete state.selected;
 
-module.exports = obj;
+                return;
+            }
+
+            state.selected = idx;
+
+            return;
+    },
+
+    "CLICK STYLE" : (idx) => {
+        if(!state.selected && state.selected !== 0) {
+            return;
+        }
+
+        state.song.lyrics[state.selected].styleIdx = idx;
+    }
+};
+
+state.action = (name, value) => actions[name](value);
+
+module.exports = state;

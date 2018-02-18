@@ -31,11 +31,13 @@ module.exports = {
                     class : css[style],
 
                     onclick : () => {
-                        if(isNaN(state.selected)) {
-                            return;
-                        }
 
-                        state.song.lyrics[state.selected].styleIdx = idx;
+                        state.action("CLICK STYLE", idx);
+                        // if(!state.selected || state.selected !== 0) {
+                        //     return;
+                        // }
+
+                        // state.song.lyrics[state.selected].styleIdx = idx;
                     }
                 }, `Style ${idx}`)
             )

@@ -25,7 +25,8 @@ module.exports = {
                             ].join(" "),
 
                             onclick : () => {
-                                state.selected = state.selected === idx ? false : idx;
+                                state.action("CLICK LYRIC", idx);
+                                // state.selected = state.selected === idx ? false : idx;
                             }
                         },
 
