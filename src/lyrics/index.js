@@ -17,16 +17,12 @@ module.exports = {
                     m("p", {
                             id    : part.hash,
                             class : [
-                                state.selected === idx ?
-                                    css.selected :
-                                    "",
-                                css.line,
-                                css[`s${part.styleIdx}`]
+                                state.selected === idx ? css.lineSelected : css.line,
+                                part.style ? css[`s${part.style.idx}`] : null
                             ].join(" "),
 
                             onclick : () => {
                                 state.action("CLICK LYRIC", idx);
-                                // state.selected = state.selected === idx ? false : idx;
                             }
                         },
 

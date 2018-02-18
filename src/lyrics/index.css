@@ -28,7 +28,9 @@
     cursor: default;
 }
 
-.selected {
+.lineSelected {
+    composes: line;
+
     border-color: #ddd5;
 }
 

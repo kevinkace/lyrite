@@ -21,3 +21,5 @@ m.mount(document.getElementById("mount"), {
         m(lyrics)
     ]
 });
+
+window.m = m;
