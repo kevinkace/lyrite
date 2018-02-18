@@ -1,5 +1,4 @@
 @value * as colors from "../palette.css";
-@value bgColor: colors.bg;
 
 .tools {
     display: flex;
@@ -26,12 +25,13 @@
     top: 0;
     right: 100%;
     bottom: 0;
+
     border: none;
     border-radius: 0.2em;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 
-    background: bgColor;
+    background: colors.bg;
 }
 
 .show svg {
@@ -49,7 +49,6 @@
     border: solid 2px var(--color);
     border-radius: 0.3em;
 
-    font: normal 0.8em/1 Lora;
     color: var(--color);
     background: transparent;
 }
@@ -80,4 +79,34 @@
 }
 .s5 {
     --color: colors.color5;
+}
+
+.selected {
+    color: colors.bg;
+
+    background: var(--color);
+}
+
+.s0Selected {
+    composes: s0, selected;
+}
+
+.s1Selected {
+    composes: s1, selected;
+}
+
+.s2Selected {
+    composes: s2, selected;
+}
+
+.s3Selected {
+    composes: s3, selected;
+}
+
+.s4Selected {
+    composes: s4, selected;
+}
+
+.s5Selected {
+    composes: s5, selected;
 }

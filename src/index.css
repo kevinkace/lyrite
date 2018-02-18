@@ -12,7 +12,11 @@ button,
 input,
 select,
 textarea {
-    font: inherit;
+    font: inherit !important;
+}
+
+button {
+    line-height: 1 !important;
 }
 
 button:focus,

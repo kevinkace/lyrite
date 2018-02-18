@@ -33,7 +33,7 @@ module.exports = {
             // Style buttons
             state.styles.map((style, idx) =>
                 m("button", {
-                    class : css[style],
+                    class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
 
                     onclick : () => {
                         state.action("CLICK STYLE", idx);

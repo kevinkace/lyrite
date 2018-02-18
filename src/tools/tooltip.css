@@ -12,8 +12,11 @@
 
     pointer-events: none;
 
-    opacity: 0.8;
+    opacity: 0;
+
+    transition: opacity 0.2s;
 }
+
 
 .s0,
 .s1,

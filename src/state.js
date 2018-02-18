@@ -8,8 +8,11 @@ const styles = [ "s0", "s1", "s2", "s3", "s4", "s5" ];
 
 const actions = {
     "CLICK LYRIC" : (idx) => {
-        // Deselect lyric, no style is set
-        if(State.selected === idx && !State.style) {
+        const styleSelected = State.song.lyrics[idx].style && State.song.lyrics[idx].style.idx === State.style.idx
+        const noStyleOrStyleSelected = !State.style || styleSelected;
+
+        // Deselect lyric
+        if(State.selected === idx && noStyleOrStyleSelected) {
             delete State.selected;
 
             return;
@@ -46,6 +49,8 @@ const actions = {
 
         // Color selected lyrics
         State.action("COLOR SELECTED LYRIC", idx);
+
+        delete State.selected;
     },
 
     "COLOR SELECTED LYRIC" : (idx) => {
@@ -69,7 +74,8 @@ State.events = {
     mousemove : (e) => {
         State.tooltip.style = {
             left : `${e.clientX}px`,
-            top  : `${e.clientY}px`
+            top  : `${e.clientY}px`,
+            opacity : e.clientY > State.header.height ? 0.8 : 0
         };
 
         m.redraw();
