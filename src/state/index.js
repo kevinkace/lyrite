@@ -85,17 +85,19 @@ State.events = {
     }
 };
 
+Object.assign(actions, require("./load")(State));
+
 State.action = (name, value) => actions[name](value);
 
-State.load   = (songObj) => {
-    if(songObj.action) {
-        State.error("NO ACTION");
+// State.load   = (songObj) => {
+//     // if(songObj.action) {
+//     //     State.error("NO ACTION");
 
-        return;
-    }
+//     //     return;
+//     // }
 
-    State.song = songObj.song;
-};
+//     State.song = songObj.song;
+// };
 
 State.font = { size : "1.3" };
 

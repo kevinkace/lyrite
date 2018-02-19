@@ -34,6 +34,7 @@
     "minireset.css": "0.0.3",
     "mithril": "^1.1.6",
     "modular-css-webpack": "^8.0.0",
+    "raw-loader": "^0.5.1",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"
   },

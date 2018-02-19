@@ -9,16 +9,17 @@ require("./index.css");
 
 const header = require("./header");
 const lyrics = require("./lyrics");
+const home   = require("./home");
 
 const exampleSong = require("./example-song");
 
 m.mount(document.getElementById("mount"), {
     oninit : () => {
-        state.load({ song : exampleSong });
+        // state.load({ song : exampleSong });
     },
     view : () => [
         m(header),
-        m(lyrics)
+        state.song ? m(lyrics) : m(home)
     ]
 });
 

@@ -16,8 +16,8 @@ module.exports = {
     },
     view : () =>
         m("div", { class : css.header },
-            m("h1", { class : css.title }, state.song.title ),
+            m("h1", { class : css.title }, state.song ? state.song.title : "Lyrite"),
             m("div", { class : css.logo }, "logo"),
-            m(tools)
+            state.song ? m(tools) : null
         )
 };
