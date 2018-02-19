@@ -12,3 +12,17 @@
     color: #fff;
     --color: colors.cta;
 }
+
+.textarea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+}
+
+.loadText {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
