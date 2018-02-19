@@ -11,7 +11,7 @@ const path = require("path"),
     assets = [{
             path : "https://fonts.googleapis.com/css?family=Raleway|Slabo+27px",
             type : "css"
-        },
+        },"https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js",
         "/index.css"
     ];
 
@@ -21,6 +21,11 @@ module.exports = {
     devServer : {
         contentBase : "./dist"
     },
+
+    externals : {
+        m : "mithril"
+    },
+
     module : {
         rules : [{
             test    : /\.js$/,
@@ -45,8 +50,8 @@ module.exports = {
         // Tells webpack to use this plugin to generate the output
         new HtmlWebpackPlugin({
             title      : "Lyrite",
-            template,
-            inject     : false,   // auto-injects already
+            // template,
+            // inject     : false,   // auto-injects already
             appMountId : "mount", // creates div#mount for Mithril mount point
             mobile     : true,    // adds viewport scaling
             minify     : {        // Remove some of the insane amount of whitespace
@@ -56,7 +61,7 @@ module.exports = {
         }),
         new HtmlWebpackIncludeAssetsPlugin({
             assets,       // Include assets into template
-            append : true // Include after existing
+            append : false // Include after existing
         })
     ],
     // Bundled JS

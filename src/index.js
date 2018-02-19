@@ -11,12 +11,10 @@ const header = require("./header");
 const lyrics = require("./lyrics");
 const home   = require("./home");
 
-const exampleSong = require("./example-song");
+const mountEl = document.body;
+// document.getElementById("mount")
 
-m.mount(document.getElementById("mount"), {
-    oninit : () => {
-        // state.load({ song : exampleSong });
-    },
+m.mount(mountEl, {
     view : () => [
         m(header),
         state.song ? m(lyrics) : m(home)
