@@ -147,6 +147,26 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 6em;
 
     transform: translateX(-50%) rotate(-90deg) translateX(-50%);
+}
+
+.dec,
+.inc {
+    composes: button;
+    padding-right: 0.3em;
+    padding-left: 0.3em;
+
+    --color: red;
+}
+
+.dec {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.inc {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }

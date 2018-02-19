@@ -12,7 +12,7 @@ module.exports = {
     oncreate : (vnode) => {
         state.header = {
             height : vnode.dom.offsetHeight
-        }
+        };
     },
     view : () =>
         m("div", { class : css.header },

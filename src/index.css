@@ -32,4 +32,6 @@ button {
 :global(#mount) {
     display: flex;
     flex-flow: column nowrap;
+    height: 100vh;
+    overflow: hidden;
 }

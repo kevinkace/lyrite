@@ -65,6 +65,31 @@ module.exports = {
                 )
             ),
 
+            // Column
+            m("div", { class : css.setting },
+                m("label", { class : css.label }, "columns "),
+                m("div", { class : css.control },
+                    m("button", {
+                        class : css.dec,
+                        onclick : (e) => {
+                            if(state.cols.count === 1) {
+                                return;
+                            }
+
+                            --state.cols.count;
+                        }
+                    }, "<"),
+                    m("label", { class : css.cols }, state.cols.count),
+                    m("button", {
+                        class : css.inc,
+                        onclick : (e) => {
+                            ++state.cols.count;
+                        }
+                    }, ">")
+
+                )
+            ),
+
             // Style tooltip
             state.style ?
                 m("div", {

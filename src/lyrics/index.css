@@ -1,17 +1,11 @@
 @value * as colors from "../palette.css";
 
 .lyrics {
-    flex: 1 0 70%;
     padding: 0.5em;
 
-    column-width: 20em;
     column-gap: 1em;
 
-    overflow-x: hidden;
-}
-
-.styles {
-    flex: 0 1 30%;
+    overflow-y: auto;
 }
 
 .line {

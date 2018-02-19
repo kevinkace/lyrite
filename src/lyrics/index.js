@@ -6,14 +6,17 @@ const css = require("./index.css");
 const state = require("../state");
 
 function addBr(text) {
-    return text.replace(/\n/g, "<br>")
+    return text.replace(/\n/g, "<br>");
 }
 
 module.exports = {
     view : () =>
         m("div", {
                 class : css.lyrics,
-                style : { fontSize : `${state.font.size}em` }
+                style : {
+                    fontSize : `${state.font.size}em`,
+                    columnCount : state.cols.count
+                }
             },
             state.song.lyrics
                 .map((part, idx) =>
