@@ -52,8 +52,8 @@ module.exports = {
                 m("div", { class : css.control },
                     m("input", {
                         type  : "range",
-                        min   : 0.5,
-                        max   : 3,
+                        min   : 0.9,
+                        max   : 2,
                         step  : 0.1,
 
                         value : state.font.size,

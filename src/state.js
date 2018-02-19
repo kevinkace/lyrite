@@ -2,17 +2,19 @@
 
 const m = require("mithril");
 
+const get = require("lodash.get");
+
 const State = {};
 
 const styles = [ "s0", "s1", "s2", "s3", "s4", "s5" ];
 
 const actions = {
     "CLICK LYRIC" : (idx) => {
-        const styleSelected = State.song.lyrics[idx].style && State.song.lyrics[idx].style.idx === State.style.idx
-        const noStyleOrStyleSelected = !State.style || styleSelected;
+        const lineStyleIsSetStyle = get(State, "style.idx") === get(State, `song.lyrics.${idx}.style.idx`);
 
         // Deselect lyric
-        if(State.selected === idx && noStyleOrStyleSelected) {
+        // selected lyric without a style set
+        if(State.selected === idx && (!State.style || lineStyleIsSetStyle)) {
             delete State.selected;
 
             return;
@@ -25,6 +27,7 @@ const actions = {
             return;
         }
 
+        // color
         State.action("COLOR SELECTED LYRIC", State.style.idx);
 
         return;

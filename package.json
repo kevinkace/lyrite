@@ -30,6 +30,7 @@
     "html-webpack-include-assets-plugin": "^1.0.2",
     "html-webpack-plugin": "^2.30.1",
     "html-webpack-template": "^6.1.0",
+    "lodash.get": "^4.4.2",
     "minireset.css": "0.0.3",
     "mithril": "^1.1.6",
     "modular-css-webpack": "^8.0.0",
@@ -43,9 +44,12 @@
       "es6": true,
       "node": true
     },
-    "rules" : {
+    "rules": {
       "no-console": 0,
-      "semi": [ "error", "always" ]
+      "semi": [
+        "error",
+        "always"
+      ]
     }
   }
 }
