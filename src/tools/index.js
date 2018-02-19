@@ -31,20 +31,38 @@ module.exports = {
             ),
 
             // Style buttons
-            m("label", { class : css.label }, "styles "),
-            m("div", { class : css.buttons },
-                state.styles.map((style, idx) =>
-                    m("button", {
-                        class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
+            m("div", { class : css.setting },
+                m("label", { class : css.label }, "styles "),
+                m("div", { class : css.buttons },
+                    state.styles.map((style, idx) =>
+                        m("button", {
+                            class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
 
-                        onclick : () => {
-                            state.action("CLICK STYLE", idx);
-                        }
-                    }, `${idx}`)
+                            onclick : () => {
+                                state.action("CLICK STYLE", idx);
+                            }
+                        }, `${idx}`)
+                    )
                 )
             ),
 
-            // Cursor color
+            // Font choices
+            m("div", { class : css.setting },
+                m("label", { class : css.label }, "font "),
+                m("div", { class : css.control },
+                    m("input", {
+                        type  : "range",
+                        min   : 0.5,
+                        max   : 3,
+                        step  : 0.1,
+
+                        value : state.font.size,
+                        oninput : m.withAttr("value", (v) => { state.font.size = v; })
+                    })
+                )
+            ),
+
+            // Style tooltip
             state.style ?
                 m("div", {
                     class : tooltipCss[`s${state.style.idx}`],

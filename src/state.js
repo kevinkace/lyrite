@@ -94,6 +94,10 @@ State.load   = (songObj) => {
     State.song = songObj.song;
 };
 
+State.font = {
+    size : 1.3
+};
+
 State.error = (err) => {
     console.error(err);
 }

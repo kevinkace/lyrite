@@ -11,7 +11,10 @@ function addBr(text) {
 
 module.exports = {
     view : () =>
-        m("div", { class : css.lyrics },
+        m("div", {
+                class : css.lyrics,
+                style : { fontSize : `${state.font.size}em` }
+            },
             state.song.lyrics
                 .map((part, idx) =>
                     m("p", {

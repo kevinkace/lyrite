@@ -7,10 +7,6 @@
     bottom: 0;
 
     display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 0.2em 0 0.2em 0.4em;
 
     background: colors.bg;
 
@@ -21,6 +17,14 @@
     composes: tools;
 
     transform: translateX(100%);
+}
+
+.setting {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0.2em 0 0.2em 0.4em;
 }
 
 .show {
