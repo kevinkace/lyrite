@@ -31,14 +31,17 @@ module.exports = {
             ),
 
             // Style buttons
-            state.styles.map((style, idx) =>
-                m("button", {
-                    class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
+            m("label", { class : css.label }, "styles "),
+            m("div", { class : css.buttons },
+                state.styles.map((style, idx) =>
+                    m("button", {
+                        class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
 
-                    onclick : () => {
-                        state.action("CLICK STYLE", idx);
-                    }
-                }, `Style ${idx}`)
+                        onclick : () => {
+                            state.action("CLICK STYLE", idx);
+                        }
+                    }, `${idx}`)
+                )
             ),
 
             // Cursor color

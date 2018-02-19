@@ -1,15 +1,18 @@
 @value * as colors from "../palette.css";
 
 .tools {
-    display: flex;
     position: absolute;
-    top: 0.2em;
+    top: 0;
     right: 0;
-    bottom: 0.2em;
+    bottom: 0;
 
-    padding: 0.2em 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0.2em 0 0.2em 0.4em;
 
-    background: bgColor;
+    background: colors.bg;
 
     transition: transform 0.2s;
 }
@@ -25,13 +28,14 @@
     top: 0;
     right: 100%;
     bottom: 0;
+    padding: 0 0.4em 0 0.6em;
 
     border: none;
-    border-radius: 0.2em;
+    border-radius: 0.3em;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 
-    background: colors.bg;
+    background: colors.cta;
 }
 
 .show svg {
@@ -42,15 +46,27 @@
     fill: #fff;
 }
 
-.buttons {
-    padding: 0.4em 1em 0.4em;
+.label {
+    display: block;
+    font-size: 0.7em;
+    text-transform: uppercase;
+}
+
+.button {
+    padding: 0.2em 0.7em 0.3em;
     margin: 0 0.2em;
 
     border: solid 2px var(--color);
     border-radius: 0.3em;
 
-    color: var(--color);
-    background: transparent;
+    font-family: monospace;
+    color: colors.bg;
+
+    background: var(--color);
+}
+
+.button:first-child {
+    margin-left: 0;
 }
 
 .s0,
@@ -59,7 +75,7 @@
 .s3,
 .s4,
 .s5 {
-    composes: buttons;
+    composes: button;
 }
 
 .s0 {
@@ -82,9 +98,8 @@
 }
 
 .selected {
-    color: colors.bg;
-
-    background: var(--color);
+    color: var(--color);
+    background: transparent;
 }
 
 .s0Selected {

@@ -6,6 +6,7 @@
 
     width: 100px;
     height: 20px;
+    margin-left: 1em;
 
     background: var(--color);
     border-radius: 0.2em;

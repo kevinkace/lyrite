@@ -1,10 +1,9 @@
 @value * as colors from "../palette.css";
-@value bgColor: colors.bg;
 
 .header {
     position: relative;
-    padding: 0.8em 0;
-    background: #fff1;
+    padding: 0.4em 0;
+    background: colors.header;
     overflow-x: hidden;
 }
 
@@ -16,4 +15,6 @@
 
 .title {
     text-align: center;
+    font: normal 1.8em/1.2 "Slabo 27px", serif;
+    text-transform: uppercase;
 }
