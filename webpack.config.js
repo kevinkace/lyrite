@@ -8,8 +8,10 @@ const path = require("path"),
     CSSPlugin = require("modular-css-webpack/plugin"),
 
     // Bundling assets for HtmlWebpackIncludeAssetsPlugin
-    assets = [
-        { path : "https://fonts.googleapis.com/css?family=Raleway|Slabo+27px", type : "css" },
+    assets = [{
+            path : "https://fonts.googleapis.com/css?family=Raleway|Slabo+27px",
+            type : "css"
+        },
         "/index.css"
     ];
 
@@ -20,7 +22,7 @@ module.exports = {
         contentBase : "./dist"
     },
     module : {
-        loaders : [{
+        rules : [{
             test    : /\.js$/,
             exclude : /(node_modules)/,
             loader  : "babel-loader"
@@ -30,6 +32,9 @@ module.exports = {
         }, {
             test   : /\.(svg)$/,
             loader : "file-loader"
+        }, {
+            test   : /\.txt$/,
+            use: "raw-loader"
         }]
     },
     plugins : [

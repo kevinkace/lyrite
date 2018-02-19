@@ -3,13 +3,14 @@
 const m = require("mithril");
 
 const state = require("../state");
-const fakesong = "lyrics\nmore lyrics\n\nlastlyrics";
+
+const slts = require("../songs/smells-like-teen-spirit.txt");
 
 const css = require("./index.css");
 
 module.exports = {
     oninit : () => {
-        state.action("LOAD SONG", fakesong);
+        state.action("LOAD SONG", slts);
     },
     view : () =>
         m("div", { class : css.home },
