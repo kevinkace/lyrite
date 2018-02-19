@@ -98,11 +98,11 @@ State.load   = (songObj) => {
 };
 
 State.font = {
-    size : 1.3
+    size : "1.3"
 };
 
 State.error = (err) => {
     console.error(err);
-}
+};
 
 module.exports = State;

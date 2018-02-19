@@ -33,7 +33,7 @@ module.exports = {
             // Style buttons
             m("div", { class : css.setting },
                 m("label", { class : css.label }, "styles "),
-                m("div", { class : css.buttons },
+                m("div", { class : css.control },
                     state.styles.map((style, idx) =>
                         m("button", {
                             class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
@@ -50,11 +50,14 @@ module.exports = {
             m("div", { class : css.setting },
                 m("label", { class : css.label }, "font "),
                 m("div", { class : css.control },
+                    m("label", { class : css.font }, parseFloat(state.font.size, 10).toFixed(2)),
                     m("input", {
                         type  : "range",
                         min   : 0.9,
                         max   : 2,
-                        step  : 0.1,
+                        step  : 0.05,
+
+                        class : css.range,
 
                         value : state.font.size,
                         oninput : m.withAttr("value", (v) => { state.font.size = v; })

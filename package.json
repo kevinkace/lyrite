@@ -46,6 +46,10 @@
     },
     "rules": {
       "no-console": 0,
+      "radix": [
+        "warn",
+        "always"
+      ],
       "semi": [
         "error",
         "always"
