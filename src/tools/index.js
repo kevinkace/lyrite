@@ -50,14 +50,49 @@ module.exports = {
             m("div", { class : css.setting },
                 m("label", { class : css.label }, "font "),
                 m("div", { class : css.control },
-                    m("label", { class : css.font }, parseFloat(state.font.size, 10).toFixed(2)),
+                    m("label", {
+                        class : css.font,
+                        onmouseover : () => {
+                            vnode.state.range = Date.now();
+                        },
+                        onmouseout : () => {
+                            let now = Date.now();
+
+                            setTimeout(() => {
+                                if(now < vnode.state.range) {
+                                    return;
+                                }
+
+                                vnode.state.range = false;
+
+                                m.redraw();
+                            }, 300);
+                        }
+                    }, parseFloat(state.font.size, 10).toFixed(2)),
                     m("input", {
                         type  : "range",
-                        min   : 0.9,
+                        min   : 0.7,
                         max   : 2,
                         step  : 0.05,
 
-                        class : css.range,
+                        class : vnode.state.range ? css.range : css.rangeHide,
+
+                        onmouseover : () => {
+                            vnode.state.range = Date.now();
+                        },
+                        onmouseout : () => {
+                            let now = Date.now();
+
+                            setTimeout(() => {
+                                if(now < vnode.state.range) {
+                                    return;
+                                }
+
+                                vnode.state.range = false;
+
+                                m.redraw();
+                            }, 300);
+                        },
 
                         value : state.font.size,
                         oninput : m.withAttr("value", (v) => { state.font.size = v; })
@@ -67,7 +102,7 @@ module.exports = {
 
             // Column
             m("div", { class : css.setting },
-                m("label", { class : css.label }, "columns "),
+                m("label", { class : css.label }, "cols "),
                 m("div", { class : css.control },
                     m("button", {
                         class : css.dec,
