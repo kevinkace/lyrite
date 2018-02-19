@@ -4,7 +4,6 @@
     position: relative;
     padding: 0.4em 0;
     background: colors.header;
-    overflow-x: hidden;
 }
 
 .logo {
