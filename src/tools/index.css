@@ -63,16 +63,9 @@
 }
 
 .button {
-    padding: 0.2em 0.7em 0.3em;
-    margin: 0 0.2em;
-
-    border: solid 2px transparent;
-    border-radius: 0.3em;
+    composes: button from "../index.css";
 
     font-family: monospace;
-    color: colors.bg;
-
-    background: var(--color);
 }
 
 .button:first-child {

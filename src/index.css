@@ -35,3 +35,15 @@ button {
     height: 100vh;
     overflow: hidden;
 }
+
+.button {
+    padding: 0.3em 0.7em;
+    margin: 0 0.2em;
+
+    border: solid 2px transparent;
+    border-radius: 0.3em;
+
+    color: colors.bg;
+
+    background: var(--color);
+}

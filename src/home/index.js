@@ -17,7 +17,7 @@ module.exports = {
             m("button", {
                 class   : css.load,
                 onclick : () => console.log("loadsong")
-            }, "This?"),
+            }, "load song"),
             m("div", { class : css.list },
                 state.songs ? state.songs.map((song, idx) =>
                     m("a", {
