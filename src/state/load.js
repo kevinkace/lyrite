@@ -6,6 +6,11 @@ const slug = require("slug");
 
 const titleSplit = "\n\n---\n\n";
 
+const songs = [
+    require("../songs/smells-like-teen-spirit.txt"),
+    require("../songs/judy-is-a-punk.txt")
+];
+
 module.exports = (State) => ({
     "LOAD SONG" : (songString) => {
         const parts = eol.lf(songString).split(titleSplit);
@@ -38,8 +43,10 @@ module.exports = (State) => ({
             }));
     },
 
-    "LOAD SONGS" : () => {
-        State.action("LOAD SONG", require("../songs/smells-like-teen-spirit.txt"));
+    "LOAD DEFAULT SONGS" : () => {
+        songs.forEach((song) => {
+            State.action("LOAD SONG", song);
+        });
     },
 
     // "OPEN SONG TEXT" : (text) =>
@@ -65,5 +72,9 @@ module.exports = (State) => ({
         }
 
         State.action("OPEN SONG", songIdx);
+    },
+
+    "CLOSE SONG" : () => {
+        delete State.song;
     }
 });

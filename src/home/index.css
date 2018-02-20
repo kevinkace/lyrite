@@ -28,3 +28,12 @@
     top: 0;
     right: 0;
 }
+
+.list a {
+    display: block;
+
+    font-family: "Slabo 27px";
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 1.25em;
+}

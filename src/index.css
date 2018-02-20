@@ -14,10 +14,6 @@ textarea {
     font: 300 1em/1.5 Raleway, sans-serif;
 }
 
-button {
-    line-height: 1;
-}
-
 button:focus,
 input:focus,
 select:focus,
@@ -26,7 +22,12 @@ textarea:focus {
 }
 
 button {
+    line-height: 1;
     cursor: pointer;
+}
+
+a {
+    color: #fff;
 }
 
 :global(#mount) {

@@ -18,7 +18,9 @@ module.exports = {
     "/"      : {
         onmatch : (args) => {
             if(!state.songs) {
-                state.action("LOAD SONGS");
+                state.action("LOAD DEFAULT SONGS");
+            } else {
+                state.action("CLOSE SONG");
             }
 
             return wrap(header, home);
