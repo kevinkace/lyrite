@@ -49,8 +49,6 @@ module.exports = (State) => ({
         });
     },
 
-    // "OPEN SONG TEXT" : (text) =>
-
     "OPEN SONG" : (idx) => {
         State.song = State.songs[idx];
     },

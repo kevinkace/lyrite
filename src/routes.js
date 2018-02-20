@@ -30,7 +30,7 @@ module.exports = {
     "/:slug" : {
         onmatch : (args) => {
             if(!state.songs) {
-                state.action("LOAD SONGS");
+                state.action("LOAD DEFAULT SONGS");
             }
 
             state.action("OPEN SONG BY SLUG", args.slug);
