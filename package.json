@@ -47,6 +47,10 @@
       "node": true
     },
     "rules": {
+      "eol-last": [
+        "error",
+        "always"
+      ],
       "no-console": 0,
       "radix": [
         "warn",

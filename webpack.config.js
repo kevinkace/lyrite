@@ -1,14 +1,13 @@
-const path = require("path"),
+const path = require("path");
 
-    HtmlWebpackPlugin  = require("html-webpack-plugin"),
-    CleanWebpackPlugin = require("clean-webpack-plugin"),
-    HtmlWebpackIncludeAssetsPlugin = require("html-webpack-include-assets-plugin"),
-    template = require("html-webpack-template"),
+const HtmlWebpackPlugin  = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const HtmlWebpackIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
 
-    CSSPlugin = require("modular-css-webpack/plugin"),
+const CSSPlugin = require("modular-css-webpack/plugin");
 
-    // Bundling assets for HtmlWebpackIncludeAssetsPlugin
-    assets = [{
+// Bundling assets for HtmlWebpackIncludeAssetsPlugi;
+const assets = [{
             path : "https://fonts.googleapis.com/css?family=Raleway|Slabo+27px",
             type : "css"
         },"https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js",
@@ -50,14 +49,7 @@ module.exports = {
         // Tells webpack to use this plugin to generate the output
         new HtmlWebpackPlugin({
             title      : "Lyrite",
-            // template,
-            // inject     : false,   // auto-injects already
-            appMountId : "mount", // creates div#mount for Mithril mount point
-            mobile     : true,    // adds viewport scaling
-            minify     : {        // Remove some of the insane amount of whitespace
-                preserveLineBreaks : true,
-                collapseWhitespace : true
-            }
+            template   : "./src/index.ejs",
         }),
         new HtmlWebpackIncludeAssetsPlugin({
             assets,       // Include assets into template

@@ -11,8 +11,7 @@ const header = require("./header");
 const lyrics = require("./lyrics");
 const home   = require("./home");
 
-const mountEl = document.body;
-// document.getElementById("mount")
+const mountEl = document.getElementById("mount");
 
 m.mount(mountEl, {
     view : () => [
