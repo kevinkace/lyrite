@@ -14,12 +14,16 @@ module.exports = {
     },
     view : (vnode) =>
         m("div", { class : css.home },
+
+            // load button
             m("button", {
                 class   : css.load,
                 onclick : () => {
                     vnode.state.load = true;
                 }
             }, "load song"),
+
+            // textarea
             vnode.state.load ? [
                     m("textarea", {
                         oncreate : (textVnode) => {
@@ -38,6 +42,8 @@ module.exports = {
                     }, "load songs text")
                 ] :
                 null,
+
+            // loaded songs list
             m("div", { class : css.list },
                 state.songs ? state.songs.map((song, idx) =>
                     m("a", {

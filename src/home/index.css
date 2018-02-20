@@ -1,13 +1,15 @@
 @value * as colors from "../palette.css";
 
 .home {
-    max-width: 500px;
-    padding: 0.5em;
-    margin: 0 auto;
+    padding: 1em 0.5em 0;
+
+    text-align: center;
 }
 
 .load {
     composes: button from "../index.css";
+
+    margin-bottom: 1em;
 
     color: #fff;
     --color: colors.cta;
