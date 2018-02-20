@@ -1,8 +1,8 @@
 "use strict";
 
-const eol = require("eol");
-const hash = require("string-hash");
-const slug = require("slug");
+const eol     = require("eol");
+const hash    = require("string-hash");
+const slugify = require("slugify");
 
 const titleSplit = "\n\n---\n\n";
 
@@ -34,7 +34,7 @@ module.exports = (State) => ({
             song.lyrics = parts[0];
         }
 
-        song.slug = slug(song.title);
+        song.slug = slugify(song.title);
 
         song.lyrics = song.lyrics
             .split("\n\n")

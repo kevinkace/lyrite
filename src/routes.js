@@ -16,7 +16,7 @@ function wrap(...components) {
 
 module.exports = {
     "/"      : {
-        onmatch : (args) => {
+        onmatch : () => {
             if(!state.songs) {
                 state.action("LOAD DEFAULT SONGS");
             } else {

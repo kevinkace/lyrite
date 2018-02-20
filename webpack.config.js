@@ -10,7 +10,8 @@ const CSSPlugin = require("modular-css-webpack/plugin");
 const assets = [{
             path : "https://fonts.googleapis.com/css?family=Raleway|Slabo+27px",
             type : "css"
-        },"https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js",
+        },
+        "https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js",
         "/index.css"
     ];
 
@@ -21,7 +22,7 @@ module.exports = {
         historyApiFallback : true,
         contentBase : "./dist"
     },
-    externals : { m : "mithril" },
+    externals : { mithril : "m" },
 
     module : {
         rules : [{
