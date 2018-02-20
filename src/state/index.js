@@ -2,7 +2,7 @@
 
 const m = require("mithril");
 
-const get = require("lodash.get");
+const get = require("object-path").get;
 
 const State = {};
 
