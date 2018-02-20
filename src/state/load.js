@@ -8,7 +8,8 @@ const titleSplit = "\n\n---\n\n";
 
 const songs = [
     require("../songs/smells-like-teen-spirit.txt"),
-    require("../songs/judy-is-a-punk.txt")
+    require("../songs/judy-is-a-punk.txt"),
+    require("../songs/hatebreeders.txt")
 ];
 
 module.exports = (State) => ({
@@ -62,6 +63,7 @@ module.exports = (State) => ({
             }
 
             songIdx = idx;
+
             return true;
         });
 
