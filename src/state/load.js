@@ -2,6 +2,7 @@
 
 const eol = require("eol");
 const hash = require("string-hash");
+const slug = require("slug");
 
 const titleSplit = "\n\n---\n\n";
 
@@ -27,26 +28,42 @@ module.exports = (State) => ({
             song.lyrics = parts[0];
         }
 
+        song.slug = slug(song.title);
+
         song.lyrics = song.lyrics
             .split("\n\n")
             .map((text) => ({
                 hash : hash(text),
                 text
             }));
+    },
 
-
-        // let song = {
-        //     title : "fake title",
-        //     lyrics : [{
-        //         hash : "asdfasdf",
-        //         text : "Here's fake lyrics"
-        //     }]
-        // };
+    "LOAD SONGS" : () => {
+        State.action("LOAD SONG", require("../songs/smells-like-teen-spirit.txt"));
     },
 
     // "OPEN SONG TEXT" : (text) =>
 
     "OPEN SONG" : (idx) => {
         State.song = State.songs[idx];
+    },
+
+    "OPEN SONG BY SLUG" : (slug) => {
+        let songIdx;
+
+        State.songs.some((song, idx) => {
+            if(song.slug !== slug) {
+                return false;
+            }
+
+            songIdx = idx;
+            return true;
+        });
+
+        if(!songIdx) {
+            State.error = "song not found";
+        }
+
+        State.action("OPEN SONG", songIdx);
     }
 });

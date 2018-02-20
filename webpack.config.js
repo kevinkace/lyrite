@@ -18,12 +18,10 @@ module.exports = {
     entry     : "./src/index.js",
     devtool   : "inline-source-map",
     devServer : {
+        historyApiFallback : true,
         contentBase : "./dist"
     },
-
-    externals : {
-        m : "mithril"
-    },
+    externals : { m : "mithril" },
 
     module : {
         rules : [{
@@ -49,7 +47,7 @@ module.exports = {
         // Tells webpack to use this plugin to generate the output
         new HtmlWebpackPlugin({
             title      : "Lyrite",
-            template   : "./src/index.ejs",
+            template   : "./src/index.ejs"
         }),
         new HtmlWebpackIncludeAssetsPlugin({
             assets,       // Include assets into template
