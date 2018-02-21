@@ -1,10 +1,10 @@
-"use strict";
-
 import m from "mithril";
-import icons from "../icons.svg";
+
+import state from "../state";
+
 import css from "./index.css";
 import tooltipCss from "./tooltip.css";
-import state from "../state";
+import icons from "../icons.svg";
 
 export default {
     view : (vnode) =>

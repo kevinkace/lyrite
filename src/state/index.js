@@ -1,6 +1,5 @@
-"use strict";
-
 import m from "mithril";
+
 import { get } from "object-path";
 
 import load from "./load";

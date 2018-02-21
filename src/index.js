@@ -2,7 +2,9 @@
 
 import "minireset.css";
 import "./index.css";
+
 import m from "mithril";
+
 import routes from "./routes";
 
 const mountEl = document.getElementById("mount");

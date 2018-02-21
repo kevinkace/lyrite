@@ -1,11 +1,10 @@
-"use strict";
-
 import m from "mithril";
+
+import state from "../state";
 
 import css from "./index.css";
 import tools from "../tools";
 
-import state from "../state";
 
 export default {
     oncreate : (vnode) => {

@@ -1,5 +1,3 @@
-"use strict";
-
 import eol from "eol";
 import hash from "string-hash";
 import slugify from "slugify";

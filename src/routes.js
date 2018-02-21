@@ -1,7 +1,9 @@
 "use strict";
 
 import m from "mithril";
+
 import state from "./state";
+
 import header from "./header";
 import lyrics from "./lyrics";
 import home from "./home";

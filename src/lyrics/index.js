@@ -1,8 +1,8 @@
-"use strict";
-
 import m from "mithril";
-import css from "./index.css";
+
 import state from "../state";
+
+import css from "./index.css";
 
 function addBr(text) {
     return text.replace(/\n/g, "<br>");
