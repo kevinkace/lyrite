@@ -1,12 +1,10 @@
 "use strict";
 
-const m = require("mithril");
-
-const state = require("./state");
-
-const header = require("./header");
-const lyrics = require("./lyrics");
-const home   = require("./home");
+import m from "mithril";
+import state from "./state";
+import header from "./header";
+import lyrics from "./lyrics";
+import home from "./home";
 
 function wrap(...components) {
     return {
@@ -14,7 +12,7 @@ function wrap(...components) {
     };
 }
 
-module.exports = {
+export default {
     "/"      : {
         onmatch : () => {
             if(!state.songs) {

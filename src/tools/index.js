@@ -1,14 +1,12 @@
 "use strict";
 
-const m = require("mithril");
+import m from "mithril";
+import icons from "../icons.svg";
+import css from "./index.css";
+import tooltipCss from "./tooltip.css";
+import state from "../state";
 
-const icons = require("../icons.svg");
-const css = require("./index.css");
-const tooltipCss = require("./tooltip.css");
-
-const state = require("../state");
-
-module.exports = {
+export default {
     view : (vnode) =>
         m("div", { class : vnode.state.show ? css.tools : css.toolsHide },
 
@@ -106,7 +104,7 @@ module.exports = {
                 m("div", { class : css.control },
                     m("button", {
                         class : css.dec,
-                        onclick : (e) => {
+                        onclick : () => {
                             if(state.cols.count === 1) {
                                 return;
                             }
@@ -117,7 +115,7 @@ module.exports = {
                     m("label", { class : css.cols }, state.cols.count),
                     m("button", {
                         class : css.inc,
-                        onclick : (e) => {
+                        onclick : () => {
                             ++state.cols.count;
                         }
                     }, ">")

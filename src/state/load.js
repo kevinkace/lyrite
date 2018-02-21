@@ -1,8 +1,8 @@
 "use strict";
 
-const eol     = require("eol");
-const hash    = require("string-hash");
-const slugify = require("slugify");
+import eol from "eol";
+import hash from "string-hash";
+import slugify from "slugify";
 
 const titleSplit = "\n\n---\n\n";
 
@@ -12,7 +12,7 @@ const songs = [
     require("../songs/hatebreeders.txt")
 ];
 
-module.exports = (State) => ({
+export default (State) => ({
     "LOAD SONG" : (songString) => {
         const parts = eol.lf(songString).split(titleSplit);
         const song = {};

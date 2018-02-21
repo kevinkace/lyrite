@@ -1,8 +1,9 @@
 "use strict";
 
-const m = require("mithril");
+import m from "mithril";
+import { get } from "object-path";
 
-const get = require("object-path").get;
+import load from "./load";
 
 const State = {};
 
@@ -45,7 +46,7 @@ const actions = {
             window.addEventListener("mousemove", State.events.mousemove);
         }
 
-        // Nothing is selected so don't color anything
+        // Nothing is selected so don"t color anything
         if(!State.selected && State.selected !== 0) {
             return;
         }
@@ -85,7 +86,7 @@ State.events = {
     }
 };
 
-Object.assign(actions, require("./load")(State));
+Object.assign(actions, load(State));
 
 State.action = (name, value) => actions[name](value);
 
@@ -107,4 +108,4 @@ State.error = (err) => {
     console.error(err);
 };
 
-module.exports = State;
+export default State;

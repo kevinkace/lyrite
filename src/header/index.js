@@ -1,14 +1,13 @@
 "use strict";
 
-const m = require("mithril");
+import m from "mithril";
 
-const css = require("./index.css");
+import css from "./index.css";
+import tools from "../tools";
 
-const tools = require("../tools");
+import state from "../state";
 
-const state = require("../state");
-
-module.exports = {
+export default {
     oncreate : (vnode) => {
         state.header = {
             height : vnode.dom.offsetHeight

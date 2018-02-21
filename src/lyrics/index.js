@@ -1,15 +1,14 @@
 "use strict";
 
-const m = require("mithril");
-
-const css = require("./index.css");
-const state = require("../state");
+import m from "mithril";
+import css from "./index.css";
+import state from "../state";
 
 function addBr(text) {
     return text.replace(/\n/g, "<br>");
 }
 
-module.exports = {
+export default {
     view : () =>
         m("div", {
                 class : css.lyrics,

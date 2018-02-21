@@ -1,11 +1,9 @@
 "use strict";
 
-require("minireset.css");
-require("./index.css");
-
-const m = require("mithril");
-
-const routes = require("./routes");
+import "minireset.css";
+import "./index.css";
+import m from "mithril";
+import routes from "./routes";
 
 const mountEl = document.getElementById("mount");
 
