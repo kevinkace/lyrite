@@ -7,6 +7,10 @@ html {
     background: colors.bg;
 }
 
+body {
+    overflow: hidden;
+}
+
 button,
 input,
 select,

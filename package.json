@@ -34,6 +34,7 @@
     "mithril": "^1.1.6",
     "modular-css-webpack": "^8.0.0",
     "object-path": "^0.11.4",
+    "postcss-nested": "^3.0.0",
     "raw-loader": "^0.5.1",
     "slugify": "^1.2.9",
     "string-hash": "^1.1.3",

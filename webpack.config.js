@@ -5,6 +5,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
 
 const CSSPlugin = require("modular-css-webpack/plugin");
+const postcssNested = require("postcss-nested");
 
 // Bundling assets for HtmlWebpackIncludeAssetsPlugi;
 const assets = [{
@@ -44,7 +45,10 @@ module.exports = {
         // Cleans build artifacts (pathsToClean, cleanOptions)
         new CleanWebpackPlugin([ "dist" ]),
         // Modular CSS
-        new CSSPlugin({ css : "./index.css" }),
+        new CSSPlugin({
+            css : "./index.css",
+            before : [ postcssNested ]
+        }),
         // Tells webpack to use this plugin to generate the output
         new HtmlWebpackPlugin({
             title      : "Lyrite",
