@@ -8,6 +8,7 @@ export default {
     view : (vnode) =>
         m("div", { class : css.home },
 
+            m("h1", { class : css.title }, state.appName),
             // load button
             m("button", {
                 class   : css.load,

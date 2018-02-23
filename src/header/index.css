@@ -1,9 +1,41 @@
 @value * as colors from "../palette.css";
+@value dur: 0.3s;
 
 .header {
     position: relative;
     padding: 0.4em 0;
+
     background: colors.header;
+}
+
+.headerIn {
+    composes: header;
+
+    transform: translateY(-100%);
+    animation: forwards dur slideIn;
+}
+
+@keyframes slideIn {
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.headerOut {
+    composes: header;
+
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    transform: translateY(0);
+    animation: forwards dur slideOut;
+}
+
+@keyframes slideOut {
+    100% {
+        transform: translateY(-100%);
+    }
 }
 
 .logo {
@@ -13,7 +45,5 @@
 }
 
 .title {
-    text-align: center;
-    font: normal 1.8em/1.2 "Slabo 27px", serif;
-    text-transform: uppercase;
+    composes: title from "../index.css";
 }

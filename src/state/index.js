@@ -2,8 +2,11 @@ import m from "mithril";
 
 import tools from "./tools";
 import load from "./load";
+import utils from "./utils";
 
 const State = {};
+
+State.appName = "Lyrite";
 
 State.styles = [ "s0", "s1", "s2", "s3", "s4", "s5" ];
 
@@ -19,7 +22,7 @@ State.events = {
     }
 };
 
-State.actions = Object.assign({}, tools(State), load(State));
+State.actions = Object.assign({}, tools(State), load(State), utils(State));
 
 State.action = (name, value) => State.actions[name](value);
 

@@ -4,15 +4,9 @@ import m from "mithril";
 
 import state from "./state";
 
-import header from "./header";
+import layout from "./layout";
 import lyrics from "./lyrics";
 import home from "./home";
-
-function wrap(...components) {
-    return {
-        view : () => components.map(m)
-    };
-}
 
 export default {
     "/"      : {
@@ -22,9 +16,8 @@ export default {
             } else {
                 state.action("CLOSE SONG");
             }
-
-            return wrap(header, home);
-        }
+        },
+        render : () => m(layout, m(home))
     },
 
     "/:slug" : {
@@ -34,8 +27,7 @@ export default {
             }
 
             state.action("OPEN SONG BY SLUG", args.slug);
-
-            return wrap(header, lyrics);
-        }
+        },
+        render : () => m(layout, { header : true }, m(lyrics))
     }
 };

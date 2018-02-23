@@ -37,3 +37,11 @@
     text-decoration: none;
     font-size: 1.25em;
 }
+
+.title {
+    composes: title from "../index.css";
+    margin: 1em 0 0.4em;
+    font-size: 3em;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+}

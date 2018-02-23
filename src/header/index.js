@@ -5,6 +5,7 @@ import state from "../state";
 import css from "./index.css";
 import tools from "../tools";
 
+import animResolve from "../lib/animResolve";
 
 export default {
     oncreate : (vnode) => {
@@ -12,9 +13,10 @@ export default {
             height : vnode.dom.offsetHeight
         };
     },
+    onbeforeremove : (vnode) => animResolve(vnode.dom, css.headerOut),
     view : () =>
-        m("div", { class : css.header },
-            m("h1", { class : css.title }, state.song ? state.song.title : "Lyrite"),
+        m("div", { class : css.headerIn },
+            m("h1", { class : css.title }, state.song ? state.song.title : state.appName),
             m("div", { class : css.logo },
                 m("a", {
                     href : "/",

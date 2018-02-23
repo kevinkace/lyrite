@@ -48,3 +48,9 @@ a {
 
     background: var(--color);
 }
+
+.title {
+    text-align: center;
+    font: normal 1.8em/1.2 "Slabo 27px", serif;
+    text-transform: uppercase;
+}
