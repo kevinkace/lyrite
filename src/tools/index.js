@@ -4,7 +4,7 @@ import state from "../state";
 
 import css from "./index.css";
 import tooltipCss from "./tooltip.css";
-import icons from "../icons.svg";
+import icons from "../icons";
 
 export default {
     view : (vnode) =>
@@ -21,11 +21,7 @@ export default {
                         }
                     }
                 },
-                m("svg",
-                    m("use", {
-                        "xlink:href" : `${icons}#icon-quill`
-                    })
-                )
+                m(icons, { icon : "edit" })
             ),
 
             // Style buttons

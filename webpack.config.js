@@ -34,9 +34,6 @@ module.exports = {
             test   : /\.css$/,
             loader : "modular-css-webpack/loader"
         }, {
-            test   : /\.(svg)$/,
-            loader : "file-loader"
-        }, {
             test   : /\.txt$/,
             use: "raw-loader"
         }]

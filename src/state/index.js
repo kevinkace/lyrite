@@ -7,6 +7,7 @@ import utils from "./utils";
 const State = {};
 
 State.appName = "Lyrite";
+State.githubHref = "https://github.com/kevinkace/lyrite";
 
 State.styles = [ "s0", "s1", "s2", "s3", "s4", "s5" ];
 
