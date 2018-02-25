@@ -10,6 +10,15 @@ const songs = [
     require("../songs/hatebreeders.txt")
 ];
 
+function parseLyricString(lyricString) {
+    return lyricString
+        .split("\n\n")
+        .map((text) => ({
+            hash : hash(text),
+            text
+        }));
+}
+
 export default (State) => ({
     "LOAD SONG" : (songString) => {
         const parts = eol.lf(songString).split(titleSplit);
@@ -37,12 +46,7 @@ export default (State) => ({
 
         song.slug = slugify(song.title);
 
-        song.lyrics = song.lyrics
-            .split("\n\n")
-            .map((text) => ({
-                hash : hash(text),
-                text
-            }));
+        song.lyrics = parseLyricString(song.lyrics);
 
         return song.slug;
     },
@@ -93,5 +97,9 @@ export default (State) => ({
 
     "CLOSE EDIT CURRENT SONG" : () => {
         State.edit = false;
+    },
+
+    "UPDATE PARSED LYRICS" : () => {
+        State.song.lyrics = parseLyricString(State.song.lyricString);
     }
 });

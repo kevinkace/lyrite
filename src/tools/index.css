@@ -148,6 +148,8 @@
 .rangeHide {
     composes: range;
 
+    pointer-events: none;
+
     opacity: 0;
 }
 

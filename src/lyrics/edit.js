@@ -8,8 +8,12 @@ export default {
     view : () =>
         m("div", { class : css.edit },
             m("textarea", {
-                class : css.textarea,
-                value : state.song.lyricString
+                class   : css.textarea,
+                value   : state.song.lyricString,
+                oninput : m.withAttr("value", (v) => {
+                    state.song.lyricString = v;
+                    state.action("UPDATE PARSED LYRICS");
+                })
             })
         )
 };
