@@ -10,35 +10,51 @@ export default {
 
             m("h1", { class : css.title }, state.appName),
             // load button
-            m("button", {
-                class   : css.load,
-                onclick : () => {
-                    vnode.state.load = true;
-                }
-            }, "load song"),
 
-            // textarea
-            vnode.state.load ? [
-                    m("textarea", {
-                        oncreate : (textVnode) => {
-                            vnode.state.textarea = textVnode;
-                        },
-                        class : css.textarea,
-                        placeholder : "past song lyrics"
-                    }),
+            m("div", { class : css.dash },
+                m("textarea", {
+                    class       : vnode.state.focused ? css.textareaFocused : css.textarea,
+                    placeholder : vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
+                    onfocus : () => {
+                        vnode.state.focused = true;
+                        vnode.state.hidePlaceholder = true;
+
+                    },
+                    onblur : () => {
+                        vnode.state.placeholder = false;
+                    },
+                    onpaste     : (e) => {
+                        vnode.state.focused = true;
+
+                        if(e.clipboardData.getData("text/plain") !== "") {
+                            vnode.state.loadable = true;
+                        }
+                    },
+                    oncreate : (textareaVnode) => {
+                        vnode.state.textarea = textareaVnode;
+                    }
+                })
+            ),
+
+            vnode.state.loadable ?
+                m("div", { class : css.btnWrap },
                     m("button", {
-                        class : css.loadText,
+                        class : css.loadBtn,
                         onclick : () => {
-                            state.action("LOAD SONG", vnode.state.textarea.dom.value);
+                            let slug = state.action("LOAD SONG", vnode.state.textarea.dom.value);
+
                             delete vnode.state.textarea;
                             delete vnode.state.load;
+
+                            m.route.set(slug);
                         }
-                    }, "load songs text")
-                ] :
+                    }, "load song")
+                ) :
                 null,
 
             // loaded songs list
             m("div", { class : css.list },
+                m("h3", "or choose a song"),
                 state.songs ? state.songs.map((song, idx) =>
                     m("a", {
                         onclick : () => {

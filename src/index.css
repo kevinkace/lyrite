@@ -1,5 +1,7 @@
 @value * as colors from "./palette.css";
 
+@value fontFamily: Raleway;
+
 html {
     font: 300 1em/1.5 Raleway, sans-serif;
     color: #fff;

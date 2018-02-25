@@ -28,6 +28,7 @@ export default (State) => ({
             song.title = parts[0];
             song.lyrics = parts[1];
         } else {
+            song.untitled = true;
             song.title = `untitled ${State.songs.length}`;
             song.lyrics = parts[0];
         }
@@ -40,6 +41,8 @@ export default (State) => ({
                 hash : hash(text),
                 text
             }));
+
+        return song.slug;
     },
 
     "LOAD DEFAULT SONGS" : () => {
