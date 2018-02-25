@@ -6,9 +6,17 @@ export default (State) => ({
             return;
         }
 
-        State.modal = { title : true };
+        State.modal = "title";
 
         m.redraw();
+    },
+
+    "ADD TITLE" : (title) => {
+        State.action("SET TITLE", title);
+
+        delete State.modal;
+
+        m.route.set(State.song.slug);
     },
 
     "CLOSE MODAL" : () => {

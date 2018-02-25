@@ -20,7 +20,7 @@ export default {
             ),
 
             state.modal ?
-                m(modal, "modal") :
+                m(modal) :
                 null
         )
 };
