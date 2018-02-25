@@ -53,6 +53,10 @@
 
     color: colors.bg;
     background: #fff;
+}
+
+.contentIn {
+    composes: content;
 
     opacity: 0;
     transform: scale(0.5);
@@ -66,6 +70,16 @@
         transform: scale(1);
     }
 }
+
+.contentOut {
+    composes: content;
+
+    opacity: 1;
+    transform: scale(1);
+
+    animation: forwards 0.6s out2;
+}
+
 @keyframes out2 {
     100% {
         opacity: 0;

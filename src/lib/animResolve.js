@@ -20,8 +20,8 @@ export default function(dom, className) {
 
             resd = true;
             res(true);
-        });
-        
-        dom.classList.add(...(className.split(" ")));
+        }, { once : true, passive : true });
+
+        dom.className = className;
     });
 }
