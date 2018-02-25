@@ -116,14 +116,18 @@ export default {
                             ++state.cols.count;
                         }
                     }, ">")
-
                 )
             ),
 
             m("div", { class : css.setting },
-                m("label", { class : css.label }, ""),
+                m("label", { class : css.label }, m.trust("&nbsp;")), // I'm a terrible person
                 m("div", { class : css.control },
-                    m("button", "click")
+                    m("button", {
+                        class : css.edit,
+                        onclick : () => {
+                            state.action("TOGGLE EDIT CURRENT SONG");
+                        }
+                    }, "edit")
                 )
             ),
 

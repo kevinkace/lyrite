@@ -27,10 +27,12 @@ export default (State) => ({
         if(parts.length === 2) {
             song.title = parts[0];
             song.lyrics = parts[1];
+            song.lyricString = parts[1];
         } else {
             song.untitled = true;
             song.title = `untitled ${State.songs.length}`;
             song.lyrics = parts[0];
+            song.lyricString = parts[0];
         }
 
         song.slug = slugify(song.title);
@@ -79,5 +81,17 @@ export default (State) => ({
 
     "CLOSE SONG" : () => {
         delete State.song;
+    },
+
+    "TOGGLE EDIT CURRENT SONG" : () => {
+        return State.edit ? State.action("CLOSE EDIT CURRENT SONG") : State.action("OPEN EDIT CURRENT SONG");
+    },
+
+    "OPEN EDIT CURRENT SONG" : () => {
+        State.edit = true;
+    },
+
+    "CLOSE EDIT CURRENT SONG" : () => {
+        State.edit = false;
     }
 });

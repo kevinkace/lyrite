@@ -180,3 +180,10 @@
 .cols {
     font-family: monospace;
 }
+
+.edit {
+    composes: button;
+
+    color: #fff;
+    --color: colors.cta;
+}

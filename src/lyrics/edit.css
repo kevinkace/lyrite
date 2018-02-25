@@ -1,0 +1,13 @@
+.edit {
+    flex: 1 1 30vw;
+
+    background: #fff;
+}
+
+.textarea {
+    width: 100%;
+    height: 100%;
+    padding: 0.3em 1em;
+
+    font: normal 0.9em/1.4 monospace;
+}

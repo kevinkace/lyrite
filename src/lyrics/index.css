@@ -1,6 +1,12 @@
 @value * as colors from "../palette.css";
 
+.lyredit {
+    display: flex;
+    flex-direction: row;
+}
+
 .lyrics {
+    flex: 1 0 70vw;
     padding: 0.5em;
 
     column-gap: 1em;

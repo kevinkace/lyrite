@@ -1,8 +1,7 @@
 import m from "mithril";
 
 import tools from "./tools";
-import load from "./load";
-import utils from "./utils";
+import song from "./song";
 
 const State = {};
 
@@ -23,7 +22,7 @@ State.events = {
     }
 };
 
-State.actions = Object.assign({}, tools(State), load(State), utils(State));
+State.actions = Object.assign({}, tools(State), song(State));
 
 State.action = (name, value) => State.actions[name](value);
 
@@ -34,5 +33,7 @@ State.cols = { count : 2 };
 State.error = (err) => {
     console.error(err);
 };
+
+window.state = State;
 
 export default State;

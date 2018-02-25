@@ -57,6 +57,8 @@ export default (State) => ({
         delete State.style;
         delete State.tooltip;
 
+        State.action("CLOSE EDIT CURRENT SONG");
+
         window.removeEventListener("mousemove", State.events.mousemove);
     }
 });

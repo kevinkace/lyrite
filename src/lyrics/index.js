@@ -4,12 +4,14 @@ import state from "../state";
 
 import css from "./index.css";
 
+import edit from "./edit";
+
 function addBr(text) {
     return text.replace(/\n/g, "<br>");
 }
 
 export default {
-    view : () =>
+    view : () => m("div", { class : css.lyredit },
         m("div", {
                 class : css.lyrics,
                 style : {
@@ -34,5 +36,8 @@ export default {
                         m.trust(addBr(part.text))
                     )
                 )
-        )
+        ),
+
+        state.edit ? m(edit) : null
+    )
 };
