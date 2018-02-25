@@ -14,6 +14,7 @@ export default {
             m("div", { class : css.dash },
                 m("textarea", {
                     class       : vnode.state.focused ? css.textareaFocused : css.textarea,
+                    value       : vnode.state.textareaValue,
                     placeholder : vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
                     onfocus : () => {
                         vnode.state.focused = true;
@@ -21,18 +22,12 @@ export default {
 
                     },
                     onblur : () => {
-                        vnode.state.placeholder = false;
+                        vnode.state.hidePlaceholder = false;
                     },
-                    onpaste     : (e) => {
-                        vnode.state.focused = true;
-
-                        if(e.clipboardData.getData("text/plain") !== "") {
-                            vnode.state.loadable = true;
-                        }
-                    },
-                    oncreate : (textareaVnode) => {
-                        vnode.state.textarea = textareaVnode;
-                    }
+                    oninput : m.withAttr("value", (v) => {
+                        vnode.state.textareaValue = v;
+                        vnode.state.loadable = v.length;
+                    })
                 })
             ),
 
@@ -41,7 +36,7 @@ export default {
                     m("button", {
                         class : css.loadBtn,
                         onclick : () => {
-                            let slug = state.action("LOAD SONG", vnode.state.textarea.dom.value);
+                            let slug = state.action("LOAD SONG", vnode.state.textareaValue);
 
                             delete vnode.state.textarea;
                             delete vnode.state.load;
