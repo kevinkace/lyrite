@@ -3,7 +3,6 @@ import m from "mithril";
 import state from "../state";
 
 import css from "./index.css";
-
 import edit from "./edit";
 
 function addBr(text) {
@@ -11,11 +10,16 @@ function addBr(text) {
 }
 
 export default {
+    oninit : () => {
+        if(state.song.untitled) {
+            state.action("OPEN TITLE MODAL");
+        }
+    },
     view : () => m("div", { class : css.lyredit },
         m("div", {
                 class : css.lyrics,
                 style : {
-                    fontSize : `${state.font.size}em`,
+                    fontSize    : `${state.font.size}em`,
                     columnCount : state.cols.count
                 }
             },

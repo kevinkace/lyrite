@@ -14,7 +14,6 @@
 
     border: dashed 2px #fff9;
     border-radius: 1em;
-
 }
 
 .textarea {
@@ -92,6 +91,7 @@
 
 .title {
     composes: title from "../index.css";
+
     margin: 1em 0 0.4em;
     font-size: 3em;
     font-weight: bold;

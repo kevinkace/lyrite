@@ -1,11 +1,11 @@
 import m from "mithril";
 
 import state from "../state";
-import icons from "../icons";
-
-import header from "../header";
 
 import css from "./index.css";
+import icons from "../icons";
+import header from "../header";
+import modal from "../modal";
 
 export default {
     view : (vnode) =>
@@ -17,6 +17,10 @@ export default {
                     class : css.github
                 },
                 m(icons, { icon : "github" })
-            )
+            ),
+
+            state.modal ?
+                m(modal, "modal") :
+                null
         )
 };

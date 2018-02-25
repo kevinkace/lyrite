@@ -2,6 +2,7 @@ import m from "mithril";
 
 import tools from "./tools";
 import song from "./song";
+import modal from "./modal";
 
 const State = {};
 
@@ -22,7 +23,7 @@ State.events = {
     }
 };
 
-State.actions = Object.assign({}, tools(State), song(State));
+State.actions = Object.assign({}, tools(State), song(State), modal(State));
 
 State.action = (name, value) => State.actions[name](value);
 

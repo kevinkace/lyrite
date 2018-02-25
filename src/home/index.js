@@ -5,7 +5,7 @@ import state from "../state";
 import css from "./index.css";
 
 export default {
-    view : (vnode) =>
+    view : (vnode) => [
         m("div", { class : css.home },
 
             m("h1", { class : css.title }, state.appName),
@@ -14,7 +14,7 @@ export default {
             m("div", { class : css.dash },
                 m("textarea", {
                     class       : vnode.state.focused ? css.textareaFocused : css.textarea,
-                    value       : vnode.state.textareaValue,
+                    value       : vnode.state.lyricsValue,
                     placeholder : vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
                     onfocus : () => {
                         vnode.state.focused = true;
@@ -25,7 +25,7 @@ export default {
                         vnode.state.hidePlaceholder = false;
                     },
                     oninput : m.withAttr("value", (v) => {
-                        vnode.state.textareaValue = v;
+                        vnode.state.lyricsValue = v;
                         vnode.state.loadable = v.length;
                     })
                 })
@@ -36,12 +36,12 @@ export default {
                     m("button", {
                         class : css.loadBtn,
                         onclick : () => {
-                            let slug = state.action("LOAD SONG", vnode.state.textareaValue);
+                            let slug = state.action("LOAD SONG", vnode.state.lyricsValue);
 
                             delete vnode.state.textarea;
                             delete vnode.state.load;
 
-                            m.route.set(slug);
+                            return m.route.set(slug);
                         }
                     }, "load song")
                 ) :
@@ -62,4 +62,5 @@ export default {
                 ) : null
             )
         )
+    ]
 };
