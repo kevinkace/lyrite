@@ -55,7 +55,7 @@ export default (State) => ({
         State.song = State.songs[idx];
     },
 
-    "OPEN SONG BY SLUG" : (slug) => {
+    "GET SONG IDX FROM SLUG" : (slug) => {
         let songIdx;
 
         State.songs.some((song, idx) => {
@@ -68,11 +68,13 @@ export default (State) => ({
             return true;
         });
 
-        if(!songIdx) {
+        if(!songIdx && songIdx !== 0) {
             State.error = "song not found";
+
+            return;
         }
 
-        State.action("OPEN SONG", songIdx);
+        return songIdx;
     },
 
     "CLOSE SONG" : () => {

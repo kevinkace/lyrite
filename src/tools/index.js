@@ -63,6 +63,7 @@ export default {
                             }, 300);
                         }
                     }, parseFloat(state.font.size, 10).toFixed(2)),
+
                     m("input", {
                         type  : "range",
                         min   : 0.7,
@@ -116,6 +117,13 @@ export default {
                         }
                     }, ">")
 
+                )
+            ),
+
+            m("div", { class : css.setting },
+                m("label", { class : css.label }, ""),
+                m("div", { class : css.control },
+                    m("button", "click")
                 )
             ),
 
