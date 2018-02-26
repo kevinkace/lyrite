@@ -11,7 +11,7 @@
     align-items: flex-start;
     justify-content: center;
 
-    background: #6666;
+    background: colors.modalBg;
 }
 
 .modalIn {
@@ -52,6 +52,7 @@
     border-radius: 0.2em;
 
     color: colors.bg;
+    box-shadow: 0 2px 143px 23px #0009;
     background: colors.modal;
 }
 
