@@ -14,7 +14,7 @@ export default (State) => ({
     "ADD TITLE" : (title) => {
         State.action("SET TITLE", title);
 
-        delete State.modal;
+        State.action("CLOSE MODAL");
 
         m.route.set(State.song.slug);
     },
