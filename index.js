@@ -125,32 +125,6 @@ window.state = State;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
-
-
-const icons = {
-    edit: {
-        title: "Edit",
-        viewBox: "0 0 32 32",
-        paths: ["M0 32c4-12 14.469-32 32-32-8.219 6.594-12 22-18 22s-6 0-6 0l-6 10h-2z"]
-    },
-    github: {
-        title: "GitHub",
-        viewBox: "0 0 1024 1024",
-        paths: ["M512.008 12.642c-282.738 0-512.008 229.218-512.008 511.998 0 226.214 146.704 418.132 350.136 485.836 25.586 4.738 34.992-11.11 34.992-24.632 0-12.204-0.48-52.542-0.696-95.324-142.448 30.976-172.504-60.41-172.504-60.41-23.282-59.176-56.848-74.916-56.848-74.916-46.452-31.778 3.51-31.124 3.51-31.124 51.4 3.61 78.476 52.766 78.476 52.766 45.672 78.27 119.776 55.64 149.004 42.558 4.588-33.086 17.852-55.68 32.506-68.464-113.73-12.942-233.276-56.85-233.276-253.032 0-55.898 20.004-101.574 52.76-137.428-5.316-12.9-22.854-64.972 4.952-135.5 0 0 43.006-13.752 140.84 52.49 40.836-11.348 84.636-17.036 128.154-17.234 43.502 0.198 87.336 5.886 128.256 17.234 97.734-66.244 140.656-52.49 140.656-52.49 27.872 70.528 10.35 122.6 5.036 135.5 32.82 35.856 52.694 81.532 52.694 137.428 0 196.654-119.778 239.95-233.79 252.624 18.364 15.89 34.724 47.046 34.724 94.812 0 68.508-0.596 123.644-0.596 140.508 0 13.628 9.222 29.594 35.172 24.566 203.322-67.776 349.842-259.626 349.842-485.768 0-282.78-229.234-511.998-511.992-511.998z"]
-    }
-};
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("svg", { viewBox: icons[vnode.attrs.icon].viewBox }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("title", icons[vnode.attrs.icon].title), icons[vnode.attrs.icon].paths.map(d => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("path", { d })))
-});
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 const MAX_TIMEOUT = 1000;
 
 /* harmony default export */ __webpack_exports__["a"] = (function (dom, className) {
@@ -173,10 +147,36 @@ const MAX_TIMEOUT = 1000;
 
             resd = true;
             res(true);
-        });
+        }, { once: true, passive: true });
 
-        dom.classList.add(...className.split(" "));
+        dom.className = className;
     });
+});
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
+
+
+const icons = {
+    edit: {
+        title: "Edit",
+        viewBox: "0 0 32 32",
+        paths: ["M0 32c4-12 14.469-32 32-32-8.219 6.594-12 22-18 22s-6 0-6 0l-6 10h-2z"]
+    },
+    github: {
+        title: "GitHub",
+        viewBox: "0 0 1024 1024",
+        paths: ["M512.008 12.642c-282.738 0-512.008 229.218-512.008 511.998 0 226.214 146.704 418.132 350.136 485.836 25.586 4.738 34.992-11.11 34.992-24.632 0-12.204-0.48-52.542-0.696-95.324-142.448 30.976-172.504-60.41-172.504-60.41-23.282-59.176-56.848-74.916-56.848-74.916-46.452-31.778 3.51-31.124 3.51-31.124 51.4 3.61 78.476 52.766 78.476 52.766 45.672 78.27 119.776 55.64 149.004 42.558 4.588-33.086 17.852-55.68 32.506-68.464-113.73-12.942-233.276-56.85-233.276-253.032 0-55.898 20.004-101.574 52.76-137.428-5.316-12.9-22.854-64.972 4.952-135.5 0 0 43.006-13.752 140.84 52.49 40.836-11.348 84.636-17.036 128.154-17.234 43.502 0.198 87.336 5.886 128.256 17.234 97.734-66.244 140.656-52.49 140.656-52.49 27.872 70.528 10.35 122.6 5.036 135.5 32.82 35.856 52.694 81.532 52.694 137.428 0 196.654-119.778 239.95-233.79 252.624 18.364 15.89 34.724 47.046 34.724 94.812 0 68.508-0.596 123.644-0.596 140.508 0 13.628 9.222 29.594 35.172 24.566 203.322-67.776 349.842-259.626 349.842-485.768 0-282.78-229.234-511.998-511.992-511.998z"]
+    }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("svg", { viewBox: icons[vnode.attrs.icon].viewBox }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("title", icons[vnode.attrs.icon].title), icons[vnode.attrs.icon].paths.map(d => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("path", { d })))
 });
 
 /***/ }),
@@ -190,6 +190,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__state__ = __webpack_require__(1);
+
 
 
 
@@ -206,6 +208,7 @@ __WEBPACK_IMPORTED_MODULE_2_mithril___default.a.route.prefix("");
 __WEBPACK_IMPORTED_MODULE_2_mithril___default.a.route(mountEl, "/", __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */]);
 
 window.m = __WEBPACK_IMPORTED_MODULE_2_mithril___default.a;
+window.state = __WEBPACK_IMPORTED_MODULE_4__state__["a" /* default */];
 
 /***/ }),
 /* 5 */
@@ -220,16 +223,19 @@ window.m = __WEBPACK_IMPORTED_MODULE_2_mithril___default.a;
 
 "use strict";
 /* unused harmony export fontFamily */
+/* unused harmony export animDur */
 /* unused harmony export mount */
 /* unused harmony export button */
 /* unused harmony export title */
 /* unused harmony default export */ var _unused_webpack_default_export = ({
     "fontFamily": "Raleway",
+    "animDur": "0.3s",
     "mount": "mount",
     "button": "mc70832d4a_button",
     "title": "mc70832d4a_title"
 });
 var fontFamily = "Raleway";
+var animDur = "0.3s";
 var mount = "mount";
 var button = "mc70832d4a_button";
 var title = "mc70832d4a_title";
@@ -243,9 +249,9 @@ var title = "mc70832d4a_title";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__layout__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lyrics__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__error__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lyrics__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__error__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home__ = __webpack_require__(35);
 
 
 
@@ -720,6 +726,11 @@ function parseLyricString(lyricString) {
         return song.slug;
     },
 
+    "SET TITLE": title => {
+        State.song.title = title;
+        State.song.slug = __WEBPACK_IMPORTED_MODULE_2_slugify___default()(State.song.title);
+    },
+
     "LOAD DEFAULT SONGS": () => {
         songs.forEach(song => {
             State.action("LOAD SONG", song);
@@ -1096,19 +1107,19 @@ module.exports = hash;
 /* 15 */
 /***/ (function(module, exports) {
 
-module.exports = "Smells Like Teen Spirit\r\n\r\n---\r\n\r\nLoad up on guns, Bring your friends\r\nIt's fun to lose and to pretend\r\n\r\nShe's overboard, self assured\r\nOh no I know, a dirty word\r\n\r\nHello, hello, hello, how low [x3]\r\nHello, hello, hello\r\n\r\nWith the lights out, it's less dangerous\r\nHere we are now, entertain us\r\nI feel stupid and contagious\r\nHere we are now, entertain us\r\n\r\nA mulatto, an Albino\r\nA mosquito, my libido, yeah\r\n\r\nHey, yay\r\n\r\nI'm worse at what I do best\r\nAnd for this gift, I feel blessed\r\n\r\nOur little group has always been\r\nAnd always will until the end\r\n\r\nHello, hello, hello, how low [x3]\r\nHello, hello, hello\r\n\r\nWith the lights out, it's less dangerous\r\nHere we are now, entertain us\r\nI feel stupid and contagious\r\nHere we are now, entertain us\r\n\r\nA mulatto, an Albino\r\nA mosquito, my libido, yeah\r\n\r\nHey, yay\r\n\r\nAnd I forget just why I taste\r\nOh yeah, I guess it makes me smile\r\n\r\nI found it hard, it was hard to find\r\nOh well, whatever, nevermind\r\n\r\nHello, hello, hello, how low [x3]\r\nHello, hello, hello\r\n\r\nWith the lights out, it's less dangerous\r\nHere we are now, entertain us\r\nI feel stupid and contagious\r\nHere we are now, entertain us\r\n\r\nA mulatto, an Albino\r\nA mosquito, my libido\r\n\r\nA denial, A denial, A denial, A denial, A denial\r\nA denial, A denial, A denial, A denial\r\n"
+module.exports = "Smells Like Teen Spirit\n\n---\n\nLoad up on guns, Bring your friends\nIt's fun to lose and to pretend\n\nShe's overboard, self assured\nOh no I know, a dirty word\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido, yeah\n\nHey, yay\n\nI'm worse at what I do best\nAnd for this gift, I feel blessed\n\nOur little group has always been\nAnd always will until the end\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido, yeah\n\nHey, yay\n\nAnd I forget just why I taste\nOh yeah, I guess it makes me smile\n\nI found it hard, it was hard to find\nOh well, whatever, nevermind\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido\n\nA denial, A denial, A denial, A denial, A denial\nA denial, A denial, A denial, A denial\n"
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = "Judy is a Punk\r\n\r\n---\r\n\r\nJackie is a punk\r\nJudy is a runt\r\nThey both went down to Berlin, joined the Ice Capades\r\n\r\nAnd oh, I don't know why\r\nOh, I don't know why\r\n\r\nPerhaps they'll die, oh yeah\r\nPerhaps they'll die, oh yeah\r\nPerhaps they'll die, oh yeah\r\nPerhaps they'll die, oh yeah\r\n\r\nSecond verse, same as the first\r\n\r\nJackie is a punk\r\nJudy is a runt\r\nThey both went down to Berlin, joined the Ice Capades\r\n\r\nAnd oh, I don't know why\r\nOh, I don't know why\r\n\r\nPerhaps they'll die, oh yeah\r\nPerhaps they'll die, oh yeah\r\nPerhaps they'll die, oh yeah\r\nPerhaps they'll die, oh yeah\r\n\r\nThird verse, different from the first\r\n\r\nJackie is a punk\r\nJudy is a runt\r\nThey both went down to San Frisco, joined the SLA\r\n\r\nAnd oh, I don't know why\r\nOh, I don't know why\r\n\r\nPerhaps they'll die, oh yeah\r\nPerhaps they'll die, oh yeah\r\nPerhaps they'll die, oh yeah\r\nPerhaps they'll die, oh yeah\r\n"
+module.exports = "Judy is a Punk\n\n---\n\nJackie is a punk\nJudy is a runt\nThey both went down to Berlin, joined the Ice Capades\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n\nSecond verse, same as the first\n\nJackie is a punk\nJudy is a runt\nThey both went down to Berlin, joined the Ice Capades\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n\nThird verse, different from the first\n\nJackie is a punk\nJudy is a runt\nThey both went down to San Frisco, joined the SLA\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n"
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = "Hatebreeders\r\n\r\n---\r\n\r\nWhoa oh oh\r\nNo\r\nWhoa oh oh\r\nHate breeders\r\nWhoa oh oh\r\nWhoa oh oh\r\nHate breeders\r\nWhoa oh oh\r\n\r\nBrain invasion goin' on in everyone\r\nYou feel the things that make your world turn angry red\r\nBecause the next time you can't take it\r\nNext thought murderlation\r\nAnd hate is all you want to know\r\n\r\nWhoa oh oh\r\nHate breeders\r\nWhoa oh oh\r\n(x4)\r\n\r\nMurder one inborn into your every cell\r\nIt's in your blood and you can't shake it\r\nBecause you were bred to take it\r\nNext stop annihilation\r\nThey bred the hate right in your bones\r\n\r\nWhoa oh oh\r\nHate breeders\r\nWhoa oh oh\r\n(x4)\r\n\r\nBecause you were bred to take it\r\nNext stop annihilation\r\nThey bred the hate right in your fuckin' bones\r\n\r\nWhoa oh oh\r\nHate breeders\r\nWhoa oh oh\r\n(x4)\r\n\r\nHate is your mistress and you shall not want\r\nYou shall not want because your breed is strong\r\nBecause when they try to break you\r\nNew world desolation\r\nAnd strength is all you gotta know\r\n\r\nWhoa oh oh\r\nHate breeders\r\nWhoa oh oh\r\n(x4)\r\n\r\nAnd all you know\r\nHatebreeders\r\nWhoa oh oh\r\nAnd all you know\r\nHatebreeders\r\nWhoa oh oh\r\n"
+module.exports = "Hatebreeders\n\n---\n\nWhoa oh oh\nNo\nWhoa oh oh\nHate breeders\nWhoa oh oh\nWhoa oh oh\nHate breeders\nWhoa oh oh\n\nBrain invasion goin' on in everyone\nYou feel the things that make your world turn angry red\nBecause the next time you can't take it\nNext thought murderlation\nAnd hate is all you want to know\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nMurder one inborn into your every cell\nIt's in your blood and you can't shake it\nBecause you were bred to take it\nNext stop annihilation\nThey bred the hate right in your bones\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nBecause you were bred to take it\nNext stop annihilation\nThey bred the hate right in your fuckin' bones\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nHate is your mistress and you shall not want\nYou shall not want because your breed is strong\nBecause when they try to break you\nNew world desolation\nAnd strength is all you gotta know\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nAnd all you know\nHatebreeders\nWhoa oh oh\nAnd all you know\nHatebreeders\nWhoa oh oh\n"
 
 /***/ }),
 /* 18 */
@@ -1125,9 +1136,17 @@ module.exports = "Hatebreeders\r\n\r\n---\r\n\r\nWhoa oh oh\r\nNo\r\nWhoa oh oh\
             return;
         }
 
-        State.modal = { title: true };
+        State.modal = "title";
 
         __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.redraw();
+    },
+
+    "ADD TITLE": title => {
+        State.action("SET TITLE", title);
+
+        State.action("CLOSE MODAL");
+
+        __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.set(State.song.slug);
     },
 
     "CLOSE MODAL": () => {
@@ -1144,7 +1163,7 @@ module.exports = "Hatebreeders\r\n\r\n---\r\n\r\nWhoa oh oh\r\nNo\r\nWhoa oh oh\
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__icons__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__icons__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__header__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modal__ = __webpack_require__(26);
 
@@ -1160,7 +1179,7 @@ module.exports = "Hatebreeders\r\n\r\n---\r\n\r\nWhoa oh oh\r\nNo\r\nWhoa oh oh\
     view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", vnode.attrs.header ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_4__header__["a" /* default */]) : null, vnode.children, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
         href: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].githubHref,
         class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].github
-    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__icons__["a" /* default */], { icon: "github" })), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].modal ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_5__modal__["a" /* default */], "modal") : null)
+    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__icons__["a" /* default */], { icon: "github" })), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].modal ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_5__modal__["a" /* default */]) : null)
 });
 
 /***/ }),
@@ -1168,10 +1187,13 @@ module.exports = "Hatebreeders\r\n\r\n---\r\n\r\nWhoa oh oh\r\nNo\r\nWhoa oh oh\
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export animDur */
 /* unused harmony export github */
 /* harmony default export */ __webpack_exports__["a"] = ({
+    "animDur": "0.3s",
     "github": "mc4a8c61ea_github"
 });
+var animDur = "0.3s";
 var github = "mc4a8c61ea_github";
 
 /***/ }),
@@ -1184,7 +1206,7 @@ var github = "mc4a8c61ea_github";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tools__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_animResolve__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_animResolve__ = __webpack_require__(2);
 
 
 
@@ -1212,21 +1234,21 @@ var github = "mc4a8c61ea_github";
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export dur */
+/* unused harmony export animDur */
 /* unused harmony export header */
 /* unused harmony export headerIn */
 /* unused harmony export headerOut */
 /* unused harmony export logo */
 /* unused harmony export title */
 /* harmony default export */ __webpack_exports__["a"] = ({
-    "dur": "0.3s",
+    "animDur": "0.3s",
     "header": "mcd924ca8c_header",
     "headerIn": "mcd924ca8c_header mcd924ca8c_headerIn",
     "headerOut": "mcd924ca8c_header mcd924ca8c_headerOut",
     "logo": "mcd924ca8c_logo",
     "title": "mc70832d4a_title mcd924ca8c_title"
 });
-var dur = "0.3s";
+var animDur = "0.3s";
 var header = "mcd924ca8c_header";
 var headerIn = "mcd924ca8c_header mcd924ca8c_headerIn";
 var headerOut = "mcd924ca8c_header mcd924ca8c_headerOut";
@@ -1243,7 +1265,7 @@ var title = "mc70832d4a_title mcd924ca8c_title";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tooltip_css__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons__ = __webpack_require__(3);
 
 
 
@@ -1361,6 +1383,7 @@ var title = "mc70832d4a_title mcd924ca8c_title";
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export animDur */
 /* unused harmony export tools */
 /* unused harmony export toolsHide */
 /* unused harmony export setting */
@@ -1389,6 +1412,7 @@ var title = "mc70832d4a_title mcd924ca8c_title";
 /* unused harmony export cols */
 /* unused harmony export edit */
 /* harmony default export */ __webpack_exports__["a"] = ({
+    "animDur": "0.3s",
     "tools": "mc01651421_tools",
     "toolsHide": "mc01651421_tools mc01651421_toolsHide",
     "setting": "mc01651421_setting",
@@ -1417,6 +1441,7 @@ var title = "mc70832d4a_title mcd924ca8c_title";
     "cols": "mc01651421_cols",
     "edit": "mc70832d4a_button mc01651421_button mc01651421_edit"
 });
+var animDur = "0.3s";
 var tools = "mc01651421_tools";
 var toolsHide = "mc01651421_tools mc01651421_toolsHide";
 var setting = "mc01651421_setting";
@@ -1482,25 +1507,33 @@ var s5 = "mc6dd10fbf_tooltip mc6dd10fbf_s5";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_animResolve__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_animResolve__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_css__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__title__ = __webpack_require__(28);
 
 
 
 
 
 
+
+
+const modals = { title: __WEBPACK_IMPORTED_MODULE_4__title__["a" /* default */] };
+const hasClose = [];
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    onbeforeremove: vnode => Object(__WEBPACK_IMPORTED_MODULE_2__lib_animResolve__["a" /* default */])(vnode.dom, __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].modalOut),
-    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", {
-        class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].modalIn
-    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].content }, vnode.children, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", {
+    onbeforeremove: vnode => Promise.all([Object(__WEBPACK_IMPORTED_MODULE_2__lib_animResolve__["a" /* default */])(vnode.dom, __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].modalOut), Object(__WEBPACK_IMPORTED_MODULE_2__lib_animResolve__["a" /* default */])(vnode.state.contentVnode.dom, __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].contentOut)]),
+    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].modalIn }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", {
+        class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].contentIn,
+        oncreate: contentVnode => {
+            vnode.state.contentVnode = contentVnode;
+        }
+    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()(modals[__WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].modal]), hasClose.indexOf(__WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].modal) > -1 ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
         class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].close,
         onclick: () => {
             __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("CLOSE MODAL");
         }
-    }, "🗙")))
+    }, "🗙") : null))
 });
 
 /***/ }),
@@ -1508,22 +1541,31 @@ var s5 = "mc6dd10fbf_tooltip mc6dd10fbf_s5";
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export animDur */
 /* unused harmony export modal */
 /* unused harmony export modalIn */
 /* unused harmony export modalOut */
 /* unused harmony export content */
+/* unused harmony export contentIn */
+/* unused harmony export contentOut */
 /* unused harmony export close */
 /* harmony default export */ __webpack_exports__["a"] = ({
+    "animDur": "0.3s",
     "modal": "mc744a0be3_modal",
     "modalIn": "mc744a0be3_modal mc744a0be3_modalIn",
     "modalOut": "mc744a0be3_modal mc744a0be3_modalOut",
     "content": "mc744a0be3_content",
+    "contentIn": "mc744a0be3_content mc744a0be3_contentIn",
+    "contentOut": "mc744a0be3_content mc744a0be3_contentOut",
     "close": "mc744a0be3_close"
 });
+var animDur = "0.3s";
 var modal = "mc744a0be3_modal";
 var modalIn = "mc744a0be3_modal mc744a0be3_modalIn";
 var modalOut = "mc744a0be3_modal mc744a0be3_modalOut";
 var content = "mc744a0be3_content";
+var contentIn = "mc744a0be3_content mc744a0be3_contentIn";
+var contentOut = "mc744a0be3_content mc744a0be3_contentOut";
 var close = "mc744a0be3_close";
 
 /***/ }),
@@ -1534,8 +1576,74 @@ var close = "mc744a0be3_close";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__edit__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__title_css__ = __webpack_require__(29);
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("input", {
+        value: vnode.state.value,
+        placeholder: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song.title,
+        class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].input,
+        oninput: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.withAttr("value", v => {
+            vnode.state.value = v;
+        }),
+        oncreate: inputVnode => {
+            inputVnode.dom.focus();
+        }
+    }), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].buttons }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
+        class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].add,
+        onclick: () => {
+            if (!vnode.state.value) {
+                return;
+            }
+
+            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("ADD TITLE", vnode.state.value);
+        }
+    }, "add title"), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
+        class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].cancel,
+        onclick: () => {
+            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("CLOSE MODAL");
+        }
+    }, "cancel"))]
+});
+
+/***/ }),
+/* 29 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export label */
+/* unused harmony export input */
+/* unused harmony export buttons */
+/* unused harmony export add */
+/* unused harmony export cancel */
+/* harmony default export */ __webpack_exports__["a"] = ({
+    "label": "mc0ec499cf_label",
+    "input": "mc0ec499cf_input",
+    "buttons": "mc0ec499cf_buttons",
+    "add": "mc70832d4a_button mc0ec499cf_add",
+    "cancel": "mc70832d4a_button mc0ec499cf_cancel"
+});
+var label = "mc0ec499cf_label";
+var input = "mc0ec499cf_input";
+var buttons = "mc0ec499cf_buttons";
+var add = "mc70832d4a_button mc0ec499cf_add";
+var cancel = "mc70832d4a_button mc0ec499cf_cancel";
+
+/***/ }),
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__edit__ = __webpack_require__(32);
 
 
 
@@ -1570,7 +1678,7 @@ function addBr(text) {
 });
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1608,14 +1716,16 @@ var s4 = "mce5e74019_line mce5e74019_s4";
 var s5 = "mce5e74019_line mce5e74019_s5";
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_css__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_css__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_animResolve__ = __webpack_require__(2);
+
 
 
 
@@ -1623,7 +1733,8 @@ var s5 = "mce5e74019_line mce5e74019_s5";
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    view: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__edit_css__["a" /* default */].edit }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
+    onbeforeremove: vnode => Object(__WEBPACK_IMPORTED_MODULE_3__lib_animResolve__["a" /* default */])(vnode.dom, __WEBPACK_IMPORTED_MODULE_2__edit_css__["a" /* default */].editOut),
+    view: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__edit_css__["a" /* default */].editIn }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
         class: __WEBPACK_IMPORTED_MODULE_2__edit_css__["a" /* default */].textarea,
         value: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song.lyricString,
         oninput: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.withAttr("value", v => {
@@ -1634,21 +1745,30 @@ var s5 = "mce5e74019_line mce5e74019_s5";
 });
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export animDur */
 /* unused harmony export edit */
+/* unused harmony export editIn */
+/* unused harmony export editOut */
 /* unused harmony export textarea */
 /* harmony default export */ __webpack_exports__["a"] = ({
+    "animDur": "0.3s",
     "edit": "mc68640514_edit",
+    "editIn": "mc68640514_edit mc68640514_editIn",
+    "editOut": "mc68640514_edit mc68640514_editOut",
     "textarea": "mc68640514_textarea"
 });
+var animDur = "0.3s";
 var edit = "mc68640514_edit";
+var editIn = "mc68640514_edit mc68640514_editIn";
+var editOut = "mc68640514_edit mc68640514_editOut";
 var textarea = "mc68640514_textarea";
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1664,14 +1784,14 @@ var textarea = "mc68640514_textarea";
 });
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(36);
 
 
 
@@ -1721,11 +1841,12 @@ var textarea = "mc68640514_textarea";
 });
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export fontFamily */
+/* unused harmony export animDur */
 /* unused harmony export home */
 /* unused harmony export dash */
 /* unused harmony export textarea */
@@ -1736,6 +1857,7 @@ var textarea = "mc68640514_textarea";
 /* unused harmony export title */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "fontFamily": "Raleway",
+    "animDur": "0.3s",
     "home": "mc63387611_home",
     "dash": "mc63387611_dash",
     "textarea": "mc63387611_textarea",
@@ -1746,6 +1868,7 @@ var textarea = "mc68640514_textarea";
     "title": "mc70832d4a_title mc63387611_title"
 });
 var fontFamily = "Raleway";
+var animDur = "0.3s";
 var home = "mc63387611_home";
 var dash = "mc63387611_dash";
 var textarea = "mc63387611_textarea";
