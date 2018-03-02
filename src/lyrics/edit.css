@@ -1,7 +1,35 @@
+@value animDur from "../index.css";
+
 .edit {
     flex: 1 1 30vw;
 
     background: #fff;
+}
+
+.editIn {
+    composes: edit;
+
+    transform: translateX(100%);
+    animation: forwards animDur in;
+}
+
+@keyframes in {
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.editOut {
+    composes: edit;
+
+    transform: translateX(0);
+    animation: forwards animDur out;
+}
+
+@keyframes out {
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 .textarea {

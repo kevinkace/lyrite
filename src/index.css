@@ -1,6 +1,7 @@
 @value * as colors from "./palette.css";
 
 @value fontFamily: Raleway;
+@value animDur: 0.3s;
 
 html {
     font: 300 1em/1.5 Raleway, sans-serif;

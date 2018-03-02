@@ -3,10 +3,13 @@ import m from "mithril";
 import state from "../state";
 
 import css from "./edit.css";
+import animResolve from "../lib/animResolve";
 
 export default {
+    onbeforeremove : (vnode) =>
+        animResolve(vnode.dom, css.editOut),
     view : () =>
-        m("div", { class : css.edit },
+        m("div", { class : css.editIn },
             m("textarea", {
                 class   : css.textarea,
                 value   : state.song.lyricString,

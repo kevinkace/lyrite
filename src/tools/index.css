@@ -1,4 +1,5 @@
 @value * as colors from "../palette.css";
+@value animDur from "../index.css";
 
 .tools {
     position: absolute;
@@ -140,7 +141,7 @@
     left: 50%;
     width: 6em;
 
-    transition: opacity 0.4s;
+    transition: opacity animDur;
 
     transform: translateX(-50%) rotate(-90deg) translateX(-50%);
 }

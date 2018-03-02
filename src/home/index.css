@@ -1,5 +1,5 @@
 @value * as colors from "../palette.css";
-@value fontFamily from "../index.css";
+@value fontFamily, animDur from "../index.css";
 
 .home {
     padding: 1em 0.5em 0;
@@ -44,7 +44,7 @@
     height: 0;
     opacity: 0;
 
-    animation: forwards 0.4s in;
+    animation: forwards animDur in;
 }
 
 @keyframes in {
