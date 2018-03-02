@@ -51,6 +51,11 @@ export default (State) => ({
         return song.slug;
     },
 
+    "SET TITLE" : (title) => {
+        State.song.title = title;
+        State.song.slug = slugify(State.song.title);
+    },
+
     "LOAD DEFAULT SONGS" : () => {
         songs.forEach((song) => {
             State.action("LOAD SONG", song);

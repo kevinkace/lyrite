@@ -12,7 +12,7 @@
     align-items: flex-start;
     justify-content: center;
 
-    background: #6666;
+    background: colors.modalBg;
 }
 
 .modalIn {
@@ -46,14 +46,19 @@
 }
 
 .content {
-    padding: 0.3em 1em;
+    padding: 1.4em;
     margin-top: 3em;
     min-width: 20vh;
 
-    border-radius: 1em;
+    border-radius: 0.2em;
 
     color: colors.bg;
-    background: #fff;
+    box-shadow: 0 2px 143px 23px #0009;
+    background: colors.modal;
+}
+
+.contentIn {
+    composes: content;
 
     opacity: 0;
     transform: scale(0.5);
@@ -67,6 +72,16 @@
         transform: scale(1);
     }
 }
+
+.contentOut {
+    composes: content;
+
+    opacity: 1;
+    transform: scale(1);
+
+    animation: forwards 0.6s out2;
+}
+
 @keyframes out2 {
     100% {
         opacity: 0;
@@ -75,5 +90,15 @@
 }
 
 .close {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    padding: 0;
+
+    border: none;
+
+    line-height: 1;
+    background: transparent;
+
     cursor: pointer;
 }
