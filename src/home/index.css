@@ -3,7 +3,41 @@
 
 .home {
     padding: 1em 0.5em 0;
+}
 
+.logoAndType {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5vh 0 1.3em;
+
+    svg {
+        display: inline-block;
+        width: auto;
+        height: 5em;
+
+        fill: colors.cta;
+    }
+}
+
+.title {
+    composes: title from "../index.css";
+
+    font-size: 3em;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+}
+
+.subTitle {
+    display: block;
+
+    opacity: 0.7;
+    text-transform: none;
+    letter-spacing: 0;
+    font: normal 1em/1 fontFamily;
+}
+
+.center {
     text-align: center;
 }
 
@@ -72,28 +106,27 @@
         margin-bottom: 0.2em;
         border-bottom: solid 1px #fff5;
 
-        color: colors.cta;
-        font: bold 2em/1 fontFamily;
+        color: colors.ctaLight;
+        font: bold 1.25em/1 fontFamily;
     }
+
     a {
         display: block;
 
         font-family: "Slabo 27px";
         text-transform: uppercase;
         text-decoration: none;
-        font-size: 1.25em;
+        font-size: 1.35em;
 
         &:hover {
             text-decoration: underline;
         }
+
+        span {
+            display: inline-block;
+            padding-left: 0.3em;
+            opacity: 0.6;
+            font-size: 0.8em;
+        }
     }
-}
-
-.title {
-    composes: title from "../index.css";
-
-    margin: 1em 0 0.4em;
-    font-size: 3em;
-    font-weight: bold;
-    letter-spacing: 0.08em;
 }

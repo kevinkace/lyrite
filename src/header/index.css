@@ -52,27 +52,11 @@
     align-items: center;
 
     a {
-        position: relative;
         display: block;
-        width: 1em;
-        height: 1.6em;
-        transform: skew(0, 10deg);
+        padding-top: 0.2em;
 
-        text-indent: 9999px;
-        white-space: nowrap;
-
-        background: colors.cta;
-
-        &:after {
-            content: "";
-
-            position: absolute;
-            top: 98%;
-            right: -0.5em;
-            left: 0;
-            height: 0.2em;
-
-            background: colors.cta;
+        svg {
+            fill: colors.cta;
         }
     }
 }

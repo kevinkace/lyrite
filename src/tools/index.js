@@ -4,7 +4,8 @@ import state from "../state";
 
 import css from "./index.css";
 import tooltipCss from "./tooltip.css";
-import icons from "../icons";
+
+import edit from "../icons/quill.svg";
 
 export default {
     view : (vnode) =>
@@ -21,7 +22,7 @@ export default {
                         }
                     }
                 },
-                m(icons, { icon : "edit" })
+                m.trust(edit)
             ),
 
             // Style buttons

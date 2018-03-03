@@ -7,7 +7,13 @@ const titleSplit = "\n\n---\n\n";
 const songs = [
     require("../songs/smells-like-teen-spirit.txt"),
     require("../songs/judy-is-a-punk.txt"),
-    require("../songs/hatebreeders.txt")
+    require("../songs/hatebreeders.txt"),
+    require("../songs/gods-plan.txt"),
+    require("../songs/perfect.txt"),
+    require("../songs/finesse-remix.txt"),
+    require("../songs/son-of-a-gun.txt"),
+    require("../songs/sparks.txt"),
+    require("../songs/black-hole-sun.txt")
 ];
 
 function parseLyricString(lyricString) {
@@ -21,8 +27,8 @@ function parseLyricString(lyricString) {
 
 export default (State) => ({
     "LOAD SONG" : (songString) => {
-        const parts = eol.lf(songString).split(titleSplit);
         const song = {};
+        const parts = eol.lf(songString).split(titleSplit);
 
         if(parts.length > 2) {
             State.error = "loading a incorrectly formatted song";
@@ -33,20 +39,25 @@ export default (State) => ({
         State.songs = State.songs || [];
         State.songs.push(song);
 
+        // has a title/author
         if(parts.length === 2) {
-            song.title = parts[0];
-            song.lyrics = parts[1];
+            song.title       = parts[0];
             song.lyricString = parts[1];
-        } else {
-            song.untitled = true;
-            song.title = `untitled ${State.songs.length}`;
-            song.lyrics = parts[0];
+
+            const titleParts = song.title.split("\n");
+
+            if(titleParts.length) {
+                song.title = titleParts[0];
+                song.artist = titleParts[1];
+            }
+        } else { // Just lyrics
+            song.untitled    = true;
+            song.title       = `untitled ${State.songs.length}`;
             song.lyricString = parts[0];
         }
 
+        song.lyrics = parseLyricString(song.lyricString);
         song.slug = slugify(song.title);
-
-        song.lyrics = parseLyricString(song.lyrics);
 
         return song.slug;
     },

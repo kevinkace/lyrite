@@ -3,9 +3,10 @@ import m from "mithril";
 import state from "../state";
 
 import css from "./index.css";
-import icons from "../icons";
 import header from "../header";
 import modal from "../modal";
+
+import ghLogo from "../icons/github.svg";
 
 export default {
     view : (vnode) =>
@@ -16,7 +17,7 @@ export default {
                     href : state.githubHref,
                     class : css.github
                 },
-                m(icons, { icon : "github" })
+                m.trust(ghLogo)
             ),
 
             state.modal ?

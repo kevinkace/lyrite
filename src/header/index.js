@@ -5,6 +5,8 @@ import state from "../state";
 import css from "./index.css";
 import tools from "../tools";
 
+import logo from "../icons/lyrite-logo.svg";
+
 import animResolve from "../lib/animResolve";
 
 export default {
@@ -17,12 +19,14 @@ export default {
     view : () =>
         m("div", { class : css.headerIn },
             m("h1", { class : css.title }, state.song ? state.song.title : state.appName),
+
             m("div", { class : css.logo },
                 m("a", {
-                    href : "/",
+                    href     : "/",
                     oncreate : m.route.link,
-                }, "logo")
+                }, m.trust(logo))
             ),
+
             state.song ? m(tools) : null
         )
 };

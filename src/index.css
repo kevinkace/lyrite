@@ -37,6 +37,10 @@ a {
     color: #fff;
 }
 
+svg {
+    display: block;
+}
+
 :global(#mount) {
     display: flex;
     flex-flow: column nowrap;
