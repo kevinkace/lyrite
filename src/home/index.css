@@ -15,6 +15,7 @@
         display: inline-block;
         width: auto;
         height: 5em;
+        padding-bottom: 0.2em;
 
         fill: colors.cta;
     }
