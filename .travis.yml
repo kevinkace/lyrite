@@ -13,4 +13,4 @@ deploy:
   on:
     branch: master
   local-dir: dist
-  fqdn: www.lyrite.com
+  fqdn: lyrite.com
