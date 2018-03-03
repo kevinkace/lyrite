@@ -3,7 +3,7 @@ node_js:
 - node
 
 install:
-npm i
+- npm install
 
 script:
-npm build
+- npm run build
