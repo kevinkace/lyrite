@@ -8,12 +8,10 @@
 
 .lyrics {
     padding: 0.5em;
-
     column-gap: 1em;
-
     overflow-y: auto;
-
     transform-origin: 0 0;
+
     transition: transform animDur;
 }
 
