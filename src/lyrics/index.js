@@ -17,7 +17,7 @@ export default {
     },
     view : () => m("div", { class : css.lyredit },
         m("div", {
-                class : css.lyrics,
+                class : state.edit ? css.lyricsEdit : css.lyrics,
                 style : {
                     fontSize    : `${state.font.size}em`,
                     columnCount : state.cols.count

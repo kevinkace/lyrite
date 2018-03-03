@@ -1,17 +1,26 @@
 @value * as colors from "../palette.css";
+@value animDur from "../index.css";
 
 .lyredit {
-    display: flex;
-    flex-direction: row;
+    position: relative;
+    height: 95vh;
 }
 
 .lyrics {
-    flex: 1 0 70vw;
     padding: 0.5em;
 
     column-gap: 1em;
 
     overflow-y: auto;
+
+    transform-origin: 0 0;
+    transition: transform animDur;
+}
+
+.lyricsEdit {
+    composes: lyrics;
+
+    transform: scale(0.7);
 }
 
 .line {

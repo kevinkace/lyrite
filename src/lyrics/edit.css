@@ -1,7 +1,11 @@
 @value animDur from "../index.css";
 
 .edit {
-    flex: 1 1 30vw;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30vw;
 
     background: #fff;
 }

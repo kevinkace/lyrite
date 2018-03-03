@@ -3,7 +3,11 @@
 
 .header {
     position: relative;
-    padding: 0.4em 0;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
 
     background: colors.header;
 }
