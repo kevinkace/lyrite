@@ -36,6 +36,9 @@ module.exports = {
         }, {
             test   : /\.(txt|svg)$/,
             use: "raw-loader"
+        }, {
+            test   : /\.ico$/,
+            loader : "file-loader?name=[name].[ext]"
         }]
     },
     plugins : [
