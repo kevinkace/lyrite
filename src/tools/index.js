@@ -68,7 +68,7 @@ export default {
                     m("input", {
                         type  : "range",
                         min   : 0.7,
-                        max   : 2,
+                        max   : 3,
                         step  : 0.05,
 
                         class : vnode.state.range ? css.range : css.rangeHide,

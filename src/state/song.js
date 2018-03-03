@@ -36,7 +36,9 @@ export default (State) => ({
             return;
         }
 
+        State.untitled = State.untitled || 0;
         State.songs = State.songs || [];
+
         State.songs.push(song);
 
         // has a title/author
@@ -52,7 +54,7 @@ export default (State) => ({
             }
         } else { // Just lyrics
             song.untitled    = true;
-            song.title       = `untitled ${State.songs.length}`;
+            song.title       = `untitled ${++State.untitled}`;
             song.lyricString = parts[0];
         }
 
