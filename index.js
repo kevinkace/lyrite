@@ -689,7 +689,9 @@ function parseLyricString(lyricString) {
             return;
         }
 
+        State.untitled = State.untitled || 0;
         State.songs = State.songs || [];
+
         State.songs.push(song);
 
         // has a title/author
@@ -706,7 +708,7 @@ function parseLyricString(lyricString) {
         } else {
             // Just lyrics
             song.untitled = true;
-            song.title = `untitled ${State.songs.length}`;
+            song.title = `untitled ${++State.untitled}`;
             song.lyricString = parts[0];
         }
 
@@ -1354,7 +1356,7 @@ var title = "mc70832d4a_title mcd924ca8c_title";
     }, parseFloat(__WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].font.size, 10).toFixed(2)), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("input", {
         type: "range",
         min: 0.7,
-        max: 2,
+        max: 3,
         step: 0.05,
 
         class: vnode.state.range ? __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].range : __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].rangeHide,
