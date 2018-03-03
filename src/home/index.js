@@ -37,24 +37,24 @@ export default {
                             vnode.state.loadable = v.length;
                         })
                     })
-                )
+                ),
+
+                vnode.state.loadable ?
+                    m("div", { class : css.btnWrap },
+                        m("button", {
+                            class : css.loadBtn,
+                            onclick : () => {
+                                let slug = state.action("LOAD SONG", vnode.state.lyricsValue);
+
+                                delete vnode.state.textarea;
+                                delete vnode.state.load;
+
+                                return m.route.set(slug);
+                            }
+                        }, "load song")
+                    ) :
+                    null
             ),
-
-            vnode.state.loadable ?
-                m("div", { class : css.btnWrap },
-                    m("button", {
-                        class : css.loadBtn,
-                        onclick : () => {
-                            let slug = state.action("LOAD SONG", vnode.state.lyricsValue);
-
-                            delete vnode.state.textarea;
-                            delete vnode.state.load;
-
-                            return m.route.set(slug);
-                        }
-                    }, "load song")
-                ) :
-                null,
 
             // loaded songs list
             m("div", { class : css.list },
