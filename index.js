@@ -78,7 +78,7 @@ module.exports = m;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tools__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__song__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal__ = __webpack_require__(24);
 
 
 
@@ -155,29 +155,9 @@ const MAX_TIMEOUT = 1000;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
-
-
-const icons = {
-    edit: {
-        title: "Edit",
-        viewBox: "0 0 32 32",
-        paths: ["M0 32c4-12 14.469-32 32-32-8.219 6.594-12 22-18 22s-6 0-6 0l-6 10h-2z"]
-    },
-    github: {
-        title: "GitHub",
-        viewBox: "0 0 1024 1024",
-        paths: ["M512.008 12.642c-282.738 0-512.008 229.218-512.008 511.998 0 226.214 146.704 418.132 350.136 485.836 25.586 4.738 34.992-11.11 34.992-24.632 0-12.204-0.48-52.542-0.696-95.324-142.448 30.976-172.504-60.41-172.504-60.41-23.282-59.176-56.848-74.916-56.848-74.916-46.452-31.778 3.51-31.124 3.51-31.124 51.4 3.61 78.476 52.766 78.476 52.766 45.672 78.27 119.776 55.64 149.004 42.558 4.588-33.086 17.852-55.68 32.506-68.464-113.73-12.942-233.276-56.85-233.276-253.032 0-55.898 20.004-101.574 52.76-137.428-5.316-12.9-22.854-64.972 4.952-135.5 0 0 43.006-13.752 140.84 52.49 40.836-11.348 84.636-17.036 128.154-17.234 43.502 0.198 87.336 5.886 128.256 17.234 97.734-66.244 140.656-52.49 140.656-52.49 27.872 70.528 10.35 122.6 5.036 135.5 32.82 35.856 52.694 81.532 52.694 137.428 0 196.654-119.778 239.95-233.79 252.624 18.364 15.89 34.724 47.046 34.724 94.812 0 68.508-0.596 123.644-0.596 140.508 0 13.628 9.222 29.594 35.172 24.566 203.322-67.776 349.842-259.626 349.842-485.768 0-282.78-229.234-511.998-511.992-511.998z"]
-    }
-};
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("svg", { viewBox: icons[vnode.attrs.icon].viewBox }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("title", icons[vnode.attrs.icon].title), icons[vnode.attrs.icon].paths.map(d => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("path", { d })))
-});
+module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n    <title>lyrite-logo-vector-01-01</title>\n\n    <path class=\"cls-2\" d=\"M28.12,28.15c-6.53-1.22-.9-.16-7.15-1.36V4.35L7,2V26.92L28.12,30.5C28.11,28.84,28.1,29.72,28.12,28.15Z\"/>\n</svg>\n"
 
 /***/ }),
 /* 4 */
@@ -248,10 +228,10 @@ var title = "mc70832d4a_title";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__layout__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lyrics__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__error__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__layout__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lyrics__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__error__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home__ = __webpack_require__(43);
 
 
 
@@ -685,7 +665,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 const titleSplit = "\n\n---\n\n";
 
-const songs = [__webpack_require__(15), __webpack_require__(16), __webpack_require__(17)];
+const songs = [__webpack_require__(15), __webpack_require__(16), __webpack_require__(17), __webpack_require__(18), __webpack_require__(19), __webpack_require__(20), __webpack_require__(21), __webpack_require__(22), __webpack_require__(23)];
 
 function parseLyricString(lyricString) {
     return lyricString.split("\n\n").map(text => ({
@@ -696,8 +676,8 @@ function parseLyricString(lyricString) {
 
 /* harmony default export */ __webpack_exports__["a"] = (State => ({
     "LOAD SONG": songString => {
-        const parts = __WEBPACK_IMPORTED_MODULE_0_eol___default.a.lf(songString).split(titleSplit);
         const song = {};
+        const parts = __WEBPACK_IMPORTED_MODULE_0_eol___default.a.lf(songString).split(titleSplit);
 
         if (parts.length > 2) {
             State.error = "loading a incorrectly formatted song";
@@ -708,20 +688,26 @@ function parseLyricString(lyricString) {
         State.songs = State.songs || [];
         State.songs.push(song);
 
+        // has a title/author
         if (parts.length === 2) {
             song.title = parts[0];
-            song.lyrics = parts[1];
             song.lyricString = parts[1];
+
+            const titleParts = song.title.split("\n");
+
+            if (titleParts.length) {
+                song.title = titleParts[0];
+                song.artist = titleParts[1];
+            }
         } else {
+            // Just lyrics
             song.untitled = true;
             song.title = `untitled ${State.songs.length}`;
-            song.lyrics = parts[0];
             song.lyricString = parts[0];
         }
 
+        song.lyrics = parseLyricString(song.lyricString);
         song.slug = __WEBPACK_IMPORTED_MODULE_2_slugify___default()(song.title);
-
-        song.lyrics = parseLyricString(song.lyrics);
 
         return song.slug;
     },
@@ -1107,22 +1093,58 @@ module.exports = hash;
 /* 15 */
 /***/ (function(module, exports) {
 
-module.exports = "Smells Like Teen Spirit\n\n---\n\nLoad up on guns, Bring your friends\nIt's fun to lose and to pretend\n\nShe's overboard, self assured\nOh no I know, a dirty word\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido, yeah\n\nHey, yay\n\nI'm worse at what I do best\nAnd for this gift, I feel blessed\n\nOur little group has always been\nAnd always will until the end\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido, yeah\n\nHey, yay\n\nAnd I forget just why I taste\nOh yeah, I guess it makes me smile\n\nI found it hard, it was hard to find\nOh well, whatever, nevermind\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido\n\nA denial, A denial, A denial, A denial, A denial\nA denial, A denial, A denial, A denial\n"
+module.exports = "Smells Like Teen Spirit\nNirvana\n\n---\n\nLoad up on guns, Bring your friends\nIt's fun to lose and to pretend\n\nShe's overboard, self assured\nOh no I know, a dirty word\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido, yeah\n\nHey, yay\n\nI'm worse at what I do best\nAnd for this gift, I feel blessed\n\nOur little group has always been\nAnd always will until the end\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido, yeah\n\nHey, yay\n\nAnd I forget just why I taste\nOh yeah, I guess it makes me smile\n\nI found it hard, it was hard to find\nOh well, whatever, nevermind\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido\n\nA denial, A denial, A denial, A denial, A denial\nA denial, A denial, A denial, A denial\n"
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = "Judy is a Punk\n\n---\n\nJackie is a punk\nJudy is a runt\nThey both went down to Berlin, joined the Ice Capades\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n\nSecond verse, same as the first\n\nJackie is a punk\nJudy is a runt\nThey both went down to Berlin, joined the Ice Capades\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n\nThird verse, different from the first\n\nJackie is a punk\nJudy is a runt\nThey both went down to San Frisco, joined the SLA\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n"
+module.exports = "Judy is a Punk\nThe Ramones\n\n---\n\nJackie is a punk\nJudy is a runt\nThey both went down to Berlin, joined the Ice Capades\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n\nSecond verse, same as the first\n\nJackie is a punk\nJudy is a runt\nThey both went down to Berlin, joined the Ice Capades\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n\nThird verse, different from the first\n\nJackie is a punk\nJudy is a runt\nThey both went down to San Frisco, joined the SLA\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n"
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = "Hatebreeders\n\n---\n\nWhoa oh oh\nNo\nWhoa oh oh\nHate breeders\nWhoa oh oh\nWhoa oh oh\nHate breeders\nWhoa oh oh\n\nBrain invasion goin' on in everyone\nYou feel the things that make your world turn angry red\nBecause the next time you can't take it\nNext thought murderlation\nAnd hate is all you want to know\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nMurder one inborn into your every cell\nIt's in your blood and you can't shake it\nBecause you were bred to take it\nNext stop annihilation\nThey bred the hate right in your bones\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nBecause you were bred to take it\nNext stop annihilation\nThey bred the hate right in your fuckin' bones\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nHate is your mistress and you shall not want\nYou shall not want because your breed is strong\nBecause when they try to break you\nNew world desolation\nAnd strength is all you gotta know\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nAnd all you know\nHatebreeders\nWhoa oh oh\nAnd all you know\nHatebreeders\nWhoa oh oh\n"
+module.exports = "Hatebreeders\nThe Ramones\n\n---\n\nWhoa oh oh\nNo\nWhoa oh oh\nHate breeders\nWhoa oh oh\nWhoa oh oh\nHate breeders\nWhoa oh oh\n\nBrain invasion goin' on in everyone\nYou feel the things that make your world turn angry red\nBecause the next time you can't take it\nNext thought murderlation\nAnd hate is all you want to know\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nMurder one inborn into your every cell\nIt's in your blood and you can't shake it\nBecause you were bred to take it\nNext stop annihilation\nThey bred the hate right in your bones\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nBecause you were bred to take it\nNext stop annihilation\nThey bred the hate right in your fuckin' bones\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nHate is your mistress and you shall not want\nYou shall not want because your breed is strong\nBecause when they try to break you\nNew world desolation\nAnd strength is all you gotta know\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nAnd all you know\nHatebreeders\nWhoa oh oh\nAnd all you know\nHatebreeders\nWhoa oh oh\n"
 
 /***/ }),
 /* 18 */
+/***/ (function(module, exports) {
+
+module.exports = "God's plan\nDrake\n\n---\n\nYeah they wishin' and wishin' and wishin' and wishin'\nThey wishin' on me, yuh\n\nI been movin' calm, don't start no trouble with me\nTryna keep it peaceful is a struggle for me\nDon’t pull up at 6 AM to cuddle with me\nYou know how I like it when you lovin' on me\nI don’t wanna die for them to miss me\nYes I see the things that they wishin' on me\nHope I got some brothers that outlive me\nThey gon' tell the story, shit was different with me\n\nGod's plan, God's plan\nI hold back, sometimes I won't, yuh\nI feel good, sometimes I don't, ay, don't\nI finessed down Weston Road, ay, 'nessed\nMight go down a G.O.D., yeah, wait\nI go hard on Southside G, yuh, wait\nI make sure that north-side eat\nAnd still\n\nBad things\nIt's a lot of bad things\nThat they wishin' and wishin' and wishin' and wishin'\nThey wishin' on me\nBad things\nIt's a lot of bad things\nThat they wishin' and wishin' and wishin' and wishin'\nThey wishin' on me\nYuh, ay, ay\n\nShe say, \"Do you love me?\" I tell her, \"Only partly\"\nI only love my bed and my momma, I'm sorry\nFifty dub, I even got it tatted on me\n81, they'll bring the crashers to the party\nAnd you know me\nTurn the O2 into the O3, dog\nWithout 40, Oli', there would be no me\nImagine if I never met the broskies\n\nGod's plan, God's plan\nI can't do this on my own, ay, no, ay\nSomeone watchin' this shit close, yep, close\nI've been me since Scarlett Road, ay, road, ay\nMight go down as G.O.D., yeah, wait\nI go hard on Southside G, ay, wait\nI make sure that north-side eat, yuh\nAnd still\n\nBad things\nIt's a lot of bad things\nThat they wishin' and wishin' and wishin' and wishin'\nThey wishin' on me\nYeah, yeah\nBad things\nIt's a lot of bad things\nThat they wishin' and wishin' and wishin' and wishin'\nThey wishin' on me\nYeah"
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = "Perfect\nEd Sheeran\n\n---\n\nI found a love for me\nDarling just dive right in\nAnd follow my lead\nWell I found a girl beautiful and sweet\nI never knew you were the someone waiting for me\n'Cause we were just kids when we fell in love\n\nNot knowing what it was\nI will not give you up this time\nBut darling, just kiss me slow, your heart is all I own\nAnd in your eyes you're holding mine\n\nBaby, I'm dancing in the dark with you between my arms\nBarefoot on the grass, listening to our favorite song\nWhen you said you looked a mess, I whispered underneath my breath\nBut you heard it, darling, you look perfect tonight\n\nWell I found a woman, stronger than anyone I know\nShe shares my dreams, I hope that someday I'll share her home\nI found a love, to carry more than just my secrets\nTo carry love, to carry children of our own\nWe are still kids, but we're so in love\nFighting against all odds\nI know we'll be alright this time\nDarling, just hold my hand\nBe my girl, I'll be your man\nI see my future in your eyes\n\nBaby, I'm dancing in the dark, with you between my arms\nBarefoot on the grass, listening to our favorite song\nWhen I saw you in that dress, looking so beautiful\nI don't deserve this, darling, you look perfect tonight\n\nBaby, I'm dancing in the dark, with you between my arms\nBarefoot on the grass, listening to our favorite song\nI have faith in what I see\nNow I know I have met an angel in person\nAnd she looks perfect\nI don't deserve this\nYou look perfect tonight"
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = "Finesse remix\nBruno Mars feat Cardi B\n\n---\n\nDrop top Porsche (Porsche), Rollie on my wrist (wrist)\nDiamonds up and down my chain (aha)\nCardi B, straight stuntin', can't tell me nothin'\nBossed up and I changed the game (you see me?)\nIt's my big Bronx boogie, got all them girls shook (shook)\nMy big fat ass got all them boys hooked (hooked)\nI went from dollar bills, now we poppin' rubber bands (ha)\nBruno sang to me while I do my money dance like ayy\nFlexin' on the 'Gram like ayy\nHit the Lil' Jon, okay (okay), okay (okay)\nOh yeah, we drippin' in finesse and getting paid, ow\n\n[Verse 2: Bruno Mars]\nOoh, don't we look good together?\nThere's a reason why they watch all night long (all night long)\nYeah, I know we'll turn heads forever (forever)\nSo tonight, I'm gonna show you off\n\n[Pre-Chorus: Bruno Mars]\nWhen I'm walkin' with you\nI watch the whole room change\nBaby, that's what you do\nNo, my baby, don't play\nBlame it on my confidence\nOh, blame it on your measurements\nShut that shit down on sight\nThat's right\n\n[Chorus: Bruno Mars]\nWe out here drippin' in finesse\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it\nWe out here drippin' in finesse\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it\n\n[Verse 3: Bruno Mars]\nNow slow it down for me, baby (slow it down now)\n'Cause I love the way it feels when we grind (we grind)\nYeah, our connection's so magnetic on the floor\nNothing can stop us tonight\n\n[Pre-Chorus: Bruno Mars]\nWhen I'm walkin' with you\nI watch the whole room change\nBaby, that's what you do\nNo, my baby, don't play\nBlame it on my confidence\nOh, blame it on your measurements\nShut that shit down on sight\nThat's right\n\n[Chorus: Bruno Mars]\nWe out here drippin' in finesse\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it\nWe out here drippin' in finesse\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it\n\n[Bridge: Bruno Mars & Cardi B]\nFellas, grab your ladies if your lady fine\nTell her she the one, she the one for life (woo)\nLadies, grab your fellas and let's do this right (do this right)\nIf you're on one like me in mind (ow!)\nYeah, we got it goin' on, got it goin' on\nDon't it feel so good to be us? (ayy)\nYeah, we got it goin' on, got it goin' on (yeah)\nGirl, we got it goin' on\nYeah, we got it goin' on, got it goin' on (hey)\nDon't it feel so good to be us, ayy? (feels so good on you)\nYeah, we got it goin' on, got it goin' on\n\n[Chorus: Bruno Mars]\nWe out here drippin' in finesse (we drippin' on them)\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it\nWe out here drippin' in finesse with my baby\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it (yeah, you know we got it goin' on)\n\n[Outro: Cardi B & Bruno Mars / Both]\nYeah, we got it goin' on, got it goin' on\nDon't it feel so good to be us, ayy?\nYeah, we got it goin' on, got it goin' on\nYou know it, you know it\nYeah, we got it goin' on, got it goin' on\nGirl, we got it\nDon't it feel so good to be us, ayy?\nYeah, we got it goin' on, got it goin' on\nYou know it, you know it\n"
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+module.exports = "Son of a Gun\nNirvana\n\n---\n\nUp, up, up and down\nTurn, turn, turn around\nRound, round, round about\nAnd over again\n\nGun, gun, son of a gun\nYou are the only one\nMakes any difference to what I say\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nUp, up, up and down\nTurn, turn, turn around\nRound, round, round about\nAnd over again\n\nGun, gun, son of a gun\nYou are the only one\nMakes any difference to what I say\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nUp, up, up and down\nTurn, turn, turn around\nRound, round, round about\nAnd over again\n\nGun, gun, son of a gun\nYou are the only one\nMakes any difference to what I say\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n"
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = "Sparks\nColdplay\n\n---\n\nDid I drive you away\nI know what you'll say\nYou say, oh, sing one we know\nBut I promise you this\nI'll always look out for you\nThat's what I'll do\n\nI say oh\nI say oh\n\nMy heart is yours\nIt's you that I hold on to\nThat's what I do\nAnd I know I was wrong\nBut I won't let you down\n(Oh yeah, yeah, yes I will)\n\nI say oh\nI cry oh\n\nAnd I saw sparks\nYeah I saw sparks\nAnd I saw sparks\nYeah I saw sparks\nSing it out\n\nLa, la, la, la, oh\nLa, la, la, la, oh\nLa, la, la, la, oh\nLa, la, la, la, oh\n"
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = "Black Hole sun\nSoundgarden\n\n---\n\nIn my eyes, indisposed\nIn disguises no one knows\nHides the face, lies the snake\nThe sun in my disgrace\nBoiling heat, summer stench\n'Neath the black the sky looks dead\nCall my name through the cream\nAnd I'll hear you scream again\n\nBlack hole sun\nWon't you come\nAnd wash away the rain\nBlack hole sun\nWon't you come\nWon't you come (won't you come)\n\nStuttering, cold and damp\nSteal the warm wind tired friend\nTimes are gone for honest men\nAnd sometimes far too long for snakes\nIn my shoes, a walking sleep\nAnd my youth I pray to keep\nHeaven sent hell away\nNo one sings like you anymore\n\nBlack hole sun\nWon't you come\nAnd wash away the rain\nBlack hole sun\nWon't you come\nWon't you come\nBlack hole sun\nWon't you come\nAnd wash away the rain\nBlack hole sun\nWon't you come\nWon't you come (black hole sun, black hole sun)\n\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\n\nHang my head, drown my fear\nTill you all just disappear\n\nBlack hole sun\nWon't you come\nAnd wash away the rain\nBlack hole sun\nWon't you come\nWon't you come\nBlack hole sun\nWon't you come\nAnd wash away the rain\nBlack hole sun\nWon't you come\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come\nWon't you come\n"
+
+/***/ }),
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1155,17 +1177,19 @@ module.exports = "Hatebreeders\n\n---\n\nWhoa oh oh\nNo\nWhoa oh oh\nHate breede
 }));
 
 /***/ }),
-/* 19 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__icons__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__header__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modal__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__header__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modal__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__icons_github_svg__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__icons_github_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__icons_github_svg__);
+
 
 
 
@@ -1176,14 +1200,14 @@ module.exports = "Hatebreeders\n\n---\n\nWhoa oh oh\nNo\nWhoa oh oh\nHate breede
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", vnode.attrs.header ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_4__header__["a" /* default */]) : null, vnode.children, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
+    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", vnode.attrs.header ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__header__["a" /* default */]) : null, vnode.children, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
         href: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].githubHref,
         class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].github
-    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__icons__["a" /* default */], { icon: "github" })), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].modal ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_5__modal__["a" /* default */]) : null)
+    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_5__icons_github_svg___default.a)), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].modal ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_4__modal__["a" /* default */]) : null)
 });
 
 /***/ }),
-/* 20 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1197,16 +1221,20 @@ var animDur = "0.3s";
 var github = "mc4a8c61ea_github";
 
 /***/ }),
-/* 21 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tools__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_animResolve__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tools__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_animResolve__ = __webpack_require__(2);
+
+
 
 
 
@@ -1222,15 +1250,15 @@ var github = "mc4a8c61ea_github";
             height: vnode.dom.offsetHeight
         };
     },
-    onbeforeremove: vnode => Object(__WEBPACK_IMPORTED_MODULE_4__lib_animResolve__["a" /* default */])(vnode.dom, __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].headerOut),
+    onbeforeremove: vnode => Object(__WEBPACK_IMPORTED_MODULE_5__lib_animResolve__["a" /* default */])(vnode.dom, __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].headerOut),
     view: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].headerIn }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song ? __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song.title : __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logo }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
         href: "/",
         oncreate: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.link
-    }, "logo")), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__tools__["a" /* default */]) : null)
+    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg___default.a))), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__tools__["a" /* default */]) : null)
 });
 
 /***/ }),
-/* 22 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1256,16 +1284,18 @@ var logo = "mcd924ca8c_logo";
 var title = "mc70832d4a_title mcd924ca8c_title";
 
 /***/ }),
-/* 23 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tooltip_css__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tooltip_css__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_quill_svg__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_quill_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__icons_quill_svg__);
+
 
 
 
@@ -1287,7 +1317,7 @@ var title = "mc70832d4a_title mcd924ca8c_title";
                 __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("HIDE TOOLS");
             }
         }
-    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_4__icons__["a" /* default */], { icon: "edit" })),
+    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_4__icons_quill_svg___default.a)),
 
     // Style buttons
     __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].setting }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("label", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].label }, "styles "), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].control }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].styles.map((style, idx) => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
@@ -1379,7 +1409,7 @@ var title = "mc70832d4a_title mcd924ca8c_title";
 });
 
 /***/ }),
-/* 24 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1471,7 +1501,7 @@ var cols = "mc01651421_cols";
 var edit = "mc70832d4a_button mc01651421_button mc01651421_edit";
 
 /***/ }),
-/* 25 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1500,7 +1530,13 @@ var s4 = "mc6dd10fbf_tooltip mc6dd10fbf_s4";
 var s5 = "mc6dd10fbf_tooltip mc6dd10fbf_s5";
 
 /***/ }),
-/* 26 */
+/* 32 */
+/***/ (function(module, exports) {
+
+module.exports = "<!-- Generated by IcoMoon.io -->\n<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n<title>quill</title>\n<path d=\"M0 32c4-12 14.469-32 32-32-8.219 6.594-12 22-18 22s-6 0-6 0l-6 10h-2z\"></path>\n</svg>\n"
+
+/***/ }),
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1508,8 +1544,8 @@ var s5 = "mc6dd10fbf_tooltip mc6dd10fbf_s5";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_animResolve__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_css__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__title__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_css__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__title__ = __webpack_require__(35);
 
 
 
@@ -1537,7 +1573,7 @@ const hasClose = [];
 });
 
 /***/ }),
-/* 27 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1569,14 +1605,14 @@ var contentOut = "mc744a0be3_content mc744a0be3_contentOut";
 var close = "mc744a0be3_close";
 
 /***/ }),
-/* 28 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__title_css__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__title_css__ = __webpack_require__(36);
 
 
 
@@ -1612,7 +1648,7 @@ var close = "mc744a0be3_close";
 });
 
 /***/ }),
-/* 29 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1635,15 +1671,21 @@ var add = "mc70832d4a_button mc0ec499cf_add";
 var cancel = "mc70832d4a_button mc0ec499cf_cancel";
 
 /***/ }),
-/* 30 */
+/* 37 */
+/***/ (function(module, exports) {
+
+module.exports = "<!-- Generated by IcoMoon.io -->\n<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n<title>github</title>\n<path d=\"M16 0.395c-8.836 0-16 7.163-16 16 0 7.069 4.585 13.067 10.942 15.182 0.8 0.148 1.094-0.347 1.094-0.77 0-0.381-0.015-1.642-0.022-2.979-4.452 0.968-5.391-1.888-5.391-1.888-0.728-1.849-1.776-2.341-1.776-2.341-1.452-0.993 0.11-0.973 0.11-0.973 1.606 0.113 2.452 1.649 2.452 1.649 1.427 2.446 3.743 1.739 4.656 1.33 0.143-1.034 0.558-1.74 1.016-2.14-3.554-0.404-7.29-1.777-7.29-7.907 0-1.747 0.625-3.174 1.649-4.295-0.166-0.403-0.714-2.030 0.155-4.234 0 0 1.344-0.43 4.401 1.64 1.276-0.355 2.645-0.532 4.005-0.539 1.359 0.006 2.729 0.184 4.008 0.539 3.054-2.070 4.395-1.64 4.395-1.64 0.871 2.204 0.323 3.831 0.157 4.234 1.026 1.12 1.647 2.548 1.647 4.295 0 6.145-3.743 7.498-7.306 7.895 0.574 0.497 1.085 1.47 1.085 2.963 0 2.141-0.019 3.864-0.019 4.391 0 0.426 0.288 0.925 1.099 0.768 6.354-2.118 10.933-8.113 10.933-15.18 0-8.837-7.164-16-16-16z\"></path>\n</svg>\n"
+
+/***/ }),
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__edit__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__edit__ = __webpack_require__(40);
 
 
 
@@ -1662,7 +1704,7 @@ function addBr(text) {
         }
     },
     view: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].lyredit }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", {
-        class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].lyrics,
+        class: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].edit ? __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].lyricsEdit : __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].lyrics,
         style: {
             fontSize: `${__WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].font.size}em`,
             columnCount: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].cols.count
@@ -1678,12 +1720,14 @@ function addBr(text) {
 });
 
 /***/ }),
-/* 31 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export animDur */
 /* unused harmony export lyredit */
 /* unused harmony export lyrics */
+/* unused harmony export lyricsEdit */
 /* unused harmony export line */
 /* unused harmony export lineSelected */
 /* unused harmony export s0 */
@@ -1693,8 +1737,10 @@ function addBr(text) {
 /* unused harmony export s4 */
 /* unused harmony export s5 */
 /* harmony default export */ __webpack_exports__["a"] = ({
+    "animDur": "0.3s",
     "lyredit": "mce5e74019_lyredit",
     "lyrics": "mce5e74019_lyrics",
+    "lyricsEdit": "mce5e74019_lyrics mce5e74019_lyricsEdit",
     "line": "mce5e74019_line",
     "lineSelected": "mce5e74019_line mce5e74019_lineSelected",
     "s0": "mce5e74019_line mce5e74019_s0",
@@ -1704,8 +1750,10 @@ function addBr(text) {
     "s4": "mce5e74019_line mce5e74019_s4",
     "s5": "mce5e74019_line mce5e74019_s5"
 });
+var animDur = "0.3s";
 var lyredit = "mce5e74019_lyredit";
 var lyrics = "mce5e74019_lyrics";
+var lyricsEdit = "mce5e74019_lyrics mce5e74019_lyricsEdit";
 var line = "mce5e74019_line";
 var lineSelected = "mce5e74019_line mce5e74019_lineSelected";
 var s0 = "mce5e74019_line mce5e74019_s0";
@@ -1716,14 +1764,14 @@ var s4 = "mce5e74019_line mce5e74019_s4";
 var s5 = "mce5e74019_line mce5e74019_s5";
 
 /***/ }),
-/* 32 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_css__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_css__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_animResolve__ = __webpack_require__(2);
 
 
@@ -1745,7 +1793,7 @@ var s5 = "mce5e74019_line mce5e74019_s5";
 });
 
 /***/ }),
-/* 33 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1768,7 +1816,7 @@ var editOut = "mc68640514_edit mc68640514_editOut";
 var textarea = "mc68640514_textarea";
 
 /***/ }),
-/* 34 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1784,14 +1832,18 @@ var textarea = "mc68640514_textarea";
 });
 
 /***/ }),
-/* 35 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg__);
+
+
 
 
 
@@ -1799,10 +1851,7 @@ var textarea = "mc68640514_textarea";
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].home }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName),
-    // load button
-
-    __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].dash }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
+    view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].home }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logoAndType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg___default.a), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logoType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h2", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].subTitle }, "a tool to format lyrics"))), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].center }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].dash }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
         class: vnode.state.focused ? __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].textareaFocused : __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].textarea,
         value: vnode.state.lyricsValue,
         placeholder: vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
@@ -1827,7 +1876,7 @@ var textarea = "mc68640514_textarea";
 
             return __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.set(slug);
         }
-    }, "load song")) : null,
+    }, "load song")) : null),
 
     // loaded songs list
     __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].list }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h3", "or choose a song"), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].songs ? __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].songs.map((song, idx) => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
@@ -1837,46 +1886,55 @@ var textarea = "mc68640514_textarea";
         },
         oncreate: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.link,
         href: `/${song.slug}`
-    }, song.title)) : null))]
+    }, song.title, song.artist ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("span", " - ", song.artist) : null)) : null))]
 });
 
 /***/ }),
-/* 36 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export fontFamily */
 /* unused harmony export animDur */
 /* unused harmony export home */
+/* unused harmony export logoAndType */
+/* unused harmony export title */
+/* unused harmony export subTitle */
+/* unused harmony export center */
 /* unused harmony export dash */
 /* unused harmony export textarea */
 /* unused harmony export textareaFocused */
 /* unused harmony export btnWrap */
 /* unused harmony export loadBtn */
 /* unused harmony export list */
-/* unused harmony export title */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "fontFamily": "Raleway",
     "animDur": "0.3s",
     "home": "mc63387611_home",
+    "logoAndType": "mc63387611_logoAndType",
+    "title": "mc70832d4a_title mc63387611_title",
+    "subTitle": "mc63387611_subTitle",
+    "center": "mc63387611_center",
     "dash": "mc63387611_dash",
     "textarea": "mc63387611_textarea",
     "textareaFocused": "mc63387611_textarea mc63387611_textareaFocused",
     "btnWrap": "mc63387611_btnWrap",
     "loadBtn": "mc70832d4a_button mc63387611_loadBtn",
-    "list": "mc63387611_list",
-    "title": "mc70832d4a_title mc63387611_title"
+    "list": "mc63387611_list"
 });
 var fontFamily = "Raleway";
 var animDur = "0.3s";
 var home = "mc63387611_home";
+var logoAndType = "mc63387611_logoAndType";
+var title = "mc70832d4a_title mc63387611_title";
+var subTitle = "mc63387611_subTitle";
+var center = "mc63387611_center";
 var dash = "mc63387611_dash";
 var textarea = "mc63387611_textarea";
 var textareaFocused = "mc63387611_textarea mc63387611_textareaFocused";
 var btnWrap = "mc63387611_btnWrap";
 var loadBtn = "mc70832d4a_button mc63387611_loadBtn";
 var list = "mc63387611_list";
-var title = "mc70832d4a_title mc63387611_title";
 
 /***/ })
 /******/ ]);

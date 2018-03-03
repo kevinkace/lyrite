@@ -112,6 +112,9 @@ button {
 a {
     color: #fff;
 }
+svg {
+    display: block;
+}
 #mount {
     display: flex;
     flex-flow: column nowrap;
@@ -133,52 +136,6 @@ a {
     text-align: center;
     font: normal 1.8em/1.2 "Slabo 27px", serif;
     text-transform: uppercase;
-}
-/*src/lyrics/index.css */
-.mce5e74019_lyredit {
-    display: flex;
-    flex-direction: row;
-}
-.mce5e74019_lyrics {
-    flex: 1 0 70vw;
-    padding: 0.5em;
-
-    column-gap: 1em;
-
-    overflow-y: auto;
-}
-.mce5e74019_line {
-    padding : 0.5em 0.5em;
-    margin: 0;
-    break-inside: avoid;
-
-    border: solid 1px transparent;
-    border-radius: 0.2em;
-    color: var(--color);
-
-    cursor: default;
-}
-.mce5e74019_lineSelected {
-
-    border-color: #ddd5;
-}
-.mce5e74019_s0 {
-    --color: #ff6188;
-}
-.mce5e74019_s1 {
-    --color: #a9dc76;
-}
-.mce5e74019_s2 {
-    --color: #ffd866;
-}
-.mce5e74019_s3 {
-    --color: #fc9867;
-}
-.mce5e74019_s4 {
-    --color: #ab9df2;
-}
-.mce5e74019_s5 {
-    --color: #78dce8;
 }
 /*src/tools/tooltip.css */
 .mc6dd10fbf_tooltip {
@@ -218,7 +175,11 @@ a {
 /*src/header/index.css */
 .mcd924ca8c_header {
     position: relative;
-    padding: 0.4em 0;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
 
     background: #fff1;
 }
@@ -256,32 +217,45 @@ a {
     align-items: center;
 }
 .mcd924ca8c_logo a {
-        position: relative;
         display: block;
-        width: 1em;
-        height: 1.6em;
-        transform: skew(0, 10deg);
-
-        text-indent: 9999px;
-        white-space: nowrap;
-
-        background: #4571a9;
+        padding-top: 0.2em;
     }
-.mcd924ca8c_logo a:after {
-            content: "";
-
-            position: absolute;
-            top: 98%;
-            right: -0.5em;
-            left: 0;
-            height: 0.2em;
-
-            background: #4571a9;
+.mcd924ca8c_logo a svg {
+            fill: #4571a9;
         }
 /*src/home/index.css */
 .mc63387611_home {
     padding: 1em 0.5em 0;
+}
+.mc63387611_logoAndType {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5vh 0 1.3em;
+}
+.mc63387611_logoAndType svg {
+        display: inline-block;
+        width: auto;
+        height: 5em;
+        padding-bottom: 0.2em;
 
+        fill: #4571a9;
+    }
+.mc63387611_title {
+
+    font-size: 3em;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+}
+.mc63387611_subTitle {
+    display: block;
+
+    opacity: 0.7;
+    text-transform: none;
+    letter-spacing: 0;
+    font: normal 1em/1 Raleway;
+}
+.mc63387611_center {
     text-align: center;
 }
 .mc63387611_dash {
@@ -341,8 +315,8 @@ a {
         margin-bottom: 0.2em;
         border-bottom: solid 1px #fff5;
 
-        color: #4571a9;
-        font: bold 2em/1 Raleway;
+        color: #6b97d0;
+        font: bold 1.25em/1 Raleway;
     }
 .mc63387611_list a {
         display: block;
@@ -350,18 +324,17 @@ a {
         font-family: "Slabo 27px";
         text-transform: uppercase;
         text-decoration: none;
-        font-size: 1.25em;
+        font-size: 1.35em;
     }
 .mc63387611_list a:hover {
             text-decoration: underline;
         }
-.mc63387611_title {
-
-    margin: 1em 0 0.4em;
-    font-size: 3em;
-    font-weight: bold;
-    letter-spacing: 0.08em;
-}
+.mc63387611_list a span {
+            display: inline-block;
+            padding-left: 0.3em;
+            opacity: 0.6;
+            font-size: 0.8em;
+        }
 /*src/layout/index.css */
 .mc4a8c61ea_github {
     display: block;
@@ -378,7 +351,11 @@ a {
     }
 /*src/lyrics/edit.css */
 .mc68640514_edit {
-    flex: 1 1 30vw;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30vw;
 
     background: #fff;
 }
@@ -408,6 +385,56 @@ a {
     padding: 0.3em 1em;
 
     font: normal 0.9em/1.4 monospace;
+}
+/*src/lyrics/index.css */
+.mce5e74019_lyredit {
+    position: relative;
+    height: 95vh;
+}
+.mce5e74019_lyrics {
+    padding: 0.5em;
+    column-gap: 1em;
+    overflow-y: auto;
+    transform-origin: 0 0;
+
+    transition: transform 0.3s;
+}
+.mce5e74019_lyricsEdit {
+
+    transform: scale(0.7);
+}
+.mce5e74019_line {
+    padding : 0.5em 0.5em;
+    margin: 0;
+    break-inside: avoid;
+
+    border: solid 1px transparent;
+    border-radius: 0.2em;
+    color: var(--color);
+
+    cursor: default;
+}
+.mce5e74019_lineSelected {
+
+    border-color: #ddd5;
+}
+.mce5e74019_s0 {
+    --color: #ff6188;
+}
+.mce5e74019_s1 {
+    --color: #a9dc76;
+}
+.mce5e74019_s2 {
+    --color: #ffd866;
+}
+.mce5e74019_s3 {
+    --color: #fc9867;
+}
+.mce5e74019_s4 {
+    --color: #ab9df2;
+}
+.mce5e74019_s5 {
+    --color: #78dce8;
 }
 /*src/modal/index.css */
 .mc744a0be3_modal {
