@@ -302,7 +302,7 @@ svg {
 }
 .mc63387611_loadBtn {
 
-    color: #fff;
+    color: #fff !important;
     --color: #4571a9;
 }
 .mc63387611_list {

@@ -85,36 +85,34 @@ module.exports = m;
 
 
 
-const State = {};
+const State = {
+    appName: "Lyrite",
+    tagline: "a tool to format lyrics",
+    githubHref: "https://github.com/kevinkace/lyrite",
 
-State.appName = "Lyrite";
-State.githubHref = "https://github.com/kevinkace/lyrite";
+    styles: ["s0", "s1", "s2", "s3", "s4", "s5"],
+    font: { size: "1.3" },
+    cols: { count: 2 },
 
-State.styles = ["s0", "s1", "s2", "s3", "s4", "s5"];
+    error: err => {
+        console.error(err);
+    },
 
-State.events = {
-    mousemove: e => {
-        State.tooltip.style = {
-            left: `${e.clientX}px`,
-            top: `${e.clientY}px`,
-            opacity: e.clientY > State.header.height ? 0.8 : 0
-        };
+    events: {
+        mousemove: e => {
+            State.tooltip.style = {
+                left: `${e.clientX}px`,
+                top: `${e.clientY}px`,
+                opacity: e.clientY > State.header.height ? 0.8 : 0
+            };
 
-        __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.redraw();
+            __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.redraw();
+        }
     }
 };
 
 State.actions = Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_1__tools__["a" /* default */])(State), Object(__WEBPACK_IMPORTED_MODULE_2__song__["a" /* default */])(State), Object(__WEBPACK_IMPORTED_MODULE_3__modal__["a" /* default */])(State));
-
 State.action = (name, value) => State.actions[name](value);
-
-State.font = { size: "1.3" };
-
-State.cols = { count: 2 };
-
-State.error = err => {
-    console.error(err);
-};
 
 window.state = State;
 
@@ -678,44 +676,31 @@ function parseLyricString(lyricString) {
     }));
 }
 
+function getSongParts(songString) {
+    return __WEBPACK_IMPORTED_MODULE_0_eol___default.a.lf(songString).split(titleSplit);
+}
+
 /* harmony default export */ __webpack_exports__["a"] = (State => ({
-    "LOAD SONG": songString => {
-        const song = {};
-        const parts = __WEBPACK_IMPORTED_MODULE_0_eol___default.a.lf(songString).split(titleSplit);
-
-        if (parts.length > 2) {
-            State.error = "loading a incorrectly formatted song";
-
-            return;
-        }
+    "LOAD SONG": song => {
+        let newSong = {};
 
         State.untitled = State.untitled || 0;
         State.songs = State.songs || [];
 
-        State.songs.push(song);
-
-        // has a title/author
-        if (parts.length === 2) {
-            song.title = parts[0];
-            song.lyricString = parts[1];
-
-            const titleParts = song.title.split("\n");
-
-            if (titleParts.length) {
-                song.title = titleParts[0];
-                song.artist = titleParts[1];
-            }
+        if (typeof song === "object") {
+            newSong = song;
         } else {
-            // Just lyrics
-            song.untitled = true;
-            song.title = `untitled ${++State.untitled}`;
-            song.lyricString = parts[0];
+            newSong.untitled = true;
+            newSong.title = `untitled ${++State.untitled}`;
+            newSong.lyricString = song;
         }
 
-        song.lyrics = parseLyricString(song.lyricString);
-        song.slug = __WEBPACK_IMPORTED_MODULE_2_slugify___default()(song.title);
+        newSong.lyrics = parseLyricString(newSong.lyricString);
+        newSong.slug = __WEBPACK_IMPORTED_MODULE_2_slugify___default()(newSong.title);
 
-        return song.slug;
+        State.songs.push(newSong);
+
+        return newSong.slug;
     },
 
     "SET TITLE": title => {
@@ -724,8 +709,14 @@ function parseLyricString(lyricString) {
     },
 
     "LOAD DEFAULT SONGS": () => {
-        songs.forEach(song => {
-            State.action("LOAD SONG", song);
+        songs.forEach(songString => {
+            const parts = getSongParts(songString);
+
+            State.action("LOAD SONG", {
+                title: parts[0].split("\n")[0],
+                artist: parts[0].split("\n")[1],
+                lyricString: parts[1]
+            });
         });
     },
 
@@ -1857,7 +1848,7 @@ var textarea = "mc68640514_textarea";
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].home }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logoAndType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg___default.a), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logoType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h2", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].subTitle }, "a tool to format lyrics"))), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].center }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].dash }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
+    view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].home }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logoAndType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg___default.a), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logoType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h2", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].subTitle }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].tagline))), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].center }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].dash }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
         class: vnode.state.focused ? __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].textareaFocused : __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].textarea,
         value: vnode.state.lyricsValue,
         placeholder: vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
