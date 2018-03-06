@@ -25,43 +25,31 @@ function parseLyricString(lyricString) {
         }));
 }
 
+function getSongParts(songString) {
+    return eol.lf(songString).split(titleSplit);
+}
+
 export default (State) => ({
-    "LOAD SONG" : (songString) => {
-        const song = {};
-        const parts = eol.lf(songString).split(titleSplit);
-
-        if(parts.length > 2) {
-            State.error = "loading a incorrectly formatted song";
-
-            return;
-        }
+    "LOAD SONG" : (song) => {
+        let newSong = {};
 
         State.untitled = State.untitled || 0;
         State.songs = State.songs || [];
 
-        State.songs.push(song);
-
-        // has a title/author
-        if(parts.length === 2) {
-            song.title       = parts[0];
-            song.lyricString = parts[1];
-
-            const titleParts = song.title.split("\n");
-
-            if(titleParts.length) {
-                song.title = titleParts[0];
-                song.artist = titleParts[1];
-            }
-        } else { // Just lyrics
-            song.untitled    = true;
-            song.title       = `untitled ${++State.untitled}`;
-            song.lyricString = parts[0];
+        if(typeof song === "object") {
+            newSong = song;
+        } else {
+            newSong.untitled    = true;
+            newSong.title       = `untitled ${++State.untitled}`;
+            newSong.lyricString = song;
         }
 
-        song.lyrics = parseLyricString(song.lyricString);
-        song.slug = slugify(song.title);
+        newSong.lyrics = parseLyricString(newSong.lyricString);
+        newSong.slug = slugify(newSong.title);
 
-        return song.slug;
+        State.songs.push(newSong);
+
+        return newSong.slug;
     },
 
     "SET TITLE" : (title) => {
@@ -70,8 +58,14 @@ export default (State) => ({
     },
 
     "LOAD DEFAULT SONGS" : () => {
-        songs.forEach((song) => {
-            State.action("LOAD SONG", song);
+        songs.forEach((songString) => {
+            const parts = getSongParts(songString);
+
+            State.action("LOAD SONG", {
+                title       : parts[0].split("\n")[0],
+                artist      : parts[0].split("\n")[1],
+                lyricString : parts[1]
+            });
         });
     },
 

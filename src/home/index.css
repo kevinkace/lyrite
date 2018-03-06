@@ -93,7 +93,7 @@
 .loadBtn {
     composes: button from "../index.css";
 
-    color: #fff;
+    color: #fff !important;
     --color: colors.cta;
 }
 

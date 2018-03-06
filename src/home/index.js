@@ -15,7 +15,7 @@ export default {
 
                 m("div", { class : css.logoType },
                     m("h1", { class : css.title }, state.appName),
-                    m("h2", { class : css.subTitle }, "a tool to format lyrics")
+                    m("h2", { class : css.subTitle }, state.tagline)
                 )
             ),
 
