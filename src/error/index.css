@@ -1,0 +1,12 @@
+@value fontSerif from "../index.css";
+
+.error {
+    margin: 1em 0;
+    text-align: center;
+
+    h1 {
+        margin: 0 0 1em;
+
+        font: normal 1.8em/1.2 fontSerif;
+    }
+}

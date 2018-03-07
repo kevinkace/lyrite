@@ -1,5 +1,5 @@
 @value * as colors from "../palette.css";
-@value fontFamily, animDur from "../index.css";
+@value fontSans, fontSerif, animDur from "../index.css";
 
 .home {
     padding: 1em 0.5em 0;
@@ -35,7 +35,7 @@
     opacity: 0.7;
     text-transform: none;
     letter-spacing: 0;
-    font: normal 1em/1 fontFamily;
+    font: normal 1em/1 fontSans;
 }
 
 .center {
@@ -108,13 +108,13 @@
         border-bottom: solid 1px #fff5;
 
         color: colors.ctaLight;
-        font: bold 1.25em/1 fontFamily;
+        font: bold 1.25em/1 fontSans;
     }
 
     a {
         display: block;
 
-        font-family: "Slabo 27px";
+        font-family: fontSerif;
         text-transform: uppercase;
         text-decoration: none;
         font-size: 1.35em;

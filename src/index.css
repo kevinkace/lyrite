@@ -1,6 +1,7 @@
 @value * as colors from "./palette.css";
 
-@value fontFamily: Raleway;
+@value fontSans: Raleway, sans-serif;
+@value fontSerif: 'Slabo 27px', serif;
 @value animDur: 0.3s;
 
 html {
@@ -62,6 +63,6 @@ svg {
 
 .title {
     text-align: center;
-    font: normal 1.8em/1.2 "Slabo 27px", serif;
+    font: normal 1.8em/1.2 fontSerif;
     text-transform: uppercase;
 }
