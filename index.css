@@ -400,11 +400,11 @@ svg {
 .mce5e74019_lyredit {
     position: relative;
     height: 95vh;
+    overflow-y: auto;
 }
 .mce5e74019_lyrics {
     padding: 0.5em;
     column-gap: 1em;
-    overflow-y: auto;
     transform-origin: 0 0;
 
     transition: transform 0.3s;
@@ -457,6 +457,7 @@ svg {
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    z-index: 1;
 
     background: #222e;
 }

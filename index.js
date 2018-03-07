@@ -1624,6 +1624,11 @@ var close = "mc744a0be3_close";
         value: vnode.state.value,
         placeholder: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song.title,
         class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].input,
+        onkeydown: e => {
+            if (e.keyCode === 13 && vnode.state.value) {
+                __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("ADD TITLE", vnode.state.value);
+            }
+        },
         oninput: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.withAttr("value", v => {
             vnode.state.value = v;
         }),
