@@ -169,7 +169,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__favicon_ico__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__favicon_ico__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__favicon_ico___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__favicon_ico__);
 
 
@@ -204,19 +204,22 @@ window.state = __WEBPACK_IMPORTED_MODULE_4__state__["a" /* default */];
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export fontFamily */
+/* unused harmony export fontSans */
+/* unused harmony export fontSerif */
 /* unused harmony export animDur */
 /* unused harmony export mount */
 /* unused harmony export button */
 /* unused harmony export title */
 /* unused harmony default export */ var _unused_webpack_default_export = ({
-    "fontFamily": "Raleway",
+    "fontSans": "Raleway, sans-serif",
+    "fontSerif": "'Slabo 27px', serif",
     "animDur": "0.3s",
     "mount": "mount",
     "button": "mc70832d4a_button",
     "title": "mc70832d4a_title"
 });
-var fontFamily = "Raleway";
+var fontSans = "Raleway, sans-serif";
+var fontSerif = "'Slabo 27px', serif";
 var animDur = "0.3s";
 var mount = "mount";
 var button = "mc70832d4a_button";
@@ -233,7 +236,7 @@ var title = "mc70832d4a_title";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__layout__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lyrics__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__error__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home__ = __webpack_require__(44);
 
 
 
@@ -1820,12 +1823,19 @@ var textarea = "mc68640514_textarea";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(43);
+
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    view: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", "shit", __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].error)
+    view: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].error }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].error), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
+        class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].home,
+        href: "/",
+        oncreate: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.link
+    }, "return to home"))
 });
 
 /***/ }),
@@ -1833,10 +1843,24 @@ var textarea = "mc68640514_textarea";
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export fontSerif */
+/* unused harmony export error */
+/* harmony default export */ __webpack_exports__["a"] = ({
+    "fontSerif": "'Slabo 27px', serif",
+    "error": "mca25e1e8f_error"
+});
+var fontSerif = "'Slabo 27px', serif";
+var error = "mca25e1e8f_error";
+
+/***/ }),
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg__);
 
@@ -1887,11 +1911,12 @@ var textarea = "mc68640514_textarea";
 });
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export fontFamily */
+/* unused harmony export fontSans */
+/* unused harmony export fontSerif */
 /* unused harmony export animDur */
 /* unused harmony export home */
 /* unused harmony export logoAndType */
@@ -1905,7 +1930,8 @@ var textarea = "mc68640514_textarea";
 /* unused harmony export loadBtn */
 /* unused harmony export list */
 /* harmony default export */ __webpack_exports__["a"] = ({
-    "fontFamily": "Raleway",
+    "fontSans": "Raleway, sans-serif",
+    "fontSerif": "'Slabo 27px', serif",
     "animDur": "0.3s",
     "home": "mc63387611_home",
     "logoAndType": "mc63387611_logoAndType",
@@ -1919,7 +1945,8 @@ var textarea = "mc68640514_textarea";
     "loadBtn": "mc70832d4a_button mc63387611_loadBtn",
     "list": "mc63387611_list"
 });
-var fontFamily = "Raleway";
+var fontSans = "Raleway, sans-serif";
+var fontSerif = "'Slabo 27px', serif";
 var animDur = "0.3s";
 var home = "mc63387611_home";
 var logoAndType = "mc63387611_logoAndType";
@@ -1934,7 +1961,7 @@ var loadBtn = "mc70832d4a_button mc63387611_loadBtn";
 var list = "mc63387611_list";
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "favicon.ico";

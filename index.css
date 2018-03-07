@@ -134,7 +134,7 @@ svg {
 }
 .mc70832d4a_title {
     text-align: center;
-    font: normal 1.8em/1.2 "Slabo 27px", serif;
+    font: normal 1.8em/1.2 'Slabo 27px', serif;
     text-transform: uppercase;
 }
 /*src/tools/tooltip.css */
@@ -172,6 +172,16 @@ svg {
 .mc6dd10fbf_s5 {
     --color: #78dce8;
 }
+/*src/error/index.css */
+.mca25e1e8f_error {
+    margin: 1em 0;
+    text-align: center;
+}
+.mca25e1e8f_error h1 {
+        margin: 0 0 1em;
+
+        font: normal 1.8em/1.2 'Slabo 27px', serif;
+    }
 /*src/header/index.css */
 .mcd924ca8c_header {
     position: relative;
@@ -253,7 +263,7 @@ svg {
     opacity: 0.7;
     text-transform: none;
     letter-spacing: 0;
-    font: normal 1em/1 Raleway;
+    font: normal 1em/1 Raleway, sans-serif;
 }
 .mc63387611_center {
     text-align: center;
@@ -316,12 +326,12 @@ svg {
         border-bottom: solid 1px #fff5;
 
         color: #6b97d0;
-        font: bold 1.25em/1 Raleway;
+        font: bold 1.25em/1 Raleway, sans-serif;
     }
 .mc63387611_list a {
         display: block;
 
-        font-family: "Slabo 27px";
+        font-family: 'Slabo 27px', serif;
         text-transform: uppercase;
         text-decoration: none;
         font-size: 1.35em;
