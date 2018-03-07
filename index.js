@@ -1620,15 +1620,20 @@ var close = "mc744a0be3_close";
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("input", {
+    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("form", {
+        onsubmit: e => {
+            e.preventDefault();
+
+            if (!vnode.state.value) {
+                return;
+            }
+
+            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("ADD TITLE", vnode.state.value);
+        }
+    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("input", {
         value: vnode.state.value,
         placeholder: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song.title,
         class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].input,
-        onkeydown: e => {
-            if (e.keyCode === 13 && vnode.state.value) {
-                __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("ADD TITLE", vnode.state.value);
-            }
-        },
         oninput: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.withAttr("value", v => {
             vnode.state.value = v;
         }),
@@ -1636,20 +1641,14 @@ var close = "mc744a0be3_close";
             inputVnode.dom.focus();
         }
     }), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].buttons }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
-        class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].add,
-        onclick: () => {
-            if (!vnode.state.value) {
-                return;
-            }
-
-            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("ADD TITLE", vnode.state.value);
-        }
+        type: "submit",
+        class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].add
     }, "add title"), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
         class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].cancel,
         onclick: () => {
             __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("CLOSE MODAL");
         }
-    }, "cancel"))]
+    }, "cancel")))
 });
 
 /***/ }),
