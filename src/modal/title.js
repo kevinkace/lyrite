@@ -10,6 +10,11 @@ export default {
             value       : vnode.state.value,
             placeholder : state.song.title,
             class       : css.input,
+            onkeydown   : (e) => {
+                if(e.keyCode === 13 && vnode.state.value) {
+                    state.action("ADD TITLE", vnode.state.value);
+                }
+            },
             oninput     : m.withAttr("value", (v) => {
                 vnode.state.value = v;
             }),
