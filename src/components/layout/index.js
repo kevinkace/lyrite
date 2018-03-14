@@ -15,6 +15,10 @@ export default {
 
             vnode.children,
 
+            state.debug ?
+                m("pre", { class : css.debug }, JSON.stringify(state, null, 2)) :
+                null,
+
             m("div", { class : css.bug },
                 m("a", {
                     href  : state.githubHref,
