@@ -1,3 +1,4 @@
+import localforage from "localforage";
 import { get, set } from "object-path";
 
 export default {
@@ -5,21 +6,22 @@ export default {
         const pathParts = path.split(".");
 
         if(pathParts.length === 1) {
-            localStorage.setItem(path, data);
-
-            return;
+            return localforage.setItem(path, data);
         }
 
-        let top = localStorage.getItem(pathParts[0]);
+        return localforage.getItem(pathParts[0])
+            .then((top) => {
+                if(!top || typeof top !== "object") {
+                    console.error("Lost data maybe");
 
-        if(typeof top !== "object") {
-            console.error("Lost data maybe");
+                    top = {};
+                }
 
-            top = {};
-        }
+                set(top, pathParts.slice(1), data);
 
-        set(top, pathParts.slice(1), data);
+                return localforage.setItem(pathParts[0], top);
+            });
 
-        localStorage.setItem(pathParts[0], top);
+
     }
 };

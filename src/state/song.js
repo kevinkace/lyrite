@@ -1,3 +1,4 @@
+import m from "mithril";
 import eol from "eol";
 import hash from "string-hash";
 import slugify from "slugify";
@@ -26,7 +27,7 @@ function getSongParts(songString) {
         artist      : meta[1],
         lyricString : parts[1],
         slug        : slugify(meta[0])
-    }
+    };
 }
 
 export default (State) => ({
@@ -57,14 +58,20 @@ export default (State) => ({
         State.song.slug = slugify(State.song.title);
     },
 
-    "ADD DEFAULT SONGS" : () => {
-        songs.forEach((songString) => {
-            State.action("ADD SONG", getSongParts(songString));
-        });
-    },
+    // returns promise
+    "ADD DEFAULT SONGS" : () =>
+        State.action("ADD SONG", songs.map((songString) => getSongParts(songString)))
+            .then(() => {
+                m.redraw();
+            }),
 
+    // returns promise
     "ADD SONG" : (songObj) => {
-        db.set(`songs.${songObj.slug}`, songObj);
+        const songObjs = Array.isArray(songObj) ? songObj : [ songObj ];
+
+        return Promise.all(songObjs.map((songObj) =>
+            db.set(`songs.${songObj.slug}`, songObj)
+        ));
     },
 
     "OPEN SONG" : (idx) => {
