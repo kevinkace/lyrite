@@ -20,8 +20,8 @@ const State = {
     events : {
         mousemove : (e) => {
             State.tooltip.style = {
-                left : `${e.clientX}px`,
-                top  : `${e.clientY}px`,
+                left    : `${e.clientX}px`,
+                top     : `${e.clientY}px`,
                 opacity : e.clientY > State.header.height ? 0.8 : 0
             };
 
