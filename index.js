@@ -136,6 +136,7 @@ const MAX_TIMEOUT = 1000;
 
             resd = true;
             rej(false);
+            console.log("anim resolve timeout");
         }, MAX_TIMEOUT);
 
         dom.addEventListener("animationend", () => {
@@ -233,10 +234,10 @@ var title = "mc70832d4a_title";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__layout__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lyrics__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__error__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_layout__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lyrics__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_error__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_home__ = __webpack_require__(44);
 
 
 
@@ -257,7 +258,7 @@ var title = "mc70832d4a_title";
                 __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("CLOSE SONG");
             }
         },
-        render: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_2__layout__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_5__home__["a" /* default */]))
+        render: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_2__components_layout__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_5__components_home__["a" /* default */]))
     },
 
     "/:slug": {
@@ -269,14 +270,14 @@ var title = "mc70832d4a_title";
             let songIdx = __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("GET SONG IDX FROM SLUG", args.slug);
 
             if (!songIdx && songIdx !== 0) {
-                return __WEBPACK_IMPORTED_MODULE_4__error__["a" /* default */];
+                return __WEBPACK_IMPORTED_MODULE_4__components_error__["a" /* default */];
             }
 
             __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("OPEN SONG", songIdx);
 
-            return __WEBPACK_IMPORTED_MODULE_3__lyrics__["a" /* default */];
+            return __WEBPACK_IMPORTED_MODULE_3__components_lyrics__["a" /* default */];
         },
-        render: comp => __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_2__layout__["a" /* default */], { header: true }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()(comp.tag))
+        render: comp => __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_2__components_layout__["a" /* default */], { header: true }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()(comp.tag))
     }
 });
 
@@ -670,6 +671,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 const titleSplit = "\n\n---\n\n";
 
+// todo: why require
 const songs = [__webpack_require__(15), __webpack_require__(16), __webpack_require__(17), __webpack_require__(18), __webpack_require__(19), __webpack_require__(20), __webpack_require__(21), __webpack_require__(22), __webpack_require__(23)];
 
 function parseLyricString(lyricString) {
@@ -1215,10 +1217,10 @@ module.exports = "Black Hole sun\nSoundgarden\n\n---\n\nIn my eyes, indisposed\n
 /* unused harmony export github */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "animDur": "0.3s",
-    "github": "mc4a8c61ea_github"
+    "github": "mc55d93723_github"
 });
 var animDur = "0.3s";
-var github = "mc4a8c61ea_github";
+var github = "mc55d93723_github";
 
 /***/ }),
 /* 27 */
@@ -1270,18 +1272,18 @@ var github = "mc4a8c61ea_github";
 /* unused harmony export title */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "animDur": "0.3s",
-    "header": "mcd924ca8c_header",
-    "headerIn": "mcd924ca8c_header mcd924ca8c_headerIn",
-    "headerOut": "mcd924ca8c_header mcd924ca8c_headerOut",
-    "logo": "mcd924ca8c_logo",
-    "title": "mc70832d4a_title mcd924ca8c_title"
+    "header": "mc23bfb80c_header",
+    "headerIn": "mc23bfb80c_header mc23bfb80c_headerIn",
+    "headerOut": "mc23bfb80c_header mc23bfb80c_headerOut",
+    "logo": "mc23bfb80c_logo",
+    "title": "mc70832d4a_title mc23bfb80c_title"
 });
 var animDur = "0.3s";
-var header = "mcd924ca8c_header";
-var headerIn = "mcd924ca8c_header mcd924ca8c_headerIn";
-var headerOut = "mcd924ca8c_header mcd924ca8c_headerOut";
-var logo = "mcd924ca8c_logo";
-var title = "mc70832d4a_title mcd924ca8c_title";
+var header = "mc23bfb80c_header";
+var headerIn = "mc23bfb80c_header mc23bfb80c_headerIn";
+var headerOut = "mc23bfb80c_header mc23bfb80c_headerOut";
+var logo = "mc23bfb80c_logo";
+var title = "mc70832d4a_title mc23bfb80c_title";
 
 /***/ }),
 /* 29 */
@@ -1443,62 +1445,62 @@ var title = "mc70832d4a_title mcd924ca8c_title";
 /* unused harmony export edit */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "animDur": "0.3s",
-    "tools": "mc01651421_tools",
-    "toolsHide": "mc01651421_tools mc01651421_toolsHide",
-    "setting": "mc01651421_setting",
-    "show": "mc01651421_show",
-    "label": "mc01651421_label",
-    "control": "mc01651421_control",
-    "button": "mc70832d4a_button mc01651421_button",
-    "s0": "mc70832d4a_button mc01651421_button mc01651421_s0",
-    "s1": "mc70832d4a_button mc01651421_button mc01651421_s1",
-    "s2": "mc70832d4a_button mc01651421_button mc01651421_s2",
-    "s3": "mc70832d4a_button mc01651421_button mc01651421_s3",
-    "s4": "mc70832d4a_button mc01651421_button mc01651421_s4",
-    "s5": "mc70832d4a_button mc01651421_button mc01651421_s5",
-    "selected": "mc01651421_selected",
-    "s0Selected": "mc70832d4a_button mc01651421_button mc01651421_s0 mc01651421_selected mc01651421_s0Selected",
-    "s1Selected": "mc70832d4a_button mc01651421_button mc01651421_s1 mc01651421_selected mc01651421_s1Selected",
-    "s2Selected": "mc70832d4a_button mc01651421_button mc01651421_s2 mc01651421_selected mc01651421_s2Selected",
-    "s3Selected": "mc70832d4a_button mc01651421_button mc01651421_s3 mc01651421_selected mc01651421_s3Selected",
-    "s4Selected": "mc70832d4a_button mc01651421_button mc01651421_s4 mc01651421_selected mc01651421_s4Selected",
-    "s5Selected": "mc70832d4a_button mc01651421_button mc01651421_s5 mc01651421_selected mc01651421_s5Selected",
-    "font": "mc01651421_font",
-    "range": "mc01651421_range",
-    "rangeHide": "mc01651421_range mc01651421_rangeHide",
-    "dec": "mc70832d4a_button mc01651421_button mc01651421_dec",
-    "inc": "mc70832d4a_button mc01651421_button mc01651421_inc",
-    "cols": "mc01651421_cols",
-    "edit": "mc70832d4a_button mc01651421_button mc01651421_edit"
+    "tools": "mce8163484_tools",
+    "toolsHide": "mce8163484_tools mce8163484_toolsHide",
+    "setting": "mce8163484_setting",
+    "show": "mce8163484_show",
+    "label": "mce8163484_label",
+    "control": "mce8163484_control",
+    "button": "mc70832d4a_button mce8163484_button",
+    "s0": "mc70832d4a_button mce8163484_button mce8163484_s0",
+    "s1": "mc70832d4a_button mce8163484_button mce8163484_s1",
+    "s2": "mc70832d4a_button mce8163484_button mce8163484_s2",
+    "s3": "mc70832d4a_button mce8163484_button mce8163484_s3",
+    "s4": "mc70832d4a_button mce8163484_button mce8163484_s4",
+    "s5": "mc70832d4a_button mce8163484_button mce8163484_s5",
+    "selected": "mce8163484_selected",
+    "s0Selected": "mc70832d4a_button mce8163484_button mce8163484_s0 mce8163484_selected mce8163484_s0Selected",
+    "s1Selected": "mc70832d4a_button mce8163484_button mce8163484_s1 mce8163484_selected mce8163484_s1Selected",
+    "s2Selected": "mc70832d4a_button mce8163484_button mce8163484_s2 mce8163484_selected mce8163484_s2Selected",
+    "s3Selected": "mc70832d4a_button mce8163484_button mce8163484_s3 mce8163484_selected mce8163484_s3Selected",
+    "s4Selected": "mc70832d4a_button mce8163484_button mce8163484_s4 mce8163484_selected mce8163484_s4Selected",
+    "s5Selected": "mc70832d4a_button mce8163484_button mce8163484_s5 mce8163484_selected mce8163484_s5Selected",
+    "font": "mce8163484_font",
+    "range": "mce8163484_range",
+    "rangeHide": "mce8163484_range mce8163484_rangeHide",
+    "dec": "mc70832d4a_button mce8163484_button mce8163484_dec",
+    "inc": "mc70832d4a_button mce8163484_button mce8163484_inc",
+    "cols": "mce8163484_cols",
+    "edit": "mc70832d4a_button mce8163484_button mce8163484_edit"
 });
 var animDur = "0.3s";
-var tools = "mc01651421_tools";
-var toolsHide = "mc01651421_tools mc01651421_toolsHide";
-var setting = "mc01651421_setting";
-var show = "mc01651421_show";
-var label = "mc01651421_label";
-var control = "mc01651421_control";
-var button = "mc70832d4a_button mc01651421_button";
-var s0 = "mc70832d4a_button mc01651421_button mc01651421_s0";
-var s1 = "mc70832d4a_button mc01651421_button mc01651421_s1";
-var s2 = "mc70832d4a_button mc01651421_button mc01651421_s2";
-var s3 = "mc70832d4a_button mc01651421_button mc01651421_s3";
-var s4 = "mc70832d4a_button mc01651421_button mc01651421_s4";
-var s5 = "mc70832d4a_button mc01651421_button mc01651421_s5";
-var selected = "mc01651421_selected";
-var s0Selected = "mc70832d4a_button mc01651421_button mc01651421_s0 mc01651421_selected mc01651421_s0Selected";
-var s1Selected = "mc70832d4a_button mc01651421_button mc01651421_s1 mc01651421_selected mc01651421_s1Selected";
-var s2Selected = "mc70832d4a_button mc01651421_button mc01651421_s2 mc01651421_selected mc01651421_s2Selected";
-var s3Selected = "mc70832d4a_button mc01651421_button mc01651421_s3 mc01651421_selected mc01651421_s3Selected";
-var s4Selected = "mc70832d4a_button mc01651421_button mc01651421_s4 mc01651421_selected mc01651421_s4Selected";
-var s5Selected = "mc70832d4a_button mc01651421_button mc01651421_s5 mc01651421_selected mc01651421_s5Selected";
-var font = "mc01651421_font";
-var range = "mc01651421_range";
-var rangeHide = "mc01651421_range mc01651421_rangeHide";
-var dec = "mc70832d4a_button mc01651421_button mc01651421_dec";
-var inc = "mc70832d4a_button mc01651421_button mc01651421_inc";
-var cols = "mc01651421_cols";
-var edit = "mc70832d4a_button mc01651421_button mc01651421_edit";
+var tools = "mce8163484_tools";
+var toolsHide = "mce8163484_tools mce8163484_toolsHide";
+var setting = "mce8163484_setting";
+var show = "mce8163484_show";
+var label = "mce8163484_label";
+var control = "mce8163484_control";
+var button = "mc70832d4a_button mce8163484_button";
+var s0 = "mc70832d4a_button mce8163484_button mce8163484_s0";
+var s1 = "mc70832d4a_button mce8163484_button mce8163484_s1";
+var s2 = "mc70832d4a_button mce8163484_button mce8163484_s2";
+var s3 = "mc70832d4a_button mce8163484_button mce8163484_s3";
+var s4 = "mc70832d4a_button mce8163484_button mce8163484_s4";
+var s5 = "mc70832d4a_button mce8163484_button mce8163484_s5";
+var selected = "mce8163484_selected";
+var s0Selected = "mc70832d4a_button mce8163484_button mce8163484_s0 mce8163484_selected mce8163484_s0Selected";
+var s1Selected = "mc70832d4a_button mce8163484_button mce8163484_s1 mce8163484_selected mce8163484_s1Selected";
+var s2Selected = "mc70832d4a_button mce8163484_button mce8163484_s2 mce8163484_selected mce8163484_s2Selected";
+var s3Selected = "mc70832d4a_button mce8163484_button mce8163484_s3 mce8163484_selected mce8163484_s3Selected";
+var s4Selected = "mc70832d4a_button mce8163484_button mce8163484_s4 mce8163484_selected mce8163484_s4Selected";
+var s5Selected = "mc70832d4a_button mce8163484_button mce8163484_s5 mce8163484_selected mce8163484_s5Selected";
+var font = "mce8163484_font";
+var range = "mce8163484_range";
+var rangeHide = "mce8163484_range mce8163484_rangeHide";
+var dec = "mc70832d4a_button mce8163484_button mce8163484_dec";
+var inc = "mc70832d4a_button mce8163484_button mce8163484_inc";
+var cols = "mce8163484_cols";
+var edit = "mc70832d4a_button mce8163484_button mce8163484_edit";
 
 /***/ }),
 /* 31 */
@@ -1513,21 +1515,21 @@ var edit = "mc70832d4a_button mc01651421_button mc01651421_edit";
 /* unused harmony export s4 */
 /* unused harmony export s5 */
 /* harmony default export */ __webpack_exports__["a"] = ({
-    "tooltip": "mc6dd10fbf_tooltip",
-    "s0": "mc6dd10fbf_tooltip mc6dd10fbf_s0",
-    "s1": "mc6dd10fbf_tooltip mc6dd10fbf_s1",
-    "s2": "mc6dd10fbf_tooltip mc6dd10fbf_s2",
-    "s3": "mc6dd10fbf_tooltip mc6dd10fbf_s3",
-    "s4": "mc6dd10fbf_tooltip mc6dd10fbf_s4",
-    "s5": "mc6dd10fbf_tooltip mc6dd10fbf_s5"
+    "tooltip": "mcc875d4e3_tooltip",
+    "s0": "mcc875d4e3_tooltip mcc875d4e3_s0",
+    "s1": "mcc875d4e3_tooltip mcc875d4e3_s1",
+    "s2": "mcc875d4e3_tooltip mcc875d4e3_s2",
+    "s3": "mcc875d4e3_tooltip mcc875d4e3_s3",
+    "s4": "mcc875d4e3_tooltip mcc875d4e3_s4",
+    "s5": "mcc875d4e3_tooltip mcc875d4e3_s5"
 });
-var tooltip = "mc6dd10fbf_tooltip";
-var s0 = "mc6dd10fbf_tooltip mc6dd10fbf_s0";
-var s1 = "mc6dd10fbf_tooltip mc6dd10fbf_s1";
-var s2 = "mc6dd10fbf_tooltip mc6dd10fbf_s2";
-var s3 = "mc6dd10fbf_tooltip mc6dd10fbf_s3";
-var s4 = "mc6dd10fbf_tooltip mc6dd10fbf_s4";
-var s5 = "mc6dd10fbf_tooltip mc6dd10fbf_s5";
+var tooltip = "mcc875d4e3_tooltip";
+var s0 = "mcc875d4e3_tooltip mcc875d4e3_s0";
+var s1 = "mcc875d4e3_tooltip mcc875d4e3_s1";
+var s2 = "mcc875d4e3_tooltip mcc875d4e3_s2";
+var s3 = "mcc875d4e3_tooltip mcc875d4e3_s3";
+var s4 = "mcc875d4e3_tooltip mcc875d4e3_s4";
+var s5 = "mcc875d4e3_tooltip mcc875d4e3_s5";
 
 /***/ }),
 /* 32 */
@@ -1587,22 +1589,22 @@ const hasClose = [];
 /* unused harmony export close */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "animDur": "0.3s",
-    "modal": "mc744a0be3_modal",
-    "modalIn": "mc744a0be3_modal mc744a0be3_modalIn",
-    "modalOut": "mc744a0be3_modal mc744a0be3_modalOut",
-    "content": "mc744a0be3_content",
-    "contentIn": "mc744a0be3_content mc744a0be3_contentIn",
-    "contentOut": "mc744a0be3_content mc744a0be3_contentOut",
-    "close": "mc744a0be3_close"
+    "modal": "mcb0630254_modal",
+    "modalIn": "mcb0630254_modal mcb0630254_modalIn",
+    "modalOut": "mcb0630254_modal mcb0630254_modalOut",
+    "content": "mcb0630254_content",
+    "contentIn": "mcb0630254_content mcb0630254_contentIn",
+    "contentOut": "mcb0630254_content mcb0630254_contentOut",
+    "close": "mcb0630254_close"
 });
 var animDur = "0.3s";
-var modal = "mc744a0be3_modal";
-var modalIn = "mc744a0be3_modal mc744a0be3_modalIn";
-var modalOut = "mc744a0be3_modal mc744a0be3_modalOut";
-var content = "mc744a0be3_content";
-var contentIn = "mc744a0be3_content mc744a0be3_contentIn";
-var contentOut = "mc744a0be3_content mc744a0be3_contentOut";
-var close = "mc744a0be3_close";
+var modal = "mcb0630254_modal";
+var modalIn = "mcb0630254_modal mcb0630254_modalIn";
+var modalOut = "mcb0630254_modal mcb0630254_modalOut";
+var content = "mcb0630254_content";
+var contentIn = "mcb0630254_content mcb0630254_contentIn";
+var contentOut = "mcb0630254_content mcb0630254_contentOut";
+var close = "mcb0630254_close";
 
 /***/ }),
 /* 35 */
@@ -1662,17 +1664,17 @@ var close = "mc744a0be3_close";
 /* unused harmony export add */
 /* unused harmony export cancel */
 /* harmony default export */ __webpack_exports__["a"] = ({
-    "label": "mc0ec499cf_label",
-    "input": "mc0ec499cf_input",
-    "buttons": "mc0ec499cf_buttons",
-    "add": "mc70832d4a_button mc0ec499cf_add",
-    "cancel": "mc70832d4a_button mc0ec499cf_cancel"
+    "label": "mc04421772_label",
+    "input": "mc04421772_input",
+    "buttons": "mc04421772_buttons",
+    "add": "mc70832d4a_button mc04421772_add",
+    "cancel": "mc70832d4a_button mc04421772_cancel"
 });
-var label = "mc0ec499cf_label";
-var input = "mc0ec499cf_input";
-var buttons = "mc0ec499cf_buttons";
-var add = "mc70832d4a_button mc0ec499cf_add";
-var cancel = "mc70832d4a_button mc0ec499cf_cancel";
+var label = "mc04421772_label";
+var input = "mc04421772_input";
+var buttons = "mc04421772_buttons";
+var add = "mc70832d4a_button mc04421772_add";
+var cancel = "mc70832d4a_button mc04421772_cancel";
 
 /***/ }),
 /* 37 */
@@ -1742,30 +1744,30 @@ function addBr(text) {
 /* unused harmony export s5 */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "animDur": "0.3s",
-    "lyredit": "mce5e74019_lyredit",
-    "lyrics": "mce5e74019_lyrics",
-    "lyricsEdit": "mce5e74019_lyrics mce5e74019_lyricsEdit",
-    "line": "mce5e74019_line",
-    "lineSelected": "mce5e74019_line mce5e74019_lineSelected",
-    "s0": "mce5e74019_line mce5e74019_s0",
-    "s1": "mce5e74019_line mce5e74019_s1",
-    "s2": "mce5e74019_line mce5e74019_s2",
-    "s3": "mce5e74019_line mce5e74019_s3",
-    "s4": "mce5e74019_line mce5e74019_s4",
-    "s5": "mce5e74019_line mce5e74019_s5"
+    "lyredit": "mc9673f5d0_lyredit",
+    "lyrics": "mc9673f5d0_lyrics",
+    "lyricsEdit": "mc9673f5d0_lyrics mc9673f5d0_lyricsEdit",
+    "line": "mc9673f5d0_line",
+    "lineSelected": "mc9673f5d0_line mc9673f5d0_lineSelected",
+    "s0": "mc9673f5d0_line mc9673f5d0_s0",
+    "s1": "mc9673f5d0_line mc9673f5d0_s1",
+    "s2": "mc9673f5d0_line mc9673f5d0_s2",
+    "s3": "mc9673f5d0_line mc9673f5d0_s3",
+    "s4": "mc9673f5d0_line mc9673f5d0_s4",
+    "s5": "mc9673f5d0_line mc9673f5d0_s5"
 });
 var animDur = "0.3s";
-var lyredit = "mce5e74019_lyredit";
-var lyrics = "mce5e74019_lyrics";
-var lyricsEdit = "mce5e74019_lyrics mce5e74019_lyricsEdit";
-var line = "mce5e74019_line";
-var lineSelected = "mce5e74019_line mce5e74019_lineSelected";
-var s0 = "mce5e74019_line mce5e74019_s0";
-var s1 = "mce5e74019_line mce5e74019_s1";
-var s2 = "mce5e74019_line mce5e74019_s2";
-var s3 = "mce5e74019_line mce5e74019_s3";
-var s4 = "mce5e74019_line mce5e74019_s4";
-var s5 = "mce5e74019_line mce5e74019_s5";
+var lyredit = "mc9673f5d0_lyredit";
+var lyrics = "mc9673f5d0_lyrics";
+var lyricsEdit = "mc9673f5d0_lyrics mc9673f5d0_lyricsEdit";
+var line = "mc9673f5d0_line";
+var lineSelected = "mc9673f5d0_line mc9673f5d0_lineSelected";
+var s0 = "mc9673f5d0_line mc9673f5d0_s0";
+var s1 = "mc9673f5d0_line mc9673f5d0_s1";
+var s2 = "mc9673f5d0_line mc9673f5d0_s2";
+var s3 = "mc9673f5d0_line mc9673f5d0_s3";
+var s4 = "mc9673f5d0_line mc9673f5d0_s4";
+var s5 = "mc9673f5d0_line mc9673f5d0_s5";
 
 /***/ }),
 /* 40 */
@@ -1808,16 +1810,16 @@ var s5 = "mce5e74019_line mce5e74019_s5";
 /* unused harmony export textarea */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "animDur": "0.3s",
-    "edit": "mc68640514_edit",
-    "editIn": "mc68640514_edit mc68640514_editIn",
-    "editOut": "mc68640514_edit mc68640514_editOut",
-    "textarea": "mc68640514_textarea"
+    "edit": "mc7d4b81c4_edit",
+    "editIn": "mc7d4b81c4_edit mc7d4b81c4_editIn",
+    "editOut": "mc7d4b81c4_edit mc7d4b81c4_editOut",
+    "textarea": "mc7d4b81c4_textarea"
 });
 var animDur = "0.3s";
-var edit = "mc68640514_edit";
-var editIn = "mc68640514_edit mc68640514_editIn";
-var editOut = "mc68640514_edit mc68640514_editOut";
-var textarea = "mc68640514_textarea";
+var edit = "mc7d4b81c4_edit";
+var editIn = "mc7d4b81c4_edit mc7d4b81c4_editIn";
+var editOut = "mc7d4b81c4_edit mc7d4b81c4_editOut";
+var textarea = "mc7d4b81c4_textarea";
 
 /***/ }),
 /* 42 */
@@ -1851,10 +1853,10 @@ var textarea = "mc68640514_textarea";
 /* unused harmony export error */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "fontSerif": "'Slabo 27px', serif",
-    "error": "mca25e1e8f_error"
+    "error": "mc1fc74cfc_error"
 });
 var fontSerif = "'Slabo 27px', serif";
-var error = "mca25e1e8f_error";
+var error = "mc1fc74cfc_error";
 
 /***/ }),
 /* 44 */
@@ -1937,32 +1939,32 @@ var error = "mca25e1e8f_error";
     "fontSans": "Raleway, sans-serif",
     "fontSerif": "'Slabo 27px', serif",
     "animDur": "0.3s",
-    "home": "mc63387611_home",
-    "logoAndType": "mc63387611_logoAndType",
-    "title": "mc70832d4a_title mc63387611_title",
-    "subTitle": "mc63387611_subTitle",
-    "center": "mc63387611_center",
-    "dash": "mc63387611_dash",
-    "textarea": "mc63387611_textarea",
-    "textareaFocused": "mc63387611_textarea mc63387611_textareaFocused",
-    "btnWrap": "mc63387611_btnWrap",
-    "loadBtn": "mc70832d4a_button mc63387611_loadBtn",
-    "list": "mc63387611_list"
+    "home": "mc9f90d7fb_home",
+    "logoAndType": "mc9f90d7fb_logoAndType",
+    "title": "mc70832d4a_title mc9f90d7fb_title",
+    "subTitle": "mc9f90d7fb_subTitle",
+    "center": "mc9f90d7fb_center",
+    "dash": "mc9f90d7fb_dash",
+    "textarea": "mc9f90d7fb_textarea",
+    "textareaFocused": "mc9f90d7fb_textarea mc9f90d7fb_textareaFocused",
+    "btnWrap": "mc9f90d7fb_btnWrap",
+    "loadBtn": "mc70832d4a_button mc9f90d7fb_loadBtn",
+    "list": "mc9f90d7fb_list"
 });
 var fontSans = "Raleway, sans-serif";
 var fontSerif = "'Slabo 27px', serif";
 var animDur = "0.3s";
-var home = "mc63387611_home";
-var logoAndType = "mc63387611_logoAndType";
-var title = "mc70832d4a_title mc63387611_title";
-var subTitle = "mc63387611_subTitle";
-var center = "mc63387611_center";
-var dash = "mc63387611_dash";
-var textarea = "mc63387611_textarea";
-var textareaFocused = "mc63387611_textarea mc63387611_textareaFocused";
-var btnWrap = "mc63387611_btnWrap";
-var loadBtn = "mc70832d4a_button mc63387611_loadBtn";
-var list = "mc63387611_list";
+var home = "mc9f90d7fb_home";
+var logoAndType = "mc9f90d7fb_logoAndType";
+var title = "mc70832d4a_title mc9f90d7fb_title";
+var subTitle = "mc9f90d7fb_subTitle";
+var center = "mc9f90d7fb_center";
+var dash = "mc9f90d7fb_dash";
+var textarea = "mc9f90d7fb_textarea";
+var textareaFocused = "mc9f90d7fb_textarea mc9f90d7fb_textareaFocused";
+var btnWrap = "mc9f90d7fb_btnWrap";
+var loadBtn = "mc70832d4a_button mc9f90d7fb_loadBtn";
+var list = "mc9f90d7fb_list";
 
 /***/ }),
 /* 46 */
