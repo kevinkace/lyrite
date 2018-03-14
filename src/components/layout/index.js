@@ -12,16 +12,20 @@ export default {
     view : (vnode) =>
         m("div",
             vnode.attrs.header ? m(header) : null,
+
             vnode.children,
-            m("a", {
-                    href : state.githubHref,
+
+            m("div", { class : css.bug },
+                m("a", {
+                    href  : state.githubHref,
                     class : css.github
-                },
-                m.trust(ghLogo)
+                }, m.trust(ghLogo)),
+
+                m("div", {
+                    class : css.ver
+                }, state.ver.tag)
             ),
 
-            state.modal ?
-                m(modal) :
-                null
+            state.modal ? m(modal) : null
         )
 };

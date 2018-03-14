@@ -13,6 +13,8 @@ const State = {
     font   : { size : "1.3" },
     cols   : { count : 2 },
 
+    ver, // eslint-disable-line no-undef
+
     error : (err) => {
         console.error(err);
     },

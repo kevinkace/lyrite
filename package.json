@@ -27,6 +27,7 @@
     "eol": "^0.9.1",
     "eslint": "^4.18.0",
     "file-loader": "^1.1.11",
+    "git-rev": "^0.2.1",
     "html-webpack-include-assets-plugin": "^1.0.2",
     "html-webpack-plugin": "^2.30.1",
     "html-webpack-template": "^6.1.0",

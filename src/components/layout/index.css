@@ -1,16 +1,26 @@
 @value animDur from "../../index.css";
 
-.github {
-    display: block;
+.bug {
     position: fixed;
     right: 1em;
     bottom: 1em;
+}
+
+.github {
+    display: block;
     height: 2em;
     width: 2em;
+    margin: 0 auto 0.2em;
 
     transition: fill animDur;
 
     &:hover {
         fill: #fff9;
     }
+}
+
+.ver {
+    opacity: 0.3;
+
+    font: normal 0.8em/1 monospace;
 }

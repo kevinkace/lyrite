@@ -4,6 +4,8 @@ const HtmlWebpackPlugin  = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
 
+const git = require("git-rev");
+
 const CSSPlugin = require("modular-css-webpack/plugin");
 const postcssNested = require("postcss-nested");
 
@@ -15,6 +17,24 @@ const assets = [{
         "https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js",
         "/index.css"
     ];
+
+const ver = {};
+
+git.short(function (str) {
+    ver.short = str;
+});
+
+git.long(function (str) {
+    ver.long = str;
+});
+
+git.branch(function (str) {
+    ver.branch = str;
+});
+
+git.tag(function (str) {
+    ver.tag = str;
+});
 
 module.exports = {
     entry     : "./src/index.js",
@@ -52,7 +72,8 @@ module.exports = {
         // Tells webpack to use this plugin to generate the output
         new HtmlWebpackPlugin({
             title      : "Lyrite",
-            template   : "./src/index.ejs"
+            template   : "./src/index.ejs",
+            ver
         }),
         new HtmlWebpackIncludeAssetsPlugin({
             assets,       // Include assets into template
