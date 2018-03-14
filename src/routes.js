@@ -12,21 +12,13 @@ import home from "./components/home";
 export default {
     "/"      : {
         onmatch : () => {
-            if(!state.songs) {
-                state.action("LOAD DEFAULT SONGS");
-            } else {
-                state.action("CLOSE SONG");
-            }
+            state.action("CLOSE SONG");
         },
         render : () => m(layout, m(home))
     },
 
     "/:slug" : {
         onmatch : (args) => {
-            if(!state.songs) {
-                state.action("LOAD DEFAULT SONGS");
-            }
-
             let songIdx = state.action("GET SONG IDX FROM SLUG", args.slug);
 
             if(!songIdx && songIdx !== 0) {
