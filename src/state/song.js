@@ -55,8 +55,12 @@ export default (State) => ({
 
     "ADD DEFAULT SONGS" : () => {
         songs.forEach((songString) => {
-            State.action("LOAD SONG", getSongParts(songString));
+            State.action("ADD SONG", getSongParts(songString));
         });
+    },
+
+    "ADD SONG" : (songObj) => {
+
     },
 
     "OPEN SONG" : (idx) => {
