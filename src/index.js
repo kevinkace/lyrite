@@ -12,9 +12,12 @@ import "./favicon.ico";
 
 const mountEl = document.getElementById("mount");
 
+state.debug = true;
+
 m.route.prefix("");
 
 m.route(mountEl, "/", routes);
+
 
 window.m = m;
 window.state = state;
