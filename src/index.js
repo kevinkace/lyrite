@@ -13,9 +13,9 @@ import "./favicon.ico";
 const mountEl = document.getElementById("mount");
 
 state.debug = true;
+state.action("ADD DEFAULT SONGS");
 
 m.route.prefix("");
-
 m.route(mountEl, "/", routes);
 
 

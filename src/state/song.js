@@ -16,7 +16,13 @@ function parseLyricString(lyricString) {
 }
 
 function getSongParts(songString) {
-    return eol.lf(songString).split(titleSplit);
+    const parts = eol.lf(songString).split(titleSplit);
+
+    return {
+        title       : parts[0].split("\n")[0],
+        artist      : parts[0].split("\n")[1],
+        lyricString : parts[1]
+    }
 }
 
 export default (State) => ({
@@ -47,15 +53,9 @@ export default (State) => ({
         State.song.slug = slugify(State.song.title);
     },
 
-    "LOAD DEFAULT SONGS" : () => {
+    "ADD DEFAULT SONGS" : () => {
         songs.forEach((songString) => {
-            const parts = getSongParts(songString);
-
-            State.action("LOAD SONG", {
-                title       : parts[0].split("\n")[0],
-                artist      : parts[0].split("\n")[1],
-                lyricString : parts[1]
-            });
+            State.action("LOAD SONG", getSongParts(songString));
         });
     },
 
