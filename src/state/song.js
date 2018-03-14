@@ -2,6 +2,8 @@ import eol from "eol";
 import hash from "string-hash";
 import slugify from "slugify";
 
+import db from "./db";
+
 import songs from "./songs";
 
 const titleSplit = "\n\n---\n\n";
@@ -17,11 +19,13 @@ function parseLyricString(lyricString) {
 
 function getSongParts(songString) {
     const parts = eol.lf(songString).split(titleSplit);
+    const meta  = parts[0].split("\n");
 
     return {
-        title       : parts[0].split("\n")[0],
-        artist      : parts[0].split("\n")[1],
-        lyricString : parts[1]
+        title       : meta[0],
+        artist      : meta[1],
+        lyricString : parts[1],
+        slug        : slugify(meta[0])
     }
 }
 
@@ -60,7 +64,7 @@ export default (State) => ({
     },
 
     "ADD SONG" : (songObj) => {
-
+        db.set(`songs.${songObj.slug}`, songObj);
     },
 
     "OPEN SONG" : (idx) => {
