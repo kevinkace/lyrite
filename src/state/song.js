@@ -2,20 +2,9 @@ import eol from "eol";
 import hash from "string-hash";
 import slugify from "slugify";
 
-const titleSplit = "\n\n---\n\n";
+import songs from "./songs";
 
-// todo: why require
-const songs = [
-    require("../songs/smells-like-teen-spirit.txt"),
-    require("../songs/judy-is-a-punk.txt"),
-    require("../songs/hatebreeders.txt"),
-    require("../songs/gods-plan.txt"),
-    require("../songs/perfect.txt"),
-    require("../songs/finesse-remix.txt"),
-    require("../songs/son-of-a-gun.txt"),
-    require("../songs/sparks.txt"),
-    require("../songs/black-hole-sun.txt")
-];
+const titleSplit = "\n\n---\n\n";
 
 function parseLyricString(lyricString) {
     return lyricString
