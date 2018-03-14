@@ -94,6 +94,8 @@ const State = {
     font: { size: "1.3" },
     cols: { count: 2 },
 
+    ver, // eslint-disable-line no-undef
+
     error: err => {
         console.error(err);
     },
@@ -1202,10 +1204,12 @@ module.exports = "Black Hole sun\nSoundgarden\n\n---\n\nIn my eyes, indisposed\n
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", vnode.attrs.header ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__header__["a" /* default */]) : null, vnode.children, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
+    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", vnode.attrs.header ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__header__["a" /* default */]) : null, vnode.children, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].bug }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
         href: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].githubHref,
         class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].github
-    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_5__icons_github_svg___default.a)), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].modal ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_4__modal__["a" /* default */]) : null)
+    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_5__icons_github_svg___default.a)), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", {
+        class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].ver
+    }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].ver.tag)), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].modal ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_4__modal__["a" /* default */]) : null)
 });
 
 /***/ }),
@@ -1214,13 +1218,19 @@ module.exports = "Black Hole sun\nSoundgarden\n\n---\n\nIn my eyes, indisposed\n
 
 "use strict";
 /* unused harmony export animDur */
+/* unused harmony export bug */
 /* unused harmony export github */
+/* unused harmony export ver */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "animDur": "0.3s",
-    "github": "mc55d93723_github"
+    "bug": "mc55d93723_bug",
+    "github": "mc55d93723_github",
+    "ver": "mc55d93723_ver"
 });
 var animDur = "0.3s";
+var bug = "mc55d93723_bug";
 var github = "mc55d93723_github";
+var ver = "mc55d93723_ver";
 
 /***/ }),
 /* 27 */

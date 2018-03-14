@@ -346,19 +346,27 @@ svg {
             font-size: 0.8em;
         }
 /*src/components/layout/index.css */
-.mc55d93723_github {
-    display: block;
+.mc55d93723_bug {
     position: fixed;
     right: 1em;
     bottom: 1em;
+}
+.mc55d93723_github {
+    display: block;
     height: 2em;
     width: 2em;
+    margin: 0 auto 0.2em;
 
     transition: fill 0.3s;
 }
 .mc55d93723_github:hover {
         fill: #fff9;
     }
+.mc55d93723_ver {
+    opacity: 0.3;
+
+    font: normal 0.8em/1 monospace;
+}
 /*src/components/lyrics/edit.css */
 .mc7d4b81c4_edit {
     position: absolute;
