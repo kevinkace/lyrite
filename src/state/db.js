@@ -1,27 +1,16 @@
 import localforage from "localforage";
 import { get, set } from "object-path";
 
+const key = "store";
+
 export default {
-    set : (path, data) => {
-        const pathParts = path.split(".");
+    set : (path, data) =>
+        localforage.getItem(key)
+            .then((store) => {
+                store = store || {};
 
-        if(pathParts.length === 1) {
-            return localforage.setItem(path, data);
-        }
+                set(store, path, data);
 
-        return localforage.getItem(pathParts[0])
-            .then((top) => {
-                if(!top || typeof top !== "object") {
-                    console.error("Lost data maybe");
-
-                    top = {};
-                }
-
-                set(top, pathParts.slice(1), data);
-
-                return localforage.setItem(pathParts[0], top);
-            });
-
-
-    }
+                return localforage.setItem(key, store);
+            })
 };
