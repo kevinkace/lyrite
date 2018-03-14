@@ -1,5 +1,5 @@
-@value * as colors from "../palette.css";
-@value fontSans, fontSerif, animDur from "../index.css";
+@value * as colors from "../../palette.css";
+@value fontSans, fontSerif, animDur from "../../index.css";
 
 .home {
     padding: 1em 0.5em 0;
@@ -22,7 +22,7 @@
 }
 
 .title {
-    composes: title from "../index.css";
+    composes: title from "../../index.css";
 
     font-size: 3em;
     font-weight: bold;
@@ -91,7 +91,7 @@
 }
 
 .loadBtn {
-    composes: button from "../index.css";
+    composes: button from "../../index.css";
 
     color: #fff !important;
     --color: colors.cta;

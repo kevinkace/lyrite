@@ -4,10 +4,10 @@ import m from "mithril";
 
 import state from "./state";
 
-import layout from "./layout";
-import lyrics from "./lyrics";
-import error from "./error";
-import home from "./home";
+import layout from "./components/layout";
+import lyrics from "./components/lyrics";
+import error from "./components/error";
+import home from "./components/home";
 
 export default {
     "/"      : {

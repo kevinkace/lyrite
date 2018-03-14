@@ -1,5 +1,5 @@
-@value * as colors from "../palette.css";
-@value animDur from "../index.css";
+@value * as colors from "../../palette.css";
+@value animDur from "../../index.css";
 
 .tools {
     position: absolute;
@@ -64,7 +64,7 @@
 }
 
 .button {
-    composes: button from "../index.css";
+    composes: button from "../../index.css";
 
     font-family: monospace;
 }

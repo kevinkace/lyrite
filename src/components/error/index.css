@@ -1,4 +1,4 @@
-@value fontSerif from "../index.css";
+@value fontSerif from "../../index.css";
 
 .error {
     margin: 1em 0;

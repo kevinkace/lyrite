@@ -1,13 +1,13 @@
 import m from "mithril";
 
-import state from "../state";
+import state from "../../state";
 
 import css from "./index.css";
 import tools from "../tools";
 
 import logo from "../icons/lyrite-logo.svg";
 
-import animResolve from "../lib/animResolve";
+import animResolve from "../../lib/animResolve";
 
 export default {
     oncreate : (vnode) => {

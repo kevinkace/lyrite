@@ -1,4 +1,4 @@
-@value * as colors from "../palette.css";
+@value * as colors from "../../palette.css";
 
 .tooltip {
     position: fixed;

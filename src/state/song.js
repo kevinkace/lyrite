@@ -4,6 +4,7 @@ import slugify from "slugify";
 
 const titleSplit = "\n\n---\n\n";
 
+// todo: why require
 const songs = [
     require("../songs/smells-like-teen-spirit.txt"),
     require("../songs/judy-is-a-punk.txt"),

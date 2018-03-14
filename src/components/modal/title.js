@@ -1,6 +1,6 @@
 import m from "mithril";
 
-import state from "../state";
+import state from "../../state";
 
 import css from "./title.css";
 

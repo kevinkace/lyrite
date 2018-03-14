@@ -1,7 +1,7 @@
 import m from "mithril";
 
-import state from "../state";
-import animResolve from "../lib/animResolve";
+import state from "../../state";
+import animResolve from "../../lib/animResolve";
 
 import css from "./index.css";
 import title from "./title";

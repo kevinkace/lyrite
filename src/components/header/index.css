@@ -1,5 +1,5 @@
-@value * as colors from "../palette.css";
-@value animDur from "../index.css";
+@value * as colors from "../../palette.css";
+@value animDur from "../../index.css";
 
 .header {
     position: relative;
@@ -62,5 +62,5 @@
 }
 
 .title {
-    composes: title from "../index.css";
+    composes: title from "../../index.css";
 }

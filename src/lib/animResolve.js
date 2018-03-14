@@ -11,6 +11,7 @@ export default function(dom, className) {
 
             resd = true;
             rej(false);
+            console.log("anim resolve timeout");
         }, MAX_TIMEOUT);
 
         dom.addEventListener("animationend", () => {

@@ -1,9 +1,9 @@
 import m from "mithril";
 
-import state from "../state";
+import state from "../../state";
 
 import css from "./edit.css";
-import animResolve from "../lib/animResolve";
+import animResolve from "../../lib/animResolve";
 
 export default {
     onbeforeremove : (vnode) =>
