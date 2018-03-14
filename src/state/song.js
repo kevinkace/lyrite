@@ -72,8 +72,13 @@ export default (State) => ({
         });
     },
 
+    // returns promise
     "ADD SONG" : (songObj) => {
-        db.set(`songs.${songObj.slug}`, songObj);
+        const songObjs = Array.isArray(songObj) ? songObj : [ songObj ];
+
+        return Promise.all(songObjs.map((songObj) =>
+            db.set(`songs.${songObj.slug}`, songObj)
+        ));
     },
 
     "OPEN SONG" : (idx) => {
