@@ -57,24 +57,26 @@ export default {
             ),
 
             // loaded songs list
-            m("div", { class : css.list },
-                m("h3", "or choose a song"),
-                state.songs ? state.songs.map((song, idx) =>
-                    m("a", {
-                            onclick : () => {
-                                console.log("open song");
-                                state.action("OPEN SONG", idx);
+            state.songs ?
+                m("div", { class : css.list },
+                    m("h3", "or choose a song"),
+                    state.songs.map((song, idx) =>
+                        m("a", {
+                                onclick : () => {
+                                    console.log("open song");
+                                    state.action("OPEN SONG", idx);
+                                },
+                                oncreate: m.route.link,
+                                href : `/${song.slug}`
                             },
-                            oncreate: m.route.link,
-                            href : `/${song.slug}`
-                        },
-                        song.title,
-                        song.artist ?
-                            m("span", " - ", song.artist ) :
-                            null
+                            song.title,
+                            song.artist ?
+                                m("span", " - ", song.artist ) :
+                                null
+                        )
                     )
-                ) : null
-            )
+                ) :
+                null
         )
     ]
 };
