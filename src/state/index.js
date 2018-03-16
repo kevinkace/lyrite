@@ -13,6 +13,7 @@ const State = {
     font   : { size : "1.3" },
     cols   : { count : 2 },
 
+    // added to script via webpack
     ver, // eslint-disable-line no-undef
 
     error : (err) => {
