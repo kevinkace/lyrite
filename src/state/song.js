@@ -72,13 +72,12 @@ export default (State) => ({
         });
     },
 
-    // returns promise
     "ADD SONG" : (songObj) => {
         const songObjs = Array.isArray(songObj) ? songObj : [ songObj ];
 
-        return Promise.all(songObjs.map((songObj) =>
+        songObjs.forEach((songObj) =>
             db.set(`songs.${songObj.slug}`, songObj)
-        ));
+        );
     },
 
     "OPEN SONG" : (idx) => {
