@@ -5,19 +5,15 @@ function DB(key) {
         throw new Error("Must provide key");
     }
 
-    localStorage.clear();
-    this.key = key;
     localStorage.setItem(key, "{}");
 
-    //   this.parsePath = (path) => path.split(".");
-
-    const _getData = () => {
-        const data = JSON.parse(localStorage.getItem(this.key));
+    function _getData() {
+        const data = JSON.parse(localStorage.getItem(key));
 
         return data;
     };
 
-    const _setData = (data) => {
+    function _setData(data) {
         return localStorage.setItem(key, JSON.stringify(data));
     };
 
