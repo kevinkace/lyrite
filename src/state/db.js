@@ -11,28 +11,28 @@ function DB(key) {
 
     //   this.parsePath = (path) => path.split(".");
 
-    this.getData = () => {
+    const _getData = () => {
         const data = JSON.parse(localStorage.getItem(this.key));
 
         return data;
     };
 
-    this.setData = (data) => {
+    const _setData = (data) => {
         return localStorage.setItem(key, JSON.stringify(data));
     };
 
     this.get = (path) => {
-        const data = this.getData();
+        const data = _getData();
 
         return get(data, path);
     };
 
     this.set = (path, newData) => {
-        const data = this.getData();
+        const data = _getData();
 
         set(data, path, newData);
 
-        return this.setData(data);
+        return _setData(data);
     };
 
     this.log = () => {
@@ -40,4 +40,28 @@ function DB(key) {
     };
 }
 
-export default DB;
+const dbs = {
+    songs : new DB("songs")
+};
+
+function parsePath(path) {
+    const parts = path.split(".");
+
+    return {
+        key : parts[0],
+        path : parts.slice(1).join(".")
+    };
+}
+
+export default {
+    get : (path) => {
+        const parsed = parsePath(path);
+
+        return dbs[parsed.key].get(parsed.path);
+    },
+    set : (path, data) => {
+        const parsed = parsePath(path);
+
+        return dbs[parsed.key].set(parsed.path, data);
+    }
+};
