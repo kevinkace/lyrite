@@ -58,20 +58,15 @@ export default (State) => ({
         State.song.slug = slugify(State.song.title);
     },
 
-    // returns promise
     "ADD DEFAULT SONGS" : () =>
-        State.action("ADD SONG", songs.map((songString) => getSongParts(songString)))
-            .then(() => {
-                m.redraw();
-            }),
+        State.action("ADD SONG", songs.map((songString) => getSongParts(songString))),
 
-    // returns promise
     "ADD SONG" : (songObj) => {
         const songObjs = Array.isArray(songObj) ? songObj : [ songObj ];
 
-        return Promise.all(songObjs.map((songObj) =>
+        songObjs.forEach((songObj) =>
             db.set(`songs.${songObj.slug}`, songObj)
-        ));
+        );
     },
 
     "OPEN SONG" : (idx) => {
