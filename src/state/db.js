@@ -1,4 +1,3 @@
-import localforage from "localforage";
 import { get, set } from "object-path";
 
 // Table class, one created for each top level
