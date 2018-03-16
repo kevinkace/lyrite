@@ -6,8 +6,6 @@ function Table(key) {
         throw new Error("Must provide key");
     }
 
-    localStorage.setItem(key, "{}");
-
     function _getData() {
         const data = JSON.parse(localStorage.getItem(key));
 
@@ -16,6 +14,11 @@ function Table(key) {
 
     function _setData(data) {
         return localStorage.setItem(key, JSON.stringify(data));
+    }
+
+
+    if(!_getData()) {
+        _setData({});
     }
 
     this.get = (path) => {
@@ -45,7 +48,7 @@ function parsePath(path) {
     const parts = path.split(".");
 
     return {
-        key : parts[0],
+        key  : parts[0],
         path : parts.slice(1).join(".")
     };
 }
