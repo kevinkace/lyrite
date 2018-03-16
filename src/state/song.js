@@ -73,11 +73,7 @@ export default (State) => ({
     },
 
     "ADD SONG" : (songObj) => {
-        const songObjs = Array.isArray(songObj) ? songObj : [ songObj ];
-
-        songObjs.forEach((songObj) =>
-            db.set(`songs.${songObj.slug}`, songObj)
-        );
+        db.set(`songs.${songObj.slug}`, songObj);
     },
 
     "OPEN SONG" : (idx) => {
