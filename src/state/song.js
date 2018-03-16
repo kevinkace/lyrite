@@ -58,15 +58,22 @@ export default (State) => ({
         State.song.slug = slugify(State.song.title);
     },
 
-    "ADD DEFAULT SONGS" : () =>
-        State.action("ADD SONG", songs.map((songString) => getSongParts(songString))),
+    "ADD DEFAULT SONGS" : () => {
+        const savedSongs = db.get("songs");
+
+        songs.forEach((songString) => {
+            const songObj = getSongParts(songString);
+
+            if(savedSongs[songObj.title]) {
+                return;
+            }
+
+            State.action("ADD SONG", songObj);
+        });
+    },
 
     "ADD SONG" : (songObj) => {
-        const songObjs = Array.isArray(songObj) ? songObj : [ songObj ];
-
-        songObjs.forEach((songObj) =>
-            db.set(`songs.${songObj.slug}`, songObj)
-        );
+        db.set(`songs.${songObj.slug}`, songObj);
     },
 
     "OPEN SONG" : (idx) => {
