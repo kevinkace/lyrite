@@ -1,6 +1,7 @@
 import { get, set } from "object-path";
 
-function DB(key) {
+// Table class, one created for each top level
+function Table(key) {
     if(!key) {
         throw new Error("Must provide key");
     }
@@ -11,11 +12,11 @@ function DB(key) {
         const data = JSON.parse(localStorage.getItem(key));
 
         return data;
-    };
+    }
 
     function _setData(data) {
         return localStorage.setItem(key, JSON.stringify(data));
-    };
+    }
 
     this.get = (path) => {
         const data = _getData();
@@ -36,8 +37,8 @@ function DB(key) {
     };
 }
 
-const dbs = {
-    songs : new DB("songs")
+const db = {
+    songs : new Table("songs")
 };
 
 function parsePath(path) {
@@ -53,11 +54,11 @@ export default {
     get : (path) => {
         const parsed = parsePath(path);
 
-        return dbs[parsed.key].get(parsed.path);
+        return db[parsed.key].get(parsed.path);
     },
     set : (path, data) => {
         const parsed = parsePath(path);
 
-        return dbs[parsed.key].set(parsed.path, data);
+        return db[parsed.key].set(parsed.path, data);
     }
 };
