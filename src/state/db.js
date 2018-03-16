@@ -1,16 +1,43 @@
-import localforage from "localforage";
 import { get, set } from "object-path";
 
-const key = "store";
+function DB(key) {
+    if(!key) {
+        throw new Error("Must provide key");
+    }
 
-export default {
-    set : (path, data) =>
-        localforage.getItem(key)
-            .then((store) => {
-                store = store || {};
+    localStorage.clear();
+    this.key = key;
+    localStorage.setItem(key, "{}");
 
-                set(store, path, data);
+    //   this.parsePath = (path) => path.split(".");
 
-                return localforage.setItem(key, store);
-            })
-};
+    this.getData = () => {
+        const data = JSON.parse(localStorage.getItem(this.key));
+
+        return data;
+    };
+
+    this.setData = (data) => {
+        return localStorage.setItem(key, JSON.stringify(data));
+    };
+
+    this.get = (path) => {
+        const data = this.getData();
+
+        return get(data, path);
+    };
+
+    this.set = (path, newData) => {
+        const data = this.getData();
+
+        set(data, path, newData);
+
+        return this.setData(data);
+    };
+
+    this.log = () => {
+        console.log(localStorage.getItem(key));
+    };
+}
+
+export default DB;
