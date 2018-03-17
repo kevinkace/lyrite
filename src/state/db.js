@@ -6,6 +6,7 @@ function Table(key) {
         throw new Error("Must provide key");
     }
 
+    // Private methods
     function _getData() {
         const data = JSON.parse(localStorage.getItem(key));
 
@@ -16,11 +17,12 @@ function Table(key) {
         return localStorage.setItem(key, JSON.stringify(data));
     }
 
-
+    // init if needed
     if(!_getData()) {
         _setData({});
     }
 
+    // Exposed API
     this.get = (path) => {
         const data = _getData();
 
@@ -40,10 +42,12 @@ function Table(key) {
     };
 }
 
+// create Tables
 const db = {
     songs : new Table("songs")
 };
 
+// pulls first key off path
 function parsePath(path) {
     const parts = path.split(".");
 
