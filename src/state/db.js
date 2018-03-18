@@ -53,11 +53,13 @@ function parseQueryParams(queryParams) {
     }
 
     return queryParams.split("&")
-        .map((keyVal) => {
+        .reduce((acc, keyVal) => {
             const [ key, value ] = keyVal.split("=");
 
-            return { key, value };
-        });
+            acc[key] = value || true;
+
+            return acc;
+        }, {});
 }
 
 // pulls first key off path
@@ -74,15 +76,37 @@ function parseQuery(query) {
     };
 }
 
-export default {
-    get : (path) => {
-        const parsed = parseQuery(path);
+function applyQueryParams(data, queryParams) {
+    let filtered = Object.keys(data);
 
-        return db[parsed.key].get(parsed.path);
+    Object.keys(queryParams).forEach((queryKey) => {
+        filtered = filtered.filter((slug) => data[slug][queryKey] === queryParams[queryKey]);
+    });
+
+    return filtered.reduce((acc, cur) => {
+        acc[cur] = data[cur];
+
+        return acc;
+    }, {});
+}
+
+export default {
+    get : (query) => {
+        const parsed = parseQuery(query);
+        const data = db[parsed.key].get(parsed.path);
+
+        if(!parsed.queryParams) {
+            return data;
+        }
+
+        return applyQueryParams(data, parsed.queryParams);
     },
-    set : (path, data) => {
-        const parsed = parseQuery(path);
+    set : (query, data) => {
+        const parsed = parseQuery(query);
 
         return db[parsed.key].set(parsed.path, data);
+    },
+    clear : () => {
+        localStorage.clear();
     }
 };

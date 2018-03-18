@@ -50,8 +50,8 @@ export default (State) => ({
 
     // import song
     "IMPORT SONG LYRICS" : (lyricString) => {
-        const untitledSongs = db.get("songs?untitled=true");
-        const title = `untitled ${untitledSongs.length + 1}`;
+        const untitledSongs = db.get("songs?untitled");
+        const title = `untitled ${Object.keys(untitledSongs).length + 1}`;
         const slug = slugify(title);
 
         let songObj = {
