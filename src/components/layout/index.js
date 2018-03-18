@@ -15,8 +15,15 @@ export default {
 
             vnode.children,
 
-            state.debug ?
-                m("pre", { class : css.debug }, JSON.stringify(state, null, 2)) :
+            state.debug ? [
+                    m("button", {
+                        onclick : () => {
+                            state.action("CLEAR DB");
+
+                        }
+                    }, "clear"),
+                    m("pre", { class : css.debug }, JSON.stringify(state, null, 2))
+                ] :
                 null,
 
             m("div", { class : css.bug },
