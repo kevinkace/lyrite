@@ -7,34 +7,46 @@ function Table(key) {
     }
 
     // Private methods
-    function _getData() {
+    function _getTable() {
         const data = JSON.parse(localStorage.getItem(key)) || {};
 
         return data;
     }
 
-    function _setData(data) {
+    function _setTable(data) {
         return localStorage.setItem(key, JSON.stringify(data));
     }
 
     // init table data if needed
-    if(!_getData()) {
-        _setData({});
+    if(!_getTable()) {
+        _setTable({});
     }
 
     // Exposed API
     this.get = (path) => {
-        const data = _getData();
+        const data = _getTable();
 
         return get(data, path);
     };
 
     this.set = (path, newData) => {
-        const data = _getData();
+        const data = _getTable();
 
         set(data, path, newData);
 
-        return _setData(data);
+        return _setTable(data);
+    };
+
+    this.del = (path) => {
+        const data = _getTable();
+
+        if(!path) {
+            return _setTable({});
+        }
+
+        set(data, path, undefined);
+
+        return _setTable(data);
     };
 
     this.log = () => {
@@ -93,6 +105,11 @@ function applyQueryParams(data, queryParams) {
 export default {
     get : (query) => {
         const parsed = parseQuery(query);
+
+        if(!parsed.key) {
+            return;
+        }
+
         const data = db[parsed.key].get(parsed.path);
 
         if(!parsed.queryParams) {
@@ -104,7 +121,20 @@ export default {
     set : (query, data) => {
         const parsed = parseQuery(query);
 
+        if(!parsed.key) {
+            return;
+        }
+
         return db[parsed.key].set(parsed.path, data);
+    },
+    del : (query) => {
+        const parsed = parseQuery(query);
+
+        if(!parsed.key) {
+            return;
+        }
+
+        return db[parsed.key].del(parsed.path);
     },
     clear : () => {
         localStorage.clear();

@@ -11,7 +11,7 @@ export default (State) => ({
         m.redraw();
     },
 
-    "ADD TITLE" : (title) => {
+    "ADD TITLE MODAL" : (title) => {
         State.action("SET TITLE", title);
 
         State.action("CLOSE MODAL");
