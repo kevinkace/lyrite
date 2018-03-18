@@ -66,10 +66,6 @@ export default {
                     m("h3", "or choose a song"),
                     Object.keys(vnode.state.songs).map((slug, idx) =>
                         m("a", {
-                                onclick : () => {
-                                    console.log("open song");
-                                    state.action("OPEN SONG", idx);
-                                },
                                 oncreate : m.route.link,
                                 href     : `/${vnode.state.songs[slug].slug}`
                             },
