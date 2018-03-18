@@ -1,4 +1,3 @@
-import m from "mithril";
 import eol from "eol";
 import hash from "string-hash";
 import slugify from "slugify";
