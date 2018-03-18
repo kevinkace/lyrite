@@ -11,7 +11,7 @@ const State = {
 
     styles : [ "s0", "s1", "s2", "s3", "s4", "s5" ],
     font   : { size : "1.3" },
-    cols   : { count : 2 },
+    cols   : { count : 3 },
 
     ver, // eslint-disable-line no-undef
 
