@@ -47,24 +47,41 @@ const db = {
     songs : new Table("songs")
 };
 
+function parseQueryParams(queryParams) {
+    if(typeof queryParams !== "string") {
+        return queryParams;
+    }
+
+    return queryParams.split("&")
+        .map((keyVal) => {
+            const [ key, value ] = keyVal.split("=");
+
+            return { key, value };
+        });
+}
+
 // pulls first key off path
-function parsePath(path) {
-    const parts = path.split(".");
+function parseQuery(query) {
+    const [ keyPath, queryParams ] = query.split("?");
+
+    const [ key, path ] = keyPath.split(".");
 
     return {
-        key  : parts[0],
-        path : parts.slice(1).join(".")
+        key,
+        path,
+        query       : queryParams,
+        queryParams : parseQueryParams(queryParams)
     };
 }
 
 export default {
     get : (path) => {
-        const parsed = parsePath(path);
+        const parsed = parseQuery(path);
 
         return db[parsed.key].get(parsed.path);
     },
     set : (path, data) => {
-        const parsed = parsePath(path);
+        const parsed = parseQuery(path);
 
         return db[parsed.key].set(parsed.path, data);
     }

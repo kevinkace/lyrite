@@ -18,15 +18,15 @@ function parseLyricString(lyricString) {
 }
 
 function parseSongString(songString) {
-    const parts = eol.lf(songString).split(titleSplit);
-    const meta  = parts[0].split("\n");
+    const [ meta, lyricString ] = eol.lf(songString).split(titleSplit);
+    const [ title, artist ] = meta.split("\n");
 
     return {
-        slug        : slugify(meta[0]),
-        title       : meta[0],
-        artist      : meta[1],
-        lyricString : parts[1],
-        lyrics      : parseLyricString(parts[1])
+        slug : slugify(title),
+        title,
+        artist,
+        lyricString : lyricString,
+        lyrics      : parseLyricString(lyricString)
     };
 }
 
