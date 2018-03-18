@@ -15,33 +15,34 @@ export default {
             state.action("OPEN TITLE MODAL");
         }
     },
-    view : () => m("div", { class : css.lyredit },
-        m("div", {
-                class : state.edit ? css.lyricsEdit : css.lyrics,
-                style : {
-                    fontSize    : `${state.font.size}em`,
-                    columnCount : state.cols.count
-                }
-            },
-            state.song.lyrics
-                .map((part, idx) =>
-                    m("p", {
-                            id    : part.hash,
-                            class : [
-                                state.selected === idx ? css.lineSelected : css.line,
-                                part.style ? css[`s${part.style.idx}`] : null
-                            ].join(" "),
+    view : () =>
+        m("div", { class : css.lyredit },
+            m("div", {
+                    class : state.edit ? css.lyricsEdit : css.lyrics,
+                    style : {
+                        fontSize    : `${state.font.size}em`,
+                        columnCount : state.cols.count
+                    }
+                },
+                state.song.lyrics
+                    .map((part, idx) =>
+                        m("p", {
+                                id    : part.hash,
+                                class : [
+                                    state.selected === idx ? css.lineSelected : css.line,
+                                    part.style ? css[`s${part.style.idx}`] : null
+                                ].join(" "),
 
-                            onclick : () => {
-                                state.action("CLICK LYRIC", idx);
-                            }
-                        },
+                                onclick : () => {
+                                    state.action("CLICK LYRIC", idx);
+                                }
+                            },
 
-                        m.trust(addBr(part.text))
+                            m.trust(addBr(part.text))
+                        )
                     )
-                )
-        ),
+            ),
 
-        state.edit ? m(edit) : null
-    )
+            state.edit ? m(edit) : null
+        )
 };
