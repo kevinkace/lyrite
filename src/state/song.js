@@ -68,8 +68,14 @@ export default (State) => ({
     },
 
     "SET TITLE" : (title) => {
+        const oldSlug = State.song.slug;
+
         State.song.title = title;
         State.song.slug = slugify(State.song.title);
+        delete State.song.untitled;
+
+        db.set(`songs.${State.song.slug}`, State.song);
+        db.del(`songs.${oldSlug}`);
     },
 
     "LOAD SONG BY SLUG" : (slug) => {
