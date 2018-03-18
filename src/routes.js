@@ -19,13 +19,11 @@ export default {
 
     "/:slug" : {
         onmatch : (args) => {
-            let songIdx = state.action("GET SONG IDX FROM SLUG", args.slug);
+            let song = state.action("LOAD SONG BY SLUG", args.slug);
 
-            if(!songIdx && songIdx !== 0) {
+            if(!song) {
                 return error;
             }
-
-            state.action("OPEN SONG", songIdx);
 
             return lyrics;
         },

@@ -48,7 +48,7 @@ export default {
                         m("button", {
                             class : css.loadBtn,
                             onclick : () => {
-                                let slug = state.action("LOAD SONG", vnode.state.lyricsValue);
+                                let slug = state.action("IMPORT SONG LYRICS", vnode.state.lyricsValue);
 
                                 delete vnode.state.textarea;
                                 delete vnode.state.load;

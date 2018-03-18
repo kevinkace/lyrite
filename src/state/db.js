@@ -8,7 +8,7 @@ function Table(key) {
 
     // Private methods
     function _getData() {
-        const data = JSON.parse(localStorage.getItem(key));
+        const data = JSON.parse(localStorage.getItem(key)) || {};
 
         return data;
     }
@@ -17,7 +17,7 @@ function Table(key) {
         return localStorage.setItem(key, JSON.stringify(data));
     }
 
-    // init if needed
+    // init table data if needed
     if(!_getData()) {
         _setData({});
     }
