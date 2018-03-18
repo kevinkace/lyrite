@@ -17,32 +17,32 @@ function parseLyricString(lyricString) {
         }));
 }
 
-function getSongParts(songString) {
+function parseSongString(songString) {
     const parts = eol.lf(songString).split(titleSplit);
     const meta  = parts[0].split("\n");
 
     return {
+        slug        : slugify(meta[0]),
         title       : meta[0],
         artist      : meta[1],
         lyricString : parts[1],
-        slug        : slugify(meta[0])
+        lyrics      : parseLyricString(parts[1])
     };
 }
 
 export default (State) => ({
-    // imports default songs if not in DB
+    // imports default songs to DB
     "IMPORT DEFAULT SONGS" : () => {
         const savedSongs = db.get("songs") || [];
 
+        // add each default song
         defaultSongs.forEach((songString) => {
-            const songObj = getSongParts(songString);
+            const songObj = parseSongString(songString);
 
-            // already in DB
-            if(savedSongs[songObj.slug]) {
+            // don't add if already in DB
+            if(songObj.slug in savedSongs) {
                 return;
             }
-
-            songObj.lyrics = parseLyricString(songObj.lyricString);
 
             db.set(`songs.${songObj.slug}`, songObj);
         });
@@ -54,15 +54,15 @@ export default (State) => ({
         const title = `untitled ${untitledSongs.length + 1}`;
         const slug = slugify(title);
 
-        let song = {
+        let songObj = {
+            slug,
             title,
             lyricString,
-            slug,
-            untitled : true,
-            lyrics   : parseLyricString(lyricString)
+            lyrics   : parseLyricString(lyricString),
+            untitled : true
         };
 
-        db.set(`songs.${slug}`, song);
+        db.set(`songs.${slug}`, songObj);
 
         return slug;
     },
@@ -70,10 +70,6 @@ export default (State) => ({
     "SET TITLE" : (title) => {
         State.song.title = title;
         State.song.slug = slugify(State.song.title);
-    },
-
-    "OPEN SONG" : (idx) => {
-        State.song = State.songs[idx];
     },
 
     "LOAD SONG BY SLUG" : (slug) => {
