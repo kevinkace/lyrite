@@ -64,12 +64,12 @@ export default {
 
             // loaded songs list
             vnode.state.customSongs ?
-                m(list, { songs : vnode.state.customSongs, header : "your saved songs"}) :
+                m(list, { songs : vnode.state.customSongs, header : "your songs"}) :
                 null,
 
             // loaded songs list
             vnode.state.defaultSongs ?
-                m(list, { songs : vnode.state.defaultSongs, header : "or choose a song"}) :
+                m(list, { songs : vnode.state.defaultSongs, header : "default songs"}) :
                 null
         )
     ]
