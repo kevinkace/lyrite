@@ -22,6 +22,7 @@ export default {
 
                         }
                     }, "clear"),
+
                     m("pre", { class : css.debug }, JSON.stringify(state, null, 2))
                 ] :
                 null,
