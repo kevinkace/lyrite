@@ -6,10 +6,12 @@ import db from "../../state/db";
 import css from "./index.css";
 
 import logo from "../icons/lyrite-logo.svg";
+import list from "./list";
 
 export default {
     oninit : (vnode) => {
-        vnode.state.songs = db.get("songs");
+        vnode.state.defaultSongs = db.get("songs?default=true");
+        vnode.state.customSongs = db.get("songs?default=undefined");
     },
     view : (vnode) => [
         m("div", { class : css.home },
@@ -61,21 +63,13 @@ export default {
             ),
 
             // loaded songs list
-            vnode.state.songs ?
-                m("div", { class : css.list },
-                    m("h3", "or choose a song"),
-                    Object.keys(vnode.state.songs).map((slug, idx) =>
-                        m("a", {
-                                oncreate : m.route.link,
-                                href     : `/${vnode.state.songs[slug].slug}`
-                            },
-                            vnode.state.songs[slug].title,
-                            vnode.state.songs[slug].artist ?
-                                m("span", " - ", vnode.state.songs[slug].artist ) :
-                                null
-                        )
-                    )
-                ) :
+            vnode.state.customSongs ?
+                m(list, { songs : vnode.state.customSongs, header : "your saved songs"}) :
+                null,
+
+            // loaded songs list
+            vnode.state.defaultSongs ?
+                m(list, { songs : vnode.state.defaultSongs, header : "or choose a song"}) :
                 null
         )
     ]

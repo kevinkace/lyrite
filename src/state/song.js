@@ -44,6 +44,8 @@ export default (State) => ({
                 return;
             }
 
+            songObj.default = true;
+
             db.set(`songs.${songObj.slug}`, songObj);
         });
     },
