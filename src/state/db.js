@@ -66,9 +66,17 @@ function parseQueryParams(queryParams) {
 
     return queryParams.split("&")
         .reduce((acc, keyVal) => {
-            const [ key, value ] = keyVal.split("=");
+            let [ key, value ] = keyVal.split("=");
 
-            acc[key] = value || true;
+            // value is implicit true (for a query like post?untitied)
+            if(!value) {
+                value = true;
+            } else {
+                // parse "true", "false"
+                value = parseValue(value);
+            }
+
+            acc[key] = value;
 
             return acc;
         }, {});
@@ -92,7 +100,14 @@ function applyQueryParams(data, queryParams) {
     let filtered = Object.keys(data);
 
     Object.keys(queryParams).forEach((queryKey) => {
-        filtered = filtered.filter((slug) => data[slug][queryKey] === queryParams[queryKey]);
+        filtered = filtered.filter((slug) => {
+            // special case, eg songs?untitled=undefined
+            if(queryParams[queryKey] === "undefined") {
+                return data[slug][queryKey] === undefined;
+            }
+
+            return data[slug][queryKey] === queryParams[queryKey];
+        });
     });
 
     return filtered.reduce((acc, cur) => {
@@ -100,6 +115,17 @@ function applyQueryParams(data, queryParams) {
 
         return acc;
     }, {});
+}
+
+function parseValue(value) {
+    if(value === "true") {
+        value = true;
+    } else if(value === "false") {
+        value = false;
+    }
+    // todo: int, float
+
+    return value;
 }
 
 export default {
