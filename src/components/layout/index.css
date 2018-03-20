@@ -25,6 +25,12 @@
     font: normal 0.8em/1 monospace;
 }
 
+.clear {
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+}
+
 .debug {
     position: fixed;
     top: 0;

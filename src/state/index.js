@@ -12,8 +12,8 @@ const State = {
     githubHref : "https://github.com/kevinkace/lyrite",
 
     styles : [ "s0", "s1", "s2", "s3", "s4", "s5" ],
-    font   : { size : "1.3" },
-    cols   : { count : 2 },
+    font   : { size : 1.3 },
+    cols   : { count : 3 },
 
     // added to doc in script via webpack
     ver, // eslint-disable-line no-undef

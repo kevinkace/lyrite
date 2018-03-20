@@ -17,6 +17,7 @@ export default {
 
             state.debug ? [
                     m("button", {
+                        class   : css.clear,
                         onclick : () => {
                             state.action("CLEAR DB");
 

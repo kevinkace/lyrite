@@ -63,12 +63,12 @@ export default {
             ),
 
             // loaded songs list
-            vnode.state.customSongs ?
+            Object.keys(vnode.state.customSongs).length ?
                 m(list, { songs : vnode.state.customSongs, header : "your songs"}) :
                 null,
 
             // loaded songs list
-            vnode.state.defaultSongs ?
+            Object.keys(vnode.state.defaultSongs).length ?
                 m(list, { songs : vnode.state.defaultSongs, header : "default songs"}) :
                 null
         )
