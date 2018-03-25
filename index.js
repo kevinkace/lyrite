@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -76,9 +76,12 @@ module.exports = m;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tools__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__song__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tools__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__song__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__db__ = __webpack_require__(2);
+
+
 
 
 
@@ -91,9 +94,10 @@ const State = {
     githubHref: "https://github.com/kevinkace/lyrite",
 
     styles: ["s0", "s1", "s2", "s3", "s4", "s5"],
-    font: { size: "1.3" },
+    font: { size: 1.3 },
     cols: { count: 3 },
 
+    // added to doc in script via webpack
     ver, // eslint-disable-line no-undef
 
     error: err => {
@@ -113,7 +117,11 @@ const State = {
     }
 };
 
-State.actions = Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_1__tools__["a" /* default */])(State), Object(__WEBPACK_IMPORTED_MODULE_2__song__["a" /* default */])(State), Object(__WEBPACK_IMPORTED_MODULE_3__modal__["a" /* default */])(State));
+State.actions = Object.assign({
+    "CLEAR DB": () => {
+        __WEBPACK_IMPORTED_MODULE_4__db__["a" /* default */].clear();
+    }
+}, Object(__WEBPACK_IMPORTED_MODULE_1__tools__["a" /* default */])(State), Object(__WEBPACK_IMPORTED_MODULE_2__song__["a" /* default */])(State), Object(__WEBPACK_IMPORTED_MODULE_3__modal__["a" /* default */])(State));
 State.action = (name, value) => State.actions[name](value);
 
 window.state = State;
@@ -122,6 +130,181 @@ window.state = State;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_object_path__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_object_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_object_path__);
+
+
+// Table class, one created for each top level
+function Table(key) {
+    if (!key) {
+        throw new Error("Must provide key");
+    }
+
+    // Private methods
+    function _getTable() {
+        const data = JSON.parse(localStorage.getItem(key)) || {};
+
+        return data;
+    }
+
+    function _setTable(data) {
+        return localStorage.setItem(key, JSON.stringify(data));
+    }
+
+    // init table data if needed
+    if (!_getTable()) {
+        _setTable({});
+    }
+
+    // Exposed API
+    this.get = path => {
+        const data = _getTable();
+
+        return Object(__WEBPACK_IMPORTED_MODULE_0_object_path__["get"])(data, path);
+    };
+
+    this.set = (path, newData) => {
+        const data = _getTable();
+
+        Object(__WEBPACK_IMPORTED_MODULE_0_object_path__["set"])(data, path, newData);
+
+        return _setTable(data);
+    };
+
+    this.del = path => {
+        const data = _getTable();
+
+        if (!path) {
+            return _setTable({});
+        }
+
+        Object(__WEBPACK_IMPORTED_MODULE_0_object_path__["set"])(data, path, undefined);
+
+        return _setTable(data);
+    };
+
+    this.log = () => {
+        console.log(localStorage.getItem(key));
+    };
+}
+
+// create Tables
+const db = {
+    songs: new Table("songs")
+};
+
+function parseQueryParams(queryParams) {
+    if (typeof queryParams !== "string") {
+        return queryParams;
+    }
+
+    return queryParams.split("&").reduce((acc, keyVal) => {
+        let [key, value] = keyVal.split("=");
+
+        // value is implicit true (for a query like post?untitied)
+        if (!value) {
+            value = true;
+        } else {
+            // parse "true", "false"
+            value = parseValue(value);
+        }
+
+        acc[key] = value;
+
+        return acc;
+    }, {});
+}
+
+// pulls first key off path
+function parseQuery(query) {
+    const [keyPath, queryParams] = query.split("?");
+
+    const [key, path] = keyPath.split(".");
+
+    return {
+        key,
+        path,
+        query: queryParams,
+        queryParams: parseQueryParams(queryParams)
+    };
+}
+
+function applyQueryParams(data, queryParams) {
+    let filtered = Object.keys(data);
+
+    Object.keys(queryParams).forEach(queryKey => {
+        filtered = filtered.filter(slug => {
+            // special case, eg songs?untitled=undefined
+            if (queryParams[queryKey] === "undefined") {
+                return data[slug][queryKey] === undefined;
+            }
+
+            return data[slug][queryKey] === queryParams[queryKey];
+        });
+    });
+
+    return filtered.reduce((acc, cur) => {
+        acc[cur] = data[cur];
+
+        return acc;
+    }, {});
+}
+
+function parseValue(value) {
+    if (value === "true") {
+        value = true;
+    } else if (value === "false") {
+        value = false;
+    }
+    // todo: int, float
+
+    return value;
+}
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    get: query => {
+        const parsed = parseQuery(query);
+
+        if (!parsed.key) {
+            return;
+        }
+
+        const data = db[parsed.key].get(parsed.path);
+
+        if (!parsed.queryParams) {
+            return data;
+        }
+
+        return applyQueryParams(data, parsed.queryParams);
+    },
+    set: (query, data) => {
+        const parsed = parseQuery(query);
+
+        if (!parsed.key) {
+            return;
+        }
+
+        return db[parsed.key].set(parsed.path, data);
+    },
+    del: query => {
+        const parsed = parseQuery(query);
+
+        if (!parsed.key) {
+            return;
+        }
+
+        return db[parsed.key].del(parsed.path);
+    },
+    clear: () => {
+        localStorage.clear();
+    }
+});
+
+/***/ }),
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -155,208 +338,7 @@ const MAX_TIMEOUT = 1000;
 });
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n    <title>lyrite-logo-vector-01-01</title>\n\n    <path class=\"cls-2\" d=\"M28.12,28.15c-6.53-1.22-.9-.16-7.15-1.36V4.35L7,2V26.92L28.12,30.5C28.11,28.84,28.1,29.72,28.12,28.15Z\"/>\n</svg>\n"
-
-/***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_minireset_css__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index_css__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mithril__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_mithril__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__favicon_ico__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__favicon_ico___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__favicon_ico__);
-
-
-
-
-
-
-
-
-
-
-
-
-const mountEl = document.getElementById("mount");
-
-__WEBPACK_IMPORTED_MODULE_2_mithril___default.a.route.prefix("");
-
-__WEBPACK_IMPORTED_MODULE_2_mithril___default.a.route(mountEl, "/", __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */]);
-
-window.m = __WEBPACK_IMPORTED_MODULE_2_mithril___default.a;
-window.state = __WEBPACK_IMPORTED_MODULE_4__state__["a" /* default */];
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony default export */ var _unused_webpack_default_export = ({});
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export fontSans */
-/* unused harmony export fontSerif */
-/* unused harmony export animDur */
-/* unused harmony export mount */
-/* unused harmony export button */
-/* unused harmony export title */
-/* unused harmony default export */ var _unused_webpack_default_export = ({
-    "fontSans": "Raleway, sans-serif",
-    "fontSerif": "'Slabo 27px', serif",
-    "animDur": "0.3s",
-    "mount": "mount",
-    "button": "mc70832d4a_button",
-    "title": "mc70832d4a_title"
-});
-var fontSans = "Raleway, sans-serif";
-var fontSerif = "'Slabo 27px', serif";
-var animDur = "0.3s";
-var mount = "mount";
-var button = "mc70832d4a_button";
-var title = "mc70832d4a_title";
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_layout__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lyrics__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_error__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_home__ = __webpack_require__(45);
-
-
-
-
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    "/": {
-        onmatch: () => {
-            if (!__WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].songs) {
-                __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("LOAD DEFAULT SONGS");
-            } else {
-                __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("CLOSE SONG");
-            }
-        },
-        render: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_2__components_layout__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_5__components_home__["a" /* default */]))
-    },
-
-    "/:slug": {
-        onmatch: args => {
-            if (!__WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].songs) {
-                __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("LOAD DEFAULT SONGS");
-            }
-
-            let songIdx = __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("GET SONG IDX FROM SLUG", args.slug);
-
-            if (!songIdx && songIdx !== 0) {
-                return __WEBPACK_IMPORTED_MODULE_4__components_error__["a" /* default */];
-            }
-
-            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("OPEN SONG", songIdx);
-
-            return __WEBPACK_IMPORTED_MODULE_3__components_lyrics__["a" /* default */];
-        },
-        render: comp => __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_2__components_layout__["a" /* default */], { header: true }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()(comp.tag))
-    }
-});
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_object_path__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_object_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_object_path__);
-
-
-/* harmony default export */ __webpack_exports__["a"] = (State => ({
-    "CLICK LYRIC": idx => {
-        const lineStyleIsSetStyle = Object(__WEBPACK_IMPORTED_MODULE_0_object_path__["get"])(State, "style.idx") === Object(__WEBPACK_IMPORTED_MODULE_0_object_path__["get"])(State, `song.lyrics.${idx}.style.idx`);
-
-        // Deselect lyric
-        // selected lyric without a style set
-        if (State.selected === idx && (!State.style || lineStyleIsSetStyle)) {
-            delete State.selected;
-
-            return;
-        }
-
-        // Always set selected otherwise
-        State.selected = idx;
-
-        if (!State.style) {
-            return;
-        }
-
-        // color
-        State.action("COLOR SELECTED LYRIC", State.style.idx);
-
-        return;
-    },
-
-    "CLICK STYLE": idx => {
-        State.style = { idx };
-
-        // Clicking first style after opening tools
-        if (!State.tooltip) {
-            // create tt obj
-            State.tooltip = { style: {} };
-
-            // add listing for tt position
-            window.addEventListener("mousemove", State.events.mousemove);
-        }
-
-        // Nothing is selected so don"t color anything
-        if (!State.selected && State.selected !== 0) {
-            return;
-        }
-
-        // Color selected lyrics
-        State.action("COLOR SELECTED LYRIC", idx);
-
-        delete State.selected;
-    },
-
-    "COLOR SELECTED LYRIC": idx => {
-        State.song.lyrics[State.selected].style = { idx };
-    },
-
-    "HIDE TOOLS": () => {
-        delete State.selected;
-        delete State.style;
-        delete State.tooltip;
-
-        State.action("CLOSE EDIT CURRENT SONG");
-
-        window.removeEventListener("mousemove", State.events.mousemove);
-    }
-}));
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory){
@@ -657,17 +639,205 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n    <title>lyrite-logo-vector-01-01</title>\n\n    <path class=\"cls-2\" d=\"M28.12,28.15c-6.53-1.22-.9-.16-7.15-1.36V4.35L7,2V26.92L28.12,30.5C28.11,28.84,28.1,29.72,28.12,28.15Z\"/>\n</svg>\n"
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_minireset_css__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index_css__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mithril__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_mithril__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__state__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__favicon_ico__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__favicon_ico___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__favicon_ico__);
+
+
+
+
+
+
+
+
+
+
+
+
+const mountEl = document.getElementById("mount");
+
+// state.debug = true;
+__WEBPACK_IMPORTED_MODULE_4__state__["a" /* default */].action("IMPORT DEFAULT SONGS");
+
+__WEBPACK_IMPORTED_MODULE_2_mithril___default.a.route.prefix("");
+__WEBPACK_IMPORTED_MODULE_2_mithril___default.a.route(mountEl, "/", __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */]);
+
+window.m = __WEBPACK_IMPORTED_MODULE_2_mithril___default.a;
+window.state = __WEBPACK_IMPORTED_MODULE_4__state__["a" /* default */];
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony default export */ var _unused_webpack_default_export = ({});
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export fontSans */
+/* unused harmony export fontSerif */
+/* unused harmony export animDur */
+/* unused harmony export mount */
+/* unused harmony export button */
+/* unused harmony export title */
+/* unused harmony default export */ var _unused_webpack_default_export = ({
+    "fontSans": "Raleway, sans-serif",
+    "fontSerif": "'Slabo 27px', serif",
+    "animDur": "0.3s",
+    "mount": "mount",
+    "button": "mc70832d4a_button",
+    "title": "mc70832d4a_title"
+});
+var fontSans = "Raleway, sans-serif";
+var fontSerif = "'Slabo 27px', serif";
+var animDur = "0.3s";
+var mount = "mount";
+var button = "mc70832d4a_button";
+var title = "mc70832d4a_title";
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_layout__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lyrics__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_error__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_home__ = __webpack_require__(46);
+
+
+
+
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    "/": {
+        onmatch: () => {
+            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("CLOSE SONG");
+        },
+        render: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_2__components_layout__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_5__components_home__["a" /* default */]))
+    },
+
+    "/:slug": {
+        onmatch: args => __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("LOAD SONG BY SLUG", args.slug) ? __WEBPACK_IMPORTED_MODULE_3__components_lyrics__["a" /* default */] : __WEBPACK_IMPORTED_MODULE_4__components_error__["a" /* default */],
+        render: comp => __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_2__components_layout__["a" /* default */], { header: true }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()(comp.tag))
+    }
+});
+
+/***/ }),
 /* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_eol__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_object_path__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_object_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_object_path__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = (State => ({
+    "CLICK LYRIC": idx => {
+        const lineStyleIsSetStyle = Object(__WEBPACK_IMPORTED_MODULE_0_object_path__["get"])(State, "style.idx") === Object(__WEBPACK_IMPORTED_MODULE_0_object_path__["get"])(State, `song.lyrics.${idx}.style.idx`);
+
+        // Deselect lyric
+        // selected lyric without a style set
+        if (State.selected === idx && (!State.style || lineStyleIsSetStyle)) {
+            delete State.selected;
+
+            return;
+        }
+
+        // Always set selected otherwise
+        State.selected = idx;
+
+        if (!State.style) {
+            return;
+        }
+
+        // color
+        State.action("COLOR SELECTED LYRIC", State.style.idx);
+
+        return;
+    },
+
+    "CLICK STYLE": idx => {
+        State.style = { idx };
+
+        // Clicking first style after opening tools
+        if (!State.tooltip) {
+            // create tt obj
+            State.tooltip = { style: {} };
+
+            // add listing for tt position
+            window.addEventListener("mousemove", State.events.mousemove);
+        }
+
+        // Nothing is selected so don"t color anything
+        if (!State.selected && State.selected !== 0) {
+            return;
+        }
+
+        // Color selected lyrics
+        State.action("COLOR SELECTED LYRIC", idx);
+
+        delete State.selected;
+    },
+
+    "COLOR SELECTED LYRIC": idx => {
+        State.song.lyrics[State.selected].style = { idx };
+    },
+
+    "HIDE TOOLS": () => {
+        delete State.selected;
+        delete State.style;
+        delete State.tooltip;
+
+        State.action("CLOSE EDIT CURRENT SONG");
+
+        window.removeEventListener("mousemove", State.events.mousemove);
+    }
+}));
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_eol__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_eol___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_eol__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_string_hash__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_string_hash__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_string_hash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_string_hash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_slugify__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_slugify__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_slugify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_slugify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__songs__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__db__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__songs__ = __webpack_require__(16);
+
+
 
 
 
@@ -683,74 +853,79 @@ function parseLyricString(lyricString) {
     }));
 }
 
-function getSongParts(songString) {
-    return __WEBPACK_IMPORTED_MODULE_0_eol___default.a.lf(songString).split(titleSplit);
+function parseSongString(songString) {
+    const [meta, lyricString] = __WEBPACK_IMPORTED_MODULE_0_eol___default.a.lf(songString).split(titleSplit);
+    const [title, artist] = meta.split("\n");
+
+    return {
+        slug: __WEBPACK_IMPORTED_MODULE_2_slugify___default()(title),
+        title,
+        artist,
+        lyricString: lyricString,
+        lyrics: parseLyricString(lyricString)
+    };
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (State => ({
-    "LOAD SONG": song => {
-        let newSong = {};
+    // imports default songs to DB
+    "IMPORT DEFAULT SONGS": () => {
+        const savedSongs = __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].get("songs") || [];
 
-        State.untitled = State.untitled || 0;
-        State.songs = State.songs || [];
+        // add each default song
+        __WEBPACK_IMPORTED_MODULE_4__songs__["a" /* default */].forEach(songString => {
+            const songObj = parseSongString(songString);
 
-        if (typeof song === "object") {
-            newSong = song;
-        } else {
-            newSong.untitled = true;
-            newSong.title = `untitled ${++State.untitled}`;
-            newSong.lyricString = song;
-        }
+            // don't add if already in DB
+            if (songObj.slug in savedSongs) {
+                return;
+            }
 
-        newSong.lyrics = parseLyricString(newSong.lyricString);
-        newSong.slug = __WEBPACK_IMPORTED_MODULE_2_slugify___default()(newSong.title);
+            songObj.default = true;
 
-        State.songs.push(newSong);
+            __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].set(`songs.${songObj.slug}`, songObj);
+        });
+    },
 
-        return newSong.slug;
+    // import song
+    "IMPORT SONG LYRICS": lyricString => {
+        const untitledSongs = __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].get("songs?untitled");
+        const title = `untitled ${Object.keys(untitledSongs).length + 1}`;
+        const slug = __WEBPACK_IMPORTED_MODULE_2_slugify___default()(title);
+
+        let songObj = {
+            slug,
+            title,
+            lyricString,
+            lyrics: parseLyricString(lyricString),
+            untitled: true
+        };
+
+        __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].set(`songs.${slug}`, songObj);
+
+        return slug;
     },
 
     "SET TITLE": title => {
+        const oldSlug = State.song.slug;
+
         State.song.title = title;
         State.song.slug = __WEBPACK_IMPORTED_MODULE_2_slugify___default()(State.song.title);
+        delete State.song.untitled;
+
+        __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].set(`songs.${State.song.slug}`, State.song);
+        __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].del(`songs.${oldSlug}`);
     },
 
-    "LOAD DEFAULT SONGS": () => {
-        __WEBPACK_IMPORTED_MODULE_3__songs__["a" /* default */].forEach(songString => {
-            const parts = getSongParts(songString);
+    "LOAD SONG BY SLUG": slug => {
+        State.song = __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].get(`songs.${slug}`);
 
-            State.action("LOAD SONG", {
-                title: parts[0].split("\n")[0],
-                artist: parts[0].split("\n")[1],
-                lyricString: parts[1]
-            });
-        });
-    },
-
-    "OPEN SONG": idx => {
-        State.song = State.songs[idx];
-    },
-
-    "GET SONG IDX FROM SLUG": slug => {
-        let songIdx;
-
-        State.songs.some((song, idx) => {
-            if (song.slug !== slug) {
-                return false;
-            }
-
-            songIdx = idx;
-
-            return true;
-        });
-
-        if (!songIdx && songIdx !== 0) {
+        if (!State.song) {
             State.error = "song not found";
 
             return;
         }
 
-        return songIdx;
+        return State.song;
     },
 
     "CLOSE SONG": () => {
@@ -775,7 +950,7 @@ function getSongParts(songString) {
 }));
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {!function(root, name, make) {
@@ -820,10 +995,10 @@ function getSongParts(songString) {
   return api
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1013,7 +1188,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1037,7 +1212,7 @@ module.exports = hash;
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -1094,27 +1269,27 @@ module.exports = hash;
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__songs_smells_like_teen_spirit_txt__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__songs_smells_like_teen_spirit_txt__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__songs_smells_like_teen_spirit_txt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__songs_smells_like_teen_spirit_txt__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__songs_judy_is_a_punk_txt__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__songs_judy_is_a_punk_txt__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__songs_judy_is_a_punk_txt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__songs_judy_is_a_punk_txt__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__songs_hatebreeders_txt__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__songs_hatebreeders_txt__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__songs_hatebreeders_txt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__songs_hatebreeders_txt__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__songs_gods_plan_txt__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__songs_gods_plan_txt__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__songs_gods_plan_txt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__songs_gods_plan_txt__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__songs_perfect_txt__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__songs_perfect_txt__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__songs_perfect_txt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__songs_perfect_txt__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__songs_finesse_remix_txt__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__songs_finesse_remix_txt__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__songs_finesse_remix_txt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__songs_finesse_remix_txt__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__songs_son_of_a_gun_txt__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__songs_son_of_a_gun_txt__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__songs_son_of_a_gun_txt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__songs_son_of_a_gun_txt__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__songs_sparks_txt__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__songs_sparks_txt__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__songs_sparks_txt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__songs_sparks_txt__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__songs_black_hole_sun_txt__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__songs_black_hole_sun_txt__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__songs_black_hole_sun_txt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__songs_black_hole_sun_txt__);
 
 
@@ -1129,61 +1304,61 @@ module.exports = hash;
 /* harmony default export */ __webpack_exports__["a"] = ([__WEBPACK_IMPORTED_MODULE_0__songs_smells_like_teen_spirit_txt___default.a, __WEBPACK_IMPORTED_MODULE_1__songs_judy_is_a_punk_txt___default.a, __WEBPACK_IMPORTED_MODULE_2__songs_hatebreeders_txt___default.a, __WEBPACK_IMPORTED_MODULE_3__songs_gods_plan_txt___default.a, __WEBPACK_IMPORTED_MODULE_4__songs_perfect_txt___default.a, __WEBPACK_IMPORTED_MODULE_5__songs_finesse_remix_txt___default.a, __WEBPACK_IMPORTED_MODULE_6__songs_son_of_a_gun_txt___default.a, __WEBPACK_IMPORTED_MODULE_7__songs_sparks_txt___default.a, __WEBPACK_IMPORTED_MODULE_8__songs_black_hole_sun_txt___default.a]);
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = "Smells Like Teen Spirit\nNirvana\n\n---\n\nLoad up on guns, Bring your friends\nIt's fun to lose and to pretend\n\nShe's overboard, self assured\nOh no I know, a dirty word\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido, yeah\n\nHey, yay\n\nI'm worse at what I do best\nAnd for this gift, I feel blessed\n\nOur little group has always been\nAnd always will until the end\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido, yeah\n\nHey, yay\n\nAnd I forget just why I taste\nOh yeah, I guess it makes me smile\n\nI found it hard, it was hard to find\nOh well, whatever, nevermind\n\nHello, hello, hello, how low [x3]\nHello, hello, hello\n\nWith the lights out, it's less dangerous\nHere we are now, entertain us\nI feel stupid and contagious\nHere we are now, entertain us\n\nA mulatto, an Albino\nA mosquito, my libido\n\nA denial, A denial, A denial, A denial, A denial\nA denial, A denial, A denial, A denial\n"
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = "Judy is a Punk\nThe Ramones\n\n---\n\nJackie is a punk\nJudy is a runt\nThey both went down to Berlin, joined the Ice Capades\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n\nSecond verse, same as the first\n\nJackie is a punk\nJudy is a runt\nThey both went down to Berlin, joined the Ice Capades\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n\nThird verse, different from the first\n\nJackie is a punk\nJudy is a runt\nThey both went down to San Frisco, joined the SLA\n\nAnd oh, I don't know why\nOh, I don't know why\n\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\nPerhaps they'll die, oh yeah\n"
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = "Hatebreeders\nThe Ramones\n\n---\n\nWhoa oh oh\nNo\nWhoa oh oh\nHate breeders\nWhoa oh oh\nWhoa oh oh\nHate breeders\nWhoa oh oh\n\nBrain invasion goin' on in everyone\nYou feel the things that make your world turn angry red\nBecause the next time you can't take it\nNext thought murderlation\nAnd hate is all you want to know\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nMurder one inborn into your every cell\nIt's in your blood and you can't shake it\nBecause you were bred to take it\nNext stop annihilation\nThey bred the hate right in your bones\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nBecause you were bred to take it\nNext stop annihilation\nThey bred the hate right in your fuckin' bones\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nHate is your mistress and you shall not want\nYou shall not want because your breed is strong\nBecause when they try to break you\nNew world desolation\nAnd strength is all you gotta know\n\nWhoa oh oh\nHate breeders\nWhoa oh oh\n(x4)\n\nAnd all you know\nHatebreeders\nWhoa oh oh\nAnd all you know\nHatebreeders\nWhoa oh oh\n"
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = "God's plan\nDrake\n\n---\n\nYeah they wishin' and wishin' and wishin' and wishin'\nThey wishin' on me, yuh\n\nI been movin' calm, don't start no trouble with me\nTryna keep it peaceful is a struggle for me\nDon’t pull up at 6 AM to cuddle with me\nYou know how I like it when you lovin' on me\nI don’t wanna die for them to miss me\nYes I see the things that they wishin' on me\nHope I got some brothers that outlive me\nThey gon' tell the story, shit was different with me\n\nGod's plan, God's plan\nI hold back, sometimes I won't, yuh\nI feel good, sometimes I don't, ay, don't\nI finessed down Weston Road, ay, 'nessed\nMight go down a G.O.D., yeah, wait\nI go hard on Southside G, yuh, wait\nI make sure that north-side eat\nAnd still\n\nBad things\nIt's a lot of bad things\nThat they wishin' and wishin' and wishin' and wishin'\nThey wishin' on me\nBad things\nIt's a lot of bad things\nThat they wishin' and wishin' and wishin' and wishin'\nThey wishin' on me\nYuh, ay, ay\n\nShe say, \"Do you love me?\" I tell her, \"Only partly\"\nI only love my bed and my momma, I'm sorry\nFifty dub, I even got it tatted on me\n81, they'll bring the crashers to the party\nAnd you know me\nTurn the O2 into the O3, dog\nWithout 40, Oli', there would be no me\nImagine if I never met the broskies\n\nGod's plan, God's plan\nI can't do this on my own, ay, no, ay\nSomeone watchin' this shit close, yep, close\nI've been me since Scarlett Road, ay, road, ay\nMight go down as G.O.D., yeah, wait\nI go hard on Southside G, ay, wait\nI make sure that north-side eat, yuh\nAnd still\n\nBad things\nIt's a lot of bad things\nThat they wishin' and wishin' and wishin' and wishin'\nThey wishin' on me\nYeah, yeah\nBad things\nIt's a lot of bad things\nThat they wishin' and wishin' and wishin' and wishin'\nThey wishin' on me\nYeah"
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = "Perfect\nEd Sheeran\n\n---\n\nI found a love for me\nDarling just dive right in\nAnd follow my lead\nWell I found a girl beautiful and sweet\nI never knew you were the someone waiting for me\n'Cause we were just kids when we fell in love\n\nNot knowing what it was\nI will not give you up this time\nBut darling, just kiss me slow, your heart is all I own\nAnd in your eyes you're holding mine\n\nBaby, I'm dancing in the dark with you between my arms\nBarefoot on the grass, listening to our favorite song\nWhen you said you looked a mess, I whispered underneath my breath\nBut you heard it, darling, you look perfect tonight\n\nWell I found a woman, stronger than anyone I know\nShe shares my dreams, I hope that someday I'll share her home\nI found a love, to carry more than just my secrets\nTo carry love, to carry children of our own\nWe are still kids, but we're so in love\nFighting against all odds\nI know we'll be alright this time\nDarling, just hold my hand\nBe my girl, I'll be your man\nI see my future in your eyes\n\nBaby, I'm dancing in the dark, with you between my arms\nBarefoot on the grass, listening to our favorite song\nWhen I saw you in that dress, looking so beautiful\nI don't deserve this, darling, you look perfect tonight\n\nBaby, I'm dancing in the dark, with you between my arms\nBarefoot on the grass, listening to our favorite song\nI have faith in what I see\nNow I know I have met an angel in person\nAnd she looks perfect\nI don't deserve this\nYou look perfect tonight"
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = "Finesse remix\nBruno Mars feat Cardi B\n\n---\n\nDrop top Porsche (Porsche), Rollie on my wrist (wrist)\nDiamonds up and down my chain (aha)\nCardi B, straight stuntin', can't tell me nothin'\nBossed up and I changed the game (you see me?)\nIt's my big Bronx boogie, got all them girls shook (shook)\nMy big fat ass got all them boys hooked (hooked)\nI went from dollar bills, now we poppin' rubber bands (ha)\nBruno sang to me while I do my money dance like ayy\nFlexin' on the 'Gram like ayy\nHit the Lil' Jon, okay (okay), okay (okay)\nOh yeah, we drippin' in finesse and getting paid, ow\n\n[Verse 2: Bruno Mars]\nOoh, don't we look good together?\nThere's a reason why they watch all night long (all night long)\nYeah, I know we'll turn heads forever (forever)\nSo tonight, I'm gonna show you off\n\n[Pre-Chorus: Bruno Mars]\nWhen I'm walkin' with you\nI watch the whole room change\nBaby, that's what you do\nNo, my baby, don't play\nBlame it on my confidence\nOh, blame it on your measurements\nShut that shit down on sight\nThat's right\n\n[Chorus: Bruno Mars]\nWe out here drippin' in finesse\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it\nWe out here drippin' in finesse\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it\n\n[Verse 3: Bruno Mars]\nNow slow it down for me, baby (slow it down now)\n'Cause I love the way it feels when we grind (we grind)\nYeah, our connection's so magnetic on the floor\nNothing can stop us tonight\n\n[Pre-Chorus: Bruno Mars]\nWhen I'm walkin' with you\nI watch the whole room change\nBaby, that's what you do\nNo, my baby, don't play\nBlame it on my confidence\nOh, blame it on your measurements\nShut that shit down on sight\nThat's right\n\n[Chorus: Bruno Mars]\nWe out here drippin' in finesse\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it\nWe out here drippin' in finesse\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it\n\n[Bridge: Bruno Mars & Cardi B]\nFellas, grab your ladies if your lady fine\nTell her she the one, she the one for life (woo)\nLadies, grab your fellas and let's do this right (do this right)\nIf you're on one like me in mind (ow!)\nYeah, we got it goin' on, got it goin' on\nDon't it feel so good to be us? (ayy)\nYeah, we got it goin' on, got it goin' on (yeah)\nGirl, we got it goin' on\nYeah, we got it goin' on, got it goin' on (hey)\nDon't it feel so good to be us, ayy? (feels so good on you)\nYeah, we got it goin' on, got it goin' on\n\n[Chorus: Bruno Mars]\nWe out here drippin' in finesse (we drippin' on them)\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it\nWe out here drippin' in finesse with my baby\nIt don't make no sense\nOut here drippin' in finesse\nYou know it, you know it (yeah, you know we got it goin' on)\n\n[Outro: Cardi B & Bruno Mars / Both]\nYeah, we got it goin' on, got it goin' on\nDon't it feel so good to be us, ayy?\nYeah, we got it goin' on, got it goin' on\nYou know it, you know it\nYeah, we got it goin' on, got it goin' on\nGirl, we got it\nDon't it feel so good to be us, ayy?\nYeah, we got it goin' on, got it goin' on\nYou know it, you know it\n"
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = "Son of a Gun\nNirvana\n\n---\n\nUp, up, up and down\nTurn, turn, turn around\nRound, round, round about\nAnd over again\n\nGun, gun, son of a gun\nYou are the only one\nMakes any difference to what I say\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nUp, up, up and down\nTurn, turn, turn around\nRound, round, round about\nAnd over again\n\nGun, gun, son of a gun\nYou are the only one\nMakes any difference to what I say\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nUp, up, up and down\nTurn, turn, turn around\nRound, round, round about\nAnd over again\n\nGun, gun, son of a gun\nYou are the only one\nMakes any difference to what I say\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n\nThe sun shines in the bedroom\nWhen we play\nThe raining always starts\nWhen you go away\n"
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = "Sparks\nColdplay\n\n---\n\nDid I drive you away\nI know what you'll say\nYou say, oh, sing one we know\nBut I promise you this\nI'll always look out for you\nThat's what I'll do\n\nI say oh\nI say oh\n\nMy heart is yours\nIt's you that I hold on to\nThat's what I do\nAnd I know I was wrong\nBut I won't let you down\n(Oh yeah, yeah, yes I will)\n\nI say oh\nI cry oh\n\nAnd I saw sparks\nYeah I saw sparks\nAnd I saw sparks\nYeah I saw sparks\nSing it out\n\nLa, la, la, la, oh\nLa, la, la, la, oh\nLa, la, la, la, oh\nLa, la, la, la, oh\n"
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = "Black Hole sun\nSoundgarden\n\n---\n\nIn my eyes, indisposed\nIn disguises no one knows\nHides the face, lies the snake\nThe sun in my disgrace\nBoiling heat, summer stench\n'Neath the black the sky looks dead\nCall my name through the cream\nAnd I'll hear you scream again\n\nBlack hole sun\nWon't you come\nAnd wash away the rain\nBlack hole sun\nWon't you come\nWon't you come (won't you come)\n\nStuttering, cold and damp\nSteal the warm wind tired friend\nTimes are gone for honest men\nAnd sometimes far too long for snakes\nIn my shoes, a walking sleep\nAnd my youth I pray to keep\nHeaven sent hell away\nNo one sings like you anymore\n\nBlack hole sun\nWon't you come\nAnd wash away the rain\nBlack hole sun\nWon't you come\nWon't you come\nBlack hole sun\nWon't you come\nAnd wash away the rain\nBlack hole sun\nWon't you come\nWon't you come (black hole sun, black hole sun)\n\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\n\nHang my head, drown my fear\nTill you all just disappear\n\nBlack hole sun\nWon't you come\nAnd wash away the rain\nBlack hole sun\nWon't you come\nWon't you come\nBlack hole sun\nWon't you come\nAnd wash away the rain\nBlack hole sun\nWon't you come\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come (black hole sun, black hole sun)\nWon't you come\nWon't you come\n"
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1202,7 +1377,7 @@ module.exports = "Black Hole sun\nSoundgarden\n\n---\n\nIn my eyes, indisposed\n
         __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.redraw();
     },
 
-    "ADD TITLE": title => {
+    "ADD TITLE MODAL": title => {
         State.action("SET TITLE", title);
 
         State.action("CLOSE MODAL");
@@ -1216,17 +1391,17 @@ module.exports = "Black Hole sun\nSoundgarden\n\n---\n\nIn my eyes, indisposed\n
 }));
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__header__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modal__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__icons_github_svg__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__header__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modal__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__icons_github_svg__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__icons_github_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__icons_github_svg__);
 
 
@@ -1239,7 +1414,12 @@ module.exports = "Black Hole sun\nSoundgarden\n\n---\n\nIn my eyes, indisposed\n
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", vnode.attrs.header ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__header__["a" /* default */]) : null, vnode.children, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].bug }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
+    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", vnode.attrs.header ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__header__["a" /* default */]) : null, vnode.children, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].debug ? [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
+        class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].clear,
+        onclick: () => {
+            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("CLEAR DB");
+        }
+    }, "clear"), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("pre", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].debug }, JSON.stringify(__WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */], null, 2))] : null, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].bug }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
         href: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].githubHref,
         class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].github
     }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_5__icons_github_svg___default.a)), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", {
@@ -1248,7 +1428,7 @@ module.exports = "Black Hole sun\nSoundgarden\n\n---\n\nIn my eyes, indisposed\n
 });
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1256,30 +1436,36 @@ module.exports = "Black Hole sun\nSoundgarden\n\n---\n\nIn my eyes, indisposed\n
 /* unused harmony export bug */
 /* unused harmony export github */
 /* unused harmony export ver */
+/* unused harmony export clear */
+/* unused harmony export debug */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "animDur": "0.3s",
     "bug": "mc55d93723_bug",
     "github": "mc55d93723_github",
-    "ver": "mc55d93723_ver"
+    "ver": "mc55d93723_ver",
+    "clear": "mc55d93723_clear",
+    "debug": "mc55d93723_debug"
 });
 var animDur = "0.3s";
 var bug = "mc55d93723_bug";
 var github = "mc55d93723_github";
 var ver = "mc55d93723_ver";
+var clear = "mc55d93723_clear";
+var debug = "mc55d93723_debug";
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tools__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tools__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_animResolve__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_animResolve__ = __webpack_require__(3);
 
 
 
@@ -1298,6 +1484,9 @@ var ver = "mc55d93723_ver";
         };
     },
     onbeforeremove: vnode => Object(__WEBPACK_IMPORTED_MODULE_5__lib_animResolve__["a" /* default */])(vnode.dom, __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].headerOut),
+    onremove: () => {
+        delete __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].header;
+    },
     view: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].headerIn }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song ? __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song.title : __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logo }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
         href: "/",
         oncreate: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.link
@@ -1305,7 +1494,7 @@ var ver = "mc55d93723_ver";
 });
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1331,16 +1520,16 @@ var logo = "mc23bfb80c_logo";
 var title = "mc70832d4a_title mc23bfb80c_title";
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tooltip_css__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_quill_svg__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tooltip_css__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_quill_svg__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_quill_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__icons_quill_svg__);
 
 
@@ -1456,7 +1645,7 @@ var title = "mc70832d4a_title mc23bfb80c_title";
 });
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1548,7 +1737,7 @@ var cols = "mce8163484_cols";
 var edit = "mc70832d4a_button mce8163484_button mce8163484_edit";
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1577,22 +1766,22 @@ var s4 = "mcc875d4e3_tooltip mcc875d4e3_s4";
 var s5 = "mcc875d4e3_tooltip mcc875d4e3_s5";
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 module.exports = "<!-- Generated by IcoMoon.io -->\n<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n<title>quill</title>\n<path d=\"M0 32c4-12 14.469-32 32-32-8.219 6.594-12 22-18 22s-6 0-6 0l-6 10h-2z\"></path>\n</svg>\n"
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_animResolve__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_css__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__title__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_animResolve__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_css__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__title__ = __webpack_require__(37);
 
 
 
@@ -1620,7 +1809,7 @@ const hasClose = [];
 });
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1652,14 +1841,14 @@ var contentOut = "mcb0630254_content mcb0630254_contentOut";
 var close = "mcb0630254_close";
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__title_css__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__title_css__ = __webpack_require__(38);
 
 
 
@@ -1675,7 +1864,7 @@ var close = "mcb0630254_close";
                 return;
             }
 
-            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("ADD TITLE", vnode.state.value);
+            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("ADD TITLE MODAL", vnode.state.value);
         }
     }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("input", {
         value: vnode.state.value,
@@ -1692,14 +1881,16 @@ var close = "mcb0630254_close";
         class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].add
     }, "add title"), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
         class: __WEBPACK_IMPORTED_MODULE_2__title_css__["a" /* default */].cancel,
-        onclick: () => {
+        onclick: e => {
+            e.preventDefault();
+
             __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("CLOSE MODAL");
         }
     }, "cancel")))
 });
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1722,21 +1913,21 @@ var add = "mc70832d4a_button mc04421772_add";
 var cancel = "mc70832d4a_button mc04421772_cancel";
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = "<!-- Generated by IcoMoon.io -->\n<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n<title>github</title>\n<path d=\"M16 0.395c-8.836 0-16 7.163-16 16 0 7.069 4.585 13.067 10.942 15.182 0.8 0.148 1.094-0.347 1.094-0.77 0-0.381-0.015-1.642-0.022-2.979-4.452 0.968-5.391-1.888-5.391-1.888-0.728-1.849-1.776-2.341-1.776-2.341-1.452-0.993 0.11-0.973 0.11-0.973 1.606 0.113 2.452 1.649 2.452 1.649 1.427 2.446 3.743 1.739 4.656 1.33 0.143-1.034 0.558-1.74 1.016-2.14-3.554-0.404-7.29-1.777-7.29-7.907 0-1.747 0.625-3.174 1.649-4.295-0.166-0.403-0.714-2.030 0.155-4.234 0 0 1.344-0.43 4.401 1.64 1.276-0.355 2.645-0.532 4.005-0.539 1.359 0.006 2.729 0.184 4.008 0.539 3.054-2.070 4.395-1.64 4.395-1.64 0.871 2.204 0.323 3.831 0.157 4.234 1.026 1.12 1.647 2.548 1.647 4.295 0 6.145-3.743 7.498-7.306 7.895 0.574 0.497 1.085 1.47 1.085 2.963 0 2.141-0.019 3.864-0.019 4.391 0 0.426 0.288 0.925 1.099 0.768 6.354-2.118 10.933-8.113 10.933-15.18 0-8.837-7.164-16-16-16z\"></path>\n</svg>\n"
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__edit__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__edit__ = __webpack_require__(42);
 
 
 
@@ -1750,9 +1941,9 @@ function addBr(text) {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     oninit: () => {
-        if (__WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song.untitled) {
-            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("OPEN TITLE MODAL");
-        }
+        // if(state.song.untitled) {
+        //     state.action("OPEN TITLE MODAL");
+        // }
     },
     view: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].lyredit }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", {
         class: __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].edit ? __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].lyricsEdit : __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].lyrics,
@@ -1771,7 +1962,7 @@ function addBr(text) {
 });
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1815,15 +2006,15 @@ var s4 = "mc9673f5d0_line mc9673f5d0_s4";
 var s5 = "mc9673f5d0_line mc9673f5d0_s5";
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_css__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_animResolve__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_css__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_animResolve__ = __webpack_require__(3);
 
 
 
@@ -1844,7 +2035,7 @@ var s5 = "mc9673f5d0_line mc9673f5d0_s5";
 });
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1867,14 +2058,14 @@ var editOut = "mc7d4b81c4_edit mc7d4b81c4_editOut";
 var textarea = "mc7d4b81c4_textarea";
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(45);
 
 
 
@@ -1890,7 +2081,7 @@ var textarea = "mc7d4b81c4_textarea";
 });
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1904,16 +2095,20 @@ var fontSerif = "'Slabo 27px', serif";
 var error = "mc1fc74cfc_error";
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__state_db__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_css__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__list__ = __webpack_require__(48);
+
+
 
 
 
@@ -1923,8 +2118,12 @@ var error = "mc1fc74cfc_error";
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].home }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logoAndType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_3__icons_lyrite_logo_svg___default.a), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logoType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h2", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].subTitle }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].tagline))), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].center }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].dash }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
-        class: vnode.state.focused ? __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].textareaFocused : __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].textarea,
+    oninit: vnode => {
+        vnode.state.defaultSongs = __WEBPACK_IMPORTED_MODULE_2__state_db__["a" /* default */].get("songs?default=true");
+        vnode.state.customSongs = __WEBPACK_IMPORTED_MODULE_2__state_db__["a" /* default */].get("songs?default=undefined");
+    },
+    view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].home }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].logoAndType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg___default.a), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].logoType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h2", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].subTitle }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].tagline))), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].center }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].dash }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
+        class: vnode.state.focused ? __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].textareaFocused : __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].textarea,
         value: vnode.state.lyricsValue,
         placeholder: vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
         onfocus: () => {
@@ -1938,10 +2137,10 @@ var error = "mc1fc74cfc_error";
             vnode.state.lyricsValue = v;
             vnode.state.loadable = v.length;
         })
-    })), vnode.state.loadable ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].btnWrap }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
-        class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].loadBtn,
+    })), vnode.state.loadable ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].btnWrap }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
+        class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].loadBtn,
         onclick: () => {
-            let slug = __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("LOAD SONG", vnode.state.lyricsValue);
+            let slug = __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("IMPORT SONG LYRICS", vnode.state.lyricsValue);
 
             delete vnode.state.textarea;
             delete vnode.state.load;
@@ -1951,18 +2150,14 @@ var error = "mc1fc74cfc_error";
     }, "load song")) : null),
 
     // loaded songs list
-    __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].list }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h3", "or choose a song"), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].songs ? __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].songs.map((song, idx) => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
-        onclick: () => {
-            console.log("open song");
-            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("OPEN SONG", idx);
-        },
-        oncreate: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.link,
-        href: `/${song.slug}`
-    }, song.title, song.artist ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("span", " - ", song.artist) : null)) : null))]
+    Object.keys(vnode.state.customSongs).length ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_5__list__["a" /* default */], { songs: vnode.state.customSongs, header: "your songs" }) : null,
+
+    // loaded songs list
+    Object.keys(vnode.state.defaultSongs).length ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_5__list__["a" /* default */], { songs: vnode.state.defaultSongs, header: "default songs" }) : null)]
 });
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1979,7 +2174,6 @@ var error = "mc1fc74cfc_error";
 /* unused harmony export textareaFocused */
 /* unused harmony export btnWrap */
 /* unused harmony export loadBtn */
-/* unused harmony export list */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "fontSans": "Raleway, sans-serif",
     "fontSerif": "'Slabo 27px', serif",
@@ -1993,8 +2187,7 @@ var error = "mc1fc74cfc_error";
     "textarea": "mc9f90d7fb_textarea",
     "textareaFocused": "mc9f90d7fb_textarea mc9f90d7fb_textareaFocused",
     "btnWrap": "mc9f90d7fb_btnWrap",
-    "loadBtn": "mc70832d4a_button mc9f90d7fb_loadBtn",
-    "list": "mc9f90d7fb_list"
+    "loadBtn": "mc70832d4a_button mc9f90d7fb_loadBtn"
 });
 var fontSans = "Raleway, sans-serif";
 var fontSerif = "'Slabo 27px', serif";
@@ -2009,10 +2202,45 @@ var textarea = "mc9f90d7fb_textarea";
 var textareaFocused = "mc9f90d7fb_textarea mc9f90d7fb_textareaFocused";
 var btnWrap = "mc9f90d7fb_btnWrap";
 var loadBtn = "mc70832d4a_button mc9f90d7fb_loadBtn";
-var list = "mc9f90d7fb_list";
 
 /***/ }),
-/* 47 */
+/* 48 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__list_css__ = __webpack_require__(49);
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_1__list_css__["a" /* default */].list }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h3", vnode.attrs.header), Object.keys(vnode.attrs.songs).map(slug => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
+        oncreate: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.link,
+        href: `/${vnode.attrs.songs[slug].slug}`
+    }, vnode.attrs.songs[slug].title, vnode.attrs.songs[slug].artist ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("span", " - ", vnode.attrs.songs[slug].artist) : null)))
+});
+
+/***/ }),
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export fontSans */
+/* unused harmony export fontSerif */
+/* unused harmony export list */
+/* harmony default export */ __webpack_exports__["a"] = ({
+    "fontSans": "Raleway, sans-serif",
+    "fontSerif": "'Slabo 27px', serif",
+    "list": "mcb48e5add_list"
+});
+var fontSans = "Raleway, sans-serif";
+var fontSerif = "'Slabo 27px', serif";
+var list = "mcb48e5add_list";
+
+/***/ }),
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "favicon.ico";

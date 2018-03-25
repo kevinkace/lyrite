@@ -315,31 +315,34 @@ svg {
     color: #fff !important;
     --color: #4571a9;
 }
-.mc9f90d7fb_list {
+/*src/components/home/list.css */
+.mcb48e5add_list {
     max-width: 30em;
     margin: 1.6em auto 0;
 
     text-align: left;
 }
-.mc9f90d7fb_list h3 {
+.mcb48e5add_list h3 {
         margin-bottom: 0.2em;
+        padding-bottom: 0.3em;
         border-bottom: solid 1px #fff5;
 
         color: #6b97d0;
-        font: bold 1.25em/1 Raleway, sans-serif;
+        font: bold 1.15em/1 Raleway, sans-serif;
     }
-.mc9f90d7fb_list a {
+.mcb48e5add_list a {
         display: block;
 
         font-family: 'Slabo 27px', serif;
         text-transform: uppercase;
         text-decoration: none;
-        font-size: 1.35em;
+        font-size: 1.25em;
+        line-height: 1.25;
     }
-.mc9f90d7fb_list a:hover {
+.mcb48e5add_list a:hover {
             text-decoration: underline;
         }
-.mc9f90d7fb_list a span {
+.mcb48e5add_list a span {
             display: inline-block;
             padding-left: 0.3em;
             opacity: 0.6;
@@ -366,6 +369,22 @@ svg {
     opacity: 0.3;
 
     font: normal 0.8em/1 monospace;
+}
+.mc55d93723_clear {
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+}
+.mc55d93723_debug {
+    position: fixed;
+    top: 0;
+    opacity: 0.2;
+    max-height: 100vh;
+    width: 400px;
+    overflow-y: auto;
+    font-size: 0.75em;
+    z-index: -1;
+    pointer-events: none;
 }
 /*src/components/lyrics/edit.css */
 .mc7d4b81c4_edit {
