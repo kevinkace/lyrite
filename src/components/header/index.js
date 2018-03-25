@@ -16,6 +16,9 @@ export default {
         };
     },
     onbeforeremove : (vnode) => animResolve(vnode.dom, css.headerOut),
+    onremove : () => {
+        delete state.header;
+    },
     view : () =>
         m("div", { class : css.headerIn },
             m("h1", { class : css.title }, state.song ? state.song.title : state.appName),

@@ -1,12 +1,18 @@
 import m from "mithril";
 
 import state from "../../state";
+import db from "../../state/db";
 
 import css from "./index.css";
 
 import logo from "../icons/lyrite-logo.svg";
+import list from "./list";
 
 export default {
+    oninit : (vnode) => {
+        vnode.state.defaultSongs = db.get("songs?default=true");
+        vnode.state.customSongs = db.get("songs?default=undefined");
+    },
     view : (vnode) => [
         m("div", { class : css.home },
 
@@ -44,7 +50,7 @@ export default {
                         m("button", {
                             class : css.loadBtn,
                             onclick : () => {
-                                let slug = state.action("LOAD SONG", vnode.state.lyricsValue);
+                                let slug = state.action("IMPORT SONG LYRICS", vnode.state.lyricsValue);
 
                                 delete vnode.state.textarea;
                                 delete vnode.state.load;
@@ -57,24 +63,14 @@ export default {
             ),
 
             // loaded songs list
-            m("div", { class : css.list },
-                m("h3", "or choose a song"),
-                state.songs ? state.songs.map((song, idx) =>
-                    m("a", {
-                            onclick : () => {
-                                console.log("open song");
-                                state.action("OPEN SONG", idx);
-                            },
-                            oncreate: m.route.link,
-                            href : `/${song.slug}`
-                        },
-                        song.title,
-                        song.artist ?
-                            m("span", " - ", song.artist ) :
-                            null
-                    )
-                ) : null
-            )
+            Object.keys(vnode.state.customSongs).length ?
+                m(list, { songs : vnode.state.customSongs, header : "your songs"}) :
+                null,
+
+            // loaded songs list
+            Object.keys(vnode.state.defaultSongs).length ?
+                m(list, { songs : vnode.state.defaultSongs, header : "default songs"}) :
+                null
         )
     ]
 };

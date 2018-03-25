@@ -2,7 +2,9 @@ import eol from "eol";
 import hash from "string-hash";
 import slugify from "slugify";
 
-import songs from "./songs";
+import db from "./db";
+
+import defaultSongs from "./songs";
 
 const titleSplit = "\n\n---\n\n";
 
@@ -15,74 +17,79 @@ function parseLyricString(lyricString) {
         }));
 }
 
-function getSongParts(songString) {
-    return eol.lf(songString).split(titleSplit);
+function parseSongString(songString) {
+    const [ meta, lyricString ] = eol.lf(songString).split(titleSplit);
+    const [ title, artist ] = meta.split("\n");
+
+    return {
+        slug : slugify(title),
+        title,
+        artist,
+        lyricString : lyricString,
+        lyrics      : parseLyricString(lyricString)
+    };
 }
 
 export default (State) => ({
-    "LOAD SONG" : (song) => {
-        let newSong = {};
+    // imports default songs to DB
+    "IMPORT DEFAULT SONGS" : () => {
+        const savedSongs = db.get("songs") || [];
 
-        State.untitled = State.untitled || 0;
-        State.songs = State.songs || [];
+        // add each default song
+        defaultSongs.forEach((songString) => {
+            const songObj = parseSongString(songString);
 
-        if(typeof song === "object") {
-            newSong = song;
-        } else {
-            newSong.untitled    = true;
-            newSong.title       = `untitled ${++State.untitled}`;
-            newSong.lyricString = song;
-        }
+            // don't add if already in DB
+            if(songObj.slug in savedSongs) {
+                return;
+            }
 
-        newSong.lyrics = parseLyricString(newSong.lyricString);
-        newSong.slug = slugify(newSong.title);
+            songObj.default = true;
 
-        State.songs.push(newSong);
+            db.set(`songs.${songObj.slug}`, songObj);
+        });
+    },
 
-        return newSong.slug;
+    // import song
+    "IMPORT SONG LYRICS" : (lyricString) => {
+        const untitledSongs = db.get("songs?untitled");
+        const title = `untitled ${Object.keys(untitledSongs).length + 1}`;
+        const slug = slugify(title);
+
+        let songObj = {
+            slug,
+            title,
+            lyricString,
+            lyrics   : parseLyricString(lyricString),
+            untitled : true
+        };
+
+        db.set(`songs.${slug}`, songObj);
+
+        return slug;
     },
 
     "SET TITLE" : (title) => {
+        const oldSlug = State.song.slug;
+
         State.song.title = title;
         State.song.slug = slugify(State.song.title);
+        delete State.song.untitled;
+
+        db.set(`songs.${State.song.slug}`, State.song);
+        db.del(`songs.${oldSlug}`);
     },
 
-    "LOAD DEFAULT SONGS" : () => {
-        songs.forEach((songString) => {
-            const parts = getSongParts(songString);
+    "LOAD SONG BY SLUG" : (slug) => {
+        State.song = db.get(`songs.${slug}`);
 
-            State.action("LOAD SONG", {
-                title       : parts[0].split("\n")[0],
-                artist      : parts[0].split("\n")[1],
-                lyricString : parts[1]
-            });
-        });
-    },
-
-    "OPEN SONG" : (idx) => {
-        State.song = State.songs[idx];
-    },
-
-    "GET SONG IDX FROM SLUG" : (slug) => {
-        let songIdx;
-
-        State.songs.some((song, idx) => {
-            if(song.slug !== slug) {
-                return false;
-            }
-
-            songIdx = idx;
-
-            return true;
-        });
-
-        if(!songIdx && songIdx !== 0) {
+        if(!State.song) {
             State.error = "song not found";
 
             return;
         }
 
-        return songIdx;
+        return State.song;
     },
 
     "CLOSE SONG" : () => {

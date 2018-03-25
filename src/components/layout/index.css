@@ -24,3 +24,21 @@
 
     font: normal 0.8em/1 monospace;
 }
+
+.clear {
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+}
+
+.debug {
+    position: fixed;
+    top: 0;
+    opacity: 0.2;
+    max-height: 100vh;
+    width: 400px;
+    overflow-y: auto;
+    font-size: 0.75em;
+    z-index: -1;
+    pointer-events: none;
+}

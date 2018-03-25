@@ -12,9 +12,12 @@ import "./favicon.ico";
 
 const mountEl = document.getElementById("mount");
 
-m.route.prefix("");
+// state.debug = true;
+state.action("IMPORT DEFAULT SONGS");
 
+m.route.prefix("");
 m.route(mountEl, "/", routes);
+
 
 window.m = m;
 window.state = state;

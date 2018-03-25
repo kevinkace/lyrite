@@ -14,7 +14,7 @@ export default {
                         return;
                     }
 
-                    state.action("ADD TITLE", vnode.state.value);
+                    state.action("ADD TITLE MODAL", vnode.state.value);
                 }
             },
             m("input", {
@@ -37,7 +37,9 @@ export default {
                 ),
                 m("button", {
                         class   : css.cancel,
-                        onclick : () => {
+                        onclick : (e) => {
+                            e.preventDefault();
+
                             state.action("CLOSE MODAL");
                         }
                     },
