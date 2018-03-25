@@ -3,9 +3,6 @@ import m from "mithril";
 import css from "./list.css";
 
 export default {
-    oninit : () => {
-        console.log("test");
-    },
     view : (vnode) =>
         m("div", { class : css.list },
             m("h3", vnode.attrs.header),
