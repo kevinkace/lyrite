@@ -51,22 +51,23 @@ export default (State) => ({
     },
 
     // import song
-    "IMPORT SONG LYRICS" : (lyricString) => {
+    "IMPORT SONG LYRICS" : (songObj) => {
         const untitledSongs = db.get("songs?untitled");
         const title = `untitled ${Object.keys(untitledSongs).length + 1}`;
         const slug = slugify(title);
 
-        let songObj = {
-            slug,
+        db.set(`songs.${slug}`, Object.assign(songObj, {
             title,
-            lyricString,
-            lyrics   : parseLyricString(lyricString),
+            slug,
+            lyrics   : parseLyricString(songObj.lyricString),
             untitled : true
-        };
-
-        db.set(`songs.${slug}`, songObj);
+        }));
 
         return slug;
+    },
+
+    "DELETE SONG BY SLUG" : (slug) => {
+        db.del(`songs.${slug}`);
     },
 
     "SET TITLE" : (title) => {

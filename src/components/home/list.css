@@ -1,5 +1,5 @@
 @value * as colors from "../../palette.css";
-@value fontSans, fontSerif from "../../index.css";
+@value fontSans, fontSerif, animDur from "../../index.css";
 
 .list {
     max-width: 30em;
@@ -16,9 +16,36 @@
         font: bold 1.15em/1 fontSans;
     }
 
-    a {
-        display: block;
+    div {
+        button {
+            position: relative;
+            top: -0.15em;
+            margin-left: 1em;
+            padding: 0.2em;
+            /* width: 1.3em;
+            height: 1.3em; */
 
+            opacity: 0;
+
+            font-size: 0.8em;
+            color: #fff;
+            background: transparent;
+            border: solid 2px #fff6;
+            border-radius: 50%;
+
+            transition: opacity animDur, background-color animDur;
+
+            &:hover {
+                background: red;
+            }
+        }
+
+        &:hover button {
+            opacity: 1;
+        }
+    }
+
+    a {
         font-family: fontSerif;
         text-transform: uppercase;
         text-decoration: none;

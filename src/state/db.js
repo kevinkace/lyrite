@@ -41,10 +41,10 @@ function Table(key) {
         const data = _getTable();
 
         if(!path) {
-            return _setTable({});
+            return;
         }
 
-        set(data, path, undefined);
+        delete data[path];
 
         return _setTable(data);
     };
@@ -53,11 +53,6 @@ function Table(key) {
         console.log(localStorage.getItem(key));
     };
 }
-
-// create Tables
-const db = {
-    songs : new Table("songs")
-};
 
 function parseQueryParams(queryParams) {
     if(typeof queryParams !== "string") {
@@ -128,7 +123,17 @@ function parseValue(value) {
     return value;
 }
 
+// create Tables
+const db = {
+    timestamp : Date.now(),
+    tables    : {
+        songs : new Table("songs")
+    }
+};
+
 export default {
+    timestamp : () => db.timestamp,
+
     get : (query) => {
         const parsed = parseQuery(query);
 
@@ -136,7 +141,7 @@ export default {
             return;
         }
 
-        const data = db[parsed.key].get(parsed.path);
+        const data = db.tables[parsed.key].get(parsed.path);
 
         if(!parsed.queryParams) {
             return data;
@@ -151,7 +156,9 @@ export default {
             return;
         }
 
-        return db[parsed.key].set(parsed.path, data);
+        db.timestamp = Date.now();
+
+        return db.tables[parsed.key].set(parsed.path, data);
     },
     del : (query) => {
         const parsed = parseQuery(query);
@@ -160,7 +167,8 @@ export default {
             return;
         }
 
-        return db[parsed.key].del(parsed.path);
+        db.timestamp = Date.now();
+        return db.tables[parsed.key].del(parsed.path);
     },
     clear : () => {
         localStorage.clear();

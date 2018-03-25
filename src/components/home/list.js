@@ -1,5 +1,7 @@
 import m from "mithril";
 
+import state from "../../state";
+
 import css from "./list.css";
 
 export default {
@@ -8,13 +10,23 @@ export default {
             m("h3", vnode.attrs.header),
 
             Object.keys(vnode.attrs.songs).map((slug) =>
-                m("a", {
-                        oncreate : m.route.link,
-                        href     : `/${vnode.attrs.songs[slug].slug}`
-                    },
-                    vnode.attrs.songs[slug].title,
-                    vnode.attrs.songs[slug].artist ?
-                        m("span", " - ", vnode.attrs.songs[slug].artist ) :
+                m("div",
+                    m("a", {
+                            oncreate : m.route.link,
+                            href     : `/${vnode.attrs.songs[slug].slug}`
+                        },
+                        vnode.attrs.songs[slug].title,
+                        vnode.attrs.songs[slug].artist ?
+                            m("span", " - ", vnode.attrs.songs[slug].artist ) :
+                            null
+                    ),
+                    vnode.attrs.songs[slug].userSong ?
+                        m("button", {
+                            onclick : () => {
+                                state.action("DELETE SONG BY SLUG", slug);
+                            },
+                            "aria-label" : "delete"
+                        }, "🗙") :
                         null
                 )
             )

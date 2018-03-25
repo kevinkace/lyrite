@@ -10,8 +10,18 @@ import list from "./list";
 
 export default {
     oninit : (vnode) => {
+        vnode.state.timestamp = db.timestamp();
         vnode.state.defaultSongs = db.get("songs?default=true");
         vnode.state.customSongs = db.get("songs?default=undefined");
+    },
+    onbeforeupdate : (vnode) => {
+        if(vnode.state.timestamp !== db.timestamp()) {
+            vnode.state.timestamp = db.timestamp();
+            vnode.state.defaultSongs = db.get("songs?default=true");
+            vnode.state.customSongs = db.get("songs?default=undefined");
+
+            return true;
+        }
     },
     view : (vnode) => [
         m("div", { class : css.home },
@@ -29,7 +39,7 @@ export default {
                 m("div", { class : css.dash },
                     m("textarea", {
                         class       : vnode.state.focused ? css.textareaFocused : css.textarea,
-                        value       : vnode.state.lyricsValue,
+                        value       : vnode.state.lyricString,
                         placeholder : vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
                         onfocus : () => {
                             vnode.state.focused = true;
@@ -39,7 +49,7 @@ export default {
                             vnode.state.hidePlaceholder = false;
                         },
                         oninput : m.withAttr("value", (v) => {
-                            vnode.state.lyricsValue = v;
+                            vnode.state.lyricString = v;
                             vnode.state.loadable = v.length;
                         })
                     })
@@ -50,7 +60,10 @@ export default {
                         m("button", {
                             class : css.loadBtn,
                             onclick : () => {
-                                let slug = state.action("IMPORT SONG LYRICS", vnode.state.lyricsValue);
+                                let slug = state.action("IMPORT SONG LYRICS", {
+                                    lyricString : vnode.state.lyricString,
+                                    userSong    : true
+                                });
 
                                 delete vnode.state.textarea;
                                 delete vnode.state.load;
