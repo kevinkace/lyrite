@@ -178,10 +178,10 @@ function Table(key) {
         const data = _getTable();
 
         if (!path) {
-            return _setTable({});
+            return;
         }
 
-        Object(__WEBPACK_IMPORTED_MODULE_0_object_path__["set"])(data, path, undefined);
+        delete data[path];
 
         return _setTable(data);
     };
@@ -190,11 +190,6 @@ function Table(key) {
         console.log(localStorage.getItem(key));
     };
 }
-
-// create Tables
-const db = {
-    songs: new Table("songs")
-};
 
 function parseQueryParams(queryParams) {
     if (typeof queryParams !== "string") {
@@ -264,7 +259,17 @@ function parseValue(value) {
     return value;
 }
 
+// create Tables
+const db = {
+    timestamp: Date.now(),
+    tables: {
+        songs: new Table("songs")
+    }
+};
+
 /* harmony default export */ __webpack_exports__["a"] = ({
+    timestamp: () => db.timestamp,
+
     get: query => {
         const parsed = parseQuery(query);
 
@@ -272,7 +277,7 @@ function parseValue(value) {
             return;
         }
 
-        const data = db[parsed.key].get(parsed.path);
+        const data = db.tables[parsed.key].get(parsed.path);
 
         if (!parsed.queryParams) {
             return data;
@@ -287,7 +292,9 @@ function parseValue(value) {
             return;
         }
 
-        return db[parsed.key].set(parsed.path, data);
+        db.timestamp = Date.now();
+
+        return db.tables[parsed.key].set(parsed.path, data);
     },
     del: query => {
         const parsed = parseQuery(query);
@@ -296,7 +303,8 @@ function parseValue(value) {
             return;
         }
 
-        return db[parsed.key].del(parsed.path);
+        db.timestamp = Date.now();
+        return db.tables[parsed.key].del(parsed.path);
     },
     clear: () => {
         localStorage.clear();
@@ -887,22 +895,23 @@ function parseSongString(songString) {
     },
 
     // import song
-    "IMPORT SONG LYRICS": lyricString => {
+    "IMPORT SONG LYRICS": songObj => {
         const untitledSongs = __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].get("songs?untitled");
         const title = `untitled ${Object.keys(untitledSongs).length + 1}`;
         const slug = __WEBPACK_IMPORTED_MODULE_2_slugify___default()(title);
 
-        let songObj = {
-            slug,
+        __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].set(`songs.${slug}`, Object.assign(songObj, {
             title,
-            lyricString,
-            lyrics: parseLyricString(lyricString),
+            slug,
+            lyrics: parseLyricString(songObj.lyricString),
             untitled: true
-        };
-
-        __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].set(`songs.${slug}`, songObj);
+        }));
 
         return slug;
+    },
+
+    "DELETE SONG BY SLUG": slug => {
+        __WEBPACK_IMPORTED_MODULE_3__db__["a" /* default */].del(`songs.${slug}`);
     },
 
     "SET TITLE": title => {
@@ -2119,12 +2128,22 @@ var error = "mc1fc74cfc_error";
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     oninit: vnode => {
+        vnode.state.timestamp = __WEBPACK_IMPORTED_MODULE_2__state_db__["a" /* default */].timestamp();
         vnode.state.defaultSongs = __WEBPACK_IMPORTED_MODULE_2__state_db__["a" /* default */].get("songs?default=true");
         vnode.state.customSongs = __WEBPACK_IMPORTED_MODULE_2__state_db__["a" /* default */].get("songs?default=undefined");
     },
+    onbeforeupdate: vnode => {
+        if (vnode.state.timestamp !== __WEBPACK_IMPORTED_MODULE_2__state_db__["a" /* default */].timestamp()) {
+            vnode.state.timestamp = __WEBPACK_IMPORTED_MODULE_2__state_db__["a" /* default */].timestamp();
+            vnode.state.defaultSongs = __WEBPACK_IMPORTED_MODULE_2__state_db__["a" /* default */].get("songs?default=true");
+            vnode.state.customSongs = __WEBPACK_IMPORTED_MODULE_2__state_db__["a" /* default */].get("songs?default=undefined");
+
+            return true;
+        }
+    },
     view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].home }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].logoAndType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg___default.a), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].logoType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h2", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].subTitle }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].tagline))), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].center }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].dash }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
         class: vnode.state.focused ? __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].textareaFocused : __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].textarea,
-        value: vnode.state.lyricsValue,
+        value: vnode.state.lyricString,
         placeholder: vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
         onfocus: () => {
             vnode.state.focused = true;
@@ -2134,13 +2153,16 @@ var error = "mc1fc74cfc_error";
             vnode.state.hidePlaceholder = false;
         },
         oninput: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.withAttr("value", v => {
-            vnode.state.lyricsValue = v;
+            vnode.state.lyricString = v;
             vnode.state.loadable = v.length;
         })
     })), vnode.state.loadable ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].btnWrap }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
         class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].loadBtn,
         onclick: () => {
-            let slug = __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("IMPORT SONG LYRICS", vnode.state.lyricsValue);
+            let slug = __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("IMPORT SONG LYRICS", {
+                lyricString: vnode.state.lyricString,
+                userSong: true
+            });
 
             delete vnode.state.textarea;
             delete vnode.state.load;
@@ -2210,16 +2232,24 @@ var loadBtn = "mc70832d4a_button mc9f90d7fb_loadBtn";
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mithril__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__list_css__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__list_css__ = __webpack_require__(49);
+
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_1__list_css__["a" /* default */].list }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h3", vnode.attrs.header), Object.keys(vnode.attrs.songs).map(slug => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
+    view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__list_css__["a" /* default */].list }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h3", vnode.attrs.header), Object.keys(vnode.attrs.songs).map(slug => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
         oncreate: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.link,
         href: `/${vnode.attrs.songs[slug].slug}`
-    }, vnode.attrs.songs[slug].title, vnode.attrs.songs[slug].artist ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("span", " - ", vnode.attrs.songs[slug].artist) : null)))
+    }, vnode.attrs.songs[slug].title, vnode.attrs.songs[slug].artist ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("span", " - ", vnode.attrs.songs[slug].artist) : null), vnode.attrs.songs[slug].userSong ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
+        onclick: () => {
+            __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("DELETE SONG BY SLUG", slug);
+        },
+        "aria-label": "delete"
+    }, "🗙") : null)))
 });
 
 /***/ }),
@@ -2229,14 +2259,17 @@ var loadBtn = "mc70832d4a_button mc9f90d7fb_loadBtn";
 "use strict";
 /* unused harmony export fontSans */
 /* unused harmony export fontSerif */
+/* unused harmony export animDur */
 /* unused harmony export list */
 /* harmony default export */ __webpack_exports__["a"] = ({
     "fontSans": "Raleway, sans-serif",
     "fontSerif": "'Slabo 27px', serif",
+    "animDur": "0.3s",
     "list": "mcb48e5add_list"
 });
 var fontSans = "Raleway, sans-serif";
 var fontSerif = "'Slabo 27px', serif";
+var animDur = "0.3s";
 var list = "mcb48e5add_list";
 
 /***/ }),

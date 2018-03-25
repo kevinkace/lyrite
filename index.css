@@ -330,9 +330,31 @@ svg {
         color: #6b97d0;
         font: bold 1.15em/1 Raleway, sans-serif;
     }
-.mcb48e5add_list a {
-        display: block;
+.mcb48e5add_list div button {
+            position: relative;
+            top: -0.15em;
+            margin-left: 1em;
+            padding: 0.2em;
+            /* width: 1.3em;
+            height: 1.3em; */
 
+            opacity: 0;
+
+            font-size: 0.8em;
+            color: #fff;
+            background: transparent;
+            border: solid 2px #fff6;
+            border-radius: 50%;
+
+            transition: opacity 0.3s, background-color 0.3s;
+        }
+.mcb48e5add_list div button:hover {
+                background: red;
+            }
+.mcb48e5add_list div:hover button {
+            opacity: 1;
+        }
+.mcb48e5add_list a {
         font-family: 'Slabo 27px', serif;
         text-transform: uppercase;
         text-decoration: none;
