@@ -14,7 +14,7 @@
 
         location.replace(
             location.protocol + "//" + location.hostname  +
-            "/?p=/" +
+            "/?p=" +
             sanitize(location.pathname) +
             (location.search ? "&q=" + sanitize(location.search.slice(1)) : "") +
             location.hash
