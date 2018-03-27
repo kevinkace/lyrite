@@ -18,25 +18,30 @@
             return path.replace(/~and~/g, "&")
         }
 
-        if(!location.search) {
-            return;
+        function checkRedirect() {
+
+            if(!location.search) {
+                return;
+            }
+
+            location.search.slice(1).split("&").forEach(function(params) {
+                const [ key, value ] = params.split("=");
+
+                q[key] = desanitize(value);
+            });
+
+            if(q.p === undefined) {
+                return;
+            }
+
+            history.replaceState(null, null,
+                location.pathname.slice(0, -1) + (q.p || "") +
+                (q.q ? ("?" + q.q) : "") +
+                location.hash
+            );
         }
 
-        location.search.slice(1).split("&").forEach(function(params) {
-            const [ key, value ] = params.split("=");
-
-            q[key] = desanitize(value);
-        });
-
-        if(q.p === undefined) {
-            return;
-        }
-
-        history.replaceState(null, null,
-            location.pathname.slice(0, -1) + (q.p || "") +
-            (q.q ? ("?" + q.q) : "") +
-            location.hash
-        );
+        checkRedirect();
 
         const ver = <%= JSON.stringify(htmlWebpackPlugin.options.ver) %>;
     </script>
