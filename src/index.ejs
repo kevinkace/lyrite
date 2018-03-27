@@ -12,29 +12,31 @@
     <div id="mount"></div>
 
     <script>
-        (function(l) {
-            var q = {};
+        const q = {};
 
-            if(!l.search) {
-                return;
-            }
+        function desanitize(path) {
+            return path.replace(/~and~/g, "&")
+        }
 
-            l.search.slice(1).split('&').forEach(function(v) {
-                var a = v.split('=');
+        if(!location.search) {
+            return;
+        }
 
-                q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
-            });
+        location.search.slice(1).split("&").forEach(function(params) {
+            const [ key, value ] = params.split("=");
 
-            if(q.p === undefined) {
-                return;
-            }
+            q[key] = desanitize(value);
+        });
 
-            window.history.replaceState(null, null,
-                l.pathname.slice(0, -1) + (q.p || '') +
-                (q.q ? ('?' + q.q) : '') +
-                l.hash
-            );
-        }(window.location))
+        if(q.p === undefined) {
+            return;
+        }
+
+        history.replaceState(null, null,
+            location.pathname.slice(0, -1) + (q.p || "") +
+            (q.q ? ("?" + q.q) : "") +
+            location.hash
+        );
 
         const ver = <%= JSON.stringify(htmlWebpackPlugin.options.ver) %>;
     </script>

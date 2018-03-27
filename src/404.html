@@ -7,18 +7,18 @@
     <title>404</title>
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
-    <script type="text/javascript">
-        var segmentCount = 0,
-            l = window.location;
+    <script>
+        function sanitize(path) {
+            return path.replace(/&/g, "~and~")
+        }
 
-        l.replace(
-            l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-            l.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?p=/' +
-            l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
-            (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-            l.hash
+        location.replace(
+            location.protocol + "//" + location.hostname  +
+            "/?p=/" +
+            sanitize(location.pathname) +
+            (location.search ? "&q=" + sanitize(location.search.slice(1)) : "") +
+            location.hash
         );
-
     </script>
 </head>
 <body>
