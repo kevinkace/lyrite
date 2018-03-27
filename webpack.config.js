@@ -11,28 +11,28 @@ const postcssNested = require("postcss-nested");
 
 // Bundling assets for HtmlWebpackIncludeAssetsPlugi;
 const assets = [{
-            path : "https://fonts.googleapis.com/css?family=Raleway|Slabo+27px",
-            type : "css"
-        },
-        "https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js",
-        "/index.css"
-    ];
+        path : "https://fonts.googleapis.com/css?family=Raleway|Slabo+27px",
+        type : "css"
+    },
+    "https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js",
+    "/index.css"
+];
 
 const ver = {};
 
-git.short(function (str) {
+git.short((str) => {
     ver.short = str;
 });
 
-git.long(function (str) {
+git.long((str) => {
     ver.long = str;
 });
 
-git.branch(function (str) {
+git.branch((str) => {
     ver.branch = str;
 });
 
-git.tag(function (str) {
+git.tag((str) => {
     ver.tag = str;
 });
 
