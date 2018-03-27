@@ -3,6 +3,7 @@ const path = require("path");
 const HtmlWebpackPlugin  = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const git = require("git-rev");
 
@@ -66,19 +67,23 @@ module.exports = {
         new CleanWebpackPlugin([ "dist" ]),
         // Modular CSS
         new CSSPlugin({
-            css : "./index.css",
+            css    : "./index.css",
             before : [ postcssNested ]
         }),
         // Tells webpack to use this plugin to generate the output
         new HtmlWebpackPlugin({
-            title      : "Lyrite",
-            template   : "./src/index.ejs",
+            title    : "Lyrite",
+            template : "./src/index.ejs",
             ver
         }),
         new HtmlWebpackIncludeAssetsPlugin({
-            assets,       // Include assets into template
+            assets,        // Include assets into template
             append : false // Include after existing
-        })
+        }),
+        new CopyWebpackPlugin([{
+            from : "./src/404.html",
+            to   : ""
+        }])
     ],
     // Bundled JS
     output : {
