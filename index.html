@@ -18,27 +18,32 @@
             return path.replace(/~and~/g, "&")
         }
 
-        if(!location.search) {
-            return;
+        function checkRedirect() {
+
+            if(!location.search) {
+                return;
+            }
+
+            location.search.slice(1).split("&").forEach(function(params) {
+                const [ key, value ] = params.split("=");
+
+                q[key] = desanitize(value);
+            });
+
+            if(q.p === undefined) {
+                return;
+            }
+
+            history.replaceState(null, null,
+                location.pathname.slice(0, -1) + (q.p || "") +
+                (q.q ? ("?" + q.q) : "") +
+                location.hash
+            );
         }
 
-        location.search.slice(1).split("&").forEach(function(params) {
-            const [ key, value ] = params.split("=");
+        checkRedirect();
 
-            q[key] = desanitize(value);
-        });
-
-        if(q.p === undefined) {
-            return;
-        }
-
-        history.replaceState(null, null,
-            location.pathname.slice(0, -1) + (q.p || "") +
-            (q.q ? ("?" + q.q) : "") +
-            location.hash
-        );
-
-        const ver = {"tag":"v1.4.0","branch":"HEAD","long":"e551abfcf5d18f69c502163f49c15451db1fb4fe","short":"e551abf"};
+        const ver = {"tag":"v1.4.0","branch":"HEAD","long":"40d99431c19fa531ff54711194f482e1b2c37548","short":"40d9943"};
     </script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js"></script><script type="text/javascript" src="index.js"></script></body>
