@@ -3,6 +3,4 @@
 
 A simple tool for adding some color to lyrics so it's easier to track visually when singing.
 
-<video>
-    <source src="https://rawgit.com/kevinkace/lyrite/master/demo-SLTS.mp4" type="video/mp4">
-</video>
+![demo](https://rawgit.com/kevinkace/lyrite/master/demo-SLTS.gif)
