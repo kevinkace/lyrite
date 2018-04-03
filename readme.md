@@ -1,4 +1,6 @@
-# ![demo](https://rawgit.com/kevinkace/lyrite/master/assets/logo-85x85.png) Lyrite - a tool for styling lyrics
+![demo](https://rawgit.com/kevinkace/lyrite/master/assets/logo-85x85.png)
+
+# Lyrite - a tool for styling lyrics
 [![Build Status](https://travis-ci.org/kevinkace/lyrite.svg?branch=master)](https://travis-ci.org/kevinkace/lyrite)
 
 
