@@ -4,7 +4,7 @@ import tools from "./tools";
 import song from "./song";
 import modal from "./modal";
 
-import db from "./db";
+import db from "../lib/db";
 
 const State = {
     appName    : "Lyrite",

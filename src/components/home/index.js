@@ -1,7 +1,7 @@
 import m from "mithril";
 
 import state from "../../state";
-import db from "../../state/db";
+import db from "../../lib/db";
 
 import css from "./index.css";
 

@@ -35,6 +35,7 @@ export default {
 
                                 onclick : () => {
                                     state.action("CLICK LYRIC", idx);
+                                    console.log(part.markdown);
                                 }
                             },
 

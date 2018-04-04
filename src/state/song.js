@@ -1,8 +1,9 @@
 import eol from "eol";
 import hash from "string-hash";
 import slugify from "slugify";
+import { markdown } from "markdown";
 
-import db from "./db";
+import db from "../lib/db";
 
 import defaultSongs from "./songs";
 
@@ -12,7 +13,8 @@ function parseLyricString(lyricString) {
     return lyricString
         .split("\n\n")
         .map((text) => ({
-            hash : hash(text),
+            hash     : hash(text),
+            markdown : markdown.toHTML(text),
             text
         }));
 }
