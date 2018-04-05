@@ -10,7 +10,7 @@ import state from "./state";
 
 const mountEl = document.getElementById("mount");
 
-// state.debug = true;
+state.debug = true;
 state.action("IMPORT DEFAULT SONGS");
 
 m.route.prefix("");

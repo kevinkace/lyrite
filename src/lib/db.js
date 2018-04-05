@@ -6,6 +6,12 @@ function Table(key) {
         throw new Error("Must provide key");
     }
 
+    const data = _getTable();
+
+    if(data.ver && data.ver !== ver) { // eslint-disable-line no-undef
+
+    }
+
     // Private methods
     function _getTable() {
         const data = JSON.parse(localStorage.getItem(key)) || {};
