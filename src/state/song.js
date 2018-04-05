@@ -10,6 +10,8 @@ import defaultSongs from "./songs";
 const titleSplit = "\n\n---\n\n";
 
 function parseLyricString(lyricString) {
+    console.log(markdown.toHTML(lyricString));
+
     return lyricString
         .split("\n\n")
         .map((text) => ({
