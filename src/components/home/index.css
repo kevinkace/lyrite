@@ -1,5 +1,5 @@
 @value * as colors from "../../palette.css";
-@value fontSans, fontSerif, animDur from "../../index.css";
+@value fontSans, fontSerif, fontDisplay, animDur from "../../index.css";
 
 .home {
     padding: 1em 0.5em 0;
@@ -14,8 +14,8 @@
     svg {
         display: inline-block;
         width: auto;
-        height: 5em;
-        padding-bottom: 0.2em;
+        height: 7.5em;
+        padding: 0 0.2em 0.8em 0;
 
         fill: colors.cta;
     }
@@ -24,18 +24,15 @@
 .title {
     composes: title from "../../index.css";
 
-    font-size: 3em;
-    font-weight: bold;
-    letter-spacing: 0.08em;
+    font-size: 4em;
 }
 
 .subTitle {
     display: block;
 
-    opacity: 0.7;
+    color: colors.grey;
     text-transform: none;
-    letter-spacing: 0;
-    font: normal 1em/1 fontSans;
+    font: normal 1.33em/1 fontDisplay;
 }
 
 .center {

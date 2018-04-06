@@ -1,10 +1,11 @@
 @value * as colors from "../../palette.css";
-@value animDur from "../../index.css";
+@value fontSans, animDur from "../../index.css";
 
 .lyredit {
     position: relative;
     height: 95vh;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .lyrics {

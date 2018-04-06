@@ -1,5 +1,5 @@
 @value * as colors from "../../palette.css";
-@value animDur from "../../index.css";
+@value fontSerif, animDur from "../../index.css";
 
 .header {
     position: relative;
@@ -8,6 +8,8 @@
     align-items: center;
     justify-content: center;
     z-index: 1;
+
+    overflow: hidden;
 
     background: colors.header;
 }
@@ -53,14 +55,17 @@
 
     a {
         display: block;
-        padding-top: 0.2em;
 
         svg {
             fill: colors.cta;
+            width: auto;
+            height: 4vh;
         }
     }
 }
 
 .title {
-    composes: title from "../../index.css";
+    padding-top: 0.05em;
+    font: normal 1.9em/1 fontSerif;
+    text-transform: uppercase;
 }

@@ -12,7 +12,7 @@ const postcssNested = require("postcss-nested");
 
 // Bundling assets for HtmlWebpackIncludeAssetsPlugi;
 const assets = [{
-        path : "https://fonts.googleapis.com/css?family=Raleway|Slabo+27px",
+        path : "https://fonts.googleapis.com/css?family=Raleway|Slabo+27px|Bitter:400,700|Lato:400,700",
         type : "css"
     },
     "https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js",
@@ -81,6 +81,9 @@ module.exports = {
             append : false // Include after existing
         }),
         new CopyWebpackPlugin([{
+            from : "./src/favicons/*",
+            to   : "[name].[ext]"
+        }, {
             from : "./src/404.html",
             to   : ""
         }])
