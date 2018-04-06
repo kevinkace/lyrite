@@ -14,8 +14,8 @@
     svg {
         display: inline-block;
         width: auto;
-        height: 6em;
-        padding: 0 0.3em 0.8em 0;
+        height: 7.5em;
+        padding: 0 0.2em 0.8em 0;
 
         fill: colors.cta;
     }
@@ -24,7 +24,7 @@
 .title {
     composes: title from "../../index.css";
 
-    font-size: 3em;
+    font-size: 4em;
 }
 
 .subTitle {
@@ -32,7 +32,7 @@
 
     color: colors.grey;
     text-transform: none;
-    font: normal 1em/1 fontDisplay;
+    font: normal 1.33em/1 fontDisplay;
 }
 
 .center {
