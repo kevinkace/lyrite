@@ -15,9 +15,10 @@ export default {
                             oncreate : m.route.link,
                             href     : `/${vnode.attrs.songs[slug].slug}`
                         },
-                        vnode.attrs.songs[slug].title,
+                        m("strong", vnode.attrs.songs[slug].title),
+
                         vnode.attrs.songs[slug].artist ?
-                            m("span", " - ", vnode.attrs.songs[slug].artist ) :
+                            [ " - ", vnode.attrs.songs[slug].artist ] :
                             null
                     ),
                     vnode.attrs.songs[slug].userSong ?

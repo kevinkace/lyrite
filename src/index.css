@@ -1,25 +1,25 @@
 @value * as colors from "./palette.css";
 
-@value fontSans: Raleway, sans-serif;
-@value fontSerif: 'Slabo 27px', serif;
+@value fontSans: Lato, sans-serif;
+@value fontDisplay: Raleway, sans-serif;
+@value fontSerif: Bitter, serif;
 @value animDur: 0.3s;
 
 html {
-    font: 300 1em/1.5 Raleway, sans-serif;
+    font: normal 1em/1.5 fontSans;
     color: #fff;
 
     background: colors.bg;
 }
 
 body {
-    overflow: hidden;
 }
 
 button,
 input,
 select,
 textarea {
-    font: 300 1em/1.5 Raleway, sans-serif;
+    font: 300 1em/1.5 fontDisplay;
 }
 
 button:focus,
@@ -45,7 +45,7 @@ svg {
 :global(#mount) {
     display: flex;
     flex-flow: column nowrap;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
 }
 
@@ -62,7 +62,10 @@ svg {
 }
 
 .title {
-    text-align: center;
-    font: normal 1.8em/1.2 fontSerif;
+    font: normal 1.9em/1 fontSerif;
     text-transform: uppercase;
+
+    &:first-letter {
+        letter-spacing: -0.1em;
+    }
 }
