@@ -650,7 +650,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n    <title>lyrite-logo-vector-01-01</title>\n\n    <path class=\"cls-2\" d=\"M28.12,28.15c-6.53-1.22-.9-.16-7.15-1.36V4.35L7,2V26.92L28.12,30.5C28.11,28.84,28.1,29.72,28.12,28.15Z\"/>\n</svg>\n"
+module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n    <title>Lyrite</title>\n\n    <path d=\"M26.44,26.17a2.33,2.33,0,1,1,0-4.66,2.6,2.6,0,0,1,.56.07V7.66L5.5,2.57V14.83a2.6,2.6,0,0,1,.56-.07,2.33,2.33,0,0,1,0,4.66,2.6,2.6,0,0,1-.56-.07v5.9L8.78,26l5.36-15h3.37L11.88,26.75l2.63.61L20.35,11h3.37L17.61,28.09,27,30.3V26.1A2.6,2.6,0,0,1,26.44,26.17Z\"/>\n</svg>\n\n\n"
 
 /***/ }),
 /* 6 */
@@ -664,10 +664,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mithril___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_mithril__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__state__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__favicon_ico__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__favicon_ico___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__favicon_ico__);
-
-
 
 
 
@@ -702,21 +698,24 @@ window.state = __WEBPACK_IMPORTED_MODULE_4__state__["a" /* default */];
 
 "use strict";
 /* unused harmony export fontSans */
+/* unused harmony export fontDisplay */
 /* unused harmony export fontSerif */
 /* unused harmony export animDur */
 /* unused harmony export mount */
 /* unused harmony export button */
 /* unused harmony export title */
 /* unused harmony default export */ var _unused_webpack_default_export = ({
-    "fontSans": "Raleway, sans-serif",
-    "fontSerif": "'Slabo 27px', serif",
+    "fontSans": "Lato, sans-serif",
+    "fontDisplay": "Raleway, sans-serif",
+    "fontSerif": "Bitter, serif",
     "animDur": "0.3s",
     "mount": "mount",
     "button": "mc70832d4a_button",
     "title": "mc70832d4a_title"
 });
-var fontSans = "Raleway, sans-serif";
-var fontSerif = "'Slabo 27px', serif";
+var fontSans = "Lato, sans-serif";
+var fontDisplay = "Raleway, sans-serif";
+var fontSerif = "Bitter, serif";
 var animDur = "0.3s";
 var mount = "mount";
 var button = "mc70832d4a_button";
@@ -1472,8 +1471,8 @@ var debug = "mc55d93723_debug";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tools__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo2_svg__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo2_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo2_svg__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_animResolve__ = __webpack_require__(3);
 
 
@@ -1499,7 +1498,7 @@ var debug = "mc55d93723_debug";
     view: () => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].headerIn }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song ? __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song.title : __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__index_css__["a" /* default */].logo }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
         href: "/",
         oncreate: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.link
-    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg___default.a))), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__tools__["a" /* default */]) : null)
+    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo2_svg___default.a))), __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].song ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()(__WEBPACK_IMPORTED_MODULE_3__tools__["a" /* default */]) : null)
 });
 
 /***/ }),
@@ -1507,6 +1506,7 @@ var debug = "mc55d93723_debug";
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export fontSerif */
 /* unused harmony export animDur */
 /* unused harmony export header */
 /* unused harmony export headerIn */
@@ -1514,19 +1514,21 @@ var debug = "mc55d93723_debug";
 /* unused harmony export logo */
 /* unused harmony export title */
 /* harmony default export */ __webpack_exports__["a"] = ({
+    "fontSerif": "Bitter, serif",
     "animDur": "0.3s",
     "header": "mc23bfb80c_header",
     "headerIn": "mc23bfb80c_header mc23bfb80c_headerIn",
     "headerOut": "mc23bfb80c_header mc23bfb80c_headerOut",
     "logo": "mc23bfb80c_logo",
-    "title": "mc70832d4a_title mc23bfb80c_title"
+    "title": "mc23bfb80c_title"
 });
+var fontSerif = "Bitter, serif";
 var animDur = "0.3s";
 var header = "mc23bfb80c_header";
 var headerIn = "mc23bfb80c_header mc23bfb80c_headerIn";
 var headerOut = "mc23bfb80c_header mc23bfb80c_headerOut";
 var logo = "mc23bfb80c_logo";
-var title = "mc70832d4a_title mc23bfb80c_title";
+var title = "mc23bfb80c_title";
 
 /***/ }),
 /* 31 */
@@ -1975,6 +1977,7 @@ function addBr(text) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export fontSans */
 /* unused harmony export animDur */
 /* unused harmony export lyredit */
 /* unused harmony export lyrics */
@@ -1988,6 +1991,7 @@ function addBr(text) {
 /* unused harmony export s4 */
 /* unused harmony export s5 */
 /* harmony default export */ __webpack_exports__["a"] = ({
+    "fontSans": "Lato, sans-serif",
     "animDur": "0.3s",
     "lyredit": "mc9673f5d0_lyredit",
     "lyrics": "mc9673f5d0_lyrics",
@@ -2001,6 +2005,7 @@ function addBr(text) {
     "s4": "mc9673f5d0_line mc9673f5d0_s4",
     "s5": "mc9673f5d0_line mc9673f5d0_s5"
 });
+var fontSans = "Lato, sans-serif";
 var animDur = "0.3s";
 var lyredit = "mc9673f5d0_lyredit";
 var lyrics = "mc9673f5d0_lyrics";
@@ -2097,10 +2102,10 @@ var textarea = "mc7d4b81c4_textarea";
 /* unused harmony export fontSerif */
 /* unused harmony export error */
 /* harmony default export */ __webpack_exports__["a"] = ({
-    "fontSerif": "'Slabo 27px', serif",
+    "fontSerif": "Bitter, serif",
     "error": "mc1fc74cfc_error"
 });
-var fontSerif = "'Slabo 27px', serif";
+var fontSerif = "Bitter, serif";
 var error = "mc1fc74cfc_error";
 
 /***/ }),
@@ -2113,8 +2118,8 @@ var error = "mc1fc74cfc_error";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__state__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__state_db__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_css__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo2_svg__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo2_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo2_svg__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__list__ = __webpack_require__(48);
 
 
@@ -2141,7 +2146,7 @@ var error = "mc1fc74cfc_error";
             return true;
         }
     },
-    view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].home }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].logoAndType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo_svg___default.a), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].logoType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h2", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].subTitle }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].tagline))), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].center }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].dash }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
+    view: vnode => [__WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].home }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].logoAndType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.trust(__WEBPACK_IMPORTED_MODULE_4__icons_lyrite_logo2_svg___default.a), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].logoType }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h1", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].title }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].appName), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h2", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].subTitle }, __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].tagline))), __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].center }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].dash }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("textarea", {
         class: vnode.state.focused ? __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].textareaFocused : __WEBPACK_IMPORTED_MODULE_3__index_css__["a" /* default */].textarea,
         value: vnode.state.lyricString,
         placeholder: vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
@@ -2185,6 +2190,7 @@ var error = "mc1fc74cfc_error";
 "use strict";
 /* unused harmony export fontSans */
 /* unused harmony export fontSerif */
+/* unused harmony export fontDisplay */
 /* unused harmony export animDur */
 /* unused harmony export home */
 /* unused harmony export logoAndType */
@@ -2197,8 +2203,9 @@ var error = "mc1fc74cfc_error";
 /* unused harmony export btnWrap */
 /* unused harmony export loadBtn */
 /* harmony default export */ __webpack_exports__["a"] = ({
-    "fontSans": "Raleway, sans-serif",
-    "fontSerif": "'Slabo 27px', serif",
+    "fontSans": "Lato, sans-serif",
+    "fontSerif": "Bitter, serif",
+    "fontDisplay": "Raleway, sans-serif",
     "animDur": "0.3s",
     "home": "mc9f90d7fb_home",
     "logoAndType": "mc9f90d7fb_logoAndType",
@@ -2211,8 +2218,9 @@ var error = "mc1fc74cfc_error";
     "btnWrap": "mc9f90d7fb_btnWrap",
     "loadBtn": "mc70832d4a_button mc9f90d7fb_loadBtn"
 });
-var fontSans = "Raleway, sans-serif";
-var fontSerif = "'Slabo 27px', serif";
+var fontSans = "Lato, sans-serif";
+var fontSerif = "Bitter, serif";
+var fontDisplay = "Raleway, sans-serif";
 var animDur = "0.3s";
 var home = "mc9f90d7fb_home";
 var logoAndType = "mc9f90d7fb_logoAndType";
@@ -2244,7 +2252,7 @@ var loadBtn = "mc70832d4a_button mc9f90d7fb_loadBtn";
     view: vnode => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", { class: __WEBPACK_IMPORTED_MODULE_2__list_css__["a" /* default */].list }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("h3", vnode.attrs.header), Object.keys(vnode.attrs.songs).map(slug => __WEBPACK_IMPORTED_MODULE_0_mithril___default()("div", __WEBPACK_IMPORTED_MODULE_0_mithril___default()("a", {
         oncreate: __WEBPACK_IMPORTED_MODULE_0_mithril___default.a.route.link,
         href: `/${vnode.attrs.songs[slug].slug}`
-    }, vnode.attrs.songs[slug].title, vnode.attrs.songs[slug].artist ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("span", " - ", vnode.attrs.songs[slug].artist) : null), vnode.attrs.songs[slug].userSong ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
+    }, __WEBPACK_IMPORTED_MODULE_0_mithril___default()("strong", vnode.attrs.songs[slug].title), vnode.attrs.songs[slug].artist ? [" - ", vnode.attrs.songs[slug].artist] : null), vnode.attrs.songs[slug].userSong ? __WEBPACK_IMPORTED_MODULE_0_mithril___default()("button", {
         onclick: () => {
             __WEBPACK_IMPORTED_MODULE_1__state__["a" /* default */].action("DELETE SONG BY SLUG", slug);
         },
@@ -2259,24 +2267,21 @@ var loadBtn = "mc70832d4a_button mc9f90d7fb_loadBtn";
 "use strict";
 /* unused harmony export fontSans */
 /* unused harmony export fontSerif */
+/* unused harmony export fontDisplay */
 /* unused harmony export animDur */
 /* unused harmony export list */
 /* harmony default export */ __webpack_exports__["a"] = ({
-    "fontSans": "Raleway, sans-serif",
-    "fontSerif": "'Slabo 27px', serif",
+    "fontSans": "Lato, sans-serif",
+    "fontSerif": "Bitter, serif",
+    "fontDisplay": "Raleway, sans-serif",
     "animDur": "0.3s",
     "list": "mcb48e5add_list"
 });
-var fontSans = "Raleway, sans-serif";
-var fontSerif = "'Slabo 27px', serif";
+var fontSans = "Lato, sans-serif";
+var fontSerif = "Bitter, serif";
+var fontDisplay = "Raleway, sans-serif";
 var animDur = "0.3s";
 var list = "mcb48e5add_list";
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "favicon.ico";
 
 /***/ })
 /******/ ]);

@@ -120,13 +120,12 @@ th {
 }
 /*src/index.css */
 html {
-    font: 300 1em/1.5 Raleway, sans-serif;
+    font: normal 1em/1.5 Lato, sans-serif;
     color: #fff;
 
     background: #2c292d;
 }
 body {
-    overflow: hidden;
 }
 button,
 input,
@@ -153,7 +152,7 @@ svg {
 #mount {
     display: flex;
     flex-flow: column nowrap;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
 }
 .mc70832d4a_button {
@@ -168,10 +167,12 @@ svg {
     background: var(--color);
 }
 .mc70832d4a_title {
-    text-align: center;
-    font: normal 1.8em/1.2 'Slabo 27px', serif;
+    font: normal 1.9em/1 Bitter, serif;
     text-transform: uppercase;
 }
+.mc70832d4a_title:first-letter {
+        letter-spacing: -0.1em;
+    }
 /*src/components/error/index.css */
 .mc1fc74cfc_error {
     margin: 1em 0;
@@ -180,7 +181,7 @@ svg {
 .mc1fc74cfc_error h1 {
         margin: 0 0 1em;
 
-        font: normal 1.8em/1.2 'Slabo 27px', serif;
+        font: normal 1.8em/1.2 Bitter, serif;
     }
 /*src/components/header/index.css */
 .mc23bfb80c_header {
@@ -190,6 +191,8 @@ svg {
     align-items: center;
     justify-content: center;
     z-index: 1;
+
+    overflow: hidden;
 
     background: #fff1;
 }
@@ -228,11 +231,17 @@ svg {
 }
 .mc23bfb80c_logo a {
         display: block;
-        padding-top: 0.2em;
     }
 .mc23bfb80c_logo a svg {
             fill: #4571a9;
+            width: auto;
+            height: 4vh;
         }
+.mc23bfb80c_title {
+    padding-top: 0.05em;
+    font: normal 1.9em/1 Bitter, serif;
+    text-transform: uppercase;
+}
 /*src/components/home/index.css */
 .mc9f90d7fb_home {
     padding: 1em 0.5em 0;
@@ -246,24 +255,21 @@ svg {
 .mc9f90d7fb_logoAndType svg {
         display: inline-block;
         width: auto;
-        height: 5em;
-        padding-bottom: 0.2em;
+        height: 7.5em;
+        padding: 0 0.2em 0.8em 0;
 
         fill: #4571a9;
     }
 .mc9f90d7fb_title {
 
-    font-size: 3em;
-    font-weight: bold;
-    letter-spacing: 0.08em;
+    font-size: 4em;
 }
 .mc9f90d7fb_subTitle {
     display: block;
 
-    opacity: 0.7;
+    color: #fff9;
     text-transform: none;
-    letter-spacing: 0;
-    font: normal 1em/1 Raleway, sans-serif;
+    font: normal 1.33em/1 Raleway, sans-serif;
 }
 .mc9f90d7fb_center {
     text-align: center;
@@ -328,7 +334,7 @@ svg {
         border-bottom: solid 1px #fff5;
 
         color: #6b97d0;
-        font: bold 1.15em/1 Raleway, sans-serif;
+        font: normal 1.25em/1 Raleway, sans-serif;
     }
 .mcb48e5add_list div button {
             position: relative;
@@ -355,20 +361,23 @@ svg {
             opacity: 1;
         }
 .mcb48e5add_list a {
-        font-family: 'Slabo 27px', serif;
-        text-transform: uppercase;
+        font-family: Raleway, sans-serif;
         text-decoration: none;
         font-size: 1.25em;
-        line-height: 1.25;
+
+        color: #fff9;
     }
-.mcb48e5add_list a:hover {
+.mcb48e5add_list a:hover strong {
             text-decoration: underline;
         }
-.mcb48e5add_list a span {
-            display: inline-block;
-            padding-left: 0.3em;
-            opacity: 0.6;
-            font-size: 0.8em;
+.mcb48e5add_list a strong {
+            padding-right: 0.2em;
+
+            color: #fff;
+            font-size: 1.1em;
+            font-family: Bitter, serif;
+            font-weight: normal;
+            text-transform: uppercase;
         }
 /*src/components/layout/index.css */
 .mc55d93723_bug {
@@ -450,6 +459,7 @@ svg {
     position: relative;
     height: 95vh;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 .mc9673f5d0_lyrics {
     padding: 0.5em;
