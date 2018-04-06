@@ -5,6 +5,7 @@
     position: relative;
     height: 95vh;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .lyrics {

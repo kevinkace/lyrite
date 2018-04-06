@@ -81,6 +81,9 @@ module.exports = {
             append : false // Include after existing
         }),
         new CopyWebpackPlugin([{
+            from : "./src/favicons/*",
+            to   : "[name].[ext]"
+        }, {
             from : "./src/404.html",
             to   : ""
         }])
