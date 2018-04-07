@@ -8,6 +8,8 @@ import css from "./index.css";
 import logo from "../icons/lyrite-logo2.svg";
 import list from "./list";
 
+import contributors  from "../contributors";
+
 export default {
     oninit : (vnode) => {
         vnode.state.timestamp = db.timestamp();
@@ -83,7 +85,9 @@ export default {
             // loaded songs list
             Object.keys(vnode.state.defaultSongs).length ?
                 m(list, { songs : vnode.state.defaultSongs, header : "default songs"}) :
-                null
+                null,
+
+            m(contributors)
         )
     ]
 };
