@@ -32,9 +32,10 @@ A single page application built with [Mithril](https://mithril.js.org/) & [Modul
 
 It's a portmanteau of "lyrics" and "write"; Lyrite.
 
-## Thanks
+## Contributors & Thanks
 
 Neil Hagar - jamming buddy, and sounding board
+Eli Scheer - logo, and fonts
 
 <details>
 <summary>
