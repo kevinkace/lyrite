@@ -192,8 +192,6 @@ svg {
     justify-content: center;
     z-index: 1;
 
-    overflow: hidden;
-
     background: #fff1;
 }
 .mc23bfb80c_headerIn {
@@ -211,6 +209,8 @@ svg {
     position: absolute;
     top: 0;
     width: 100%;
+
+    overflow:  hidden;
 
     transform: translateY(0);
     animation: forwards 0.3s mc23bfb80c_slideOut;
