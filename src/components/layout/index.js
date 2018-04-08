@@ -5,12 +5,14 @@ import state from "../../state";
 import css from "./index.css";
 import header from "../header";
 import modal from "../modal";
+import contributors  from "../contributors";
+
 
 import ghLogo from "../icons/github.svg";
 
 export default {
     view : (vnode) =>
-        m("div",
+        [
             vnode.attrs.header ? m(header) : null,
 
             vnode.children,
@@ -39,6 +41,8 @@ export default {
                 }, state.ver.tag)
             ),
 
-            state.modal ? m(modal) : null
-        )
+            state.modal ? m(modal) : null,
+
+            m(contributors)
+        ]
 };

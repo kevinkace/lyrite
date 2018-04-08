@@ -1,6 +1,72 @@
+@value fontSerif from "../../index.css";
+@value * as colors from "../../palette.css";
+
 .contributors {
     position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
+    min-height: 200px;
+    overflow: hidden;
+
+    text-align: center;
+
+    button {
+        position: absolute;
+        bottom: 100%;
+        padding:  1em;
+        font-size: 0.8em;
+        background: none;
+        color: colors.grey;
+        border: none;
+        transform: translateX(-50%);
+    }
+}
+
+.slide {
+    position: absolute;
+    /* top: 0; */
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    transition: transform 0.2s;
+}
+
+.slideOut {
+    composes: slide;
+
+    transform: translateY(100%);
+}
+
+.slideIn {
+    composes: slide;
+
+    transform: translateY(0);
+}
+
+.content {
+    display: flex;
+    max-width: 860px;
+    margin: 0 auto;
+    flex-flow: row nowrap;
+
+    justify-content: space-around;
+
+    text-align: left;
+}
+
+.contributor {
+    flex: 0 0 140px;
+    padding: 1em 0;
+    color: colors.grey;
+}
+
+.name {
+    display: block;
+
+    font: normal 1em/1 fontSerif;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fff;
 }

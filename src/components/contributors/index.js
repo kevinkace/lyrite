@@ -15,16 +15,25 @@ const contributors = [{
 }];
 
 export default {
-    view : () =>
-        m("div",
-            m("button", "contributors"),
-            m("div", { class : css.content },
-                contributors.map((c) =>
-                    m("div", { class : css.contributor },
-                        m(c.href ? "a" : "div", {
-                            href : c.href
-                        }, c.name),
-                        c.desc
+    view : (vnode) =>
+        m("div", { class : css.contributors },
+            m("div", { class : vnode.state.show ? css.slideIn : css.slideOut },
+                m("button", {
+                        onclick : () => {
+                            vnode.state.show = !vnode.state.show;
+                        }
+                    },
+                    "contributors"
+                ),
+                m("div", { class : css.content },
+                    contributors.map((c) =>
+                        m("div", { class : css.contributor },
+                            m(c.href ? "a" : "div", {
+                                class :  css.name,
+                                href : c.href
+                            }, c.name),
+                            c.desc
+                        )
                     )
                 )
             )
