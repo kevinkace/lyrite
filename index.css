@@ -230,12 +230,20 @@ svg {
     align-items: center;
 }
 .mc23bfb80c_logo a {
-        display: block;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
     }
 .mc23bfb80c_logo a svg {
             fill: #4571a9;
             width: auto;
             height: 4vh;
+        }
+.mc23bfb80c_logo a div {
+            margin: 0.4em 0 0 0.4em;
+
+            font: normal 1.2em/1 Bitter, serif;
+            text-transform: uppercase;
         }
 .mc23bfb80c_title {
     padding-top: 0.05em;
@@ -649,6 +657,9 @@ svg {
     bottom: 0;
     padding: 0 0.4em 0 0.6em;
 
+    color: #fff;
+    text-align: center;
+
     border: none;
     border-radius: 0.3em;
     border-top-right-radius: 0;
@@ -657,12 +668,16 @@ svg {
     background: #4571a9;
 }
 .mce8163484_show svg {
-    display: block;
-    height: 100%;
-    width: 1em;
+        display: block;
+        width: 1em;
+        margin: 0 auto;
 
-    fill: #fff;
-}
+        fill: #fff;
+    }
+.mce8163484_show div {
+        font-size: 0.75em;
+        text-transform: uppercase;
+    }
 .mce8163484_label {
     display: block;
     font-size: 0.7em;
