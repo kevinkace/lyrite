@@ -54,12 +54,21 @@
     align-items: center;
 
     a {
-        display: block;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
 
         svg {
             fill: colors.cta;
             width: auto;
             height: 4vh;
+        }
+
+        div {
+            margin: 0.4em 0 0 0.4em;
+
+            font: normal 1.2em/1 fontSerif;
+            text-transform: uppercase;
         }
     }
 }

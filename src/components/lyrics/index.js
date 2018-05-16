@@ -12,11 +12,12 @@ function addBr(text) {
 }
 
 export default {
-    oninit : () => {
-        // if(state.song.untitled) {
-        //     state.action("OPEN TITLE MODAL");
-        // }
-    },
+    // oninit : () => {
+    //     // todo: make this not broken
+    //     if(state.song.untitled) {
+    //         state.action("OPEN TITLE MODAL");
+    //     }
+    // },
     view : () =>
         m("div", { class : css.lyredit },
             m("div", {

@@ -25,9 +25,12 @@ export default {
 
             m("div", { class : css.logo },
                 m("a", {
-                    href     : "/",
-                    oncreate : m.route.link,
-                }, m.trust(logo))
+                        href     : "/",
+                        oncreate : m.route.link,
+                    },
+                    m.trust(logo),
+                    m("div", "Lyrite")
+                )
             ),
 
             state.song ? m(tools) : null

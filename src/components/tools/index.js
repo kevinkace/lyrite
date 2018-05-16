@@ -22,7 +22,8 @@ export default {
                         }
                     }
                 },
-                m.trust(edit)
+                m.trust(edit),
+                m("div", "tools")
             ),
 
             // Style buttons

@@ -36,20 +36,28 @@
     bottom: 0;
     padding: 0 0.4em 0 0.6em;
 
+    color: #fff;
+    text-align: center;
+
     border: none;
     border-radius: 0.3em;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 
     background: colors.cta;
-}
 
-.show svg {
-    display: block;
-    height: 100%;
-    width: 1em;
+    svg {
+        display: block;
+        width: 1em;
+        margin: 0 auto;
 
-    fill: #fff;
+        fill: #fff;
+    }
+
+    div {
+        font-size: 0.75em;
+        text-transform: uppercase;
+    }
 }
 
 .label {
