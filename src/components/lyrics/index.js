@@ -5,6 +5,8 @@ import state from "../../state";
 import css from "./index.css";
 import edit from "./edit";
 
+import marked from "marked";
+
 function addBr(text) {
     return text.replace(/\n/g, "<br>");
 }
@@ -38,7 +40,7 @@ export default {
                                 }
                             },
 
-                            m.trust(addBr(part.text))
+                            m.trust(marked(part.text))
                         )
                     )
             ),
