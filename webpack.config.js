@@ -39,12 +39,16 @@ git.tag((str) => {
 
 module.exports = {
     entry     : "./src/index.js",
+
     devtool   : "source-map",
+
     devServer : {
         historyApiFallback : true,
         contentBase : "./dist"
     },
+
     externals : { mithril : "m" },
+
     mode : "development",
 
     module : {
@@ -63,6 +67,7 @@ module.exports = {
             loader : "file-loader?name=[name].[ext]"
         }]
     },
+
     plugins : [
         // Cleans build artifacts (pathsToClean, cleanOptions)
         new CleanWebpackPlugin([ "dist" ]),
@@ -89,7 +94,7 @@ module.exports = {
             to   : ""
         }])
     ],
-    // Bundled JS
+
     output : {
         filename : "index.js",
         path     : path.resolve(__dirname, "dist")

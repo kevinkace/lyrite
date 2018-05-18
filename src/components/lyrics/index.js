@@ -41,7 +41,7 @@ export default {
                                 }
                             },
 
-                            m.trust(marked(part.text))
+                            m.trust(marked(addBr(part.text)))
                         )
                     )
             ),
