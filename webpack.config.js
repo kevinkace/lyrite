@@ -45,6 +45,7 @@ module.exports = {
         contentBase : "./dist"
     },
     externals : { mithril : "m" },
+    mode : "development",
 
     module : {
         rules : [{
