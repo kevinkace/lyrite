@@ -5,7 +5,7 @@ import state from "../../state";
 import css from "./index.css";
 import tooltipCss from "./tooltip.css";
 
-import edit from "../icons/quill.svg";
+import edit from "../../icons/quill.svg";
 
 export default {
     view : (vnode) =>

@@ -5,9 +5,9 @@ import m from "mithril";
 import state from "./state";
 
 import layout from "./components/layout";
-import lyrics from "./components/lyrics";
-import error from "./components/error";
-import home from "./components/home";
+import lyrics from "./pages/lyrics";
+import error from "./pages/error";
+import home from "./pages/home";
 
 export default {
     "/" : {

@@ -5,7 +5,7 @@ import db from "../../state/db";
 
 import css from "./index.css";
 
-import logo from "../icons/lyrite-logo2.svg";
+import logo from "../../icons/lyrite-logo2.svg";
 import list from "./list";
 
 export default {

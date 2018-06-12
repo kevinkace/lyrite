@@ -6,7 +6,7 @@ import css from "./index.css";
 import header from "../header";
 import modal from "../modal";
 
-import ghLogo from "../icons/github.svg";
+import ghLogo from "../../icons/github.svg";
 
 export default {
     view : (vnode) =>

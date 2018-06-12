@@ -5,7 +5,7 @@ import state from "../../state";
 import css from "./index.css";
 import tools from "../tools";
 
-import logo from "../icons/lyrite-logo2.svg";
+import logo from "../../icons/lyrite-logo2.svg";
 
 import animResolve from "../../lib/animResolve";
 
