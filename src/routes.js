@@ -11,15 +11,23 @@ import home from "./pages/home";
 
 export default {
     "/" : {
-        onmatch : () => {
-            state.action("CLOSE SONG");
-        },
+        // onmatch : () => {
+        //     state.action("CLOSE SONG");
+        // },
         render : () => m(layout, m(home))
     },
 
-    "/:slug" : {
-        onmatch : (args) =>
-            state.action("LOAD SONG BY SLUG", args.slug) ? lyrics : error,
-        render : (comp) => m(layout, { header : true }, m(comp.tag))
+    "/songs/:slug" : {
+        onmatch : (args) => {
+            if(!args.slug) {
+                m.route.set("/");
+            }
+
+            state.action("SET SLUG", args.slug);
+
+            // return state.action("LOAD SONG BY SLUG", args.slug) ? lyrics : error;
+            // return lyrics;
+        },
+        render : () => m(layout, { header : true }, m(lyrics))
     }
 };

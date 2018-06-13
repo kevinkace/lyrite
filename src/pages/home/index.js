@@ -2,28 +2,46 @@ import m from "mithril";
 
 import state from "../../state";
 import db from "../../state/db";
+import db2 from "../../db";
 
 import css from "./index.css";
 
 import logo from "../../icons/lyrite-logo2.svg";
 import list from "./list";
+import users from "../../components/users";
 
 export default {
     oninit : (vnode) => {
-        vnode.state.timestamp = db.timestamp();
-        vnode.state.defaultSongs = db.get("songs?default=true");
-        vnode.state.customSongs = db.get("songs?default=undefined");
-    },
-    onbeforeupdate : (vnode) => {
-        if(vnode.state.timestamp !== db.timestamp()) {
-            vnode.state.timestamp = db.timestamp();
-            vnode.state.defaultSongs = db.get("songs?default=true");
-            vnode.state.customSongs = db.get("songs?default=undefined");
+        vnode.state.songs = {};
+        vnode.state.loaded = false;
 
-            return true;
-        }
+        db2.collection("songs").onSnapshot((snap) => {
+            vnode.state.songs = {};
+
+            snap.forEach((doc) => {
+                vnode.state.songs[doc.id] = doc.data();
+                // vnode.state.songs.push(doc.data());
+            });
+
+            vnode.state.loaded = true;
+            m.redraw();
+        });
+
+        // vnode.state.timestamp = db.timestamp();
+        // vnode.state.defaultSongs = db.get("songs?default=true");
+        // vnode.state.customSongs = db.get("songs?default=undefined");
     },
+    // onbeforeupdate : (vnode) => {
+    //     if(vnode.state.timestamp !== db.timestamp()) {
+    //         vnode.state.timestamp = db.timestamp();
+    //         vnode.state.defaultSongs = db.get("songs?default=true");
+    //         vnode.state.customSongs = db.get("songs?default=undefined");
+
+    //         return true;
+    //     }
+    // },
     view : (vnode) => [
+        m(users),
         m("div", { class : css.home },
 
             m("div", { class : css.logoAndType },
@@ -75,14 +93,22 @@ export default {
                     null
             ),
 
-            // loaded songs list
-            Object.keys(vnode.state.customSongs).length ?
-                m(list, { songs : vnode.state.customSongs, header : "your songs"}) :
-                null,
+            // // loaded songs list
+            // Object.keys(vnode.state.customSongs).length ?
+            //     m(list, { songs : vnode.state.customSongs, header : "your songs"}) :
+            //     null,
+
+            // // loaded songs list
+            // Object.keys(vnode.state.defaultSongs).length ?
+            //     m(list, { songs : vnode.state.defaultSongs, header : "default songs"}) :
+            //     null,
 
             // loaded songs list
-            Object.keys(vnode.state.defaultSongs).length ?
-                m(list, { songs : vnode.state.defaultSongs, header : "default songs"}) :
+            Object.keys(vnode.state.songs).length ?
+                // m("div", Object.values(vnode.state.songs).map((song) =>
+                //     m("div", song.title)
+                // )) :
+                m(list, { songs : vnode.state.songs, header : "default songs"}) :
                 null
         )
     ]

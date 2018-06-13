@@ -18,7 +18,7 @@ export default {
     //         state.action("OPEN TITLE MODAL");
     //     }
     // },
-    view : () =>
+    view : (vnode) =>
         m("div", { class : css.lyredit },
             m("div", {
                     class : state.edit ? css.lyricsEdit : css.lyrics,

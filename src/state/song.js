@@ -31,6 +31,10 @@ function parseSongString(songString) {
 }
 
 export default (State) => ({
+    "SET SLUG" : (slug) => {
+        State.slug = slug;
+    },
+
     // imports default songs to DB
     "IMPORT DEFAULT SONGS" : () => {
         const savedSongs = db.get("songs") || [];
