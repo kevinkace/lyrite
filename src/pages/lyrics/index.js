@@ -1,6 +1,7 @@
 import m from "mithril";
 
 import state from "../../state";
+import db from "../../db";
 
 import css from "./index.css";
 import edit from "./edit";
@@ -18,7 +19,14 @@ export default {
     //         state.action("OPEN TITLE MODAL");
     //     }
     // },
-    view : (vnode) =>
+
+    // onbeforeupdate : (vnode) => {
+    //     if(vnode.state.slug !== state.slug) {
+    //         vnode.state.loading = true;
+    //     }
+    // },
+
+    view : () =>
         m("div", { class : css.lyredit },
             m("div", {
                     class : state.edit ? css.lyricsEdit : css.lyrics,
@@ -27,8 +35,9 @@ export default {
                         columnCount : state.cols.count
                     }
                 },
-                state.song.lyrics
-                    .map((part, idx) =>
+                state.loading ?
+                    "loading" :
+                    state.song.parsedLyrics.map((part, idx) =>
                         m("p", {
                                 id    : part.hash,
                                 class : [

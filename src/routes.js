@@ -23,7 +23,9 @@ export default {
                 m.route.set("/");
             }
 
-            state.action("SET SLUG", args.slug);
+            // state.action("SET SLUG", args.slug);
+            state.action("LOAD SLUG", args.slug);
+
 
             // return state.action("LOAD SONG BY SLUG", args.slug) ? lyrics : error;
             // return lyrics;

@@ -1,38 +1,40 @@
-import eol from "eol";
-import hash from "string-hash";
+import m from "mithril";
 import slugify from "slugify";
 
 import db from "./db";
+import db2 from "../db";
 
 import defaultSongs from "./songs";
 
-const titleSplit = "\n\n---\n\n";
+import { parseLyricString, parseSongString } from "../lib/parse";
 
-function parseLyricString(lyricString) {
-    return lyricString
-        .split("\n\n")
-        .map((text) => ({
-            hash : hash(text),
-            text
-        }));
-}
-
-function parseSongString(songString) {
-    const [ meta, lyricString ] = eol.lf(songString).split(titleSplit);
-    const [ title, artist ] = meta.split("\n");
-
-    return {
-        slug : slugify(title),
-        title,
-        artist,
-        lyricString : lyricString,
-        lyrics      : parseLyricString(lyricString)
-    };
+function addBr(text) {
+    return text.replace(/\n/g, "<br>");
 }
 
 export default (State) => ({
     "SET SLUG" : (slug) => {
         State.slug = slug;
+    },
+
+    "LOAD SLUG" : (slug) => {
+        State.loading = true;
+
+        State.unsubscribe = db2.collection("songs").where("slug", "==", slug)
+            .onSnapshot((snap) => {
+                State.loading = false;
+                State.loaded = Date.now();
+
+                // should just be 1 doc
+                snap.forEach((doc) => {
+                    debugger;
+                    State.song = doc.data();
+                    State.song.id = doc.id;
+                    State.song.parsedLyrics = parseLyricString(State.song.lyrics);
+                });
+
+                m.redraw();
+            });
     },
 
     // imports default songs to DB
