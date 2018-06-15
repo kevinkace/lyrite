@@ -27,7 +27,6 @@ export default (State) => ({
 
                 // should just be 1 doc
                 snap.forEach((doc) => {
-                    debugger;
                     State.song = doc.data();
                     State.song.id = doc.id;
                     State.song.parsedLyrics = parseLyricString(State.song.lyrics);
