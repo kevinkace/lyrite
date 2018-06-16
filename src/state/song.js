@@ -18,18 +18,26 @@ export default (State) => ({
     },
 
     "LOAD SLUG" : (slug) => {
-        State.loading = true;
+        State.song = {
+            slug,
+            loading : true
+        };
 
         State.unsubscribe = db2.collection("songs").where("slug", "==", slug)
             .onSnapshot((snap) => {
-                State.loading = false;
-                State.loaded = Date.now();
+                delete State.song.loading;
+                State.song.loaded = Date.now();
 
                 // should just be 1 doc
-                snap.forEach((doc) => {
-                    State.song = doc.data();
+                snap.forEach((doc, idx) => {
+                    if(idx) {
+                        return;
+                    }
+
+                    State.song.doc = doc;
+                    State.song.data = doc.data();
                     State.song.id = doc.id;
-                    State.song.parsedLyrics = parseLyricString(State.song.lyrics);
+                    State.song.parsedLyrics = parseLyricString(State.song.data.lyrics);
                 });
 
                 m.redraw();
@@ -114,7 +122,11 @@ export default (State) => ({
         State.edit = false;
     },
 
-    "UPDATE PARSED LYRICS" : () => {
-        State.song.lyrics = parseLyricString(State.song.lyricString);
+    "UPDATE PARSED LYRICS" : (lyrics) => {
+        const doc = db2.collection("songs").doc(State.song.id);
+
+        State.song.data.lyrics = lyrics;
+        doc.set(State.song.data);
+        // State.song.lyrics = parseLyricString(State.song.lyricString);
     }
 });

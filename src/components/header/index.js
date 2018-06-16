@@ -1,4 +1,5 @@
 import m from "mithril";
+import { get } from "object-path";
 
 import state from "../../state";
 
@@ -21,7 +22,7 @@ export default {
     },
     view : () =>
         m("div", { class : css.headerIn },
-            m("h1", { class : css.title }, state.song ? state.song.title : state.appName),
+            m("h1", { class : css.title }, get(state, [ "song", "data", "title" ])),
 
             m("div", { class : css.logo },
                 m("a", {

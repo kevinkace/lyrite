@@ -1,4 +1,5 @@
 import m from "mithril";
+import { get } from "object-path";
 
 import state from "../../state";
 import db from "../../db";
@@ -26,8 +27,10 @@ export default {
     //     }
     // },
 
-    view : () =>
-        m("div", { class : css.lyredit },
+    view() {
+        const loading = !state.song || state.song.loading;
+
+        return m("div", { class : css.lyredit },
             m("div", {
                     class : state.edit ? css.lyricsEdit : css.lyrics,
                     style : {
@@ -35,7 +38,7 @@ export default {
                         columnCount : state.cols.count
                     }
                 },
-                state.loading ?
+                loading ?
                     "loading" :
                     state.song.parsedLyrics.map((part, idx) =>
                         m("p", {
@@ -57,4 +60,5 @@ export default {
 
             state.edit ? m(edit) : null
         )
+    }
 };
