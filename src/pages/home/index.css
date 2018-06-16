@@ -21,13 +21,13 @@
     }
 }
 
-.title {
+.appName {
     composes: title from "../../index.css";
 
     font-size: 4em;
 }
 
-.subTitle {
+.tagline {
     display: block;
 
     color: colors.grey;
@@ -36,11 +36,53 @@
 }
 
 .center {
+    width: 23em;
+    margin: 0 auto;
+
     text-align: center;
 }
 
+.input {
+    margin: 0 0.6em;
+    padding: 0.4em;
+
+    border-bottom: solid 1px #fff2;
+
+    input {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+
+        color: #fff;
+        border: none;
+        background: transparent;
+    }
+
+}
+
+.inputFocused {
+    background: #fff1;
+}
+
+.title {
+    composes: input;
+}
+
+.titleFocused {
+    composes: title;
+    composes: inputFocused;
+}
+
+.artist {
+    composes: input;
+}
+
+.artistFocused {
+    composes: artist;
+    composes: inputFocused;
+}
+
 .dash {
-    display: inline-block;
     padding: 0.3em 0.6em;
     margin-bottom: 0.3em;
 
@@ -50,7 +92,7 @@
 
 .textarea {
     display: block;
-    width: 30em;
+    width: 100%;
     height: 10em;
 
     overflow-y: auto;

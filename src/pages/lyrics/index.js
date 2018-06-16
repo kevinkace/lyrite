@@ -1,8 +1,6 @@
 import m from "mithril";
-import { get } from "object-path";
 
 import state from "../../state";
-import db from "../../db";
 
 import css from "./index.css";
 import edit from "./edit";
@@ -14,19 +12,6 @@ function addBr(text) {
 }
 
 export default {
-    // oninit : () => {
-    //     // todo: make this not broken
-    //     if(state.song.untitled) {
-    //         state.action("OPEN TITLE MODAL");
-    //     }
-    // },
-
-    // onbeforeupdate : (vnode) => {
-    //     if(vnode.state.slug !== state.slug) {
-    //         vnode.state.loading = true;
-    //     }
-    // },
-
     view() {
         const loading = !state.song || state.song.loading;
 

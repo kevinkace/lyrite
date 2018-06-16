@@ -11,9 +11,10 @@ import home from "./pages/home";
 
 export default {
     "/" : {
-        // onmatch : () => {
-        //     state.action("CLOSE SONG");
-        // },
+        onmatch : () => {
+            state.action("CLOSE SONG");
+            state.action("LOAD SONGS LIST");
+        },
         render : () => m(layout, m(home))
     },
 
@@ -24,11 +25,8 @@ export default {
             }
 
             // state.action("SET SLUG", args.slug);
-            state.action("LOAD SLUG", args.slug);
+            state.action("LOAD SONG BY SLUG", args.slug);
 
-
-            // return state.action("LOAD SONG BY SLUG", args.slug) ? lyrics : error;
-            // return lyrics;
         },
         render : () => m(layout, { header : true }, m(lyrics))
     }

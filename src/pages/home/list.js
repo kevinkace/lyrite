@@ -1,4 +1,5 @@
 import m from "mithril";
+import { get } from "object-path";
 
 import state from "../../state";
 
@@ -9,27 +10,30 @@ export default {
         m("div", { class : css.list },
             m("h3", vnode.attrs.header),
 
-            Object.keys(vnode.attrs.songs).map((id) =>
-                m("div",
-                    m("a", {
-                            oncreate : m.route.link,
-                            href     : `/songs/${vnode.attrs.songs[id].slug}`
-                        },
-                        m("strong", vnode.attrs.songs[id].title),
-
-                        vnode.attrs.songs[id].artist ?
-                            [ " - ", vnode.attrs.songs[id].artist ] :
-                            null
-                    ),
-                    vnode.attrs.songs[id].userSong ?
-                        m("button", {
-                            onclick : () => {
-                                state.action("DELETE SONG BY SLUG", id);
+            get(state, [ "songs", "songs" ]) ?
+                state.songs.songs.map((song) =>
+                    m("div",
+                        m("a", {
+                                oncreate : m.route.link,
+                                href     : `/songs/${song.data.slug}`
                             },
-                            "aria-label" : "delete"
-                        }, "🗙") :
-                        null
-                )
-            )
+                            m("strong", song.data.title),
+
+                            song.data.artist ?
+                                [ " - ", song.data.artist ] :
+                                null
+                        )
+                        // ,
+                        // vnode.attrs.songs[id].userSong ?
+                        //     m("button", {
+                        //         onclick : () => {
+                        //             state.action("DELETE SONG BY SLUG", id);
+                        //         },
+                        //         "aria-label" : "delete"
+                        //     }, "🗙") :
+                        //     null
+                    )
+                ) :
+                null
         )
 };
