@@ -1,10 +1,16 @@
 const checks = {
     type(data, type) {
-        return typeof data === type;
+        return typeof data === type ? null : {
+            type  : "type",
+            label : `must be a ${type}`
+        };
     },
 
     minLength(data, minLength) {
-        return data && data.length >= minLength;
+        return data && data.length >= minLength ? null : {
+            type : "minLength",
+            label : `must be at least ${minLength} characters`
+        };
     }
 };
 
@@ -17,10 +23,12 @@ export default function validator(data, schema) {
             const oneSchema = schema[key];
 
             for(let check in oneSchema) {
-                if(!checks[check](data[key], oneSchema[check])) {
+                const error = checks[check](data[key], oneSchema[check]);
+
+                if(error) {
                     errors[key] = errors[key] || [];
 
-                    errors[key].push(check);
+                    errors[key].push(error);
                 }
             }
         }
