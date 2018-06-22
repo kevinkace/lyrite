@@ -1,7 +1,7 @@
 import m from "mithril";
 import slugify from "slugify";
 
-import db2 from "../db";
+import db from "../db";
 
 import { parseLyricString } from "../lib/parse";
 
@@ -16,7 +16,7 @@ export default (State) => ({
             loading : true
         };
 
-        State.unsubscribe = db2.collection("songs").where("slug", "==", slug)
+        State.unsubscribe = db.collection("songs").where("slug", "==", slug)
             .onSnapshot((snap) => {
                 delete State.song.loading;
                 State.song.loaded = Date.now();
@@ -45,9 +45,10 @@ export default (State) => ({
             songs   : [] // State.songs.songs !@#$@
         };
 
-        db2.collection("songs").onSnapshot((snap) => {
+        db.collection("songs").onSnapshot((snap) => {
             delete State.songs.loading;
             State.songs.loaded = Date.now();
+            State.songs.songs = [];
 
             snap.forEach((doc) => {
                 State.songs.songs.push({
@@ -65,7 +66,7 @@ export default (State) => ({
     "IMPORT SONG LYRICS" : (songObj) => {
         const slug = slugify(songObj.title);
 
-        return db2.collection("songs").add({
+        return db.collection("songs").add({
             artist     : songObj.artist,
             created_at : Date.now(),
             created_by : "users/is8T9YLdvlAB6yfqJlX4",
@@ -82,6 +83,11 @@ export default (State) => ({
     },
 
     "CLOSE SONG" : () => {
+        if(State.unsubscribe) {
+            State.unsubscribe();
+        }
+
+        delete State.unsubscribe;
         delete State.song;
     },
 
@@ -98,9 +104,19 @@ export default (State) => ({
     },
 
     "UPDATE PARSED LYRICS" : (lyrics) => {
-        const doc = db2.collection("songs").doc(State.song.id);
+        const doc = db.collection("songs").doc(State.song.id);
 
         State.song.data.lyrics = lyrics;
         doc.set(State.song.data);
+    },
+
+    "DELETE SONG BY ID" : (id) => {
+        db.collection("songs").doc(id).delete()
+            .then(() => {
+                console.log("Document successfully deleted!");
+            })
+            .catch((error) => {
+                console.error("Error removing document: ", error);
+            });
     }
 });

@@ -6,13 +6,19 @@ import state from "../../state";
 import css from "./list.css";
 
 export default {
-    view : (vnode) =>
-        m("div", { class : css.list },
-            m("h3", vnode.attrs.header),
+    oninit(vnode) {
+        vnode.state.disabled = {};
+    },
+    view(vnode) {
+        const va = vnode.attrs;
+        const vs = vnode.state;
+
+        return m("div", { class : css.list },
+            m("h3", va.header),
 
             get(state, [ "songs", "songs" ]) ?
                 state.songs.songs.map((song) =>
-                    m("div",
+                    m("div", { key : song.id },
                         m("a", {
                                 oncreate : m.route.link,
                                 href     : `/songs/${song.data.slug}`
@@ -22,18 +28,22 @@ export default {
                             song.data.artist ?
                                 [ " - ", song.data.artist ] :
                                 null
-                        )
-                        // ,
-                        // vnode.attrs.songs[id].userSong ?
-                        //     m("button", {
-                        //         onclick : () => {
-                        //             state.action("DELETE SONG BY SLUG", id);
-                        //         },
-                        //         "aria-label" : "delete"
-                        //     }, "🗙") :
-                        //     null
+                        ),
+
+                        m("button", {
+                            onclick : () => {
+                                if(vs.disabled[song.id]) {
+                                    return;
+                                }
+
+                                state.action("DELETE SONG BY ID", song.id);
+                                vs.disabled[song.id] = true;
+                            },
+                            "aria-label" : "delete"
+                        }, "🗙")
                     )
                 ) :
                 null
-        )
+        );
+    }
 };
