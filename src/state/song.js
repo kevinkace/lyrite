@@ -63,20 +63,22 @@ export default (State) => ({
 
     // import song
     "IMPORT SONG LYRICS" : (songObj) => {
-        debugger;
-        const title = Math.randomw(); //`untitled ${Object.keys(untitledSongs).length + 1}`;
-        const slug = slugify(title);
+        const slug = slugify(songObj.title);
 
-        console.error("WRITE TO FIRESTORE");
-
-        // db.set(`songs.${slug}`, Object.assign(songObj, {
-        //     title,
-        //     slug,
-        //     lyrics   : parseLyricString(songObj.lyricString),
-        //     untitled : true
-        // }));
-
-        return slug;
+        return db2.collection("songs").add({
+            artist     : songObj.artist,
+            created_at : Date.now(),
+            created_by : "users/is8T9YLdvlAB6yfqJlX4",
+            lyrics     : songObj.lyrics,
+            slug       : slug,
+            title      : songObj.title
+        })
+        .then((doc) => {
+            return {
+                slug,
+                id : doc.id
+            };
+        });
     },
 
     "CLOSE SONG" : () => {

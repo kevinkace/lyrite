@@ -1,6 +1,9 @@
 import m from "mithril";
+import { get } from "object-path";
 
 import state from "../../state";
+import validator from "../../lib/validator";
+import { songSchema } from "../../lib/schemas";
 
 import css from "./index.css";
 
@@ -8,14 +11,29 @@ import logo from "../../icons/lyrite-logo2.svg";
 import list from "./list";
 
 export default {
-
     oninit(vnode) {
         vnode.state.focused = "";
+        vnode.state.validate = validator(vnode.state, songSchema);
+
+        vnode.state.validationResults = vnode.state.validate();
+
+        vnode.state.onsubmit = (e) => {
+            e.preventDefault();
+
+            vnode.state.validationResults = vnode.state.validate();
+
+            if(vnode.state.validationResults.errors) {
+                return;
+            }
+
+            state.action("IMPORT SONG LYRICS", vnode.state)
+                .then((song) => {
+                    m.route.set(`/songs/${song.slug}`);
+                });
+        };
     },
 
     view(vnode) {
-        const loading = !state.songs || state.songs.loading;
-
         return [
             m("div", { class : css.home },
 
@@ -29,11 +47,16 @@ export default {
                     )
                 ),
 
-                // text input
-                m("div", { class : css.center },
+                m("form", {
+                        class : css.center,
+                        onsubmit : vnode.state.onsubmit
+                    },
 
                     // title input
                     m("div", { class : vnode.state.focused === vnode.state.titleDom ? css.titleFocused : css.title },
+                        vnode.state.showTitleError && get(vnode.state, [ "validationResults", "errors", "title" ]) ?
+                            m("div", { class : css.error }, "dun goofed") :
+                            null,
                         m("input", {
                             value       : vnode.state.title,
                             placeholder : vnode.state.focused === vnode.state.titleDom ? "" : "Song Title",
@@ -44,19 +67,26 @@ export default {
 
                             onfocus : (e) => {
                                 vnode.state.focused = e.currentTarget;
+                                delete vnode.state.showTitleError;
                             },
                             onblur : (e) => {
                                 if(vnode.state.focused === e.currentTarget) {
                                     delete vnode.state.focused;
                                 }
-                            }
+
+                                vnode.state.showTitleError = true;
+                            },
+                            oninput : m.withAttr("value", (v) => {
+                                vnode.state.title = v;
+                                vnode.state.validationResults = vnode.state.validate();
+                            })
                         })
                     ),
 
                     // artist input
                     m("div", { class : vnode.state.focused === vnode.state.artistDom ? css.titleFocused : css.title },
                         m("input", {
-                            value       : vnode.state.title,
+                            value       : vnode.state.artist,
                             placeholder : vnode.state.focused === vnode.state.artistDom ? "" : "Artist",
 
                             oncreate : (artistVnode) => {
@@ -70,7 +100,11 @@ export default {
                                 if(vnode.state.focused === e.currentTarget) {
                                     delete vnode.state.focused;
                                 }
-                            }
+                            },
+                            oninput : m.withAttr("value", (v) => {
+                                vnode.state.artist = v;
+                                vnode.state.validationResults = vnode.state.validate();
+                            })
                         })
                     ),
 
@@ -78,7 +112,7 @@ export default {
                     m("div", { class : css.dash },
                         m("textarea", {
                             class       : vnode.state.focused === vnode.state.lyricsDom ? css.textareaFocused : css.textarea,
-                            value       : vnode.state.lyricString,
+                            value       : vnode.state.lyrics,
                             placeholder : vnode.state.focused === vnode.state.lyricsDom ? "" : "paste or drop lyrics",
 
                             oncreate : (lyricsVnode) => {
@@ -94,28 +128,18 @@ export default {
                                 }
                             },
                             oninput : m.withAttr("value", (v) => {
-                                vnode.state.lyricString = v;
-                                vnode.state.loadable = v.length;
+                                vnode.state.lyrics = v;
+                                vnode.state.validationResults = vnode.state.validate();
                             })
                         })
                     ),
 
                     // load button
-                    vnode.state.loadable ?
+                    !get(vnode.state, [ "validationResults", "errors"]) ?
                         m("div", { class : css.btnWrap },
                             m("button", {
                                 class : css.loadBtn,
-                                onclick : () => {
-                                    let slug = state.action("IMPORT SONG LYRICS", {
-                                        lyricString : vnode.state.lyricString,
-                                        userSong    : true
-                                    });
-
-                                    delete vnode.state.textarea;
-                                    delete vnode.state.load;
-
-                                    return m.route.set(slug);
-                                }
+                                type  : "submit"
                             }, "load song")
                         ) :
                         null
