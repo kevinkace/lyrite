@@ -1,7 +1,7 @@
 import m from "mithril";
 import slugify from "slugify";
 
-import db from "../db";
+import db, { fsDelete } from "../db";
 
 import { parseLyricString } from "../lib/parse";
 
@@ -110,13 +110,54 @@ export default (State) => ({
         doc.set(State.song.data);
     },
 
+    // fake delete with undo, then real delete
+    // - track deleted songs locally on State.delete = { id : true }
+    // -
     "DELETE SONG BY ID" : (id) => {
-        db.collection("songs").doc(id).delete()
+        State.deleted = State.deleted || {};
+
+        // already queued to be deleted
+        if(State.deleted[id]) {
+            return;
+        }
+
+        // mark as deleted om Firestore
+        db.collection("songs").doc(id).update({
+            deleted_at : Date.now()
+        })
             .then(() => {
-                console.log("Document successfully deleted!");
-            })
-            .catch((error) => {
-                console.error("Error removing document: ", error);
+                // timeout to actually delete
+                State.deleted[id] = setTimeout(() => {
+                    console.log(`deleting ${id}`);
+
+                    db.collection("songs").doc(id).delete()
+                        .then(() => {
+                            delete State.deleted[id];
+                            m.redraw();
+
+                            console.log("Document successfully deleted!");
+                        })
+                        .catch((error) => {
+                            console.error("Error removing document: ", error);
+                        });
+                }, 10000);
+
+                m.redraw();
+            });
+
+    },
+
+    "UNDO DELETE SONG BY ID" : (id) => {
+        if(!State.deleted || !State.deleted[id]) {
+            return;
+        }
+
+        clearTimeout(State.deleted[id]);
+
+        db.collection("songs").doc(id).update({ deleted_at : fsDelete() })
+            .then(() => {
+                delete State.deleted[id];
+                m.redraw();
             });
     }
 });

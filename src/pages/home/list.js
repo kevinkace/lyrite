@@ -6,19 +6,21 @@ import state from "../../state";
 import css from "./list.css";
 
 export default {
-    oninit(vnode) {
-        vnode.state.disabled = {};
-    },
     view(vnode) {
         const va = vnode.attrs;
-        const vs = vnode.state;
 
         return m("div", { class : css.list },
             m("h3", va.header),
 
             get(state, [ "songs", "songs" ]) ?
-                state.songs.songs.map((song) =>
-                    m("div", { key : song.id },
+                state.songs.songs
+                .filter((song) => !song.data.deleted_at)
+                .map((song) =>
+                    m("div", {
+                            key : song.id
+                            // ,
+                            // onbeforeremove : () => {}
+                        },
                         m("a", {
                                 oncreate : m.route.link,
                                 href     : `/songs/${song.data.slug}`
@@ -32,12 +34,7 @@ export default {
 
                         m("button", {
                             onclick : () => {
-                                if(vs.disabled[song.id]) {
-                                    return;
-                                }
-
                                 state.action("DELETE SONG BY ID", song.id);
-                                vs.disabled[song.id] = true;
                             },
                             "aria-label" : "delete"
                         }, "🗙")

@@ -36,6 +36,6 @@ const State = {
 State.actions = Object.assign({}, tools(State), song(State), modal(State));
 State.action  = (name, value) => State.actions[name](value);
 
-window.state = State;
+window.State = State;
 
 export default State;

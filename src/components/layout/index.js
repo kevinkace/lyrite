@@ -1,4 +1,5 @@
 import m from "mithril";
+import { get } from "object-path";
 
 import state from "../../state";
 
@@ -39,6 +40,21 @@ export default {
                 }, state.ver.tag)
             ),
 
-            state.modal ? m(modal) : null
+            state.modal ? m(modal) : null,
+
+            state.deleted ?
+                m("div", { class : css.notifications },
+                    Object.keys(state.deleted).map((id) =>
+                        m("div", { class : css.notification },
+                            `deleted ${id}`,
+                            m("button", {
+                                onclick : () => {
+                                    state.action("UNDO DELETE SONG BY ID", id);
+                                }
+                            }, "undo")
+                        )
+                    )
+                ) :
+                null
         )
 };
