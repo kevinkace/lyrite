@@ -67,3 +67,11 @@
         }
     }
 }
+
+.songOut {
+    composes: fadeOut from "../../fade.css";
+
+    button {
+        display: none;
+    }
+}

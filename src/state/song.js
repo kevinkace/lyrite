@@ -4,6 +4,7 @@ import slugify from "slugify";
 import db, { fsDelete } from "../db";
 
 import { parseLyricString } from "../lib/parse";
+import { getSongFromId } from "../lib/song";
 
 export default (State) => ({
     "SET SLUG" : (slug) => {
@@ -121,26 +122,27 @@ export default (State) => ({
             return;
         }
 
-        // mark as deleted om Firestore
+        // mark as deleted in Firestore
         db.collection("songs").doc(id).update({
             deleted_at : Date.now()
         })
             .then(() => {
                 // timeout to actually delete
-                State.deleted[id] = setTimeout(() => {
-                    console.log(`deleting ${id}`);
-
+                const timeoutId = setTimeout(() => {
                     db.collection("songs").doc(id).delete()
                         .then(() => {
                             delete State.deleted[id];
                             m.redraw();
-
-                            console.log("Document successfully deleted!");
                         })
                         .catch((error) => {
                             console.error("Error removing document: ", error);
                         });
-                }, 10000);
+                }, 5000);
+
+                State.deleted[id] = {
+                    timeoutId,
+                    song : getSongFromId(id)
+                };
 
                 m.redraw();
             });
@@ -152,7 +154,7 @@ export default (State) => ({
             return;
         }
 
-        clearTimeout(State.deleted[id]);
+        clearTimeout(State.deleted[id].timeoutId);
 
         db.collection("songs").doc(id).update({ deleted_at : fsDelete() })
             .then(() => {

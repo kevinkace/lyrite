@@ -8,6 +8,7 @@ import header from "../header";
 import modal from "../modal";
 
 import ghLogo from "../../icons/github.svg";
+import animResolve from "../../lib/animResolve";
 
 export default {
     view : (vnode) =>
@@ -45,8 +46,16 @@ export default {
             state.deleted ?
                 m("div", { class : css.notifications },
                     Object.keys(state.deleted).map((id) =>
-                        m("div", { class : css.notification },
-                            `deleted ${id}`,
+                        m("div", {
+                                key   : id,
+                                class : css.notificationIn,
+
+                                onbeforeremove : (notiVnode) => animResolve(notiVnode.dom, css.notificationOut)
+                            },
+
+                            "deleted song! ",
+                            m("span", { class : css.songTitle }, state.deleted[id].song.data.title),
+
                             m("button", {
                                 onclick : () => {
                                     state.action("UNDO DELETE SONG BY ID", id);

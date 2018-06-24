@@ -1,0 +1,22 @@
+@value animDur from "./index.css";
+
+.fadeIn {
+    animation: forwards fadeIn animDur;
+    opacity: 0;
+}
+
+@keyframes fadeOut {
+    100% {
+        opacity: 1;
+    }
+}
+
+.fadeOut {
+    animation: forwards fadeOut animDur;
+}
+
+@keyframes fadeOut {
+    100% {
+        opacity: 0;
+    }
+}
