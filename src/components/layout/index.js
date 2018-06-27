@@ -1,5 +1,4 @@
 import m from "mithril";
-import { get } from "object-path";
 
 import state from "../../state";
 
@@ -13,22 +12,12 @@ import animResolve from "../../lib/animResolve";
 export default {
     view : (vnode) =>
         m("div",
+
+            !state.loggedIn ? m("button", { onclick : () => { state.action("OPEN LOGIN MODAL"); } }, "login") : null,
+
             vnode.attrs.header ? m(header) : null,
 
             vnode.children,
-
-            state.debug ? [
-                    m("button", {
-                        class   : css.clear,
-                        onclick : () => {
-                            state.action("CLEAR DB");
-
-                        }
-                    }, "clear"),
-
-                    m("pre", { class : css.debug }, JSON.stringify(state, null, 2))
-                ] :
-                null,
 
             m("div", { class : css.bug },
                 m("a", {

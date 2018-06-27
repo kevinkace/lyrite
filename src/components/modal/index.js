@@ -4,16 +4,16 @@ import state from "../../state";
 import animResolve from "../../lib/animResolve";
 
 import css from "./index.css";
-import title from "./title";
+import login from "./login";
 
-const modals = { title };
-const hasClose = [];
+const modals = { login };
+const hasClose = [ "login" ];
 
 export default {
-    onbeforeremove : (vnode) => Promise.all([
-        animResolve(vnode.dom, css.modalOut),
-        animResolve(vnode.state.contentVnode.dom, css.contentOut)
-    ]),
+    // onbeforeremove : (vnode) => Promise.all([
+    //     animResolve(vnode.dom, css.modalOut),
+    //     animResolve(vnode.state.contentVnode.dom, css.contentOut)
+    // ]),
     view : (vnode) =>
         m("div", { class : css.modalIn },
             m("div", {

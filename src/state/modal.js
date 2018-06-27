@@ -11,6 +11,11 @@ export default (State) => ({
         m.redraw();
     },
 
+    "OPEN LOGIN MODAL" : () => {
+        // State.showLogin = true;
+        State.modal = "login";
+    },
+
     "ADD TITLE MODAL" : (title) => {
         State.action("SET TITLE", title);
 

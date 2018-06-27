@@ -56,6 +56,10 @@
     color: colors.bg;
     box-shadow: 0 2px 143px 23px #0009;
     background: colors.modal;
+
+    a {
+        color: colors.cta;
+    }
 }
 
 .contentIn {
