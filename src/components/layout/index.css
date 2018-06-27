@@ -7,6 +7,14 @@
     bottom: 1em;
 }
 
+.login {
+    position: fixed;
+    top: 0.2em;
+    right: 0.2em;
+
+    font-size: 0.8em;
+}
+
 .github {
     display: block;
     height: 2em;

@@ -5,6 +5,7 @@ import state from "../../state";
 import css from "./index.css";
 import header from "../header";
 import modal from "../modal";
+import login from "../login";
 
 import ghLogo from "../../icons/github.svg";
 import animResolve from "../../lib/animResolve";
@@ -13,7 +14,7 @@ export default {
     view : (vnode) =>
         m("div",
 
-            !state.loggedIn ? m("button", { onclick : () => { state.action("OPEN LOGIN MODAL"); } }, "login") : null,
+            !state.loggedIn ? m("div", { class : css.login }, m(login)) : null,
 
             vnode.attrs.header ? m(header) : null,
 

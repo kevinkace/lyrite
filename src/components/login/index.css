@@ -1,0 +1,7 @@
+@value * as colors from "../../palette.css";
+
+.login {
+    background: none;
+    border: none;
+    color: colors.ctaLight;
+}
