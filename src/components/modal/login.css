@@ -1,5 +1,6 @@
 @value twitter: #1da1f2;
 @value facebook: #4267b2;
+@value github: #222;
 
 .login {
     display: flex;
@@ -43,4 +44,10 @@
     composes: button;
 
     background: facebook;
+}
+
+.github {
+    composes: button;
+
+    background: github;
 }

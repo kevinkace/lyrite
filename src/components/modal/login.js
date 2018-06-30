@@ -5,6 +5,7 @@ import state from "../../state";
 import css from "./login.css";
 import twitter from "../../icons/twitter.svg";
 import facebook from "../../icons/facebook.svg";
+import github from "../../icons/github.svg";
 
 import { firebase } from "../../db";
 
@@ -16,6 +17,10 @@ const providers = [{
         name     : "facebook",
         provName : "FacebookAuthProvider",
         logo     : facebook
+    }, {
+        name     : "github",
+        provName : "GithubAuthProvider",
+        logo     : github
 }];
 
 
