@@ -7,22 +7,26 @@ import twitter from "../../icons/twitter.svg";
 import facebook from "../../icons/facebook.svg";
 import github from "../../icons/github.svg";
 
+import db from "../../db";
 import { firebase } from "../../db";
 
 const providers = [{
         name     : "twitter",
         provName : "TwitterAuthProvider",
         logo     : twitter
-    }, {
-        name     : "facebook",
-        provName : "FacebookAuthProvider",
-        logo     : facebook
+    // }, {
+    //     name     : "facebook",
+    //     provName : "FacebookAuthProvider",
+    //     logo     : facebook
     }, {
         name     : "github",
         provName : "GithubAuthProvider",
         logo     : github
 }];
 
+function updateUser(result) {
+    return
+}
 
 export default {
     view() {
@@ -42,7 +46,9 @@ export default {
                                     const secret = result.credential.secret;
                                     const user = result.user;
                                     debugger;
+                                    return result;
                                 })
+                                .then(updateUser)
                                 .catch((err) => {
                                     debugger;
                                     console.log(err);
