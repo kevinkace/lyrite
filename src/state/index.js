@@ -3,6 +3,7 @@ import m from "mithril";
 import tools from "./tools";
 import song from "./song";
 import modal from "./modal";
+import user from "./user";
 
 const State = {
     appName    : "Lyrite",
@@ -33,7 +34,7 @@ const State = {
     }
 };
 
-State.actions = Object.assign({}, tools(State), song(State), modal(State));
+State.actions = Object.assign({}, tools(State), song(State), modal(State), user(State));
 State.action  = (name, value) => State.actions[name](value);
 
 window.State = State;

@@ -7,9 +7,6 @@ import twitter from "../../icons/twitter.svg";
 import facebook from "../../icons/facebook.svg";
 import github from "../../icons/github.svg";
 
-import db from "../../db";
-import { firebase } from "../../db";
-
 const providers = [{
         name     : "twitter",
         provName : "TwitterAuthProvider",
@@ -24,10 +21,6 @@ const providers = [{
         logo     : github
 }];
 
-function updateUser(result) {
-    return
-}
-
 export default {
     view() {
         return m("div", { class : css.login },
@@ -38,21 +31,7 @@ export default {
                         class : css[p.name],
 
                         onclick : () => {
-                            const provider = new firebase.auth[p.provName]();
-
-                            firebase.auth().signInWithPopup(provider)
-                                .then((result) => {
-                                    const token = result.credential.accessToken;
-                                    const secret = result.credential.secret;
-                                    const user = result.user;
-                                    debugger;
-                                    return result;
-                                })
-                                .then(updateUser)
-                                .catch((err) => {
-                                    debugger;
-                                    console.log(err);
-                                });
+                            state.action("LOGIN", p.provName);
                         }
                     },
                     m.trust(p.logo),

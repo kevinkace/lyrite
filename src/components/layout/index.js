@@ -6,6 +6,7 @@ import css from "./index.css";
 import header from "../header";
 import modal from "../modal";
 import login from "../login";
+import logout from "../logout";
 
 import ghLogo from "../../icons/github-black.svg";
 import animResolve from "../../lib/animResolve";
@@ -14,7 +15,11 @@ export default {
     view : (vnode) =>
         m("div",
 
-            !state.loggedIn ? m("div", { class : css.login }, m(login)) : null,
+            m("div", { class : css.login },
+                state.loggedIn ?
+                    m(logout) :
+                    m(login)
+            ),
 
             vnode.attrs.header ? m(header) : null,
 
