@@ -10,6 +10,8 @@ import state from "./state";
 
 const mountEl = document.getElementById("mount");
 
+debugger;
+state.action("INIT");
 
 m.route.prefix("");
 m.route(mountEl, "/", routes);

@@ -4,6 +4,15 @@ import db from "../db";
 import { firebase } from "../db";
 
 export default (State) => ({
+    "INIT" : () => {
+        debugger;
+        if(firebase.auth().currentUser) {
+            State.loggedIn = true;
+
+            m.redraw();
+        }
+    },
+
     "LOGIN" : (provName) => {
         const provider = new firebase.auth[provName]();
 
@@ -15,9 +24,12 @@ export default (State) => ({
 
                 State.loggedIn = true;
                 delete State.modal;
+
                 m.redraw();
-                debugger;
             })
+            .then(() =>
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            )
             .catch((err) => {
                 delete State.loggedIn;
                 debugger;

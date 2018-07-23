@@ -9,6 +9,8 @@ const fsDelete = firebase.firestore.FieldValue.delete;
 
 db.settings({ timestampsInSnapshots : true });
 
+window.fb = firebase;
+
 export default db;
 export {
     firebase as firebase,
