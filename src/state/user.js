@@ -1,15 +1,13 @@
-import m from "mithril";
-
-import db from "../db";
 import { firebase } from "../db";
+import * as lib from "../db/lib";
 
 export default (State) => ({
     "INIT" : () => {
-        debugger;
-        if(firebase.auth().currentUser) {
-            State.loggedIn = true;
-
-            m.redraw();
+        if(!lib.checkAuth(State)) {
+            setTimeout(() => {
+                console.log("timeout login");
+                lib.checkAuth(State);
+            }, 1500);
         }
     },
 
@@ -18,17 +16,11 @@ export default (State) => ({
 
         firebase.auth().signInWithPopup(provider)
             .then((result) => {
-                const token = result.credential.accessToken;
-                const secret = result.credential.secret;
-                const user = result.user;
-
-                State.loggedIn = true;
+                lib.checkAuth(State, result);
                 delete State.modal;
-
-                m.redraw();
             })
             .then(() =>
-                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
             )
             .catch((err) => {
                 delete State.loggedIn;
