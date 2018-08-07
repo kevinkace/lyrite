@@ -14,10 +14,6 @@
 
     color: #fff;
 
-    &:last-child {
-        margin-bottom: 0;
-    }
-
     svg {
         width: 1.6em;
         margin-right: 0.6em;

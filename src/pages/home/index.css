@@ -5,6 +5,11 @@
     padding: 1em 0.5em 0;
 }
 
+.fixedWidth {
+    max-width: 30em;
+    margin: 1.6em auto 0;
+}
+
 .logoAndType {
     display: flex;
     justify-content: center;
@@ -33,4 +38,11 @@
     color: colors.grey;
     text-transform: none;
     font: normal 1.33em/1 fontDisplay;
+}
+
+.providers {
+    composes: fixedWidth;
+
+    display: flex;
+    justify-content: space-around;
 }

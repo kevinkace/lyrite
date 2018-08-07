@@ -2,8 +2,7 @@
 @value fontSans, fontSerif, fontDisplay, animDur from "../../index.css";
 
 .list {
-    max-width: 30em;
-    margin: 1.6em auto 0;
+    composes: fixedWidth from "./index.css";
 
     text-align: left;
 

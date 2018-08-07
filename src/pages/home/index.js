@@ -26,7 +26,7 @@ export default {
 
                 state.loggedIn ?
                     m(songForm) :
-                    m("div", { class : css.login },
+                    m("div", { class : css.providers },
                         m(providers)
                     ),
 
