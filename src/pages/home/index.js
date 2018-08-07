@@ -27,6 +27,7 @@ export default {
                 state.loggedIn ?
                     m(songForm) :
                     m("div", { class : css.providers },
+                        m("p", "login to add", m("br"), "your own song"),
                         m(providers)
                     ),
 

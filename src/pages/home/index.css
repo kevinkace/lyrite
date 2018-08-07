@@ -45,4 +45,16 @@
 
     display: flex;
     justify-content: space-around;
+    align-items: center;
+
+    p {
+        color: colors.grey;
+
+        font-size: 0.8em;
+        line-height: 1;
+    }
+
+    button {
+        font-size: 0.8em;
+    }
 }
