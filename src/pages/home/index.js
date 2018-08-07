@@ -7,6 +7,7 @@ import css from "./index.css";
 import logo from "../../icons/lyrite-logo2.svg";
 import list from "./list";
 import songForm from "./songForm";
+import providers from "../../components/login/providers";
 
 export default {
     view() {
@@ -23,7 +24,11 @@ export default {
                     )
                 ),
 
-                state.loggedIn ? m(songForm) : "login to add custom song",
+                state.loggedIn ?
+                    m(songForm) :
+                    m("div", { class : css.login },
+                        m(providers)
+                    ),
 
                 m(list, { header : "all songs" })
 

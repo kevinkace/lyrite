@@ -3,7 +3,7 @@ import { get } from "object-path";
 
 import state from "../../state";
 
-import css from "./index.css";
+import css from "./songForm.css";
 import error from "./error";
 
 import validator from "../../lib/validator";
@@ -81,7 +81,7 @@ export default {
             ),
 
             // artist input
-            m("div", { class : vs.isFocused(vs.artistDom, css.titleFocused, css.title) },
+            m("div", { class : vs.isFocused(vs.artistDom, css.artistFocused, css.artist) },
                 m(error, {
                     show   : vs.showArtistError,
                     errors : get(vs, [ "validationResults", "errors", "artist" ])
