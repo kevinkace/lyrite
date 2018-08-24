@@ -9,13 +9,10 @@ import animResolve from "../../lib/animResolve";
 
 export default {
     view(vnode) {
-        const va = vnode.attrs;
+        const songs = get(state, [ "songs", "songs" ]) || [];
 
         return m("div", { class : css.list },
-            m("h3", va.header),
-
-            get(state, [ "songs", "songs" ]) ?
-                state.songs.songs
+            songs
                 .filter((song) => !song.data.deleted_at)
                 .map((song) =>
                     m("div", {
@@ -42,8 +39,7 @@ export default {
                             "aria-label" : "delete"
                         }, "🗙")
                     )
-                ) :
-                null
+                )
         );
     }
 };

@@ -35,4 +35,5 @@
     composes: button;
 
     background: github;
+    box-shadow: 0 0 1px #fff8;
 }

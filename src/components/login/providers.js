@@ -12,13 +12,13 @@ const providers = [{
         provName : "TwitterAuthProvider",
         logo     : twitter
     }, {
-        name     : "facebook",
-        provName : "FacebookAuthProvider",
-        logo     : facebook
-    }, {
         name     : "github",
         provName : "GithubAuthProvider",
         logo     : github
+    }, {
+        name     : "facebook",
+        provName : "FacebookAuthProvider",
+        logo     : facebook
 }];
 
 export default {
