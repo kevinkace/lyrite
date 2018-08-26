@@ -9,5 +9,35 @@
     line-height: 1;
     letter-spacing: 0.05em;
 
-    color: #f00d;
+    color: #f44a;
+}
+
+.errorIn {
+    composes: error;
+
+    animation: forwards slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(20%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.errorOut {
+    composes: error;
+
+    animation: forwards slideOut 0.3s;
+}
+
+@keyframes slideOut {
+    100% {
+        transform: translateX(20%);
+        opacity: 0;
+    }
 }
