@@ -3,10 +3,7 @@
 
 .home {
     padding: 1em 0.5em 0;
-}
-
-.fixedWidth {
-    max-width: 30em;
+    max-width: 500px;
     margin: 1.6em auto 0;
 }
 
@@ -20,6 +17,7 @@
         display: inline-block;
         width: auto;
         height: 6.5em;
+        margin-left: -1em;
         padding: 0 0.2em 0.8em 0;
 
         fill: colors.cta;
@@ -41,36 +39,17 @@
 }
 
 .providers {
-    composes: fixedWidth;
-
-    display: flex;
-    align-items: center;
-
-    p {
-        flex: 1 0 auto;
-        padding: 0 3em;
+    h3 {
+        margin: 1em 0;
+        font-size: 1.3em;
         color: colors.grey;
-        font-size: 1.2em;
-        line-height: 1;
-
-        strong {
-            font-size: 1.2em;
-            color: #fff;
-            font-weight: normal;
-        }
+        text-align: center;
     }
 
-    button {
-        font-size: 0.8em;
-        margin-bottom: 0.4em;
-
-        &:last-child {
-            margin: 0;
-        }
+    div {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+        align-items: center;
     }
-}
-
-.buttons {
-    display: flex;
-    flex-direction: column
 }

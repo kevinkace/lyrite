@@ -6,4 +6,8 @@
     p {
         margin-bottom: 1em;
     }
+
+    button {
+        margin-bottom: 0.4em;
+    }
 }

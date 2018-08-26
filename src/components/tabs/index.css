@@ -1,3 +1,5 @@
+@value * as colors from "../../palette.css";
+
 .tabs {
 
 }
@@ -5,4 +7,46 @@
 .buttons {
     display: flex;
     justify-content: space-between;
+    padding-bottom: 0.4em;
+    margin-bottom: 0.6em;
+
+    border-bottom: solid 1px colors.border;
+
+}
+
+.tab {
+    display: block;
+    padding: 0.2em 0;
+    border: none;
+    color: colors.cta;
+    background: none;
+
+    &:hover {
+        color: colors.ctaLight;
+
+        svg {
+            fill: colors.ctaLight;
+        }
+    }
+
+    svg {
+        height: 1em;
+        width: 1em;
+        margin: 0 0.2em -0.15em 0;
+        fill: colors.cta;
+
+        display: inline-block;
+        opacity: 0.7;
+    }
+}
+
+.tabSelected {
+    composes: tab;
+
+    color: colors.ctaLight;
+    cursor: default;
+
+    svg {
+        fill: colors.ctaLight;
+    }
 }

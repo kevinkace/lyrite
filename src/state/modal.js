@@ -26,5 +26,6 @@ export default (State) => ({
 
     "CLOSE MODAL" : () => {
         delete State.modal;
+        m.redraw();
     }
 });

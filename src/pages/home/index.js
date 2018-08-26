@@ -8,6 +8,10 @@ import logo from "../../icons/lyrite-logo2.svg";
 import list from "./list";
 import songForm from "./songForm";
 import tabs from "../../components/tabs";
+import providers from "../../components/login/providers";
+
+import newIcon from "../../icons/new.svg";
+import addIcon from "../../icons/plus.svg";
 
 export default {
     view() {
@@ -24,13 +28,24 @@ export default {
                     )
                 ),
 
-                m(tabs, { tabs : [ "newest songs", "add new song" ] },
+                m(tabs, {
+                        tabs : [
+                            "newest lyrics",
+                            {
+                                icon  : addIcon,
+                                label : "add lyrics"
+                            }
+                        ]
+                    },
                     m(list),
 
                     state.loggedIn ?
                         m(songForm) :
                         m("div", { class : css.providers },
-                            m("button", "add your own song")
+                            m("h3", "sign in to add a song"),
+                            m("div",
+                                m(providers)
+                            )
                         )
                 )
             )

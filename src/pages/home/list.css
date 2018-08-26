@@ -2,8 +2,6 @@
 @value fontSans, fontSerif, fontDisplay, animDur from "../../index.css";
 
 .list {
-    composes: fixedWidth from "./index.css";
-
     text-align: left;
 
     div {
