@@ -11,7 +11,7 @@ export default {
 
                 onclick : () => { state.action("OPEN LOGIN MODAL"); }
             },
-            "login"
+            "sign in"
         );
     }
 };
