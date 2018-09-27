@@ -5,6 +5,7 @@ export default (State) => ({
     "INIT" : () => {
         firebase.auth().onAuthStateChanged((user) => {
             console.log("Auth change");
+            lib.checkAuth(State);
 
             if(!user) {
                 console.error("something broke");
@@ -12,13 +13,13 @@ export default (State) => ({
                 return;
             }
 
-            for (const key in user) {
-                if (!user.hasOwnProperty(key)) {
-                    return;
-                }
+            // for (const key in user) {
+            //     if (!user.hasOwnProperty(key)) {
+            //         return;
+            //     }
 
-                console.log(key);
-            }
+            //     console.log(key);
+            // }
 
             m.redraw();
 
@@ -27,7 +28,7 @@ export default (State) => ({
             // console.log(user.emailVerified);
             console.log(user.photoURL);
             // console.log(user.isAnonymous);
-            // console.log(user.uid);
+            console.log(user.uid);
             // console.log(user.providerData);
         });
     },
