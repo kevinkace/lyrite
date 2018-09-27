@@ -3,12 +3,33 @@ import * as lib from "../db/lib";
 
 export default (State) => ({
     "INIT" : () => {
-        if(!lib.checkAuth(State)) {
-            setTimeout(() => {
-                console.log("timeout login");
-                lib.checkAuth(State);
-            }, 1500);
-        }
+        firebase.auth().onAuthStateChanged((user) => {
+            console.log("Auth change");
+
+            if(!user) {
+                console.error("something broke");
+
+                return;
+            }
+
+            for (const key in user) {
+                if (!user.hasOwnProperty(key)) {
+                    return;
+                }
+
+                console.log(key);
+            }
+
+            m.redraw();
+
+            // console.log(user.displayName);
+            // console.log(user.email);
+            // console.log(user.emailVerified);
+            console.log(user.photoURL);
+            // console.log(user.isAnonymous);
+            // console.log(user.uid);
+            // console.log(user.providerData);
+        });
     },
 
     "LOGIN" : (provName) => {

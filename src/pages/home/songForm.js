@@ -14,27 +14,12 @@ export default {
         const vs = vnode.state;
 
         vs.focused = "";
-        vs.title = "";
-        vs.artist = "";
-        vs.lyrics = "";
+        vs.title   = "";
+        vs.artist  = "";
+        vs.lyrics  = "";
 
         vs.validate = validator(vs, songSchema);
         vs.validationResults = vs.validate();
-
-        vs.onsubmit = (e) => {
-            e.preventDefault();
-
-            vs.validationResults = vs.validate();
-
-            if(vs.validationResults.errors) {
-                return;
-            }
-
-            state.action("IMPORT SONG LYRICS", vs)
-                .then((song) => {
-                    m.route.set(`/songs/${song.slug}`);
-                });
-        };
 
         vs.isFocused = function(dom, trueResult, falseResult) {
             return vs.focused === dom ? trueResult : falseResult;
@@ -43,21 +28,40 @@ export default {
 
     view(vnode) {
         const vs = vnode.state;
+        const {
+            onsubmit, isFocused, focused, validate,
+            titleDom, showTitleError, title,
+            artistDom, showArtistError, artist,
+            lyricsDom, showLyricsError, lyrics,
+        } = vnode.state;
 
         return m("form", {
                 class    : css.center,
-                onsubmit : vs.onsubmit
+                onsubmit : (e) => {
+                    e.preventDefault();
+
+                    vs.validationResults = vs.validate();
+
+                    if(vs.validationResults.errors) {
+                        return;
+                    }
+
+                    state.action("IMPORT SONG LYRICS", vs)
+                        .then((song) => {
+                            m.route.set(`/songs/${song.slug}`);
+                        });
+                }
             },
 
             // title input
-            m("div", { class : vs.isFocused(vs.titleDom, css.titleFocused, css.title) },
+            m("div", { class : isFocused(titleDom, css.titleFocused, css.title) },
                 m(error, {
-                    show   : vs.showTitleError,
+                    show   : showTitleError,
                     errors : get(vs, [ "validationResults", "errors", "title" ])
                 }),
                 m("input", {
-                    value       : vs.title,
-                    placeholder : vs.isFocused(vs.titleDom, "", "Song Title"),
+                    value       : title,
+                    placeholder : isFocused(titleDom, "", "Song Title"),
 
                     oncreate : (titleVnode) => {
                         vs.titleDom = titleVnode.dom;
@@ -67,7 +71,7 @@ export default {
                         vs.focused = e.currentTarget;
                     },
                     onblur : (e) => {
-                        if(vs.focused === e.currentTarget) {
+                        if(focused === e.currentTarget) {
                             delete vs.focused;
                         }
 
@@ -75,20 +79,20 @@ export default {
                     },
                     oninput : m.withAttr("value", (v) => {
                         vs.title = v;
-                        vs.validationResults = vs.validate();
+                        vs.validationResults = validate();
                     })
                 })
             ),
 
             // artist input
-            m("div", { class : vs.isFocused(vs.artistDom, css.artistFocused, css.artist) },
+            m("div", { class : isFocused(artistDom, css.artistFocused, css.artist) },
                 m(error, {
-                    show   : vs.showArtistError,
+                    show   : showArtistError,
                     errors : get(vs, [ "validationResults", "errors", "artist" ])
                 }),
                 m("input", {
-                    value       : vs.artist,
-                    placeholder : vs.isFocused(vs.artistDom, "", "Artist"),
+                    value       : artist,
+                    placeholder : isFocused(artistDom, "", "Artist"),
 
                     oncreate : (artistVnode) => {
                         vs.artistDom = artistVnode.dom;
@@ -98,7 +102,7 @@ export default {
                         vs.focused = e.currentTarget;
                     },
                     onblur : (e) => {
-                        if(vs.focused === e.currentTarget) {
+                        if(focused === e.currentTarget) {
                             delete vs.focused;
                         }
 
@@ -106,7 +110,7 @@ export default {
                     },
                     oninput : m.withAttr("value", (v) => {
                         vs.artist = v;
-                        vs.validationResults = vs.validate();
+                        vs.validationResults = validate();
                     })
                 })
             ),
@@ -114,13 +118,13 @@ export default {
             // lyrics input
             m("div", { class : css.dash },
                 m(error, {
-                    show   : vs.showLyricsError,
+                    show   : showLyricsError,
                     errors : get(vs, [ "validationResults", "errors", "lyrics" ])
                 }),
                 m("textarea", {
-                    class       : vs.isFocused(vs.lyricsDom, css.textareaFocused, css.textarea),
-                    value       : vs.lyrics,
-                    placeholder : vs.isFocused(vs.lyricsDom, "", "paste or drop lyrics"),
+                    class       : isFocused(lyricsDom, css.textareaFocused, css.textarea),
+                    value       : lyrics,
+                    placeholder : isFocused(lyricsDom, "", "paste or drop lyrics"),
 
                     oncreate : (lyricsVnode) => {
                         vs.lyricsDom = lyricsVnode.dom;
@@ -130,7 +134,7 @@ export default {
                         vs.focused = e.currentTarget;
                     },
                     onblur : (e) => {
-                        if(vs.focused === e.currentTarget) {
+                        if(focused === e.currentTarget) {
                             delete vs.focused;
                         }
 
@@ -138,7 +142,7 @@ export default {
                     },
                     oninput : m.withAttr("value", (v) => {
                         vs.lyrics = v;
-                        vs.validationResults = vs.validate();
+                        vs.validationResults = validate();
                     })
                 })
             ),
