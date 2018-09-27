@@ -1,5 +1,3 @@
-import m from "mithril";
-
 import db from "../../db";
 
 const usersCollection = db.collection("users");

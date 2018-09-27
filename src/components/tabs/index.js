@@ -1,5 +1,3 @@
-import m from "mithril";
-
 import css from "./index.css";
 
 export default {

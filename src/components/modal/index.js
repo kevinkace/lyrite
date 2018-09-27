@@ -1,5 +1,3 @@
-import m from "mithril";
-
 import state from "../../state";
 import animResolve from "../../lib/animResolve";
 

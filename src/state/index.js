@@ -1,5 +1,3 @@
-import m from "mithril";
-
 import tools from "./tools";
 import song from "./song";
 import modal from "./modal";

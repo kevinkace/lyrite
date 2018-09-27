@@ -1,4 +1,3 @@
-import m from "mithril";
 import { get } from "object-path";
 
 import state from "../../state";

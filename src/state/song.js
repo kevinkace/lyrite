@@ -1,4 +1,3 @@
-import m from "mithril";
 import slugify from "slugify";
 
 import db, { fsDelete } from "../db";

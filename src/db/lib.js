@@ -1,4 +1,3 @@
-import m from "mithril";
 import { firebase } from "./";
 
 function checkAuth(State, result) {

@@ -1,19 +1,13 @@
-"use strict";
-
 import "minireset.css";
 import "./index.css";
-
-import m from "mithril";
 
 import routes from "./routes";
 import state from "./state";
 
-const mountEl = document.getElementById("mount");
-
 state.action("INIT");
 
 m.route.prefix("");
-m.route(mountEl, "/", routes);
+m.route(document.getElementById("mount"), "/", routes);
 
 // todo: debug
 // state.debug = true;

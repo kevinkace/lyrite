@@ -61,6 +61,9 @@
       "ecmaVersion": 6,
       "sourceType": "module"
     },
+    "globals": {
+      "m" : true
+    },
     "rules": {
       "eol-last": [
         "error",

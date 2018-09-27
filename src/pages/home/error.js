@@ -1,5 +1,3 @@
-import m from "mithril";
-
 import css from "./error.css";
 import resolveAnimation from "../../lib/animResolve";
 
