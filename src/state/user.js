@@ -1,64 +1,64 @@
 import { firebase } from "../db";
 import * as lib from "../db/lib";
 
-export default (State) => ({
-    "INIT" : () => {
-        firebase.auth().onAuthStateChanged((user) => {
+export default State => ({
+    INIT : () => {
+        firebase.auth().onAuthStateChanged(user => {
             console.log("Auth change");
-            lib.checkAuth(State);
 
-            if(!user) {
-                console.error("something broke");
+            if (!user) {
+                // not logged in, so why is this firing?
 
                 return;
             }
 
-            // for (const key in user) {
-            //     if (!user.hasOwnProperty(key)) {
-            //         return;
-            //     }
+            lib.checkAuth(State, null, user);
 
-            //     console.log(key);
-            // }
-
-            m.redraw();
-
+            // console.log(user.providerData);
             // console.log(user.displayName);
             // console.log(user.email);
             // console.log(user.emailVerified);
-            console.log(user.photoURL);
+            // console.log(user.photoURL);
             // console.log(user.isAnonymous);
-            console.log(user.uid);
+            // console.log(user.uid);
             // console.log(user.providerData);
+            // user.updateProfile({
+            //     displayName : "test"
+            // });
         });
     },
 
-    "LOGIN" : (provName) => {
+    LOGIN : provName => {
         const provider = new firebase.auth[provName]();
 
         firebase.auth().signInWithPopup(provider)
-            .then((result) => {
+            .then(result => {
                 lib.checkAuth(State, result);
                 delete State.modal;
+
+                return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             })
-            .then(() =>
-                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-            )
-            .catch((err) => {
+            .catch(err => {
                 delete State.loggedIn;
+
                 debugger;
+
                 console.log(err);
             });
     },
 
-    "LOGOUT" : () => {
+    LOGOUT : () => {
         firebase.auth().signOut()
-            .then(function() {
+            .then(() => {
                 // Sign-out successful.
                 delete State.loggedIn;
             })
-            .catch(function(error) {
+            .catch(err => {
                 // An error happened.
+                console.error(err);
+            })
+            .finally(() => {
+                m.redraw();
             });
     }
 });

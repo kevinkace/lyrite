@@ -1,6 +1,6 @@
 import slugify from "slugify";
 
-import db, { fsDelete } from "../db";
+import db, { fsDelete, fsTimestamp } from "../db";
 
 import { parseLyricString } from "../lib/parse";
 import { getSongFromId } from "../lib/song";
@@ -23,7 +23,7 @@ export default (State) => ({
 
                 // should just be 1 doc
                 snap.forEach((doc, idx) => {
-                    if(idx) {
+                    if (idx) {
                         return;
                     }
 
@@ -68,7 +68,8 @@ export default (State) => ({
 
         return db.collection("songs").add({
             artist     : songObj.artist,
-            created_at : Date.now(),
+            created_at : fsTimestamp(),
+            // todo: user id
             created_by : "users/is8T9YLdvlAB6yfqJlX4",
             lyrics     : songObj.lyrics,
             slug       : slug,
@@ -83,7 +84,7 @@ export default (State) => ({
     },
 
     "CLOSE SONG" : () => {
-        if(State.unsubscribe) {
+        if (State.unsubscribe) {
             State.unsubscribe();
         }
 
@@ -117,7 +118,7 @@ export default (State) => ({
         State.deleted = State.deleted || {};
 
         // already queued to be deleted
-        if(State.deleted[id]) {
+        if (State.deleted[id]) {
             return;
         }
 
@@ -149,7 +150,7 @@ export default (State) => ({
     },
 
     "UNDO DELETE SONG BY ID" : (id) => {
-        if(!State.deleted || !State.deleted[id]) {
+        if (!State.deleted || !State.deleted[id]) {
             return;
         }
 

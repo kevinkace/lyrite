@@ -51,7 +51,7 @@
 .dash {
     position: relative;
     padding: 0.3em 0.6em;
-    margin-bottom: 0.3em;
+    margin: 0.8em 0 0.3em;
 
     border: dashed 2px #fff9;
     border-radius: 0.5em;

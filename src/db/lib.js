@@ -1,16 +1,37 @@
-import { firebase } from "./";
+import db, { firebase, fsTimestamp } from "./";
 
-function checkAuth(State, result) {
-    if(firebase.auth().currentUser) {
+/**
+ * Does something with auth
+ * @param {object} State - state object...?
+ * @param {object} [result] - provider auth result
+ * @param {object} [user] - user data
+ */
+function checkAuth(State, result, user) {
+    if (firebase.auth().currentUser) {
         State.loggedIn = true;
         State.user = firebase.auth().currentUser;
     }
 
-    if(result) {
+    if (result) {
+        const { accessToken, secret } = result.credential;
+        const { uid, email, photoURL } = result.user;
+
+        // what's this for? who knows!
         State.session = {
-            token : result.credential.accessToken,
-            secret : result.credential.secret
+            accessToken,
+            secret
         };
+
+        // create user entry in db
+        db.collection("users").doc(uid).set({
+            created_at : fsTimestamp(),
+            email,
+            photoURL
+        });
+    }
+
+    if (user) {
+        console.log("user");
     }
 
     m.redraw();
