@@ -5,7 +5,7 @@ export default function(dom, className) {
         let resd = false;
 
         setTimeout(() => {
-            if(resd) {
+            if (resd) {
                 return;
             }
 
@@ -15,7 +15,7 @@ export default function(dom, className) {
         }, MAX_TIMEOUT);
 
         dom.addEventListener("animationend", () => {
-            if(resd) {
+            if (resd) {
                 return;
             }
 

@@ -2,7 +2,7 @@ import { firebase } from "../db";
 import * as lib from "../db/lib";
 
 export default State => ({
-    INIT : () => {
+    INIT() {
         firebase.auth().onAuthStateChanged(user => {
             console.log("Auth change");
 
@@ -28,7 +28,7 @@ export default State => ({
         });
     },
 
-    LOGIN : provName => {
+    LOGIN(provName) {
         const provider = new firebase.auth[provName]();
 
         firebase.auth().signInWithPopup(provider)
@@ -47,7 +47,7 @@ export default State => ({
             });
     },
 
-    LOGOUT : () => {
+    LOGOUT() {
         firebase.auth().signOut()
             .then(() => {
                 // Sign-out successful.

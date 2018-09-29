@@ -6,11 +6,11 @@ import { parseLyricString } from "../lib/parse";
 import { getSongFromId } from "../lib/song";
 
 export default (State) => ({
-    "SET SLUG" : (slug) => {
+    SET_SLUG(slug) {
         State.slug = slug;
     },
 
-    "LOAD SONG BY SLUG" : (slug) => {
+    LOAD_SONG_BY_SLUG(slug) {
         State.song = {
             slug,
             loading : true
@@ -39,7 +39,7 @@ export default (State) => ({
     },
 
     // imports default songs to DB
-    "LOAD SONGS LIST" : () => {
+    LOAD_SONGS_LIST() {
         State.songs = {
             loading : true,
             songs   : [] // State.songs.songs !@#$@
@@ -63,7 +63,7 @@ export default (State) => ({
     },
 
     // import song
-    "IMPORT SONG LYRICS" : (songObj) => {
+    IMPORT_SONG_LYRICS(songObj) {
         const slug = slugify(songObj.title);
 
         return db.collection("songs").add({
@@ -83,7 +83,7 @@ export default (State) => ({
         });
     },
 
-    "CLOSE SONG" : () => {
+    CLOSE_SONG() {
         if (State.unsubscribe) {
             State.unsubscribe();
         }
@@ -92,19 +92,19 @@ export default (State) => ({
         delete State.song;
     },
 
-    "TOGGLE EDIT CURRENT SONG" : () => {
-        return State.edit ? State.action("CLOSE EDIT CURRENT SONG") : State.action("OPEN EDIT CURRENT SONG");
+    TOGGLE_EDIT_CURRENT_SONG() {
+        return State.edit ? State.action("CLOSE_EDIT_CURRENT_SONG") : State.action("OPEN_EDIT_CURRENT_SONG");
     },
 
-    "OPEN EDIT CURRENT SONG" : () => {
+    OPEN_EDIT_CURRENT_SONG() {
         State.edit = true;
     },
 
-    "CLOSE EDIT CURRENT SONG" : () => {
+    CLOSE_EDIT_CURRENT_SONG() {
         State.edit = false;
     },
 
-    "UPDATE PARSED LYRICS" : (lyrics) => {
+    UPDATE_PARSED_LYRICS(lyrics) {
         const doc = db.collection("songs").doc(State.song.id);
 
         State.song.data.lyrics = lyrics;
@@ -114,7 +114,7 @@ export default (State) => ({
     // fake delete with undo, then real delete
     // - track deleted songs locally on State.delete = { id : true }
     // -
-    "DELETE SONG BY ID" : (id) => {
+    DELETE_SONG_BY_ID(id) {
         State.deleted = State.deleted || {};
 
         // already queued to be deleted
@@ -149,7 +149,7 @@ export default (State) => ({
 
     },
 
-    "UNDO DELETE SONG BY ID" : (id) => {
+    UNDO_DELETE_SONG_BY_ID(id) {
         if (!State.deleted || !State.deleted[id]) {
             return;
         }

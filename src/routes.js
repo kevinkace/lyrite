@@ -7,23 +7,26 @@ import home from "./pages/home";
 
 export default {
     "/" : {
-        onmatch : () => {
-            state.action("CLOSE SONG");
-            state.action("LOAD SONGS LIST");
+        onmatch() {
+            state.action("CLOSE_SONG");
+            state.action("LOAD_SONGS_LIST");
         },
-        render : () => m(layout, m(home))
+        render() {
+            return m(layout, m(home));
+        }
     },
 
     "/songs/:slug" : {
-        onmatch : (args) => {
-            if(!args.slug) {
+        onmatch(args) {
+            if (!args.slug) {
                 m.route.set("/");
             }
 
-            // state.action("SET SLUG", args.slug);
-            state.action("LOAD SONG BY SLUG", args.slug);
-
+            // state.action("SET_SLUG", args.slug);
+            state.action("LOAD_SONG_BY_SLUG", args.slug);
         },
-        render : () => m(layout, { header : true }, m(lyrics))
+        render() {
+            return m(layout, { header : true }, m(lyrics));
+        }
     }
 };

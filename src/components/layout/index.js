@@ -51,7 +51,7 @@ export default {
 
                             m("button", {
                                 onclick : () => {
-                                    state.action("UNDO DELETE SONG BY ID", id);
+                                    state.action("UNDO_DELETE_SONG_BY_ID", id);
                                 }
                             }, "undo")
                         )

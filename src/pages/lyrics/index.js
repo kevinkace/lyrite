@@ -31,8 +31,8 @@ export default {
                                     part.style ? css[`s${part.style.idx}`] : null
                                 ].join(" "),
 
-                                onclick : () => {
-                                    state.action("CLICK LYRIC", idx);
+                                onclick() {
+                                    state.action("CLICK_LYRIC", idx);
                                 }
                             },
 

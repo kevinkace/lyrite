@@ -15,12 +15,12 @@ const State = {
     // added to doc in script via webpack
     ver, // eslint-disable-line no-undef
 
-    error : (err) => {
+    error(err) {
         console.error(err);
     },
 
     events : {
-        mousemove : (e) => {
+        mousemove(e) {
             State.tooltip.style = {
                 left    : `${e.clientX}px`,
                 top     : `${e.clientY}px`,
@@ -33,7 +33,15 @@ const State = {
 };
 
 State.actions = Object.assign({}, tools(State), song(State), modal(State), user(State));
-State.action  = (name, value) => State.actions[name](value);
+State.action  = (name, value) => {
+    if (!State.actions[name]) {
+        console.error(`Action not found: ${name}`);
+
+        return;
+    }
+
+    return State.actions[name](value);
+};
 
 window.State = State;
 

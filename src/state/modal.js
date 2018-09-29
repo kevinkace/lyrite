@@ -1,6 +1,6 @@
 export default (State) => ({
-    "OPEN TITLE MODAL" : () => {
-        if(!State.song) {
+    OPEN_TITLE_MODAL() {
+        if (!State.song) {
             return;
         }
 
@@ -9,20 +9,20 @@ export default (State) => ({
         m.redraw();
     },
 
-    "OPEN LOGIN MODAL" : () => {
+    OPEN_LOGIN_MODAL() {
         // State.showLogin = true;
         State.modal = "login";
     },
 
-    "ADD TITLE MODAL" : (title) => {
-        State.action("SET TITLE", title);
+    ADD_TITLE_MODAL(title) {
+        State.action("SET_TITLE", title);
 
-        State.action("CLOSE MODAL");
+        State.action("CLOSE_MODAL");
 
         m.route.set(State.song.slug);
     },
 
-    "CLOSE MODAL" : () => {
+    CLOSE_MODAL() {
         delete State.modal;
         m.redraw();
     }

@@ -7,7 +7,7 @@ import css from "./list.css";
 import animResolve from "../../lib/animResolve";
 
 export default {
-    view(vnode) {
+    view() {
         const songs = get(state, [ "songs", "songs" ]) || [];
 
         return m("div", { class : css.list },
@@ -17,8 +17,9 @@ export default {
                     m("div", {
                             key : song.id,
 
-                            onbeforeremove : (songVnode) =>
-                                animResolve(songVnode.dom, css.songOut)
+                            onbeforeremove(songVnode) {
+                                return animResolve(songVnode.dom, css.songOut);
+                            }
                         },
                         m("a", {
                                 oncreate : m.route.link,
@@ -32,8 +33,8 @@ export default {
                         ),
 
                         m("button", {
-                            onclick : () => {
-                                state.action("DELETE SONG BY ID", song.id);
+                            onclick() {
+                                state.action("DELETE_SONG_BY_ID", song.id);
                             },
                             "aria-label" : "delete"
                         }, "🗙")

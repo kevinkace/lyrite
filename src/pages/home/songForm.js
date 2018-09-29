@@ -28,24 +28,24 @@ export default {
     view(vnode) {
         const vs = vnode.state;
         const {
-            onsubmit, isFocused, focused, validate,
+            isFocused, focused, validate,
             titleDom, showTitleError, title,
             artistDom, showArtistError, artist,
             lyricsDom, showLyricsError, lyrics,
         } = vnode.state;
 
         return m("form", {
-                class    : css.center,
-                onsubmit : (e) => {
+                class : css.center,
+                onsubmit(e) {
                     e.preventDefault();
 
                     vs.validationResults = vs.validate();
 
-                    if(vs.validationResults.errors) {
+                    if (vs.validationResults.errors) {
                         return;
                     }
 
-                    state.action("IMPORT SONG LYRICS", vs)
+                    state.action("IMPORT_SONG_LYRICS", vs)
                         .then((song) => {
                             m.route.set(`/songs/${song.slug}`);
                         });
@@ -62,15 +62,15 @@ export default {
                     value       : title,
                     placeholder : isFocused(titleDom, "", "Song Title"),
 
-                    oncreate : (titleVnode) => {
+                    oncreate(titleVnode) {
                         vs.titleDom = titleVnode.dom;
                     },
 
-                    onfocus : (e) => {
+                    onfocus(e) {
                         vs.focused = e.currentTarget;
                     },
-                    onblur : (e) => {
-                        if(focused === e.currentTarget) {
+                    onblur(e) {
+                        if (focused === e.currentTarget) {
                             delete vs.focused;
                         }
 
@@ -93,15 +93,15 @@ export default {
                     value       : artist,
                     placeholder : isFocused(artistDom, "", "Artist"),
 
-                    oncreate : (artistVnode) => {
+                    oncreate(artistVnode) {
                         vs.artistDom = artistVnode.dom;
                     },
 
-                    onfocus : (e) => {
+                    onfocus(e) {
                         vs.focused = e.currentTarget;
                     },
-                    onblur : (e) => {
-                        if(focused === e.currentTarget) {
+                    onblur(e) {
+                        if (focused === e.currentTarget) {
                             delete vs.focused;
                         }
 
@@ -125,15 +125,15 @@ export default {
                     value       : lyrics,
                     placeholder : isFocused(lyricsDom, "", "paste or drop lyrics"),
 
-                    oncreate : (lyricsVnode) => {
+                    oncreate(lyricsVnode) {
                         vs.lyricsDom = lyricsVnode.dom;
                     },
 
-                    onfocus : (e) => {
+                    onfocus(e) {
                         vs.focused = e.currentTarget;
                     },
-                    onblur : (e) => {
-                        if(focused === e.currentTarget) {
+                    onblur(e) {
+                        if (focused === e.currentTarget) {
                             delete vs.focused;
                         }
 
@@ -147,7 +147,7 @@ export default {
             ),
 
             // load button
-            !get(vs, [ "validationResults", "errors"]) ?
+            !get(vs, [ "validationResults", "errors" ]) ?
                 m("div", { class : css.btnWrap },
                     m("button", {
                         class : css.loadBtn,

@@ -32,7 +32,7 @@
 
         function checkRedirect() {
 
-            if(!location.search) {
+            if (!location.search) {
                 return;
             }
 
@@ -42,7 +42,7 @@
                 q[key] = desanitize(value);
             });
 
-            if(q.p === undefined) {
+            if (q.p === undefined) {
                 return;
             }
 

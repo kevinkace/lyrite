@@ -7,7 +7,9 @@ export default {
         return m("button", {
                 class : css.login,
 
-                onclick : () => { state.action("OPEN LOGIN MODAL"); }
+                onclick() {
+                    state.action("OPEN_LOGIN_MODAL");
+                }
             },
             "sign in"
         );

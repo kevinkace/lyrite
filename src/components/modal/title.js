@@ -3,16 +3,16 @@ import state from "../../state";
 import css from "./title.css";
 
 export default {
-    view : (vnode) =>
-        m("form", {
-                onsubmit : (e) => {
+    view(vnode) {
+        return m("form", {
+                onsubmit(e) {
                     e.preventDefault();
 
-                    if(!vnode.state.value) {
+                    if (!vnode.state.value) {
                         return;
                     }
 
-                    state.action("ADD TITLE MODAL", vnode.state.value);
+                    state.action("ADD_TITLE_MODAL", vnode.state.value);
                 }
             },
             m("input", {
@@ -22,7 +22,7 @@ export default {
                 oninput     : m.withAttr("value", (v) => {
                     vnode.state.value = v;
                 }),
-                oncreate : (inputVnode) => {
+                oncreate(inputVnode) {
                     inputVnode.dom.focus();
                 }
             }),
@@ -34,15 +34,16 @@ export default {
                     "add title"
                 ),
                 m("button", {
-                        class   : css.cancel,
-                        onclick : (e) => {
+                        class : css.cancel,
+                        onclick(e) {
                             e.preventDefault();
 
-                            state.action("CLOSE MODAL");
+                            state.action("CLOSE_MODAL");
                         }
                     },
                     "cancel"
                 )
             )
-        )
+        );
+    }
 };

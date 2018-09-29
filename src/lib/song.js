@@ -3,7 +3,7 @@ import state from "../state";
 function getSongFromId(id) {
     let song;
 
-    if(!state.songs.songs || !id) {
+    if (!state.songs.songs || !id) {
         return;
     }
 

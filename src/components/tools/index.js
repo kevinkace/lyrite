@@ -6,17 +6,17 @@ import tooltipCss from "./tooltip.css";
 import edit from "../../icons/quill.svg";
 
 export default {
-    view : (vnode) =>
-        m("div", { class : vnode.state.show ? css.tools : css.toolsHide },
+    view(vnode) {
+        return m("div", { class : vnode.state.show ? css.tools : css.toolsHide },
 
             // Show/hide tool button
             m("button", {
                     class : css.show,
-                    onclick : () => {
+                    onclick() {
                         vnode.state.show = !vnode.state.show;
 
-                        if(!vnode.state.show) {
-                            state.action("HIDE TOOLS");
+                        if (!vnode.state.show) {
+                            state.action("HIDE_TOOLS");
                         }
                     }
                 },
@@ -32,8 +32,8 @@ export default {
                         m("button", {
                             class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
 
-                            onclick : () => {
-                                state.action("CLICK STYLE", idx);
+                            onclick() {
+                                state.action("CLICK_STYLE", idx);
                             }
                         }, `${idx}`)
                     )
@@ -46,14 +46,14 @@ export default {
                 m("div", { class : css.control },
                     m("label", {
                         class : css.font,
-                        onmouseover : () => {
+                        onmouseover() {
                             vnode.state.range = Date.now();
                         },
-                        onmouseout : () => {
+                        onmouseout() {
                             let now = Date.now();
 
                             setTimeout(() => {
-                                if(now < vnode.state.range) {
+                                if (now < vnode.state.range) {
                                     return;
                                 }
 
@@ -65,21 +65,21 @@ export default {
                     }, parseFloat(state.font.size, 10).toFixed(2)),
 
                     m("input", {
-                        type  : "range",
-                        min   : 0.7,
-                        max   : 3,
-                        step  : 0.05,
+                        type : "range",
+                        min  : 0.7,
+                        max  : 3,
+                        step : 0.05,
 
                         class : vnode.state.range ? css.range : css.rangeHide,
 
-                        onmouseover : () => {
+                        onmouseover() {
                             vnode.state.range = Date.now();
                         },
-                        onmouseout : () => {
+                        onmouseout() {
                             let now = Date.now();
 
                             setTimeout(() => {
-                                if(now < vnode.state.range) {
+                                if (now < vnode.state.range) {
                                     return;
                                 }
 
@@ -89,7 +89,7 @@ export default {
                             }, 300);
                         },
 
-                        value : state.font.size,
+                        value   : state.font.size,
                         oninput : m.withAttr("value", (v) => { state.font.size = v; })
                     })
                 )
@@ -101,8 +101,8 @@ export default {
                 m("div", { class : css.control },
                     m("button", {
                         class : css.dec,
-                        onclick : () => {
-                            if(state.cols.count === 1) {
+                        onclick() {
+                            if (state.cols.count === 1) {
                                 return;
                             }
 
@@ -112,7 +112,7 @@ export default {
                     m("label", { class : css.cols }, state.cols.count),
                     m("button", {
                         class : css.inc,
-                        onclick : () => {
+                        onclick() {
                             ++state.cols.count;
                         }
                     }, ">")
@@ -124,8 +124,8 @@ export default {
                 m("div", { class : css.control },
                     m("button", {
                         class : css.edit,
-                        onclick : () => {
-                            state.action("TOGGLE EDIT CURRENT SONG");
+                        onclick() {
+                            state.action("TOGGLE_EDIT_CURRENT_SONG");
                         }
                     }, "edit")
                 )
@@ -138,5 +138,6 @@ export default {
                     style : state.tooltip.style
                 }) :
                 null
-        )
+        );
+    }
 };

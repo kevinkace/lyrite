@@ -1,12 +1,12 @@
 import { get } from "object-path";
 
 export default (State) => ({
-    "CLICK LYRIC" : (idx) => {
+    CLICK_LYRIC(idx) {
         const lineStyleIsSetStyle = get(State, "style.idx") === get(State, `song.lyrics.${idx}.style.idx`);
 
         // Deselect lyric
         // selected lyric without a style set
-        if(State.selected === idx && (!State.style || lineStyleIsSetStyle)) {
+        if (State.selected === idx && (!State.style || lineStyleIsSetStyle)) {
             delete State.selected;
 
             return;
@@ -15,21 +15,21 @@ export default (State) => ({
         // Always set selected otherwise
         State.selected = idx;
 
-        if(!State.style) {
+        if (!State.style) {
             return;
         }
 
         // color
-        State.action("COLOR SELECTED LYRIC", State.style.idx);
+        State.action("COLOR_SELECTED_LYRIC", State.style.idx);
 
         return;
     },
 
-    "CLICK STYLE" : (idx) => {
+    CLICK_STYLE(idx) {
         State.style = { idx };
 
         // Clicking first style after opening tools
-        if(!State.tooltip) {
+        if (!State.tooltip) {
             // create tt obj
             State.tooltip  = { style : {} };
 
@@ -38,26 +38,25 @@ export default (State) => ({
         }
 
         // Nothing is selected so don"t color anything
-        if(!State.selected && State.selected !== 0) {
+        if (!State.selected && State.selected !== 0) {
             return;
         }
 
-        // Color selected lyrics
-        State.action("COLOR SELECTED LYRIC", idx);
+        State.action("COLOR_SELECTED_LYRIC", idx);
 
         delete State.selected;
     },
 
-    "COLOR SELECTED LYRIC" : (idx) => {
-        State.song.lyrics[State.selected].style = { idx };
+    COLOR_SELECTED_LYRIC(idx) {
+        State.song.parsedLyrics[State.selected].style = { idx };
     },
 
-    "HIDE TOOLS" : () => {
+    HIDE_TOOLS() {
         delete State.selected;
         delete State.style;
         delete State.tooltip;
 
-        State.action("CLOSE EDIT CURRENT SONG");
+        State.action("CLOSE_EDIT_CURRENT_SONG");
 
         window.removeEventListener("mousemove", State.events.mousemove);
     }
