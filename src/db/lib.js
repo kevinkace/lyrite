@@ -15,6 +15,7 @@ function checkAuth(State, result, user) {
     if (result) {
         const { accessToken, secret } = result.credential;
         const { uid, email, photoURL } = result.user;
+        const ref = db.collection("users").doc(uid);
 
         // what's this for? who knows!
         State.session = {
@@ -23,10 +24,20 @@ function checkAuth(State, result, user) {
         };
 
         // create user entry in db
-        db.collection("users").doc(uid).set({
-            created_at : fsTimestamp(),
-            email,
-            photoURL
+        ref.get().then(doc => {
+            if (!doc.exists) {
+                return ref.set({
+                    created_at : fsTimestamp(),
+                    email,
+                    photoURL
+                });
+            }
+
+            ref.update({
+                created_at : fsTimestamp(),
+                email,
+                photoURL
+            });
         });
     }
 

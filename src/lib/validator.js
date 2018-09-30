@@ -8,9 +8,9 @@ const checks = {
 
     minLength(data, minLength) {
         return data && data.length >= minLength ? null : {
-            type  : "minLength",
-            label : `must be at least ${minLength} characters`
-        };
+                type  : "minLength",
+                label : `must be at least ${minLength} characters`
+            };
     }
 };
 
