@@ -33,7 +33,7 @@ function checkAuth(State, result, user) {
                 });
             }
 
-            ref.update({
+            return ref.update({
                 created_at : fsTimestamp(),
                 email,
                 photoURL
