@@ -7,8 +7,10 @@ export default {
 
         return va.show && va.errors ?
             m("div", {
-                    onbeforeremove : (vnode) => resolveAnimation(vnode.dom, css.errorOut),
-                    class : css.errorIn
+                    class : css.errorIn,
+                    onbeforeremove(divVnode) {
+                        return resolveAnimation(divVnode.dom, css.errorOut);
+                    }
                 },
                 va.errors.map((error) => error.label)
             ) :

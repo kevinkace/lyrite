@@ -12,8 +12,10 @@ export default {
             m("div", { class : css.buttons },
                 tabs.map((tab, idx) =>
                     m("button", {
-                            class   : vnode.state.idx === idx ? css.tabSelected : css.tab,
-                            onclick : () => {
+                            class : vnode.state.idx === idx ?
+                                css.tabSelected :
+                                css.tab,
+                            onclick() {
                                 vnode.state.idx = idx;
                             }
                         },

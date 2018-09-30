@@ -6,8 +6,9 @@ export default {
     view() {
         return m("button", {
                 class : css.logout,
-
-                onclick : () => { state.action("LOGOUT"); }
+                onclick() {
+                    state.action("LOGOUT");
+                }
             },
             "logout"
         );

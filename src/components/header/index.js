@@ -10,17 +10,20 @@ import logo from "../../icons/lyrite-logo2.svg";
 import animResolve from "../../lib/animResolve";
 
 export default {
-    oncreate : (vnode) => {
+    oncreate(vnode) {
         state.header = {
             height : vnode.dom.offsetHeight
         };
     },
-    onbeforeremove : (vnode) => animResolve(vnode.dom, css.headerOut),
-    onremove : () => {
+    onbeforeremove(vnode) {
+        return animResolve(vnode.dom, css.headerOut);
+    },
+    onremove() {
+        // todo: should be in an action
         delete state.header;
     },
-    view : () =>
-        m("div", { class : css.headerIn },
+    view() {
+        return m("div", { class : css.headerIn },
             m("h1", { class : css.title }, get(state, [ "song", "data", "title" ])),
 
             m("div", { class : css.logo },
@@ -34,5 +37,6 @@ export default {
             ),
 
             state.song ? m(tools) : null
-        )
+        );
+    }
 };

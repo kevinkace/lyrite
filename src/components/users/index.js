@@ -20,13 +20,14 @@ function getUsers(vnode) {
 }
 
 export default {
-    oninit : (vnode) => {
+    oninit(vnode) {
         getUsers(vnode);
     },
-    view : (vnode) =>
-        m("div", "users",
+    view(vnode) {
+        return m("div", "users",
             vnode.state.loaded ?
                 users.map((user) => m("div", user.name )) :
                 "loading"
-        )
+        );
+    }
 };

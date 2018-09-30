@@ -10,8 +10,8 @@ import ghLogo from "../../icons/github-black.svg";
 import animResolve from "../../lib/animResolve";
 
 export default {
-    view : (vnode) =>
-        m("div",
+    view(vnode) {
+        return m("div",
 
             m("div", { class : css.login },
                 state.loggedIn ?
@@ -43,14 +43,16 @@ export default {
                                 key   : id,
                                 class : css.notificationIn,
 
-                                onbeforeremove : (notiVnode) => animResolve(notiVnode.dom, css.notificationOut)
+                                onbeforeremove(notiVnode) {
+                                    return animResolve(notiVnode.dom, css.notificationOut);
+                                }
                             },
 
                             "deleted song! ",
                             m("span", { class : css.songTitle }, state.deleted[id].song.data.title),
 
                             m("button", {
-                                onclick : () => {
+                                onclick() {
                                     state.action("UNDO_DELETE_SONG_BY_ID", id);
                                 }
                             }, "undo")
@@ -58,5 +60,6 @@ export default {
                     )
                 ) :
                 null
-        )
+        );
+    }
 };

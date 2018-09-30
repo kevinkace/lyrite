@@ -24,8 +24,7 @@ export default {
         return providers.map((p) =>
             m("button", {
                     class : css[p.name],
-
-                    onclick : () => {
+                    onclick() {
                         state.action("LOGIN", p.provName);
                     }
                 },
