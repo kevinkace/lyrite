@@ -1,4 +1,4 @@
-import db, { firebase, fsTimestamp } from "./";
+import db, { firebase, serverTimestamp } from "./";
 
 /**
  * Does something with auth
@@ -20,21 +20,22 @@ function checkAuth(State, result, user) {
         // what's this for? who knows!
         State.session = {
             accessToken,
-            secret
+            secret,
+            uid
         };
 
         // create user entry in db
         ref.get().then(doc => {
             if (!doc.exists) {
                 return ref.set({
-                    created_at : fsTimestamp(),
+                    created_at : serverTimestamp(),
                     email,
                     photoURL
                 });
             }
 
             return ref.update({
-                created_at : fsTimestamp(),
+                created_at : serverTimestamp(),
                 email,
                 photoURL
             });
@@ -42,7 +43,9 @@ function checkAuth(State, result, user) {
     }
 
     if (user) {
-        console.log("user");
+        const { uid } = user;
+
+        State.session = { uid };
     }
 
     m.redraw();

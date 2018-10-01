@@ -1,6 +1,6 @@
 import slugify from "slugify";
 
-import db, { fsDelete, fsTimestamp } from "../db";
+import db, { _delete, serverTimestamp, arrayUnion } from "../db";
 
 import { parseLyricString } from "../lib/parse";
 import { getSongFromId } from "../lib/song";
@@ -65,22 +65,27 @@ export default (State) => ({
     // import song
     IMPORT_SONG_LYRICS(songObj) {
         const slug = slugify(songObj.title);
+        const { uid } = State.session;
+        const batch = db.batch();
+        const songRef = db.collection("songs").doc();
+        const userRef = db.collection("users").doc(uid);
 
-        return db.collection("songs").add({
+        // update song
+        batch.set(songRef, {
+            slug,
+            title      : songObj.title,
             artist     : songObj.artist,
-            created_at : fsTimestamp(),
-            // todo: user id
-            created_by : "users/is8T9YLdvlAB6yfqJlX4",
-            lyrics     : songObj.lyrics,
-            slug       : slug,
-            title      : songObj.title
-        })
-        .then((doc) => {
-            return {
-                slug,
-                id : doc.id
-            };
+            created_at : serverTimestamp(),
+            created_by : userRef,
+            lyrics     : songObj.lyrics
         });
+
+        // update user
+        batch.update(userRef, {
+            songs : arrayUnion(songRef)
+        });
+
+        return batch.commit().then(() => slug);
     },
 
     CLOSE_SONG() {
@@ -156,7 +161,7 @@ export default (State) => ({
 
         clearTimeout(State.deleted[id].timeoutId);
 
-        db.collection("songs").doc(id).update({ deleted_at : fsDelete() })
+        db.collection("songs").doc(id).update({ deleted_at : _delete() })
             .then(() => {
                 delete State.deleted[id];
                 m.redraw();

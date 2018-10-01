@@ -46,8 +46,8 @@ export default {
                     }
 
                     state.action("IMPORT_SONG_LYRICS", vs)
-                        .then((song) => {
-                            m.route.set(`/songs/${song.slug}`);
+                        .then((slug) => {
+                            m.route.set(`/songs/${slug}`);
                         });
                 }
             },

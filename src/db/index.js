@@ -5,8 +5,7 @@ import "firebase/firestore";
 firebase.initializeApp(config);
 
 const db = firebase.firestore();
-const fsDelete = firebase.firestore.FieldValue.delete;
-const fsTimestamp = firebase.firestore.FieldValue.serverTimestamp;
+const { delete : _delete, serverTimestamp, arrayUnion, arrayRemove } = firebase.firestore.FieldValue;
 
 db.settings({ timestampsInSnapshots : true });
 
@@ -15,6 +14,8 @@ window.fb = firebase;
 export default db;
 export {
     firebase as firebase,
-    fsDelete as fsDelete,
-    fsTimestamp as fsTimestamp
+    _delete as _delete,
+    serverTimestamp as serverTimestamp,
+    arrayUnion as arrayUnion,
+    arrayRemove as arrayRemove
 };
