@@ -34,6 +34,7 @@ It's a portmanteau of "lyrics" and "write"; Lyrite.
 
 ## Contributors & Thanks
 
+Kevin Cameron - Most things (dev, design, features)  
 Neil Hagar - jamming buddy, and sounding board  
 Eli Scheer - logo, and fonts
 
