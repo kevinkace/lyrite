@@ -34,7 +34,7 @@ It's a portmanteau of "lyrics" and "write"; Lyrite.
 
 ## Contributors & Thanks
 
-Neil Hagar - jamming buddy, and sounding board
+Neil Hagar - jamming buddy, and sounding board  
 Eli Scheer - logo, and fonts
 
 <details>
