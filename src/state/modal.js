@@ -5,8 +5,6 @@ export default (State) => ({
         }
 
         State.modal = "title";
-
-        m.redraw();
     },
 
     OPEN_LOGIN_MODAL() {
@@ -24,6 +22,5 @@ export default (State) => ({
 
     CLOSE_MODAL() {
         delete State.modal;
-        m.redraw();
     }
 });

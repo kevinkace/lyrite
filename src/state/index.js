@@ -40,7 +40,11 @@ State.action  = (name, value) => {
         return;
     }
 
-    return State.actions[name](value);
+    const returnVal = State.actions[name](value);
+
+    m.redraw();
+
+    return returnVal;
 };
 
 window.State = State;
