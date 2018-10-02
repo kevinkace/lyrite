@@ -42,7 +42,7 @@ Eli Scheer - logo, and fonts
 Video of styling a song
 </summary>
 
-![demo](https://rawgit.com/kevinkace/lyrite/master/demo-SLTS.gif)
+![demo](https://rawgit.com/kevinkace/lyrite/master/demo-imgs/demo-SLTS.gif)
 
 </details>
 
@@ -51,6 +51,6 @@ Video of styling a song
 Video of adding a custom song
 </summary>
 
-![demo](https://rawgit.com/kevinkace/lyrite/master/demo-custom.gif)
+![demo](https://rawgit.com/kevinkace/lyrite/master/demo-imgs/demo-custom.gif)
 
 </details>
