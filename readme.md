@@ -12,7 +12,7 @@ A simple web-app to style song lyrics so they are easier to read when jamming. :
 
 ![demo](https://rawgit.com/kevinkace/lyrite/master/demo-imgs/demo-SLTS.gif)
 
-**Adding your own lyrics**
+**Adding & editing your own lyrics**
 
 ![demo](https://rawgit.com/kevinkace/lyrite/master/demo-imgs/demo-custom.gif)
 
@@ -36,7 +36,7 @@ With Lyrite you can easily have all lyrics on a single page with columns and fon
 
 ## Technology
 
-A single page application built with [Mithril](https://mithril.js.org/) & [Modular-CSS](https://github.com/tivac/modular-css), bundled with [Webpack](https://webpack.js.org/), and hosted on [Github Pages](https://pages.github.com/). It uses [Firestore](https://firebase.google.com/docs/firestore/) to store lyrics in the :sparkle: *cloud* :sparkle:.
+A single page application built with [Mithril](https://mithril.js.org/) & [Modular-CSS](https://github.com/tivac/modular-css), bundled with [Webpack](https://webpack.js.org/), and hosted on [Github Pages](https://pages.github.com/). It uses [Firestore](https://firebase.google.com/docs/firestore/) to store lyrics in the cloud.
 
 ## How to pronounce?
 
