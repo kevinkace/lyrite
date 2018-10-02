@@ -13,18 +13,6 @@ export default State => ({
             }
 
             lib.checkAuth(State, null, user);
-
-            // console.log(user.providerData);
-            // console.log(user.displayName);
-            // console.log(user.email);
-            // console.log(user.emailVerified);
-            // console.log(user.photoURL);
-            // console.log(user.isAnonymous);
-            // console.log(user.uid);
-            // console.log(user.providerData);
-            // user.updateProfile({
-            //     displayName : "test"
-            // });
         });
     },
 
@@ -41,7 +29,7 @@ export default State => ({
             .catch(err => {
                 delete State.loggedIn;
 
-                debugger;
+                // todo: handle login error
 
                 console.log(err);
             });
@@ -55,6 +43,7 @@ export default State => ({
             })
             .catch(err => {
                 // An error happened.
+                // todo: handle error
                 console.error(err);
             })
             .finally(() => {

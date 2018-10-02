@@ -29,14 +29,12 @@ function checkAuth(State, result, user) {
             if (!doc.exists) {
                 return ref.set({
                     created_at : serverTimestamp(),
-                    email,
                     photoURL
                 });
             }
 
             return ref.update({
                 created_at : serverTimestamp(),
-                email,
                 photoURL
             });
         });
