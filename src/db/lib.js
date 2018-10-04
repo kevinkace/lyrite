@@ -12,6 +12,7 @@ function checkAuth(State, result, user) {
         State.user = firebase.auth().currentUser;
     }
 
+    // logging in for the first time
     if (result) {
         const { accessToken, secret } = result.credential;
         const { uid, email, photoURL } = result.user;
@@ -40,6 +41,7 @@ function checkAuth(State, result, user) {
         });
     }
 
+    // user previously logged in
     if (user) {
         const { uid } = user;
 

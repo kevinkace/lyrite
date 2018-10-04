@@ -4,8 +4,6 @@ import * as lib from "../db/lib";
 export default State => ({
     INIT() {
         firebase.auth().onAuthStateChanged(user => {
-            console.log("Auth change");
-
             if (!user) {
                 // not logged in, so why is this firing?
 

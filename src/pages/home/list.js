@@ -6,6 +6,10 @@ import css from "./list.css";
 
 import animResolve from "../../lib/animResolve";
 
+function createdByUser(song) {
+    return state.session && song.data.created_by && song.data.created_by.id === state.session.uid;
+}
+
 export default {
     view() {
         const songs = get(state, [ "songs", "songs" ]) || [];
@@ -28,16 +32,18 @@ export default {
                             m("strong", song.data.title),
 
                             song.data.artist ?
-                                [ " - ", song.data.artist ] :
+                                ` - ${song.data.artist}` :
                                 null
                         ),
 
-                        m("button", {
-                            onclick() {
-                                state.action("DELETE_SONG_BY_ID", song.id);
-                            },
-                            "aria-label" : "delete"
-                        }, "🗙")
+                        createdByUser(song) ?
+                            m("button", {
+                                onclick() {
+                                    state.action("DELETE_SONG_BY_ID", song.id);
+                                },
+                                "aria-label" : "delete"
+                            }, "🗙") :
+                            null
                     )
                 )
         );

@@ -1,13 +1,32 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-  	match /songs/{song} {
-    	allow read;
-    	allow create: if request.auth != null;
-      allow update: if request.auth != null && resource.data.created_by == request.auth.uid;
+    match /songs/{song} {
+      allow read;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && userExists() && isOwner(resource);
+      allow delete: if isSignedIn() && userExists() && isOwner(resource);
     }
-  	match /users/{user} {
-    	allow create: if request.auth != null;
-      allow update: if request.auth != null && resource.id == request.auth.uid;
+
+    match /users/{userId} {
+      allow read;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && isUser(userId);
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isUser(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function isOwner(resouce) {
+      return resource.data.created_by == /databases/$(database)/documents/users/$(request.auth.uid)
+    }
+
+    function userExists() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid));
     }
   }
 }
