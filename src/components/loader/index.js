@@ -1,5 +1,5 @@
 import css from "./index.css";
-import animResolve from "../../lib/animResolve";
+import animResolve from "animation-resolve";
 
 export default {
     onbeforeremove(vnode) {

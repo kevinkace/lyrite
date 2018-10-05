@@ -7,7 +7,7 @@ import login from "../login";
 import logout from "../logout";
 
 import ghLogo from "../../icons/github-black.svg";
-import animResolve from "../../lib/animResolve";
+import animResolve from "animation-resolve";
 
 export default {
     view(vnode) {

@@ -3,7 +3,7 @@ import { get } from "object-path";
 import state from "../../state";
 
 import css from "./edit.css";
-import animResolve from "../../lib/animResolve";
+import animResolve from "animation-resolve";
 
 export default {
     oninit(vnode) {

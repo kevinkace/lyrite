@@ -7,7 +7,7 @@ import tools from "../tools";
 
 import logo from "../../icons/lyrite-logo2.svg";
 
-import animResolve from "../../lib/animResolve";
+import animResolve from "animation-resolve";
 
 export default {
     oncreate(vnode) {

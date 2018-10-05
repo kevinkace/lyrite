@@ -3,7 +3,7 @@ import { get } from "object-path";
 import state from "../../state";
 
 import css from "./list.css";
-import animResolve from "../../lib/animResolve";
+import animResolve from "animation-resolve";
 import loader from "../../components/loader";
 
 function createdByUser(song) {

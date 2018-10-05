@@ -1,5 +1,5 @@
 import css from "./error.css";
-import resolveAnimation from "../../lib/animResolve";
+import animResolve from "animation-resolve";
 
 export default {
     view(vnode) {
@@ -9,7 +9,7 @@ export default {
             m("div", {
                     class : css.errorIn,
                     onbeforeremove(divVnode) {
-                        return resolveAnimation(divVnode.dom, css.errorOut);
+                        return animResolve(divVnode.dom, css.errorOut);
                     }
                 },
                 va.errors.map((error) => error.label)

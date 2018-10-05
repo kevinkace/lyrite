@@ -1,5 +1,5 @@
 import state from "../../state";
-import animResolve from "../../lib/animResolve";
+import animResolve from "animation-resolve";
 
 import css from "./index.css";
 import login from "./login";
