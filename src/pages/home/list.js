@@ -3,8 +3,8 @@ import { get } from "object-path";
 import state from "../../state";
 
 import css from "./list.css";
-
 import animResolve from "../../lib/animResolve";
+import loader from "../../components/loader";
 
 function createdByUser(song) {
     return state.session && song.data.created_by && song.data.created_by.id === state.session.uid;
@@ -12,10 +12,12 @@ function createdByUser(song) {
 
 export default {
     view() {
-        const songs = get(state, [ "songs", "songs" ]) || [];
+        const songs = get(state, [ "songs", "songs" ]);
 
         return m("div", { class : css.list },
-            songs
+            songs ?
+
+                songs
                 .filter((song) => !song.data.deleted_at)
                 .map((song) =>
                     m("div", {
@@ -45,6 +47,16 @@ export default {
                             }, "🗙") :
                             null
                     )
+                ) :
+
+                m("div", {
+                        class : css.loader,
+                        onbeforeremove(loaderVnode) {
+                            return animResolve(loaderVnode.dom, css.loaderFade);
+                        }
+                    },
+                    "loading",
+                    m(loader)
                 )
         );
     }

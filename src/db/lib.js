@@ -15,7 +15,7 @@ function checkAuth(State, result, user) {
     // logging in for the first time
     if (result) {
         const { accessToken, secret } = result.credential;
-        const { uid, email, photoURL } = result.user;
+        const { uid, photoURL } = result.user;
         const ref = db.collection("users").doc(uid);
 
         // what's this for? who knows!

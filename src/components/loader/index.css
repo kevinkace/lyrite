@@ -1,0 +1,38 @@
+@value * as colors from "../../palette.css";
+
+.loader {
+    width: 33%;
+    height: 6px;
+    background: #fff1;
+    position: relative;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: colors.cta;
+
+        animation: loader 1s infinite;
+        transform-origin: 0 50%;
+    }
+}
+
+@keyframes loader {
+    0% {
+        transform: scaleX(0);
+    }
+    49% {
+        transform-origin: 0 50%;
+    }
+    50% {
+        transform: scaleX(1);
+        transform-origin: 100% 50%;
+    }
+    100% {
+        transform: scaleX(0);
+        transform-origin: 100% 50%;
+    }
+}

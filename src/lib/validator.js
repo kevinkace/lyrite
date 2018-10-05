@@ -34,12 +34,8 @@ export default function validator(data, schema) {
         }
 
         if (Object.keys(errors).length > 0) {
-            console.log("invalid");
-
             return { errors };
         }
-
-        console.log("valid");
 
         return {};
     };

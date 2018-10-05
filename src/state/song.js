@@ -42,7 +42,7 @@ export default (State) => ({
     LOAD_SONGS_LIST() {
         State.songs = {
             loading : true,
-            songs   : [] // State.songs.songs !@#$@
+            songs   : undefined // State.songs.songs !@#$@
         };
 
         db.collection("songs").onSnapshot((snap) => {
@@ -128,9 +128,8 @@ export default (State) => ({
         }
 
         // mark as deleted in Firestore
-        db.collection("songs").doc(id).update({
-            deleted_at : Date.now()
-        })
+        db.collection("songs").doc(id)
+            .update({ deleted_at : serverTimestamp() })
             .then(() => {
                 // timeout to actually delete
                 const timeoutId = setTimeout(() => {
