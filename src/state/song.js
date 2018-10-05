@@ -98,7 +98,9 @@ export default (State) => ({
     },
 
     TOGGLE_EDIT_CURRENT_SONG() {
-        return State.edit ? State.action("CLOSE_EDIT_CURRENT_SONG") : State.action("OPEN_EDIT_CURRENT_SONG");
+        return State.edit ?
+            State.action("CLOSE_EDIT_CURRENT_SONG") :
+            State.action("OPEN_EDIT_CURRENT_SONG");
     },
 
     OPEN_EDIT_CURRENT_SONG() {
@@ -133,7 +135,8 @@ export default (State) => ({
             .then(() => {
                 // timeout to actually delete
                 const timeoutId = setTimeout(() => {
-                    db.collection("songs").doc(id).delete()
+                    db.collection("songs").doc(id)
+                        .delete()
                         .then(() => {
                             delete State.deleted[id];
                             m.redraw();
@@ -150,7 +153,6 @@ export default (State) => ({
 
                 m.redraw();
             });
-
     },
 
     UNDO_DELETE_SONG_BY_ID(id) {
@@ -160,7 +162,8 @@ export default (State) => ({
 
         clearTimeout(State.deleted[id].timeoutId);
 
-        db.collection("songs").doc(id).update({ deleted_at : _delete() })
+        db.collection("songs").doc(id)
+            .update({ deleted_at : _delete() })
             .then(() => {
                 delete State.deleted[id];
                 m.redraw();
