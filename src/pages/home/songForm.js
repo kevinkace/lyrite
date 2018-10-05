@@ -58,6 +58,7 @@ export default {
                     show   : showTitleError,
                     errors : get(vs, [ "validationResults", "errors", "title" ])
                 }),
+
                 m("input", {
                     value       : title,
                     placeholder : isFocused(titleDom, "", "Song Title"),
@@ -69,6 +70,7 @@ export default {
                     onfocus(e) {
                         vs.focused = e.currentTarget;
                     },
+
                     onblur(e) {
                         if (focused === e.currentTarget) {
                             delete vs.focused;
@@ -76,8 +78,9 @@ export default {
 
                         vs.showTitleError = true;
                     },
-                    oninput : m.withAttr("value", (v) => {
-                        vs.title = v;
+
+                    oninput : m.withAttr("value", (value) => {
+                        vs.title = value;
                         vs.validationResults = validate();
                     })
                 })
@@ -89,6 +92,7 @@ export default {
                     show   : showArtistError,
                     errors : get(vs, [ "validationResults", "errors", "artist" ])
                 }),
+
                 m("input", {
                     value       : artist,
                     placeholder : isFocused(artistDom, "", "Artist"),
@@ -100,6 +104,7 @@ export default {
                     onfocus(e) {
                         vs.focused = e.currentTarget;
                     },
+
                     onblur(e) {
                         if (focused === e.currentTarget) {
                             delete vs.focused;
@@ -107,8 +112,9 @@ export default {
 
                         vs.showArtistError = true;
                     },
-                    oninput : m.withAttr("value", (v) => {
-                        vs.artist = v;
+
+                    oninput : m.withAttr("value", (value) => {
+                        vs.artist = value;
                         vs.validationResults = validate();
                     })
                 })
@@ -120,6 +126,7 @@ export default {
                     show   : showLyricsError,
                     errors : get(vs, [ "validationResults", "errors", "lyrics" ])
                 }),
+
                 m("textarea", {
                     class       : isFocused(lyricsDom, css.textareaFocused, css.textarea),
                     value       : lyrics,
@@ -132,6 +139,7 @@ export default {
                     onfocus(e) {
                         vs.focused = e.currentTarget;
                     },
+
                     onblur(e) {
                         if (focused === e.currentTarget) {
                             delete vs.focused;
@@ -139,8 +147,9 @@ export default {
 
                         vs.showLyricsError = true;
                     },
-                    oninput : m.withAttr("value", (v) => {
-                        vs.lyrics = v;
+
+                    oninput : m.withAttr("value", (value) => {
+                        vs.lyrics = value;
                         vs.validationResults = validate();
                     })
                 })

@@ -27,6 +27,7 @@ export default {
             // Style buttons
             m("div", { class : css.setting },
                 m("label", { class : css.label }, "styles "),
+
                 m("div", { class : css.control },
                     state.styles.map((style, idx) =>
                         m("button", {
@@ -35,7 +36,7 @@ export default {
                             onclick() {
                                 state.action("CLICK_STYLE", idx);
                             }
-                        }, `${idx}`)
+                        }, idx)
                     )
                 )
             ),
@@ -43,12 +44,15 @@ export default {
             // Font choices
             m("div", { class : css.setting },
                 m("label", { class : css.label }, "font "),
+
                 m("div", { class : css.control },
                     m("label", {
                         class : css.font,
+
                         onmouseover() {
                             vnode.state.range = Date.now();
                         },
+
                         onmouseout() {
                             let now = Date.now();
 
@@ -75,6 +79,7 @@ export default {
                         onmouseover() {
                             vnode.state.range = Date.now();
                         },
+
                         onmouseout() {
                             let now = Date.now();
 
@@ -90,7 +95,9 @@ export default {
                         },
 
                         value   : state.font.size,
-                        oninput : m.withAttr("value", (v) => { state.font.size = v; })
+                        oninput : m.withAttr("value", (value) => {
+                            state.font.size = value;
+                        })
                     })
                 )
             ),
@@ -98,9 +105,11 @@ export default {
             // Column
             m("div", { class : css.setting },
                 m("label", { class : css.label }, "cols "),
+
                 m("div", { class : css.control },
                     m("button", {
                         class : css.dec,
+
                         onclick() {
                             if (state.cols.count === 1) {
                                 return;
@@ -109,7 +118,9 @@ export default {
                             --state.cols.count;
                         }
                     }, "<"),
+
                     m("label", { class : css.cols }, state.cols.count),
+
                     m("button", {
                         class : css.inc,
                         onclick() {
@@ -121,9 +132,11 @@ export default {
 
             m("div", { class : css.setting },
                 m("label", { class : css.label }, m.trust("&nbsp;")), // I'm a terrible person
+
                 m("div", { class : css.control },
                     m("button", {
                         class : css.edit,
+
                         onclick() {
                             state.action("TOGGLE_EDIT_CURRENT_SONG");
                         }

@@ -8,6 +8,7 @@ export default {
         return va.show && va.errors ?
             m("div", {
                     class : css.errorIn,
+
                     onbeforeremove(divVnode) {
                         return animResolve(divVnode.dom, css.errorOut);
                     }

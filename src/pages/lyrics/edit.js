@@ -13,20 +13,23 @@ export default {
     oninit(vnode) {
         update(vnode);
     },
+
     onbeforeupdate(vnode) {
         update(vnode);
     },
+
     onbeforeremove(vnode) {
         return animResolve(vnode.dom, css.editOut);
     },
+
     view(vnode) {
         return m("div", { class : css.editIn },
             m("textarea", {
                 class   : css.textarea,
                 value   : vnode.state.lyrics,
-                oninput : m.withAttr("value", (v) => {
-                    vnode.state.lyrics = v;
-                    state.action("UPDATE_PARSED_LYRICS", v);
+                oninput : m.withAttr("value", (value) => {
+                    vnode.state.lyrics = value;
+                    state.action("UPDATE_PARSED_LYRICS", value);
                 })
             })
         );

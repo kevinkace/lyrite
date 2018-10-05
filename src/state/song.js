@@ -2,7 +2,7 @@ import slugify from "slugify";
 
 import db, { _delete, serverTimestamp, arrayUnion } from "../db";
 
-import { parseLyricString } from "../lib/parse";
+import parseLyrics from "../lib/parseLyrics";
 import { getSongFromId } from "../lib/song";
 
 export default (State) => ({
@@ -31,7 +31,7 @@ export default (State) => ({
                     State.song.id   = doc.id;
                     State.song.data = doc.data();
 
-                    State.song.parsedLyrics = parseLyricString(State.song.data.lyrics);
+                    State.song.parsedLyrics = parseLyrics(State.song.data.lyrics);
                 });
 
                 m.redraw();
