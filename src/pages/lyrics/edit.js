@@ -5,12 +5,16 @@ import state from "../../state";
 import css from "./edit.css";
 import animResolve from "animation-resolve";
 
+function update(vnode) {
+    vnode.state.lyrics = get(state.song.data.lyrics);
+}
+
 export default {
     oninit(vnode) {
-        vnode.state.lyrics = get(state.song.data.lyrics);
+        update(vnode);
     },
     onbeforeupdate(vnode) {
-        vnode.state.lyrics = get(state.song.data.lyrics);
+        update(vnode);
     },
     onbeforeremove(vnode) {
         return animResolve(vnode.dom, css.editOut);
