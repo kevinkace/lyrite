@@ -8,17 +8,38 @@ import error from "./error";
 import validator from "../../lib/validator";
 import { songSchema } from "../../lib/schemas";
 
+let formState = {},
+    validationResults = {},
+    validate = validator(formState, formState);
+
+function onsubmit(e) {
+    if (e) {
+        e.preventDefault();
+    }
+
+    validationResults = validate();
+
+    if (validationResults.errors) {
+        return;
+    }
+
+    state.action("IMPORT_SONG_LYRICS", formState)
+        .then((slug) => {
+            m.route.set(`/songs/${slug}`);
+        });
+}
+
 export default {
     oninit(vnode) {
         const vs = vnode.state;
 
         vs.focused = "";
-        vs.title   = "";
-        vs.artist  = "";
-        vs.lyrics  = "";
+        formState.title   = "";
+        formState.artist  = "";
+        formState.lyrics  = "";
 
-        vs.validate = validator(vs, songSchema);
-        vs.validationResults = vs.validate();
+        validate = validator(formState, songSchema);
+        validationResults = validate();
 
         vs.isFocused = function(dom, trueResult, falseResult) {
             return vs.focused === dom ? trueResult : falseResult;
@@ -28,35 +49,24 @@ export default {
     view(vnode) {
         const vs = vnode.state;
         const {
-            isFocused, focused, validate,
-            titleDom, showTitleError, title,
-            artistDom, showArtistError, artist,
-            lyricsDom, showLyricsError, lyrics,
+            isFocused, focused,
+            titleDom, showTitleError,
+            artistDom, showArtistError,
+            lyricsDom, showLyricsError,
         } = vnode.state;
+        const { title, artist, lyrics } = formState;
 
         return m("form", {
                 class : css.center,
-                onsubmit(e) {
-                    e.preventDefault();
 
-                    vs.validationResults = vs.validate();
-
-                    if (vs.validationResults.errors) {
-                        return;
-                    }
-
-                    state.action("IMPORT_SONG_LYRICS", vs)
-                        .then((slug) => {
-                            m.route.set(`/songs/${slug}`);
-                        });
-                }
+                onsubmit
             },
 
             // title input
             m("div", { class : isFocused(titleDom, css.titleFocused, css.title) },
                 m(error, {
                     show   : showTitleError,
-                    errors : get(vs, [ "validationResults", "errors", "title" ])
+                    errors : get(validationResults, [ "errors", "title" ])
                 }),
 
                 m("input", {
@@ -80,8 +90,8 @@ export default {
                     },
 
                     oninput : m.withAttr("value", (value) => {
-                        vs.title = value;
-                        vs.validationResults = validate();
+                        formState.title = value;
+                        validationResults = validate();
                     })
                 })
             ),
@@ -90,7 +100,7 @@ export default {
             m("div", { class : isFocused(artistDom, css.artistFocused, css.artist) },
                 m(error, {
                     show   : showArtistError,
-                    errors : get(vs, [ "validationResults", "errors", "artist" ])
+                    errors : get(validationResults, [ "errors", "artist" ])
                 }),
 
                 m("input", {
@@ -114,8 +124,8 @@ export default {
                     },
 
                     oninput : m.withAttr("value", (value) => {
-                        vs.artist = value;
-                        vs.validationResults = validate();
+                        formState.artist = value;
+                        validationResults = validate();
                     })
                 })
             ),
@@ -124,7 +134,7 @@ export default {
             m("div", { class : css.dash },
                 m(error, {
                     show   : showLyricsError,
-                    errors : get(vs, [ "validationResults", "errors", "lyrics" ])
+                    errors : get(validationResults, [ "errors", "lyrics" ])
                 }),
 
                 m("textarea", {
@@ -149,14 +159,20 @@ export default {
                     },
 
                     oninput : m.withAttr("value", (value) => {
-                        vs.lyrics = value;
-                        vs.validationResults = validate();
-                    })
+                        formState.lyrics = value;
+                        validationResults = validate();
+                    }),
+
+                    onkeydown(e) {
+                        if (e.key === "Enter" && e.ctrlKey) {
+                            onsubmit();
+                        }
+                    }
                 })
             ),
 
             // load button
-            !get(vs, [ "validationResults", "errors" ]) ?
+            !validationResults.errors ?
                 m("div", { class : css.btnWrap },
                     m("button", {
                         class : css.loadBtn,
