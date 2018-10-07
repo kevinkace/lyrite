@@ -1,6 +1,6 @@
 import slugify from "slugify";
 
-import db, { _delete, serverTimestamp, arrayUnion } from "../db";
+import db, { _delete, serverTimestamp, arrayUnion, arrayRemove } from "../db";
 
 import parseLyrics from "../lib/parseLyrics";
 import { getSongFromId } from "../lib/song";
@@ -135,8 +135,17 @@ export default (State) => ({
             .then(() => {
                 // timeout to actually delete
                 const timeoutId = setTimeout(() => {
-                    db.collection("songs").doc(id)
-                        .delete()
+                    const { uid } = State.session;
+                    const batch = db.batch();
+                    const songRef = db.collection("songs").doc(id);
+                    const userRef = db.collection("users").doc(uid);
+
+                    batch.delete(songRef);
+                    batch.update(userRef, {
+                        songs : arrayRemove(songRef)
+                    });
+
+                    batch.commit()
                         .then(() => {
                             delete State.deleted[id];
                             m.redraw();
