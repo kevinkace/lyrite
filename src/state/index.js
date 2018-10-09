@@ -2,7 +2,22 @@ import tools from "./tools";
 import song from "./song";
 import modal from "./modal";
 import user from "./user";
-
+/**
+ * @typedef state
+ * @property {string} appName
+ * @property {string} tagline
+ * @property {string} githubHref
+ * @property {string[]} styles - style class names
+ * @property {object} font - font size
+ * @property {object} cols - number of columns
+ * @property {object} deleted - ids of songs that are mid-delete
+ * @property {string} ver - app version
+ * @property {function} err - future error handling
+ * @property {object} events - just mousemove() ATM
+ * @property {object} actions
+ * @property {function} action
+ */
+/** @type {state} */
 const State = {
     appName    : "Lyrite",
     tagline    : "a tool to format lyrics",
@@ -31,11 +46,13 @@ const State = {
 
             m.redraw();
         }
-    }
+    },
+
+    actions : {}
 };
 
-State.actions = Object.assign({}, tools(State), song(State), modal(State), user(State));
-State.action  = (name, value) => {
+Object.assign(State.actions, tools(State), song(State), modal(State), user(State));
+State.action = (name, value) => {
     if (!State.actions[name]) {
         console.error(`Action not found: ${name}`);
 
