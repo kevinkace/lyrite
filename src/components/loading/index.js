@@ -7,6 +7,9 @@ export default {
     },
 
     view() {
-        return m("div", { class : css.loader });
+        return m("div", { class : css.loader },
+            "loading",
+            m("div", { class : css.bar })
+        );
     }
 };

@@ -12,6 +12,8 @@ const State = {
     font   : { size : 1.3 },
     cols   : { count : 3 },
 
+    deleted : {},
+
     // added to doc in script via webpack
     ver, // eslint-disable-line no-undef
 

@@ -1,10 +1,10 @@
-import { get } from "object-path";
-
 import state from "../../state";
+
+import { get } from "object-path";
 
 import css from "./list.css";
 import animResolve from "animation-resolve";
-import loader from "../../components/loader";
+import loading from "../../components/loading";
 
 function createdByUser(song) {
     return state.session && song.data.created_by && song.data.created_by.id === state.session.uid;
@@ -14,14 +14,15 @@ export default {
     view() {
         const songs = get(state, [ "songs", "songs" ]);
 
-        return m("div", { class : css.list },
+        return m("ul", { class : css.list },
             songs ?
 
                 songs
                 .filter((song) => !song.data.deleted_at)
                 .map((song) =>
-                    m("div", {
-                            key : song.id,
+                    m("li", {
+                            key   : song.id,
+                            class : get(state, [ "deleted", song.id ]) ? css.deleted : null,
 
                             onbeforeremove(songVnode) {
                                 return animResolve(songVnode.dom, css.songOut);
@@ -49,15 +50,7 @@ export default {
                     )
                 ) :
 
-                m("div", {
-                        class : css.loader,
-                        onbeforeremove(loaderVnode) {
-                            return animResolve(loaderVnode.dom, css.loaderFade);
-                        }
-                    },
-                    "loading",
-                    m(loader)
-                )
+                m(loading)
         );
     }
 };

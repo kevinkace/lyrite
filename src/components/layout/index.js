@@ -38,7 +38,7 @@ export default {
 
             state.deleted ?
                 m("div", { class : css.notifications },
-                    Object.keys(state.deleted).map((id) =>
+                    Object.keys(state.deleted).map(id =>
                         m("div", {
                                 key   : id,
                                 class : css.notificationIn,

@@ -4,6 +4,7 @@ import css from "./index.css";
 import edit from "./edit";
 
 import marked from "marked";
+import loading from "../../components/loading";
 
 function addBr(text) {
     return text.replace(/\n/g, "<br>");
@@ -11,7 +12,7 @@ function addBr(text) {
 
 export default {
     view() {
-        const loading = !state.song || state.song.loading;
+        const isLoading = !state.song || state.song.loading;
 
         return m("div", { class : css.lyredit },
             m("div", {
@@ -21,8 +22,8 @@ export default {
                         columnCount : state.cols.count
                     }
                 },
-                loading ?
-                    "loading" :
+                isLoading ?
+                    m(loading) :
                     state.song.parsedLyrics.map((part, idx) =>
                         m("p", {
                                 id    : part.hash,

@@ -7,7 +7,12 @@
 
     animation: listIn 0.3s;
 
-    div {
+    li {
+        &.deleted {
+            text-decoration-line: line-through;
+            opacity: 0.5;
+        }
+
         button {
             position: relative;
             top: -0.15em;
@@ -73,27 +78,5 @@
 
     button {
         display: none;
-    }
-}
-
-.loader {
-    position: absolute;
-    top: 5vh;
-    right: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.loaderFade {
-    composes: loader;
-
-    animation: fadeOut 0.3s;
-}
-
-@keyframes fadeOut {
-    100% {
-        opacity: 0;
     }
 }

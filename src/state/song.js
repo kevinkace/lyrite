@@ -122,12 +122,14 @@ export default (State) => ({
     // - track deleted songs locally on State.delete = { id : true }
     // -
     DELETE_SONG_BY_ID(id) {
-        State.deleted = State.deleted || {};
-
         // already queued to be deleted
         if (State.deleted[id]) {
             return;
         }
+
+        State.deleted[id] = {
+            song : getSongFromId(id)
+        };
 
         // mark as deleted in Firestore
         db.collection("songs").doc(id)
