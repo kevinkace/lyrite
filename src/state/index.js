@@ -7,6 +7,7 @@ import user from "./user";
  * @property {string} appName
  * @property {string} tagline
  * @property {string} githubHref
+ * @property {string} ver - app version
  * @property {string[]} styles - style class names
  * @property {object} font - font size
  * @property {object} cols - number of columns
@@ -14,7 +15,6 @@ import user from "./user";
  * @property {object} username - Firebase auth currentUser
  * @property {object} session - just uid ATM
  * @property {object} deleted - ids of songs that are mid-delete
- * @property {string} ver - app version
  * @property {function} err - future error handling
  * @property {object} events - just mousemove() ATM
  * @property {object} actions
@@ -25,6 +25,8 @@ const State = {
     appName    : "Lyrite",
     tagline    : "a tool to format lyrics",
     githubHref : "https://github.com/kevinkace/lyrite",
+    // added to doc in script via webpack
+    ver, // eslint-disable-line no-undef
 
     styles : [ "s0", "s1", "s2", "s3", "s4", "s5" ],
     font   : { size : 1.3 },
@@ -35,9 +37,6 @@ const State = {
     session  : {},
 
     deleted : {},
-
-    // added to doc in script via webpack
-    ver, // eslint-disable-line no-undef
 
     error(err) {
         console.error(err);
