@@ -3,50 +3,51 @@ import db, { firebase, serverTimestamp } from "./";
 /**
  * Does something with auth
  * @param {object} State - state object...?
- * @param {object} [result] - provider auth result
- * @param {object} [user] - user data
+ * @param {object} user - user data
  */
-function checkAuth(State, result, user) {
-    if (firebase.auth().currentUser) {
-        State.loggedIn = true;
-        State.user = firebase.auth().currentUser;
+function checkAuth(State, user) {
+    // not sure if/how this would ever happen
+    if (!user) {
+        State.loggedIn = false;
+        delete State.user;
+        delete State.session;
+
+        console.error("checkAuth error");
+
+        return;
     }
 
-    // logging in for the first time
-    if (result) {
-        const { accessToken, secret } = result.credential;
-        const { uid, photoURL } = result.user;
-        const ref = db.collection("users").doc(uid);
+    const { uid, photoURL } = user;
+    const ref = db.collection("users").doc(uid);
 
-        // what's this for? who knows!
-        State.session = {
-            accessToken,
-            secret,
-            uid
-        };
+    State.loggedIn = true;
+    State.user = user;
+    State.session = {
+        uid,
+        photoURL,
+        pending : true
+    };
 
-        // create user entry in db
-        ref.get().then(doc => {
-            if (!doc.exists) {
-                return ref.set({
-                    created_at : serverTimestamp(),
-                    photoURL
-                });
-            }
-
-            return ref.update({
+    // create user entry in db
+    ref.get().then(doc => {
+        if (!doc.exists) {
+            ref.set({
                 created_at : serverTimestamp(),
+                updated_at : serverTimestamp(),
                 photoURL
             });
+
+            return;
+        }
+
+        ref.update({
+            updated_at : serverTimestamp(),
+            photoURL
         });
-    }
 
-    // user previously logged in
-    if (user) {
-        const { uid } = user;
-
-        State.session = { uid };
-    }
+        State.session.username = doc.data().username;
+        delete State.session.pending;
+    });
 
     m.redraw();
 }

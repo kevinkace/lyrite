@@ -10,7 +10,7 @@ export default State => ({
                 return;
             }
 
-            lib.checkAuth(State, null, user);
+            lib.checkAuth(State, user);
         });
     },
 
@@ -19,10 +19,11 @@ export default State => ({
 
         firebase.auth().signInWithPopup(provider)
             .then(result => {
-                lib.checkAuth(State, result);
+                lib.checkAuth(State, result.user);
                 delete State.modal;
 
-                return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             })
             .catch(err => {
                 delete State.loggedIn;

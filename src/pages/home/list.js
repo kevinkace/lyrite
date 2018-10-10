@@ -7,7 +7,10 @@ import animResolve from "animation-resolve";
 import loading from "../../components/loading";
 
 function createdByUser(song) {
-    return state.session && song.data.created_by && song.data.created_by.id === state.session.uid;
+    const uid = get(state, [ "session", "uid" ]);
+    const createdBy = get(song, [ "data", "created_by" ]) || {}; // created_by is a firebase doc ref, and not really an obj so have to handle a little differently
+
+    return uid && createdBy.id === uid;
 }
 
 export default {

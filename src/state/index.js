@@ -10,6 +10,9 @@ import user from "./user";
  * @property {string[]} styles - style class names
  * @property {object} font - font size
  * @property {object} cols - number of columns
+ * @property {boolean} loggedIn
+ * @property {object} username - Firebase auth currentUser
+ * @property {object} session - just uid ATM
  * @property {object} deleted - ids of songs that are mid-delete
  * @property {string} ver - app version
  * @property {function} err - future error handling
@@ -26,6 +29,10 @@ const State = {
     styles : [ "s0", "s1", "s2", "s3", "s4", "s5" ],
     font   : { size : 1.3 },
     cols   : { count : 3 },
+
+    loggedIn : false,
+    username : undefined,
+    session  : {},
 
     deleted : {},
 
