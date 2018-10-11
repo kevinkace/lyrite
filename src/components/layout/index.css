@@ -65,6 +65,7 @@
 }
 
 .notification {
+    margin-top: 0.4em;
     padding: 0.8em 1.4em;
 
     font-size: 0.8em;
