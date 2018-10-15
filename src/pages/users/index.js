@@ -26,7 +26,7 @@ export default {
     view(vnode) {
         return m("div", "users",
             vnode.state.loaded ?
-                users.map((user) => m("div", user.name )) :
+                users.map((user) => m("div", user.name)) :
                 "loading"
         );
     }

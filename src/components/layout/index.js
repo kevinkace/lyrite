@@ -19,7 +19,7 @@ export default {
                     m(login)
             ),
 
-            vnode.attrs.header ? m(header) : null,
+            vnode.attrs.header !== false ? m(header) : null,
 
             vnode.children,
 
