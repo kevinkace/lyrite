@@ -1,5 +1,7 @@
 import db from "../../db";
 
+import loading from "../../components/loading";
+
 const usersCollection = db.collection("users");
 
 let users = [];
@@ -24,10 +26,10 @@ export default {
         getUsers(vnode);
     },
     view(vnode) {
-        return m("div", "users",
+        return m("div",
             vnode.state.loaded ?
                 users.map((user) => m("div", user.name)) :
-                "loading"
+                m(loading)
         );
     }
 };

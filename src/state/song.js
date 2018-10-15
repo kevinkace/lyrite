@@ -1,4 +1,5 @@
 import slugify from "slugify";
+import shortid from "shortid";
 
 import db, { _delete, serverTimestamp, arrayUnion, arrayRemove } from "../db";
 
@@ -64,11 +65,13 @@ export default (State) => ({
 
     // import song
     IMPORT_SONG_LYRICS(songObj) {
-        const slug = slugify(songObj.title);
-        const { uid } = State.session;
-        const batch = db.batch();
-        const songRef = db.collection("songs").doc();
-        const userRef = db.collection("users").doc(uid);
+        const slugTitle = slugify(songObj.title);
+        const uuid      = shortid.generate();
+        const slug      = `${slugTitle}-${uuid}`;
+        const { uid }   = State.session;
+        const batch     = db.batch();
+        const songRef   = db.collection("songs").doc();
+        const userRef   = db.collection("users").doc(uid);
 
         // update song
         batch.set(songRef, {
