@@ -1,4 +1,4 @@
-import { firebase } from "../db";
+import db, { firebase } from "../db";
 import * as lib from "../db/lib";
 
 export default State => ({
@@ -20,8 +20,6 @@ export default State => ({
         firebase.auth().signInWithPopup(provider)
             .then(result => {
                 lib.checkAuth(State, result.user);
-                delete State.modal;
-
 
                 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             })
@@ -48,5 +46,26 @@ export default State => ({
             .finally(() => {
                 m.redraw();
             });
+    },
+
+    TRY_ADD_USERNAME(username) {
+        const usernameRef = db.collection("usernames").doc(username);
+
+        return db.runTransaction(transaction =>
+            transaction.get(usernameRef).then(usernameDoc => {
+                if (usernameDoc.exists) {
+                    throw new Error("username is taken");
+                }
+
+                transaction.update(State.userRef, { username });
+                transaction.set(usernameRef, { user : State.userRef });
+            })
+        )
+        .then(() => {
+            console.log("username added");
+        })
+        .catch(err => {
+            console.error(err);
+        });
     }
 });

@@ -1,11 +1,11 @@
-import css from "./error.css";
+import css from "./index.css";
 import animResolve from "animation-resolve";
 
 export default {
     view(vnode) {
-        const va = vnode.attrs;
+        const { show, errors, labels } = vnode.attrs;
 
-        return va.show && va.errors ?
+        return show && errors ?
             m("div", {
                     class : css.errorIn,
 
@@ -13,7 +13,8 @@ export default {
                         return animResolve(divVnode.dom, css.errorOut);
                     }
                 },
-                va.errors.map((error) => error.label)
+
+                errors.map((error) => (labels[error] || labels.all))
             ) :
             null;
     }

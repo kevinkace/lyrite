@@ -1,0 +1,8 @@
+@value * as colors from "../../palette.css";
+
+.button {
+    composes: button from "../../index.css";
+
+    color: #fff !important;
+    --color: colors.cta;
+}

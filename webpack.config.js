@@ -15,7 +15,8 @@ const assets = [{
         path : "https://fonts.googleapis.com/css?family=Raleway|Slabo+27px|Bitter:400,700|Lato:400,700",
         type : "css"
     },
-    "https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js",
+    "https://gitcdn.xyz/cdn/kevinkace/mithril.js/ae096c5f72ff69828d75cc0b3fc251132d0eac68/mithril.min.js",
+    // "https://cdnjs.cloudflare.com/ajax/libs/mithril/1.1.6/mithril.js",
     "/index.css"
 ];
 

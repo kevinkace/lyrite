@@ -3,8 +3,9 @@ import animResolve from "animation-resolve";
 
 import css from "./index.css";
 import login from "./login";
+import username from "./username";
 
-const modals = { login };
+const modals = { login, username };
 const hasClose = [ "login" ];
 
 function escHandler(e) {

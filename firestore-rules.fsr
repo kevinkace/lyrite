@@ -13,6 +13,11 @@ service cloud.firestore {
       allow update: if isSignedIn() && isUser(userId);
     }
 
+    match /usernames/{username} {
+      allow read;
+      allow create: if isSignedIn();
+    }
+
     function isSignedIn() {
       return request.auth != null;
     }

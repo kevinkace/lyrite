@@ -3,7 +3,7 @@ import { get } from "object-path";
 import state from "../../state";
 
 import css from "./songForm.css";
-import error from "./error";
+import error from "../../components/error";
 
 import validator from "../../lib/validator";
 import { songSchema } from "../../lib/schemas";

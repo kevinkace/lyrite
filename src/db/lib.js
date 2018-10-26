@@ -11,6 +11,7 @@ function checkAuth(State, user) {
         State.loggedIn = false;
         delete State.user;
         delete State.session;
+        delete State.modal;
 
         console.error("checkAuth error");
 
@@ -18,10 +19,11 @@ function checkAuth(State, user) {
     }
 
     const { uid, photoURL } = user;
-    const ref = db.collection("users").doc(uid);
+    const userRef = db.collection("users").doc(uid);
 
     State.loggedIn = true;
     State.user = user;
+    State.userRef = userRef;
     State.session = {
         uid,
         photoURL,
@@ -29,24 +31,32 @@ function checkAuth(State, user) {
     };
 
     // create user entry in db
-    ref.get().then(doc => {
+    userRef.get().then(doc => {
         if (!doc.exists) {
-            ref.set({
+            userRef.set({
                 created_at : serverTimestamp(),
                 updated_at : serverTimestamp(),
                 photoURL
             });
 
+            State.modal = "username";
+
             return;
         }
 
-        ref.update({
+        userRef.update({
             updated_at : serverTimestamp(),
             photoURL
         });
 
         State.session.username = doc.data().username;
         delete State.session.pending;
+
+        if (!State.session.username) {
+            State.modal = "username";
+        }
+
+        m.redraw();
     });
 
     m.redraw();
