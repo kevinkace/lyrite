@@ -14,7 +14,18 @@ export default {
                     }
                 },
 
-                errors.map((error) => (labels[error] || labels.all))
+                errors
+                    .map(error => (labels[error] || labels.all))
+                    // unique error msgs
+                    .reduce((acc, cur) => {
+                        if (acc.includes(cur)) {
+                            return acc;
+                        }
+
+                        acc.push(cur);
+
+                        return acc;
+                    }, [])
             ) :
             null;
     }
