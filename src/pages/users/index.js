@@ -29,7 +29,7 @@ export default {
         return m("div",
             vnode.state.loaded ?
                 users.map((user) => m("div", user.name)) :
-                m(loading)
+                m(loading, { text : true })
         );
     }
 };

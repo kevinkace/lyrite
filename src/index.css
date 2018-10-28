@@ -26,7 +26,8 @@ button:focus,
 input:focus,
 select:focus,
 textarea:focus {
-    outline: none;
+    /* todo: something here */
+    /* color: red; */
 }
 
 button {

@@ -3,19 +3,22 @@ import animResolve from "animation-resolve";
 
 export default {
     view(vnode) {
-        const { show, errors, labels } = vnode.attrs;
+        const { show, errors, labels, align } = vnode.attrs;
+        const [ cssIn, cssOut ] = align === "left" ?
+            [ css.errorInLeft, css.errorOutLeft ] :
+            [ css.errorIn, css.errorOut ];
 
         return show && errors ?
             m("div", {
-                    class : css.errorIn,
+                    class : cssIn,
 
                     onbeforeremove(divVnode) {
-                        return animResolve(divVnode.dom, css.errorOut);
+                        return animResolve(divVnode.dom, cssOut);
                     }
                 },
 
                 errors
-                    .map(error => (labels[error] || labels.all))
+                    .map(error => m.trust(labels[error] || labels.all))
                     // unique error msgs
                     .reduce((acc, cur) => {
                         if (acc.includes(cur)) {

@@ -54,7 +54,7 @@ export default State => ({
         return db.runTransaction(transaction =>
             transaction.get(usernameRef).then(usernameDoc => {
                 if (usernameDoc.exists) {
-                    throw new Error("username is taken");
+                    throw new Error("unique");
                 }
 
                 transaction.update(State.userRef, { username });
@@ -62,10 +62,8 @@ export default State => ({
             })
         )
         .then(() => {
-            console.log("username added");
-        })
-        .catch(err => {
-            console.error(err);
+            State.modal = "usernameSuccess";
+            m.redraw();
         });
     }
 });

@@ -2,6 +2,7 @@ import state from "../../state";
 
 import css from "./username.css";
 import error from "../error";
+import loading from "../loading";
 
 let formDom,
     formErrors = {};
@@ -44,10 +45,14 @@ function validateForm(form, errors) {
 }
 
 export default {
+    manditory : true,
     view(vnode) {
-        return m("div", { class : css.username },
+        const visibleErrors = (vnode.state.showErrors && formErrors.username) || vnode.state.loading;
+
+        return m("div", { class : visibleErrors ? css.usernameErrors : css.username },
 
             m("form", {
+                    class      : vnode.state.disabled ? css.formDisabled : css.form,
                     novalidate : true,
                     oncreate(formVnode) {
                         formDom = formVnode.dom;
@@ -58,22 +63,33 @@ export default {
                             e.preventDefault();
                         }
 
+                        if (vnode.state.disabled) {
+                            return;
+                        }
+
+                        vnode.state.disabled = true;
+
+                        // always show errors after attempting submit once
                         vnode.state.showErrors = true;
 
                         validateForm(formDom, formErrors);
 
+                        // errors will be shown, don't submit
                         if (Object.keys(formErrors).length) {
-                            console.error("errors");
-
                             return;
                         }
 
-                        console.log("submit");
+                        vnode.state.loading = true;
 
-                        state.action("TRY_ADD_USERNAME", vnode.state.value);
+                        state.action("TRY_ADD_USERNAME", vnode.state.value)
+                            .catch(err => {
+                                delete vnode.state.disabled;
+                                delete vnode.state.loading;
+                                pushError(formErrors, "username", err.message);
+                                m.redraw();
+                            });
                     }
                 },
-
 
                 m("label",
                     "Choose a user name",
@@ -83,6 +99,7 @@ export default {
                     m("input", {
                         name      : "username",
                         type      : "text",
+                        disabled  : vnode.state.disabled,
                         minlength : 4,
                         maxlength : 30,
                         required  : true,
@@ -97,16 +114,21 @@ export default {
                 ),
 
                 m("button", {
-                    type  : "submit",
-                    class : css.button
+                    type     : "submit",
+                    class    : css.button,
+                    disabled : vnode.state.disabled
                 }, "submit"),
+
+                vnode.state.loading ? m(loading, { width : "full", valign : "bottom" }) : null,
 
                 m(error, {
                     show   : vnode.state.showErrors,
                     errors : formErrors.username,
+                    align  : "left",
+                    valign : "bottom",
                     labels : {
-                        all    : "must be 4-30 characters, using only letters, numbers, and -",
-                        unique : "must be unique, please try a variation"
+                        all    : "must be 4-30 characters <br>allowed characters: letters, numbers,  -",
+                        unique : "usernames must be unique <br>please try something else"
                     }
                 })
             )

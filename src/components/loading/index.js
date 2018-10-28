@@ -6,10 +6,12 @@ export default {
         return animResolve(vnode.dom, css.loaderFade);
     },
 
-    view() {
-        return m("div", { class : css.loader },
-            "loading",
-            m("div", { class : css.bar })
+    view(vnode) {
+        const { text, width, valign } = vnode.attrs;
+
+        return m("div", { class : valign === "bottom" ? css.loaderBottom : css.loader },
+            text ? "loading" : null,
+            m("div", { class : width === "full" ? css.barFull : css.bar })
         );
     }
 };

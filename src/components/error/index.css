@@ -1,21 +1,39 @@
+@value side: 0.8em;
+
 .error {
     position: absolute;
-    right: 0.8em;
+    right: side;
     bottom: 1em;
-    width: 8em;
+    /* width: 8em; */
 
     text-align: right;
-    font-size: 0.6em;
+    font-size: 0.8em;
     line-height: 1;
     letter-spacing: 0.05em;
 
-    color: #f44a;
+    color: #f44c;
+}
+
+.errorLeft {
+    composes: error;
+
+    right: auto;
+    left: 0;
+    bottom: 0;
+
+    text-align: left;
 }
 
 .errorIn {
     composes: error;
 
     animation: forwards slideIn 0.3s;
+}
+
+.errorInLeft {
+    composes: errorLeft;
+
+    animation: forwards slideInLeft 0.3s;
 }
 
 @keyframes slideIn {
@@ -29,15 +47,39 @@
     }
 }
 
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .errorOut {
     composes: error;
 
     animation: forwards slideOut 0.3s;
 }
 
+.errorOutLeft {
+    composes: errorLeft;
+
+    animation: forwards slideOutLeft 0.3s;
+}
+
 @keyframes slideOut {
     100% {
-        transform: translateX(20%);
         opacity: 0;
+        transform: translateX(20%);
+    }
+}
+
+@keyframes slideOutLeft {
+    100% {
+        opacity: 0;
+        transform: translateX(-20%);
     }
 }

@@ -1,8 +1,38 @@
 @value * as colors from "../../palette.css";
 
+.form {}
+
+.formDisabled {
+    composes: form;
+
+    cursor: wait;
+
+    input,
+    button {
+        cursor: wait;
+    }
+}
+
+.username {
+    /* for error position */
+    position: relative;
+    cursor: inherit;
+}
+
+.usernameErrors {
+    composes: username;
+    padding-bottom: 2em;
+}
+
 .button {
     composes: button from "../../index.css";
 
+    margin-right: 0 !important;
+
     color: #fff !important;
     --color: colors.cta;
+
+    &:disabled {
+        opacity: 0.5;
+    }
 }

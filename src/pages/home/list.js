@@ -53,7 +53,7 @@ export default {
                     )
                 ) :
 
-                m(loading)
+                m(loading, { text : true })
         );
     }
 };

@@ -4,9 +4,9 @@ import animResolve from "animation-resolve";
 import css from "./index.css";
 import login from "./login";
 import username from "./username";
+import usernameSuccess from "./usernameSuccess";
 
-const modals = { login, username };
-const hasClose = [ "login" ];
+const modals = { login, username, usernameSuccess };
 
 function escHandler(e) {
     if (e.keyCode === 27) {
@@ -24,10 +24,12 @@ export default {
         ]);
     },
     view(vnode) {
+        const modal = modals[state.modal];
+
         return m("div", {
                 class : css.modalIn,
                 onclick(e) {
-                    if (e.target !== e.currentTarget) {
+                    if (e.target !== e.currentTarget || modal.manditory) {
                         return;
                     }
 
@@ -42,9 +44,9 @@ export default {
                     }
                 },
 
-                m(modals[state.modal]),
+                m(modal),
 
-                hasClose.indexOf(state.modal) > -1 ?
+                modal.close ?
                     m("button", {
                         class : css.close,
                         onclick() {

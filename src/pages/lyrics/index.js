@@ -23,7 +23,7 @@ export default {
                     }
                 },
                 isLoading ?
-                    m(loading) :
+                    m(loading, { text : true }) :
                     state.song.parsedLyrics.map((part, idx) =>
                         m("p", {
                                 id    : part.hash,
