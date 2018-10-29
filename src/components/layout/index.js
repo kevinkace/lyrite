@@ -11,28 +11,34 @@ import animResolve from "animation-resolve";
 
 export default {
     view(vnode) {
+        const { header : _header, bug, login : _login } = vnode.attrs;
+
         return m("div",
 
-            m("div", { class : css.login },
-                state.loggedIn ?
-                    m(logout) :
-                    m(login)
-            ),
+            _login ?
+                m("div", { class : css.login },
+                    state.loggedIn ?
+                        m(logout) :
+                        m(login)
+                ) :
+                null,
 
-            vnode.attrs.header !== false ? m(header) : null,
+            _header !== false ? m(header) : null,
 
             vnode.children,
 
-            m("div", { class : css.bug },
-                m("a", {
-                    href  : state.githubHref,
-                    class : css.github
-                }, m.trust(ghLogo)),
+            bug ?
+                m("div", { class : css.bug },
+                    m("a", {
+                        href  : state.githubHref,
+                        class : css.github
+                    }, m.trust(ghLogo)),
 
-                m("div", {
-                    class : css.ver
-                }, state.ver.tag)
-            ),
+                    m("div", {
+                        class : css.ver
+                    }, state.ver.tag)
+                ) :
+                null,
 
             state.modal ? m(modal) : null,
 

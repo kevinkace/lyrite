@@ -6,5 +6,9 @@ export default (State) => ({
 
     CLOSE_MODAL() {
         delete State.modal;
+    },
+
+    FORK_MODAL() {
+        State.modal = "fork";
     }
 });

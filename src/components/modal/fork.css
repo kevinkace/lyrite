@@ -1,0 +1,11 @@
+@value fontSerif from "../../index.css";
+
+.h {
+    font-size: 1.2em;
+    font-family: fontSerif;
+}
+
+.list {
+    margin-left: 2em;
+    list-style-type: disc;
+}

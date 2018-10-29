@@ -54,6 +54,8 @@ function checkAuth(State, user) {
 
         if (!State.session.username) {
             State.modal = "username";
+        } else {
+            delete State.modal;
         }
 
         m.redraw();

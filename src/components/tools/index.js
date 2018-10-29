@@ -5,6 +5,7 @@ import tooltipCss from "./tooltip.css";
 
 import edit from "../../icons/quill.svg";
 import createdByCurrentUser from "../../lib/createdByCurrentUser";
+import forkOrLogin from "./forkOrLogin";
 
 export default {
     view(vnode) {
@@ -155,7 +156,8 @@ export default {
                         }) :
                         null
                 ] :
-                "fork"
+
+                m(forkOrLogin)
         );
     }
 };
