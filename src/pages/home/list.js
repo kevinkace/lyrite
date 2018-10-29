@@ -6,12 +6,7 @@ import css from "./list.css";
 import animResolve from "animation-resolve";
 import loading from "../../components/loading";
 
-function createdByUser(song) {
-    const uid = get(state, [ "session", "uid" ]);
-    const createdBy = get(song, [ "data", "created_by" ]) || {}; // created_by is a firebase doc ref, and not really an obj so have to handle a little differently
-
-    return uid && createdBy.id === uid;
-}
+import createdByCurrentUser from "../../lib/createdByCurrentUser";
 
 export default {
     view() {
@@ -42,7 +37,7 @@ export default {
                                 null
                         ),
 
-                        createdByUser(song) ?
+                        createdByCurrentUser(song) ?
                             m("button", {
                                 onclick() {
                                     state.action("DELETE_SONG_BY_ID", song.id);
