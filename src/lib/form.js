@@ -18,8 +18,8 @@ function validateForm(form, errors) {
 
     // iterate through form elements
     [].forEach.call(form.elements, (el) => {
-        if (!el.name) {
-            // only validate fields with a name attr
+        // no name attr (required for displaying errors), or it's valid
+        if (!el.name || el.validity.valid) {
             return;
         }
 

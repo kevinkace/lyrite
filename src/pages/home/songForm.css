@@ -23,6 +23,10 @@
         color: #fff;
         border: none;
         background: transparent;
+
+        &:focus {
+            outline: none;
+        }
     }
 }
 
@@ -71,6 +75,10 @@
     border: none;
     color: #fff;
     background: transparent;
+
+    &:focus {
+        outline: none;
+    }
 }
 
 .textareaFocused {

@@ -12,6 +12,8 @@
     letter-spacing: 0.05em;
 
     color: #f44c;
+
+    pointer-events: none;
 }
 
 .errorLeft {
