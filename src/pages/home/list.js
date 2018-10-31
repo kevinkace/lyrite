@@ -28,7 +28,7 @@ export default {
                         },
                         m("a", {
                                 oncreate : m.route.link,
-                                href     : `/songs/${song.data.slug}`
+                                href     : `/songs/${song.data.slug}-${song.id}`
                             },
                             m("strong", song.data.title),
 

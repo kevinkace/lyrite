@@ -47,7 +47,6 @@
     "object-path": "^0.11.4",
     "postcss-nested": "^3.0.0",
     "raw-loader": "^0.5.1",
-    "shortid": "^2.2.13",
     "slugify": "^1.3.0",
     "string-hash": "^1.1.3",
     "url-parse": "^1.4.3",

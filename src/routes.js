@@ -17,14 +17,13 @@ export default {
         }
     },
 
-    "/songs/:slug" : {
+    "/songs/:slugAndId" : {
         onmatch(args) {
-            if (!args.slug) {
+            if (!args.slugAndId) {
                 m.route.set("/");
             }
 
-            // state.action("SET_SLUG", args.slug);
-            state.action("LOAD_SONG_BY_SLUG", args.slug);
+            state.action("LOAD_SONG_BY_SLUG_AND_ID", args.slugAndId);
         },
         render() {
             return m(layout, m(lyrics));

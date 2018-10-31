@@ -42,8 +42,8 @@ function onsubmit(e) {
     loading = true;
 
     state.action("IMPORT_SONG_LYRICS", formState)
-        .then(slug => {
-            m.route.set(`/songs/${slug}`);
+        .then(({ slug, id }) => {
+            m.route.set(`/songs/${slug}-${id}`);
         })
         .catch(err => {
             console.error(err);
@@ -52,13 +52,16 @@ function onsubmit(e) {
             loading = false;
             pushError(formErrors, "firebase", err);
             m.redraw();
-
         });
 }
 
 export default {
     oninit(vnode) {
         const vs = vnode.state;
+
+        disabled = false;
+        loading = false;
+        showErrors = false;
 
         vs.focused = "";
         formState.title   = "";

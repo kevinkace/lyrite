@@ -1,39 +1,35 @@
 import slugify from "slugify";
-import shortid from "shortid";
 
 import db, { _delete, serverTimestamp, arrayUnion, arrayRemove } from "../db";
 
 import parseLyrics from "../lib/parseLyrics";
 import { getSongFromId } from "../lib/song";
 
+const slugIdRegex = /\-(?!.*\-.*)/;
+
 export default (State) => ({
     SET_SLUG(slug) {
         State.slug = slug;
     },
 
-    LOAD_SONG_BY_SLUG(slug) {
+    LOAD_SONG_BY_SLUG_AND_ID(slugAndId) {
+        const [ slug, id ] = slugAndId.split(slugIdRegex);
+
         State.song = {
             slug,
             loading : true
         };
 
-        State.unsubscribe = db.collection("songs").where("slug", "==", slug)
-            .onSnapshot((snap) => {
+        State.unsubscribe = db.collection("songs").doc(id)
+            .onSnapshot(doc => {
                 delete State.song.loading;
                 State.song.loaded = Date.now();
 
-                // should just be 1 doc
-                snap.forEach((doc, idx) => {
-                    if (idx) {
-                        return;
-                    }
+                State.song.doc  = doc;
+                State.song.id   = doc.id;
+                State.song.data = doc.data();
 
-                    State.song.doc  = doc;
-                    State.song.id   = doc.id;
-                    State.song.data = doc.data();
-
-                    State.song.parsedLyrics = parseLyrics(State.song.data.lyrics);
-                });
+                State.song.parsedLyrics = parseLyrics(State.song.data.lyrics);
 
                 m.redraw();
             });
@@ -46,7 +42,7 @@ export default (State) => ({
             songs   : undefined // State.songs.songs !@#$@
         };
 
-        db.collection("songs").onSnapshot((snap) => {
+        db.collection("songs").onSnapshot(snap => {
             delete State.songs.loading;
             State.songs.loaded = Date.now();
             State.songs.songs = [];
@@ -65,13 +61,11 @@ export default (State) => ({
 
     // import song
     IMPORT_SONG_LYRICS(songObj) {
-        const slugTitle = slugify(songObj.title);
-        const uuid      = shortid.generate();
-        const slug      = `${slugTitle}-${uuid}`;
-        const { uid }   = State.session;
-        const batch     = db.batch();
-        const songRef   = db.collection("songs").doc();
-        const userRef   = db.collection("users").doc(uid);
+        const slug    = slugify(songObj.title);
+        const { uid } = State.session;
+        const batch   = db.batch();
+        const songRef = db.collection("songs").doc();
+        const userRef = db.collection("users").doc(uid);
 
         // update song
         batch.set(songRef, {
@@ -88,7 +82,7 @@ export default (State) => ({
             songs : arrayUnion(songRef)
         });
 
-        return batch.commit().then(() => slug);
+        return batch.commit().then(() => ({ slug, id : songRef.id }));
     },
 
     CLOSE_SONG() {

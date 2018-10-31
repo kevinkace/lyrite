@@ -63,6 +63,7 @@ export default State => ({
         )
         .then(() => {
             State.modal = "usernameSuccess";
+            State.username = username;
             m.redraw();
         });
     }
