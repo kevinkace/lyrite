@@ -8,6 +8,7 @@ import error from "../../components/error";
 import { validateForm, pushError } from "../../lib/form";
 
 let formDom,
+    submitDom,
     disabled,
     showErrors,
     loading,
@@ -24,6 +25,8 @@ function onsubmit(e) {
     if (disabled) {
         return;
     }
+
+    submitDom.focus();
 
     disabled = true;
 
@@ -105,7 +108,7 @@ export default {
                 m("input", {
                     value       : title,
                     placeholder : isFocused(titleDom, "", "Song Title"),
-                    minlength   : 3,
+                    minlength   : 1,
                     maxlength   : 50,
                     disabled,
                     required    : true,
@@ -145,7 +148,7 @@ export default {
                 m("input", {
                     value       : artist,
                     placeholder : isFocused(artistDom, "", "Artist"),
-                    minlength   : 3,
+                    minlength   : 1,
                     maxlength   : 50,
                     disabled,
                     required    : true,
@@ -224,7 +227,10 @@ export default {
                 m("button", {
                     disabled,
                     class : css.loadBtn,
-                    type  : "submit"
+                    type  : "submit",
+                    oncreate(buttonVnode) {
+                        submitDom = buttonVnode.dom;
+                    }
                 }, "load song")
             )
         );

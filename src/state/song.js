@@ -23,6 +23,14 @@ export default (State) => ({
         State.unsubscribe = db.collection("songs").doc(id)
             .onSnapshot(doc => {
                 delete State.song.loading;
+
+                if (!doc.exists) {
+                    State.error = "404";
+
+                    return m.route.set("/");
+                }
+
+                delete State.song.loading;
                 State.song.loaded = Date.now();
 
                 State.song.doc  = doc;

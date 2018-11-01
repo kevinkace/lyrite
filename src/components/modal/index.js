@@ -6,8 +6,9 @@ import login from "./login";
 import username from "./username";
 import usernameSuccess from "./usernameSuccess";
 import fork from "./fork";
+import loginError from "./loginError";
 
-const modals = { login, username, usernameSuccess, fork };
+const modals = { login, username, usernameSuccess, fork, loginError };
 
 function escHandler(e) {
     if (e.keyCode === 27) {

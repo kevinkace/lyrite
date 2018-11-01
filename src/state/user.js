@@ -25,10 +25,8 @@ export default State => ({
             })
             .catch(err => {
                 delete State.loggedIn;
-
-                // todo: handle login error
-
-                console.log(err);
+                State.modal = "loginError";
+                m.redraw();
             });
     },
 
