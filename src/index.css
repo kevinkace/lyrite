@@ -19,6 +19,12 @@ button,
 input,
 select,
 textarea {
+    font: 300 1em/1.5 fontDisplay;
+
+    border: solid 0 transparent;
+}
+
+input {
     position: relative;
     padding: 1.5em 0 0.4em 0.9em;
 
@@ -31,15 +37,13 @@ textarea {
     background: #bbb6;
 
     &:focus {
-        /* todo: something here */
-        /* color: red; */
         outline: none;
         border-bottom-color: colors.cta;
     }
 }
 
 label {
-    span {
+    :global(.placeholder) {
         position: absolute;
         top: 1em;
         left: 0.9em;
@@ -52,7 +56,7 @@ label {
 
     input:focus,
     input:global(.focus) {
-        + span {
+        + :global(.placeholder) {
             color: colors.cta;
             transform: scale(0.7) translateY(-0.8em);
         }
@@ -62,6 +66,14 @@ label {
 button {
     line-height: 1;
     cursor: pointer;
+
+    transisition: transform 0.3s;
+
+    &:focus {
+        outline: none;
+        transform: translateY(-0.1em);
+        box-shadow: 1px 2px 4px 0 #4449;
+    }
 }
 
 a {

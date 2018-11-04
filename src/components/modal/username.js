@@ -78,6 +78,7 @@ export default {
                 m("label",
 
                     m("input", {
+                        tabindex    : 1,
                         class       : vnode.state.value.length ? "focus" : null,
                         name        : "username",
                         type        : "text",
@@ -98,10 +99,11 @@ export default {
                         }
                     }),
 
-                    m("span", "Username")
+                    m("span", { class : "placeholder" }, "Username")
                 ),
 
                 m("button", {
+                    tabindex : 2,
                     type     : "submit",
                     class    : css.button,
                     disabled : vnode.state.disabled,

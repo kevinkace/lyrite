@@ -11,10 +11,8 @@ export default {
 
             m("div", { class : !state.username ? css.step1Active : css.step1 },
                 m("div", { class : css.number }, "01"),
-                m("div",
-                    m("div", { class : css.username },
-                        m(username)
-                    )
+                m("div", { class : css.username },
+                    m(username)
                 )
             ),
 
