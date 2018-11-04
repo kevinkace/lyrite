@@ -75,10 +75,17 @@ export default {
                     }
                 },
 
+                m("label", {
+                    tabindex : 1,
+                    oncreate(labelVnode) {
+                        labelVnode.dom.focus();
+                    }
+                }),
+
                 m("label",
 
                     m("input", {
-                        tabindex    : 1,
+                        tabindex    : 2,
                         class       : vnode.state.value.length ? "focus" : null,
                         name        : "username",
                         type        : "text",
@@ -103,7 +110,7 @@ export default {
                 ),
 
                 m("button", {
-                    tabindex : 2,
+                    tabindex : 3,
                     type     : "submit",
                     class    : css.button,
                     disabled : vnode.state.disabled,
