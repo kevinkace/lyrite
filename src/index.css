@@ -19,15 +19,44 @@ button,
 input,
 select,
 textarea {
+    position: relative;
+    padding: 1.5em 0 0.4em 0.9em;
+
     font: 300 1em/1.5 fontDisplay;
+
+    border: solid 0 transparent;
+    border-radius: 0.3em 0.3em 0 0;
+    border-bottom-width: 2px;
+    border-bottom-color: #9994;
+    background: #bbb6;
+
+    &:focus {
+        /* todo: something here */
+        /* color: red; */
+        outline: none;
+        border-bottom-color: colors.cta;
+    }
 }
 
-button:focus,
-input:focus,
-select:focus,
-textarea:focus {
-    /* todo: something here */
-    /* color: red; */
+label {
+    span {
+        position: absolute;
+        top: 1em;
+        left: 0.9em;
+
+        line-height: 1.4;
+        transition: transform 0.3s;
+        transform-origin: 0 0;
+        pointer-events: none;
+    }
+
+    input:focus,
+    input:global(.focus) {
+        + span {
+            color: colors.cta;
+            transform: scale(0.7) translateY(-0.8em);
+        }
+    }
 }
 
 button {
@@ -43,6 +72,12 @@ svg {
     display: block;
 }
 
+hr {
+    margin: 1.4em 0;
+    border: solid 1px #ccc6;
+    border-width: 1px 0 0 0;
+}
+
 :global(#mount) {
     display: flex;
     flex-flow: column nowrap;
@@ -52,7 +87,6 @@ svg {
 
 .button {
     padding: 0.3em 0.7em;
-    margin: 0 0.2em;
 
     border: solid 2px transparent;
     border-radius: 0.3em;

@@ -1,5 +1,6 @@
 import state from "../../state";
 
+import cssJoin from "cssJoin";
 import css from "./providers.css";
 import twitter from "../../icons/twitter.svg";
 import facebook from "../../icons/facebook.svg";
@@ -20,17 +21,21 @@ const providers = [{
 }];
 
 export default {
-    view() {
+    view(vnode) {
+        const { style } = vnode.attrs;
+
         return providers.map((p) =>
             m("button", {
-                    class : css[p.name],
+                    class : cssJoin(
+                        css[p.name],
+                        [ style === "icon", css.icon ]
+                    ),
                     onclick() {
                         state.action("LOGIN", p.provName);
                     }
                 },
                 m.trust(p.logo),
-                " ",
-                p.name
+                m("span", p.name)
             )
         );
     }

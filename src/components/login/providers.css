@@ -15,7 +15,36 @@
 
     svg {
         width: 1.6em;
-        margin-right: 0.6em;
+    }
+
+    span {
+        padding-left: 0.6em;
+        overflow: hidden;
+        max-width: 20em;
+    }
+}
+
+.icon {
+    padding: 0;
+    margin: 0.1em 0.3em 0 0;
+
+    background: transparent !important;
+
+    span  {
+        max-width: 0;
+        padding-left: 0;
+
+        transition: max-width 0.3s;
+    }
+
+    &.twitter svg {
+        fill: twitter;
+    }
+    &.github svg {
+        fill: github;
+    }
+    &.facebook svg {
+        fill: facebook;
     }
 }
 

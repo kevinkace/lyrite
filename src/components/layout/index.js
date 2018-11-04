@@ -6,7 +6,7 @@ import modal from "../modal";
 import login from "../login";
 import logout from "../logout";
 
-import ghLogo from "../../icons/github-black.svg";
+import ghLogo from "../../icons/github.svg";
 import animResolve from "animation-resolve";
 
 export default {

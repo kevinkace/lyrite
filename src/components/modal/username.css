@@ -1,6 +1,24 @@
 @value * as colors from "../../palette.css";
 
-.form {}
+.username {
+    display: flex;
+    /* for error position */
+    position: relative;
+    cursor: inherit;
+}
+
+.usernameErrors {
+    composes: username;
+
+    padding-bottom: 2em;
+}
+
+.form {
+    input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
 
 .formDisabled {
     composes: form;
@@ -13,17 +31,6 @@
     }
 }
 
-.username {
-    /* for error position */
-    position: relative;
-    cursor: inherit;
-}
-
-.usernameErrors {
-    composes: username;
-    padding-bottom: 2em;
-}
-
 .button {
     composes: button from "../../index.css";
 
@@ -31,6 +38,14 @@
 
     color: #fff !important;
     --color: colors.cta;
+
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+    svg {
+        fill: #fff;
+        height: 1em;
+    }
 
     &:disabled {
         opacity: 0.5;

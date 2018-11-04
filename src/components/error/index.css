@@ -7,7 +7,7 @@
     /* width: 8em; */
 
     text-align: right;
-    font-size: 0.8em;
+    font-size: 0.75em;
     line-height: 1;
     letter-spacing: 0.05em;
 
@@ -26,6 +26,15 @@
     text-align: left;
 }
 
+.errorBottom {
+    composes: error;
+
+    right: auto;
+    left: 0;
+
+    text-align: left;
+}
+
 .errorIn {
     composes: error;
 
@@ -36,6 +45,12 @@
     composes: errorLeft;
 
     animation: forwards slideInLeft 0.3s;
+}
+
+.errorInBottom {
+    composes: errorBottom;
+
+    animation: forwards slideInBottom 0.3s;
 }
 
 @keyframes slideIn {
@@ -60,6 +75,17 @@
     }
 }
 
+@keyframes slideInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(-20%);
+    }
+    100% {
+        opacity: 2;
+        transform: translateY(0);
+    }
+}
+
 .errorOut {
     composes: error;
 
@@ -70,6 +96,12 @@
     composes: errorLeft;
 
     animation: forwards slideOutLeft 0.3s;
+}
+
+.errorOutBottom {
+    composes: errorBottom;
+
+    animation: forwards slideOutBottom 0.3s;
 }
 
 @keyframes slideOut {
@@ -83,5 +115,12 @@
     100% {
         opacity: 0;
         transform: translateX(-20%);
+    }
+}
+
+@keyframes slideOutBottom {
+    100% {
+        opacity: 0;
+        transform: translateY(-20%);
     }
 }
