@@ -29,6 +29,13 @@ export default {
     close() {
         return !state.session.loggedIn ? state.action("LOGOUT") : null;
     },
+    onupdate() {
+        if (state.session.loggedIn) {
+            setTimeout(() => {
+                state.action("CLOSE_MODAL");
+            }, 1000);
+        }
+    },
     view() {
         const {
             authorized,
