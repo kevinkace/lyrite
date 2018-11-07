@@ -77,7 +77,8 @@ export default State => ({
                 tx.set(usernameRef, {
                     user     : State.session.userRef,
                     provider : State.session.provider,
-                    owner    : State.session.userRef
+                    owner    : State.session.userRef,
+                    created  : serverTimestamp()
                 });
             })
         )
