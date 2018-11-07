@@ -38,7 +38,7 @@ export default {
 
                     m(list),
 
-                    state.loggedIn ?
+                    state.session.loggedIn ?
                         m(songForm) :
                         m("div", { class : css.providers },
                             m("h3", "sign in to add a song"),

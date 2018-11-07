@@ -17,7 +17,7 @@ export default {
 
             _login ?
                 m("div", { class : css.login },
-                    state.loggedIn ?
+                    state.session.loggedIn ?
                         m(logout) :
                         m(login)
                 ) :

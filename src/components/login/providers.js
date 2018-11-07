@@ -22,21 +22,26 @@ const providers = [{
 
 export default {
     view(vnode) {
-        const { style } = vnode.attrs;
+        const { style, tabindex = 1 } = vnode.attrs;
 
-        return providers.map((p) =>
-            m("button", {
-                    class : cssJoin(
-                        css[p.name],
-                        [ style === "icon", css.icon ]
-                    ),
-                    onclick() {
-                        state.action("LOGIN", p.provName);
-                    }
-                },
-                m.trust(p.logo),
-                m("span", p.name)
+        return [
+            providers.map(p =>
+                m("button", {
+                        tabindex,
+                        class : cssJoin(
+                            css[p.name]
+                            // [ style === "icon", css.icon ],
+                            // [ state.provider === p.name, css.curProvider ],
+                            // [ state.provider && state.provider !== p.name, css.otherProvider ]
+                        ),
+                        onclick() {
+                            state.action("LOGIN", p.provName, p.name).then(m.redraw);
+                        }
+                    },
+                    m.trust(p.logo),
+                    m("span", p.name)
+                )
             )
-        );
+        ];
     }
 }

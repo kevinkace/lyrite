@@ -12,12 +12,13 @@ let formDom,
     formErrors = {};
 
 export default {
-    manditory : true, // prevent modal from being closable
     oninit(vnode) {
         vnode.state.value = "";
     },
     view(vnode) {
-        const visibleErrors = (vnode.state.showErrors && formErrors.username) || vnode.state.loading;
+        const visibleErrors = vnode.state.showErrors && formErrors.username;
+
+        const { tabindex } = vnode.attrs;
 
         return [
             m("form", {
@@ -49,54 +50,33 @@ export default {
                             return;
                         }
 
-                        vnode.state.loading = true;
                         vnode.state.disabled = true;
 
-                        state.action("GET_USERNAME_PROVIDERS", vnode.state.value)
-                            .then(curProvider => {
-                                // new user for username
-                                if (!curProvider) {
-                                    // username locked
-                                    // show all providers
+                        state.action("ADD_USERNAME", vnode.state.value)
+                            .then(m.redraw)
+                            .catch((err) => {
+                                vnode.state.value = "";
+                                delete vnode.state.disabled;
 
-                                    return;
-                                }
-
-                                // show selected provider
-                            })
-
-                        // state.action("TRY_ADD_USERNAME", vnode.state.value)
-                        //     .catch(err => {
-                        //         delete vnode.state.disabled;
-                        //         delete vnode.state.loading;
-                        //         pushError(formErrors, "username", err.message);
-                        //         m.redraw();
-                        //     });
+                                m.redraw();
+                            });
                     }
                 },
-
-                m("label", {
-                    tabindex : 1,
-                    oncreate(labelVnode) {
-                        labelVnode.dom.focus();
-                    }
-                }),
 
                 m("label",
 
                     m("input", {
-                        tabindex    : 2,
-                        class       : vnode.state.value.length ? "focus" : null,
-                        name        : "username",
-                        type        : "text",
-                        disabled    : vnode.state.disabled,
-                        minlength   : 4,
-                        maxlength   : 30,
-                        required    : true,
-                        pattern     : "[\\w\\-]*",
-                        value       : vnode.state.value,
-                        // placeholder : "username",
-                        oninput     : m.withAttr("value", (value) => {
+                        tabindex,
+                        class     : vnode.state.value.length ? "focus" : null,
+                        name      : "username",
+                        type      : "text",
+                        disabled  : vnode.state.disabled,
+                        minlength : 4,
+                        maxlength : 30,
+                        required  : true,
+                        pattern   : "[\\w\\-]*",
+                        value     : vnode.state.value,
+                        oninput   : m.withAttr("value", (value) => {
                             vnode.state.value = value;
 
                             validateForm(formDom, formErrors);
@@ -117,8 +97,6 @@ export default {
 
                     "aria-label" : "submit"
                 }, m.trust(submitSvg)),
-
-                vnode.state.loading ? m(loading, { width : "full", valign : "bottom" }) : null,
 
                 m(error, {
                     show   : vnode.state.showErrors,

@@ -78,11 +78,11 @@ export default (State) => ({
         // update song
         batch.set(songRef, {
             slug,
-            title      : songObj.title,
-            artist     : songObj.artist,
-            created_at : serverTimestamp(),
-            created_by : userRef,
-            lyrics     : songObj.lyrics
+            title   : songObj.title,
+            artist  : songObj.artist,
+            created : serverTimestamp(),
+            owner   : userRef,
+            lyrics  : songObj.lyrics
         });
 
         // update user

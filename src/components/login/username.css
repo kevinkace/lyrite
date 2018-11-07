@@ -17,6 +17,7 @@
     input {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+        margin-left: -0.2em;
     }
 }
 

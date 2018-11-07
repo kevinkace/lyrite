@@ -3,12 +3,10 @@ import animResolve from "animation-resolve";
 
 import css from "./index.css";
 import login from "./login";
-import username from "./username";
-import usernameSuccess from "./usernameSuccess";
 import fork from "./fork";
 import loginError from "./loginError";
 
-const modals = { login, username, usernameSuccess, fork, loginError };
+const modals = { login, fork, loginError };
 
 function escHandler(e) {
     if (e.keyCode === 27) {
@@ -17,16 +15,22 @@ function escHandler(e) {
 }
 
 export default {
+    oninit(vnode) {
+        vnode.state.modal = modals[state.modal];
+    },
     onbeforeremove(vnode) {
         window.removeEventListener("keydown", escHandler);
 
         return Promise.all([
+            vnode.state.modal.close ?
+                vnode.state.modal.close() :
+                Promise.resolve(),
             animResolve(vnode.dom, css.modalOut),
             animResolve(vnode.state.contentVnode.dom, css.contentOut)
         ]);
     },
     view(vnode) {
-        const modal = modals[state.modal];
+        const { modal } = vnode.state;
 
         return m("div", {
                 class : css.modalIn,

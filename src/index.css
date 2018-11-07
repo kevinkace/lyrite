@@ -33,7 +33,7 @@ input {
     border: solid 0 transparent;
     border-radius: 0.3em 0.3em 0 0;
     border-bottom-width: 2px;
-    border-bottom-color: #9994;
+    border-bottom-color: colors.placeholderBorder;
     background: #bbb6;
 
     &:focus {
@@ -49,6 +49,7 @@ label {
         left: 0.9em;
 
         line-height: 1.4;
+        color: colors.placeholder;
         transition: transform 0.3s;
         transform-origin: 0 0;
         pointer-events: none;
@@ -64,10 +65,9 @@ label {
 }
 
 button {
-    line-height: 1;
     cursor: pointer;
 
-    transisition: transform 0.3s;
+    transition: transform 0.3s;
 
     &:focus {
         outline: none;

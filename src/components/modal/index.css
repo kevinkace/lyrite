@@ -47,7 +47,7 @@
 }
 
 .content {
-    padding: 2em;
+    padding: 1em 1.6em;
     margin-top: 3em;
     min-width: 20vh;
 
@@ -109,7 +109,9 @@
     opacity: 0.6;
     transition: opacity 0.3s;
 
-    &:hover {
+    &:hover,
+    &:focus {
         opacity: 1;
+        box-shadow: none;
     }
 }

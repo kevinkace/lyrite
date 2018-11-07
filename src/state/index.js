@@ -11,8 +11,6 @@ import user from "./user";
  * @property {string[]} styles - style class names
  * @property {object} font - font size
  * @property {object} cols - number of columns
- * @property {boolean} loggedIn
- * @property {object} username - Firebase auth currentUser
  * @property {object} session - just uid ATM
  * @property {object} deleted - ids of songs that are mid-delete
  * @property {function} err - future error handling
@@ -25,6 +23,7 @@ const State = {
     appName    : "Lyrite",
     tagline    : "a tool to format lyrics",
     githubHref : "https://github.com/kevinkace/lyrite",
+
     // added to doc in script via webpack
     ver, // eslint-disable-line no-undef
 
@@ -32,8 +31,6 @@ const State = {
     font   : { size : 1.3 },
     cols   : { count : 3 },
 
-    loggedIn : false,
-    username : undefined,
     session  : {},
 
     deleted : {},
@@ -58,14 +55,16 @@ const State = {
 };
 
 Object.assign(State.actions, tools(State), song(State), modal(State), user(State));
-State.action = (name, value) => {
+
+// eslint-disable-next-line no-restricted-syntax
+State.action = (name, ...values) => {
     if (!State.actions[name]) {
         console.error(`Action not found: ${name}`);
 
         return;
     }
 
-    const returnVal = State.actions[name](value);
+    const returnVal = State.actions[name](...values);
 
     m.redraw();
 

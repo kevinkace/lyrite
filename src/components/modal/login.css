@@ -4,60 +4,73 @@
     display: flex;
     align-content: center;
     flex-direction: column;
-}
 
-.step {
-    display: flex;
-    opacity: 0.2;
-    pointer-events: none;
-}
-
-.stepActive {
-    display: flex;
-    align-items: flex-start;
-    opacity: 1;
-
-    .number:after {
-        opacity: 0.9;
+    p {
+        margin-bottom: 0.4em;
     }
 }
 
-.step1,
-.step2 {
-    composes: step;
+.stepBase {
+    transition: max-height 0.3s;
 }
 
-.step1Active,
-.step2Active {
-    composes: stepActive;
+.step {
+    composes: stepBase;
+
+    max-height: 8em;
+}
+
+.stepHidden {
+    composes: stepBase;
+
+    max-height: 0;
+}
+
+.signedIn {
+    display: flex;
+    align-items: center;
+
+    font-size: 0.8em;
+    opacity: 0.5;
+
+    svg {
+        height: 1em;
+        margin-right: 0.4em;
+    }
+}
+
+.twitter svg {
+    fill: colors.twitter;
+}
+.github svg {
+    fill: colors.github;
+}
+.facebook svg {
+    fill: colors.facebook;
+}
+
+.logout {
+    font-size: 0.8em;
+
+    button {
+        padding: 0;
+        margin: 0;
+
+        color: colors.cta;
+        background: transparent;
+    }
 }
 
 .providers {
     display: flex;
-    flex-direction: row;
-}
-
-.number {
+    margin-top: 1em;
     position: relative;
-    margin: 0 0.65em 0 -0.4em;
-    vertical-align: baseline;
 
-    opacity: 0.6;
+    button {
+        margin-right: 1em;
 
-    line-height: 1;
-    font-size: 1.8em;
-
-    &:after {
-        position: absolute;
-        content: "";
-        top: 100%;
-        left: 0;
-        width: 100%;
-        height: 2px;
-
-        background: colors.bg;
-        opacity: 0;
-
-        transition: opacity 0.3s;
+        &:last-child {
+            margin-right: 0;
+        }
     }
 }

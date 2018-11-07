@@ -4,7 +4,7 @@ import css from "./forkOrLogin.css";
 
 export default {
     view() {
-        return state.loggedIn ?
+        return state.session.loggedIn ?
             m("button", {
                     class : css.fork,
                     onclick() {

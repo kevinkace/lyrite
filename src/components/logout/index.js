@@ -7,7 +7,7 @@ export default {
         return m("button", {
                 class : css.logout,
                 onclick() {
-                    state.action("LOGOUT");
+                    state.action("LOGOUT").then(m.redraw);
                 }
             },
             "logout"

@@ -1,4 +1,4 @@
-import db, { firebase } from "../db";
+import db, { firebase, serverTimestamp } from "../db";
 import * as lib from "../db/lib";
 
 export default State => ({
@@ -10,59 +10,77 @@ export default State => ({
                 return;
             }
 
-            lib.checkAuth(State, user);
+            lib.checkAuth(State, user).then(() => {
+                // todo: move to view
+                m.redraw();
+            });
         });
     },
 
-    LOGIN(provName) {
+    LOGIN(provName, provType) {
         const provider = new firebase.auth[provName]();
+        const local = firebase.auth.Auth.Persistence.LOCAL;
 
-        firebase.auth().signInWithPopup(provider)
+        State.session.provider = provType;
+        State.session.authorizing = true;
+        delete State.session.authFailed;
+        delete State.session.loggedIn;
+
+        return firebase.auth().signInWithPopup(provider)
             .then(result => {
-                lib.checkAuth(State, result.user);
+                firebase.auth().setPersistence(local);
 
-                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                return lib.checkAuth(State, result.user, provType);
+            })
+            .then(() => {
+                // login step 3b/3c
+                delete State.session.authorizing;
             })
             .catch(err => {
-                delete State.loggedIn;
-                State.modal = "loginError";
-                m.redraw();
+                // login step 3a
+                State.session.authFailed = true;
             });
     },
 
     LOGOUT() {
-        firebase.auth().signOut()
+        State.session.loggingOut = true;
+
+        return firebase.auth().signOut()
             .then(() => {
-                // Sign-out successful.
-                delete State.loggedIn;
+                // Sign-out successful
+                State.session = {};
             })
             .catch(err => {
                 // An error happened.
                 // todo: handle error
                 console.error(err);
-            })
-            .finally(() => {
-                m.redraw();
             });
     },
 
-    TRY_ADD_USERNAME(username) {
+    ADD_USERNAME(username) {
         const usernameRef = db.collection("usernames").doc(username);
 
-        return db.runTransaction(transaction =>
-            transaction.get(usernameRef).then(usernameDoc => {
+        State.session.tryingName = username;
+
+        State.session.usernaming = true;
+        delete State.session.usernameFailed;
+
+        return db.runTransaction(tx =>
+            tx.get(usernameRef).then(usernameDoc => {
                 if (usernameDoc.exists) {
+                    delete State.session.usernaming;
+                    State.session.usernameFailed = true;
                     throw new Error("unique");
                 }
 
-                transaction.update(State.userRef, { username });
-                transaction.set(usernameRef, { user : State.userRef });
+                tx.update(State.session.userRef, { username });
+                tx.set(usernameRef, { user : State.session.userRef });
             })
         )
         .then(() => {
-            State.modal = "usernameSuccess";
-            State.username = username;
-            m.redraw();
+            delete State.session.tryingName;
+            delete State.session.usernaming;
+            State.session.username = username;
         });
     }
 });

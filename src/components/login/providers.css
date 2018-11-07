@@ -1,12 +1,10 @@
-@value twitter: #1da1f2;
-@value facebook: #4267b2;
-@value github: #222;
+@value * as colors from "../../palette.css";
 
 .button {
     display: flex;
     align-items: center;
 
-    padding: 0.4em 0.8em;
+    padding: 0.6em;
 
     border: none;
     border-radius: 0.2em;
@@ -15,10 +13,11 @@
 
     svg {
         width: 1.6em;
+        fill: #fff;
     }
 
     span {
-        padding-left: 0.6em;
+        padding: 0 0.2em 0 0.6em;
         overflow: hidden;
         max-width: 20em;
     }
@@ -38,31 +37,35 @@
     }
 
     &.twitter svg {
-        fill: twitter;
+        fill: colors.twitter;
     }
     &.github svg {
-        fill: github;
+        fill: colors.github;
     }
     &.facebook svg {
-        fill: facebook;
+        fill: colors.facebook;
     }
 }
 
 .twitter {
     composes: button;
 
-    background: twitter;
+    background: colors.twitter;
 }
 
 .facebook {
     composes: button;
 
-    background: facebook;
+    background: colors.facebook;
 }
 
 .github {
     composes: button;
 
-    background: github;
+    background: colors.github;
     box-shadow: 0 0 1px #fff8;
+}
+
+.otherProvider {
+    display: none;
 }
