@@ -73,7 +73,13 @@ export default State => ({
                     throw new Error("unique");
                 }
 
-                tx.update(State.session.userRef, { username });
+                // update user with username
+                tx.update(State.session.userRef, {
+                    username,
+                    updated : serverTimestamp()
+                });
+
+                // create username with user ref
                 tx.set(usernameRef, {
                     user     : State.session.userRef,
                     provider : State.session.provider,
