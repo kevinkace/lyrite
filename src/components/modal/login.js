@@ -70,7 +70,7 @@ export default {
                 null,
 
             authorizing ?
-                m("div", { class : css.step },
+                m("div", { class : cssJoin(css.step, css.loading) },
                     m("p", `Signing in with ${provider}`),
                     m(loading, { valign : "bottom" })
                 ) :

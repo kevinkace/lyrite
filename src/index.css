@@ -46,7 +46,7 @@ label {
     :global(.placeholder) {
         position: absolute;
         top: 1em;
-        left: 0.9em;
+        left: 0.7em;
 
         line-height: 1.4;
         color: colors.placeholder;

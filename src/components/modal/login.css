@@ -11,19 +11,19 @@
 }
 
 .stepBase {
-    transition: max-height 0.3s;
+    position: relative;
 }
 
 .step {
     composes: stepBase;
-
-    max-height: 8em;
 }
 
 .stepHidden {
     composes: stepBase;
+}
 
-    max-height: 0;
+.loading {
+    padding-bottom: 1em;
 }
 
 .signedIn {
