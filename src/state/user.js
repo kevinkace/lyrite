@@ -74,7 +74,11 @@ export default State => ({
                 }
 
                 tx.update(State.session.userRef, { username });
-                tx.set(usernameRef, { user : State.session.userRef });
+                tx.set(usernameRef, {
+                    user     : State.session.userRef,
+                    provider : State.session.provider,
+                    owner    : State.session.userRef
+                });
             })
         )
         .then(() => {
