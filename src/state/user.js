@@ -93,7 +93,6 @@ export default State => ({
             State.session.loggedIn = true;
         })
         .catch(err => {
-            delete State.session.tryingName;
             delete State.session.usernaming;
             State.session.usernameFailed = err.message;
 
