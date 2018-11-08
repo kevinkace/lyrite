@@ -58,6 +58,7 @@ export default {
                 }
             }),
 
+            // 1, 3a - show auth providers
             !authorized && !authorizing ?
                 m("div", { class : css.step },
                     authFailed ?
@@ -69,6 +70,7 @@ export default {
                 ) :
                 null,
 
+            // 2 - authorizing
             authorizing ?
                 m("div", { class : cssJoin(css.step, css.loading) },
                     m("p", `Signing in with ${provider}`),
@@ -76,36 +78,44 @@ export default {
                 ) :
                 null,
 
-            authorized && !username ?
+            // 3b, 5b - username field
+            authorized && !username && !usernaming ?
                 m("div", { class : css.step },
-                    usernameFailed ?
-                        m("p", `"${tryingName}" is unavailable, try again`) :
+
+                    // no error
+                    !usernameFailed ?
                         [
                             m("p", { class : cssJoin(css.signedIn, css[provider]) },
                                 m.trust(providerIcons[provider]),
                                 " signed in!"
                             ),
                             m("p", "Choose a username")
-                        ],
+                        ] :
+                        null,
+
+                    // error - username already taken
+                    usernameFailed === "unique" ?
+                        m("p", `"${tryingName}" is unavailable, try again`) :
+                        null,
+
+                    // error - prob firebase error
+                    usernameFailed && usernameFailed !== "unique" ?
+                        m("p", "Adding username failed, try again") :
+                        null,
+
                     m(usernameC, { tabindex : 3 })
-                    // m("p", { class : css.logout },
-                    //     "or ",
-                    //     m("button", {
-                    //         onclick() {
-                    //             state.action("LOGOUT");
-                    //         }
-                    //     }, "logout")
-                    // )
                 ) :
                 null,
 
+            // 4 - usernaming
             usernaming ?
-                m("div", { class : css.step },
+                m("div", { class : cssJoin(css.step, css.loading) },
                     m("p", `Trying username ${tryingName}`),
                     m(loading, { valign : "bottom" })
                 ) :
                 null,
 
+            // 3c, 5a - DONE
             loggedIn ? m("div", "Logged in!") : null
         );
     }

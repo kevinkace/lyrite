@@ -37,6 +37,8 @@ function checkAuth(State, user, provider) {
                     if (doc.data().username) {
                         State.session.username = doc.data().username;
                         State.session.loggedIn = true;
+                    } else {
+                        State.modal = "login";
                     }
                 })
     ));

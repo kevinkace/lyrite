@@ -23,8 +23,10 @@ export default {
         delete state.header;
     },
     view() {
+        const title = get(state, [ "song", "data", "title" ]);
+
         return m("div", { class : css.headerIn },
-            m("h1", { class : css.title }, get(state, [ "song", "data", "title" ])),
+            m("h1", { class : css.title }, title),
 
             m("div", { class : css.logo },
                 m("a", {

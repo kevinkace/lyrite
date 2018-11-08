@@ -34,9 +34,7 @@ export default {
                         class : css.github
                     }, m.trust(ghLogo)),
 
-                    m("div", {
-                        class : css.ver
-                    }, state.ver.tag)
+                    m("div", { class : css.ver }, state.ver.tag)
                 ) :
                 null,
 

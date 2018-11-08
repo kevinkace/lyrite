@@ -69,25 +69,29 @@ export default (State) => ({
 
     // import song
     IMPORT_SONG_LYRICS(songObj) {
-        const slug    = slugify(songObj.title);
         const { uid } = State.session;
         const batch   = db.batch();
         const songRef = db.collection("songs").doc();
         const userRef = db.collection("users").doc(uid);
 
+        const { title, artist, lyrics } = songObj;
+        const slug = slugify(title);
+
         // update song
         batch.set(songRef, {
-            slug,
-            title   : songObj.title,
-            artist  : songObj.artist,
             created : serverTimestamp(),
+            updated : serverTimestamp(),
             owner   : userRef,
-            lyrics  : songObj.lyrics
+            slug,
+            title,
+            artist,
+            lyrics
         });
 
         // update user
         batch.update(userRef, {
-            songs : arrayUnion(songRef)
+            udpated : serverTimestamp(),
+            songs   : arrayUnion(songRef)
         });
 
         return batch.commit().then(() => ({ slug, id : songRef.id }));

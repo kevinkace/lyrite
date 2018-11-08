@@ -53,13 +53,11 @@ export default {
                         vnode.state.disabled = true;
 
                         state.action("ADD_USERNAME", vnode.state.value)
-                            .then(m.redraw)
-                            .catch((err) => {
+                            .catch(err => {
                                 vnode.state.value = "";
                                 delete vnode.state.disabled;
-
-                                m.redraw();
-                            });
+                            })
+                            .finally(m.redraw);
                     }
                 },
 

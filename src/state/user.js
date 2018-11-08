@@ -4,7 +4,7 @@ import * as lib from "../db/lib";
 export default State => ({
     INIT() {
         firebase.auth().onAuthStateChanged(user => {
-            if (!user) {
+            if (!user || State.session.authorizing) {
                 // not logged in, so why is this firing?
 
                 return;
@@ -68,8 +68,6 @@ export default State => ({
         return db.runTransaction(tx =>
             tx.get(usernameRef).then(usernameDoc => {
                 if (usernameDoc.exists) {
-                    delete State.session.usernaming;
-                    State.session.usernameFailed = true;
                     throw new Error("unique");
                 }
 
@@ -92,6 +90,14 @@ export default State => ({
             delete State.session.tryingName;
             delete State.session.usernaming;
             State.session.username = username;
+            State.session.loggedIn = true;
+        })
+        .catch(err => {
+            delete State.session.tryingName;
+            delete State.session.usernaming;
+            State.session.usernameFailed = err.message;
+
+            throw err;
         });
     }
 });

@@ -31,7 +31,7 @@ const State = {
     font   : { size : 1.3 },
     cols   : { count : 3 },
 
-    session  : {},
+    session : {},
 
     deleted : {},
 
