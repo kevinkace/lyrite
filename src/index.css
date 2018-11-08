@@ -70,10 +70,9 @@ button {
     transition: transform 0.3s;
 
     &:focus {
-        outline: none;
-        transform: translateY(-0.1em);
-        box-shadow: 1px 2px 4px 0 #4449;
+        /* outline: none; */
     }
+
 }
 
 a {
@@ -106,6 +105,12 @@ hr {
     color: colors.bg;
 
     background: var(--color);
+
+    &:focus {
+        outline: none;
+        transform: translateY(-0.1em);
+        box-shadow: 1px 2px 4px 0 #4449;
+    }
 }
 
 .title {
