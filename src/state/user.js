@@ -26,6 +26,9 @@ export default State => ({
         delete State.session.authFailed;
         delete State.session.loggedIn;
 
+        State.modal = "login";
+        m.redraw();
+
         return firebase.auth().signInWithPopup(provider)
             .then(result => {
                 firebase.auth().setPersistence(local);
