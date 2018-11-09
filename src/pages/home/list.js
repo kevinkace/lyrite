@@ -16,7 +16,7 @@ export default {
             songs ?
 
                 songs
-                .filter((song) => !song.data.deleted_at)
+                .filter((song) => !song.data.deleted)
                 .map((song) =>
                     m("li", {
                             key   : song.id,

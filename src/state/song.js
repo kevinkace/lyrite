@@ -50,7 +50,7 @@ export default (State) => ({
             songs   : undefined // State.songs.songs !@#$@
         };
 
-        db.collection("songs").onSnapshot(snap => {
+        db.collection("songs").orderBy("created", "desc").onSnapshot(snap => {
             delete State.songs.loading;
             State.songs.loaded = Date.now();
             State.songs.songs = [];
@@ -142,7 +142,7 @@ export default (State) => ({
 
         // mark as deleted in Firestore
         db.collection("songs").doc(id)
-            .update({ deleted_at : serverTimestamp() })
+            .update({ deleted : serverTimestamp() })
             .then(() => {
                 // timeout to actually delete
                 const timeoutId = setTimeout(() => {
@@ -153,7 +153,8 @@ export default (State) => ({
 
                     batch.delete(songRef);
                     batch.update(userRef, {
-                        songs : arrayRemove(songRef)
+                        updated : serverTimestamp(),
+                        songs   : arrayRemove(songRef)
                     });
 
                     batch.commit()
@@ -183,7 +184,10 @@ export default (State) => ({
         clearTimeout(State.deleted[id].timeoutId);
 
         db.collection("songs").doc(id)
-            .update({ deleted_at : _delete() })
+            .update({
+                deleted : _delete(),
+                updated : serverTimestamp()
+            })
             .then(() => {
                 delete State.deleted[id];
                 m.redraw();
