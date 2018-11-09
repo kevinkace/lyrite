@@ -1,6 +1,5 @@
 import state from "../../state";
 
-import cssJoin from "cssJoin";
 import css from "./providers.css";
 import twitter from "../../icons/twitter.svg";
 import facebook from "../../icons/facebook.svg";
@@ -28,12 +27,7 @@ export default {
             providers.map(p =>
                 m("button", {
                         tabindex,
-                        class : cssJoin(
-                            css[p.name]
-                            // [ style === "icon", css.icon ],
-                            // [ state.provider === p.name, css.curProvider ],
-                            // [ state.provider && state.provider !== p.name, css.otherProvider ]
-                        ),
+                        class : css[p.name],
                         onclick() {
                             state.action("LOGIN", p.provName, p.name).then(m.redraw);
                         }
