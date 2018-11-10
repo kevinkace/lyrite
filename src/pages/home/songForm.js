@@ -101,7 +101,7 @@ export default {
                     show   : showErrors && !isFocused(titleDom),
                     errors : formErrors.title,
                     labels : {
-                        all : "title must be 3-50 characters"
+                        all : "title must be 1-50 characters"
                     }
                 }),
 
@@ -141,7 +141,7 @@ export default {
                     show   : showErrors && !isFocused(artistDom),
                     errors : formErrors.artist,
                     labels : {
-                        all : "artist name must be 3-50 characters"
+                        all : "artist name must be 1-50 characters"
                     }
                 }),
 
@@ -181,7 +181,7 @@ export default {
                     show   : showErrors && !isFocused(lyricsDom),
                     errors : formErrors.lyrics,
                     labels : {
-                        all : "lyrics must be 10-1000 characters"
+                        all : "lyrics must be 10-5000 characters"
                     }
                 }),
 
@@ -190,7 +190,7 @@ export default {
                     value       : lyrics,
                     placeholder : isFocused(lyricsDom, "", "paste or drop lyrics"),
                     minlength   : 10,
-                    maxlength   : 1000,
+                    maxlength   : 5000,
                     disabled,
                     required    : true,
                     name        : "lyrics",
