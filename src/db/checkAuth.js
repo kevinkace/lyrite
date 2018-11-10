@@ -1,11 +1,11 @@
-import db, { firebase, serverTimestamp } from "./";
+import db, { serverTimestamp } from ".";
 
 /**
  * Does something with auth
  * @param {object} State - state object...?
  * @param {object} user - user data
  */
-function checkAuth(State, user, provider) {
+export default function checkAuth(State, user, provider) {
     const { uid, photoURL } = user;
     const userRef = db.collection("users").doc(uid);
 
@@ -43,5 +43,3 @@ function checkAuth(State, user, provider) {
                 })
     ));
 }
-
-export { checkAuth as checkAuth };

@@ -1,5 +1,5 @@
 import db, { firebase, serverTimestamp } from "../db";
-import * as lib from "../db/lib";
+import checkAuth from "../db/checkAuth";
 
 export default State => ({
     INIT() {
@@ -10,7 +10,7 @@ export default State => ({
                 return;
             }
 
-            lib.checkAuth(State, user).then(() => {
+            checkAuth(State, user).then(() => {
                 // todo: move to view
                 m.redraw();
             });
@@ -34,7 +34,7 @@ export default State => ({
             .then(result => {
                 firebase.auth().setPersistence(local);
 
-                return lib.checkAuth(State, result.user, provType);
+                return checkAuth(State, result.user, provType);
             })
             .then(() => {
                 // login step 3b/3c
