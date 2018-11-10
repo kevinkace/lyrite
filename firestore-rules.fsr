@@ -2,21 +2,20 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /songs/{song} {
       allow read;
-      allow create: if isSignedIn() && createdIsNow() && validTitle() && validArtist() && validLyrics();
-      allow update: if isSignedIn() && userExists() && isOwner(resource);
-      allow delete: if isSignedIn() && userExists() && isOwner(resource);
+      allow create: if isSignedIn() && userExists() && createdIsNow() && hasOwner() && validSong() && numFields(7);
+      allow update: if isSignedIn() && userExists() && songOwner(resource) && validSong() || deletedIsNow();
+      allow delete: if isSignedIn() && userExists() && songOwner(resource) && markedForDelete(resource);
     }
 
     match /users/{userId} {
       allow read;
-      allow create: if isSignedIn();
-      allow update: if isSignedIn() && isUser(userId);
+      allow create: if isSignedIn() && createdIsNow() && updatedIsNow();
+      allow update: if isSignedIn() && isUser(userId) && updatedIsNow() && (updatedSongs() || validUsername()) && numFields(2);
     }
 
     match /usernames/{username} {
       allow read;
-      allow update: if isOwner(resource);
-      allow create: if isSignedIn();
+      allow create: if isSignedIn() && userExists() && createdIsNow() && updatedIsNow() && hasOwner() && hasProvider();
     }
 
     function isSignedIn() {
@@ -27,7 +26,7 @@ service cloud.firestore {
       return request.auth.uid == userId;
     }
 
-    function isOwner(resouce) {
+    function songOwner(resource) {
       return (resource.data.owner == /databases/$(database)/documents/users/$(request.auth.uid)) || resource.id == request.auth.uid;
     }
 
@@ -39,16 +38,56 @@ service cloud.firestore {
       return request.resource.data.created == request.time;
     }
 
+    function updatedIsNow() {
+      return request.resource.data.updated == request.time;
+    }
+
+    function deletedIsNow() {
+      return request.resource.data.deleted == request.time;
+    }
+
+    function validUsername() {
+      return request.resouce.data.username is string && request.resouce.data.username.size() >= 1 && request.resouce.data.username.size() <= 30;
+    }
+
     function validTitle() {
-      return request.resource.data.title.size() >= 1 && request.resource.data.title.size() <= 50;
+      return request.resouce.data.title is string && request.resource.data.title.size() >= 1 && request.resource.data.title.size() <= 50;
     }
 
     function validArtist() {
-      return request.resource.data.artist.size() >= 1 && request.resource.data.artist.size() <= 50;
+      return request.resouce.data.artist is string && request.resource.data.artist.size() >= 1 && request.resource.data.artist.size() <= 50;
     }
 
     function validLyrics() {
-      return request.resource.data.title.size() >= 10 && request.resource.data.title.size() <= 5000;
+      return request.resource.data.lyrics is string && request.resource.data.lyrics.size() >= 10 && request.resource.data.lyrics.size() <= 5000;
+    }
+
+    function validSlug() {
+      return request.resource.data.slug is string && request.resource.data.slug.size() >= 1 && request.resource.data.slug.size() <= 100;
+    }
+
+    function validSong() {
+      return validTitle() && validArtist() && validLyrics() && validSlug() && updatedIsNow();
+    }
+
+    function hasProvider() {
+      return request.resource.data.provider == "twitter" || request.resource.data.provider == "github" || request.resource.data.provider == "facebook";
+    }
+
+    function hasOwner() {
+      return request.resource.data.owner == request.auth.uid;
+    }
+
+    function numFields(num) {
+      return request.resouce.data.size() == num;
+    }
+
+    function updatedSongs() {
+      return request.resouce.data.songs is map;
+    }
+
+    function markedForDelete(resource) {
+      return resource.data.deleted < request.time;
     }
   }
 }
