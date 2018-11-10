@@ -26,6 +26,7 @@ export default State => ({
         delete State.session.authFailed;
         delete State.session.loggedIn;
 
+        // ensure modal is open when logging in (could have clicked provider from song form area)
         State.modal = "login";
         m.redraw();
 
@@ -42,6 +43,9 @@ export default State => ({
             .catch(err => {
                 // login step 3a
                 State.session.authFailed = true;
+                console.error(err);
+
+                return err;
             });
     },
 
