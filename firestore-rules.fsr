@@ -2,7 +2,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /songs/{song} {
       allow read;
-      allow create: if isSignedIn();
+      allow create: if isSignedIn() && createdIsNow() && validTitle() && validArtist() && validLyrics();
       allow update: if isSignedIn() && userExists() && isOwner(resource);
       allow delete: if isSignedIn() && userExists() && isOwner(resource);
     }
@@ -15,6 +15,7 @@ service cloud.firestore {
 
     match /usernames/{username} {
       allow read;
+      allow update: if isOwner(resource);
       allow create: if isSignedIn();
     }
 
@@ -27,11 +28,27 @@ service cloud.firestore {
     }
 
     function isOwner(resouce) {
-      return resource.data.created_by == /databases/$(database)/documents/users/$(request.auth.uid)
+      return (resource.data.owner == /databases/$(database)/documents/users/$(request.auth.uid)) || resource.id == request.auth.uid;
     }
 
     function userExists() {
       return exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function createdIsNow() {
+      return request.resource.data.created == request.time;
+    }
+
+    function validTitle() {
+      return request.resource.data.title.size() >= 1 && request.resource.data.title.size() <= 50;
+    }
+
+    function validArtist() {
+      return request.resource.data.artist.size() >= 1 && request.resource.data.artist.size() <= 50;
+    }
+
+    function validLyrics() {
+      return request.resource.data.title.size() >= 10 && request.resource.data.title.size() <= 5000;
     }
   }
 }
