@@ -123,6 +123,7 @@ export default (State) => ({
     UPDATE_PARSED_LYRICS(lyrics) {
         const doc = db.collection("songs").doc(State.song.id);
 
+        debugger;
         State.song.data.lyrics = lyrics;
         doc.set(State.song.data);
     },
@@ -142,12 +143,16 @@ export default (State) => ({
 
         // mark as deleted in Firestore
         db.collection("songs").doc(id)
-            .update({ deleted : serverTimestamp() })
+            .update({
+                updated : serverTimestamp(),
+                deleted : serverTimestamp()
+            })
             .then(() => {
                 // timeout to actually delete
+                // todo: change to firestore function, #40
                 const timeoutId = setTimeout(() => {
                     const { uid } = State.session;
-                    const batch = db.batch();
+                    const batch   = db.batch();
                     const songRef = db.collection("songs").doc(id);
                     const userRef = db.collection("users").doc(uid);
 
