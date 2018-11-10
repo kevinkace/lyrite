@@ -69,7 +69,7 @@ export default {
                         name      : "username",
                         type      : "text",
                         disabled  : vnode.state.disabled,
-                        minlength : 4,
+                        minlength : 1,
                         maxlength : 30,
                         required  : true,
                         pattern   : "[\\w\\-]*",
@@ -102,7 +102,7 @@ export default {
                     align  : "bottom",
                     // valign : "bottom",
                     labels : {
-                        all    : "4-30 characters, letters, numbers,  -",
+                        all    : "1-30 characters, letters, numbers,  -",
                         unique : "usernames must be unique <br>please try something else"
                     }
                 })
