@@ -10,9 +10,13 @@ export default State => ({
                 return;
             }
 
-            checkAuth(State, user).then(() => {
+            return checkAuth(State, user).then(() => {
                 // todo: move to view
                 m.redraw();
+            })
+            .catch(err => {
+                debugger;
+                console.error(err);
             });
         });
     },

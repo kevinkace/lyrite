@@ -9,8 +9,8 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read;
-      allow create: if isSignedIn() && createdIsNow() && updatedIsNow();
-      allow update: if isSignedIn() && isUser(userId) && updatedIsNow() && (updatedSongs() || validUsername()) && numFields(2);
+      allow create: if isSignedIn() && createdIsNow() && updatedIsNow() && hasProvider() && hasPhoto();
+      allow update: if isSignedIn() && isUser(userId) && updatedIsNow() && (updatedSongs() || validUsername() || hasPhoto()) && numFields(2);
     }
 
     match /usernames/{username} {
@@ -47,15 +47,15 @@ service cloud.firestore {
     }
 
     function validUsername() {
-      return request.resouce.data.username is string && request.resouce.data.username.size() >= 1 && request.resouce.data.username.size() <= 30;
+      return request.resource.data.username is string && request.resource.data.username.size() >= 1 && request.resource.data.username.size() <= 30;
     }
 
     function validTitle() {
-      return request.resouce.data.title is string && request.resource.data.title.size() >= 1 && request.resource.data.title.size() <= 50;
+      return request.resource.data.title is string && request.resource.data.title.size() >= 1 && request.resource.data.title.size() <= 50;
     }
 
     function validArtist() {
-      return request.resouce.data.artist is string && request.resource.data.artist.size() >= 1 && request.resource.data.artist.size() <= 50;
+      return request.resource.data.artist is string && request.resource.data.artist.size() >= 1 && request.resource.data.artist.size() <= 50;
     }
 
     function validLyrics() {
@@ -74,16 +74,20 @@ service cloud.firestore {
       return request.resource.data.provider == "twitter" || request.resource.data.provider == "github" || request.resource.data.provider == "facebook";
     }
 
+    function hasPhoto() {
+      return request.resource.data.photoURL is string;
+    }
+
     function hasOwner() {
       return request.resource.data.owner == request.auth.uid;
     }
 
     function numFields(num) {
-      return request.resouce.data.size() == num;
+      return request.resource.data.size() == num;
     }
 
     function updatedSongs() {
-      return request.resouce.data.songs is map;
+      return request.resource.data.songs is map;
     }
 
     function markedForDelete(resource) {

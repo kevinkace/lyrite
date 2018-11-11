@@ -23,37 +23,19 @@
   },
   "homepage": "https://github.com/kevinkace/lyrite#readme",
   "dependencies": {
-    "@types/mithril": "^1.1.13",
-    "animation-resolve": "git+https://github.com/kevinkace/animation-resolve.git",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-preset-es2015": "^6.24.1",
-    "clean-webpack-plugin": "^0.1.19",
-    "copy-webpack-plugin": "^4.5.1",
+    "animation-resolve": "github:kevinkace/animation-resolve",
     "cssJoin": "github:kevinkace/cssJoin",
     "eol": "^0.9.1",
-    "eslint": "^4.19.1",
-    "eslint-config-arenanet": "^4.2.0",
     "file-loader": "^1.1.11",
     "firebase": "^5.5.2",
     "firebase-app": "0.0.1",
-    "git-rev": "^0.2.1",
-    "html-webpack-include-assets-plugin": "^1.0.4",
-    "html-webpack-plugin": "^3.2.0",
-    "html-webpack-template": "^6.2.0",
     "marked": "^0.3.19",
     "minireset.css": "0.0.3",
     "mithril": "^1.1.6",
-    "modular-css-webpack": "^8.2.0",
     "object-path": "^0.11.4",
-    "postcss-nested": "^3.0.0",
-    "raw-loader": "^0.5.1",
     "slugify": "^1.3.0",
     "string-hash": "^1.1.3",
-    "url-parse": "^1.4.3",
-    "webpack": "^4.8.3",
-    "webpack-cli": "^2.1.3",
-    "webpack-dev-server": "^3.1.4"
+    "url-parse": "^1.4.3"
   },
   "eslintConfig": {
     "extends": "arenanet",
@@ -92,5 +74,26 @@
         }
       ]
     }
+  },
+  "devDependencies": {
+    "@types/mithril": "^1.1.13",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.1",
+    "eslint": "^4.19.1",
+    "eslint-config-arenanet": "^4.2.0",
+    "git-rev": "^0.2.1",
+    "firestore-security-tests": "^1.4.0",
+    "html-webpack-include-assets-plugin": "^1.0.4",
+    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-template": "^6.2.0",
+    "modular-css-webpack": "^8.2.0",
+    "postcss-nested": "^3.0.0",
+    "raw-loader": "^0.5.1",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-server": "^3.1.4"
   }
 }
