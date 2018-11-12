@@ -1,71 +1,38 @@
 import db, { firebase, serverTimestamp } from "../db";
-import checkAuth from "../db/checkAuth";
+// import checkAuth from "../db/checkAuth";
+import Session from "./Session";
 
 export default State => ({
     INIT() {
-        firebase.auth().onAuthStateChanged(user => {
-            if (!user || State.session.authorizing) {
-                // not logged in, so why is this firing?
+        State.session = new Session();
 
-                return;
-            }
-
-            return checkAuth(State, user).then(() => {
-                // todo: move to view
-                m.redraw();
-            })
-            .catch(err => {
-                debugger;
-                console.error(err);
-            });
-        });
+        firebase.auth().onAuthStateChanged(fbUser => State.session.onAuthStateChanged(fbUser));
     },
 
-    LOGIN(provName, provType) {
+    AUTH_WITH_PROVIDER(provName, provType) {
         const provider = new firebase.auth[provName]();
         const local = firebase.auth.Auth.Persistence.LOCAL;
 
-        State.session.provider = provType;
-        State.session.authorizing = true;
-        delete State.session.authFailed;
-        delete State.session.loggedIn;
+        const { session } = State;
 
         // ensure modal is open when logging in (could have clicked provider from song form area)
         State.modal = "login";
-        m.redraw();
+        State.session.tryingAuthProvider(provType);
 
         return firebase.auth().signInWithPopup(provider)
-            .then(result => {
-                firebase.auth().setPersistence(local);
-
-                return checkAuth(State, result.user, provType);
-            })
+            .then(res => session.signInWithPopup(res))
             .then(() => {
-                // login step 3b/3c
-                delete State.session.authorizing;
+                firebase.auth().setPersistence(local);
             })
-            .catch(err => {
-                // login step 3a
-                State.session.authFailed = true;
-                delete State.session.authorizing;
-
-                return firebase.auth().signOut();
-            });
+            .catch(err => session.signInWithPopupCatch(err));
     },
 
     LOGOUT() {
-        State.session.loggingOut = true;
+        State.session.tryingLogout();
 
         return firebase.auth().signOut()
-            .then(() => {
-                // Sign-out successful
-                State.session = {};
-            })
-            .catch(err => {
-                // An error happened.
-                // todo: handle error
-                console.error(err);
-            });
+            .then(() => State.session.signOut())
+            .catch(() => State.session.signOutCatch());
     },
 
     ADD_USERNAME(username) {

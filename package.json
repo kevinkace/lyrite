@@ -72,6 +72,25 @@
           "args": "after-used",
           "ignoreRestSiblings": false
         }
+      ],
+
+      "no-restricted-syntax": ["error",
+        "ExperimentalRestProperty",
+        "ExperimentalSpreadProperty",
+        "WithStatement",
+        "RestElement",
+        "YieldExpression",
+        "JSXIdentifier",
+        "JSXNamespacedName",
+        "JSXMemberExpression",
+        "JSXEmptyExpression",
+        "JSXExpressionContainer",
+        "JSXElement",
+        "JSXClosingElement",
+        "JSXOpeningElement",
+        "JSXAttribute",
+        "JSXSpreadAttribute",
+        "JSXText"
       ]
     }
   },

@@ -29,7 +29,7 @@ export default {
                         tabindex,
                         class : css[p.name],
                         onclick() {
-                            state.action("LOGIN", p.provName, p.name).then(m.redraw);
+                            state.action("AUTH_WITH_PROVIDER", p.provName, p.name).finally(m.redraw);
                         }
                     },
                     m.trust(p.logo),

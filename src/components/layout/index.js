@@ -47,8 +47,8 @@ export default {
                                 key   : id,
                                 class : css.notificationIn,
 
-                                onbeforeremove(notiVnode) {
-                                    return animResolve(notiVnode.dom, css.notificationOut);
+                                onbeforeremove({ dom }) {
+                                    return animResolve(dom, css.notificationOut);
                                 }
                             },
 
