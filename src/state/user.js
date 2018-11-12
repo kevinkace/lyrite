@@ -47,9 +47,9 @@ export default State => ({
             .catch(err => {
                 // login step 3a
                 State.session.authFailed = true;
-                console.error(err);
+                delete State.session.authorizing;
 
-                return err;
+                return firebase.auth().signOut();
             });
     },
 

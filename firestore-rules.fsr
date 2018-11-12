@@ -9,7 +9,7 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read;
-      allow create: if isSignedIn() && createdIsNow() && updatedIsNow() && hasProvider() && hasPhoto();
+      allow create: if isSignedIn() && createdIsNow() && updatedIsNow() && hasProvider() && hasPhoto() && numFields(4);
       allow update: if isSignedIn() && isUser(userId) && updatedIsNow() && (updatedSongs() || validUsername() || hasPhoto()) && numFields(2);
     }
 
@@ -83,7 +83,8 @@ service cloud.firestore {
     }
 
     function numFields(num) {
-      return request.resource.data.size() == num;
+      // todo: will be replaced by request.data.keys().size()???
+      return request.writeFields.size() == num;
     }
 
     function updatedSongs() {

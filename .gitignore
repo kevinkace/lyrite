@@ -1,5 +1,4 @@
 node_modules
 dist
 config.js
-test/firestore-config.json
-test/lyrite-86271-firebase-adminsdk-7u8ep-432fa461a9.json
+test/*
