@@ -19,7 +19,7 @@ export default {
                 m("div", { class : css.login },
                     state.session.loggedIn ?
                         m(logout) :
-                        m(login)
+                        [m(logout), m(login)]
                 ) :
                 null,
 

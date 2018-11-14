@@ -39,12 +39,6 @@ export default class Session {
         this.loggingIn = true;
 
         delete this.init;
-        delete this.authorized;
-        delete this.authFailed;
-        delete this.username;
-        delete this.usernameFailed;
-        delete this.tryingName;
-        delete this.loggedIn;
     }
 
     tryingLogout() {
@@ -87,6 +81,11 @@ export default class Session {
     }
 
     onAuthStateChanged(fbUser) { // eslint-disable-line max-statements
+        // app startup, never logged in
+        if (!fbUser && this.init) {
+            return;
+        }
+
         // not app startup, authed (something else should be handling this)
         if (!this.init && fbUser) {
             return;
@@ -97,14 +96,8 @@ export default class Session {
             return;
         }
 
-        // app startup, never logged in
-        if (!fbUser && this.init) {
-            return;
-        }
-
         // handle auth removal (ie user removes auth from their provider)
         if (!fbUser && !this.loggingOut && !this.authorizing) {
-
             this.deleteAll();
             this.authFailed = true;
 
@@ -131,36 +124,36 @@ export default class Session {
      */
     getUser() {
         return this.userRef.get()
-        .then(res => this.gotDoc(res))
-        .then(() => {
-            if (this.getUsername()) {
-                this.loggedIn = true;
-            } else {
-                // todo: this feels strange
-                State.modal = "login";
-            }
-        })
-        .catch(err => {
+            .then(this.gotDoc.bind(this))
+            .then(() => {
+                if (this.getUsername()) {
+                    this.loggedIn = true;
+                } else {
+                    // todo: this feels strange
+                    State.modal = "login";
+                }
+            })
+            .catch(err => {
 
-            console.error(err);
-            debugger;
+                console.error(err);
+                debugger;
 
-            this.authFailed = true;
+                this.authFailed = true;
 
-            delete this.authorized;
-            delete this.authorizing;
-            delete this.username;
-            delete this.usernaming;
-            delete this.usernameFailed;
-            delete this.tryingName;
-            delete this.provider;
-            delete this.loggedIn;
+                delete this.authorized;
+                delete this.authorizing;
+                delete this.username;
+                delete this.usernaming;
+                delete this.usernameFailed;
+                delete this.tryingName;
+                delete this.provider;
+                delete this.loggedIn;
 
-            // todo: is this necessary?
-            firebase.auth().signOut();
+                // todo: is this necessary?
+                firebase.auth().signOut();
 
-            throw err;
-        });
+                throw err;
+            });
     }
 
     gotDoc(doc) {
@@ -192,12 +185,6 @@ export default class Session {
         this.authorized = true;
 
         delete this.authorizing;
-        delete this.authFailed;
-        delete this.username;
-        delete this.usernaming; // ?
-        delete this.usernameFailed;
-        delete this.tryingName;
-        // we can assume user
 
         this.addFbUser(fbUser);
 
