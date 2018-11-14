@@ -16,24 +16,21 @@ export default class Session {
         // loggedIn
     }
 
-    deleteAll() {
+    deleteAll(keep) {
         debugger;
 
-        delete this.provider;
-        delete this.authorized;
-        delete this.authorizing;
-        delete this.authFailed;
+        for (const prop in this) {
+            if (keep.indexOf(prop) >= 0) {
+                continue;
+            }
 
-        delete this.username;
-        delete this.user;
-        delete this.usernameFailed;
-        delete this.tryingName;
-
-        delete this.loggedIn;
-        delete this.loggingIn;
+            delete this[prop];
+        }
     }
 
     tryingAuthProvider(provType) {
+        debugger;
+
         this.provider = provType;
         this.authorizing = true;
         this.loggingIn = true;
@@ -42,6 +39,8 @@ export default class Session {
     }
 
     tryingLogout() {
+        debugger;
+
         delete this.authorizing;
         delete this.authFailed;
         delete this.username;
@@ -53,6 +52,8 @@ export default class Session {
     }
 
     signOut() {
+        debugger;
+
         delete this.provider;
         delete this.authorized;
         delete this.authorizing;
@@ -63,12 +64,16 @@ export default class Session {
     }
 
     signOutCatch(err) {
+        debugger;
+
         // maybe still logged in?
 
         this.signOut;
     }
 
     addFbUser(fbUser) {
+        debugger;
+
         const { uid, photoURL } = fbUser;
         const userRef = db.collection("users").doc(uid);
 
@@ -81,38 +86,24 @@ export default class Session {
     }
 
     onAuthStateChanged(fbUser) { // eslint-disable-line max-statements
+        debugger;
+
         // app startup, never logged in
-        if (!fbUser && this.init) {
-            return;
-        }
+        if (!fbUser) {
+            this.deleteAll([ "init" ]);
 
-        // not app startup, authed (something else should be handling this)
-        if (!this.init && fbUser) {
-            return;
-        }
-
-        // something else is running (logout), which will handle this
-        if (this.authorizing || this.loggingOut || this.loggingIn) {
-            return;
-        }
-
-        // handle auth removal (ie user removes auth from their provider)
-        if (!fbUser && !this.loggingOut && !this.authorizing) {
-            this.deleteAll();
-            this.authFailed = true;
+            if (!this.init) {
+                // logged out?
+                // auth failed?
+                // perms revoked?
+            }
 
             return;
         }
+
+        this.deleteAll([ "provider", "loggingIn" ]);
 
         this.authorized = true;
-
-        delete this.init;
-        delete this.authorizing;
-        delete this.authFailed;
-        delete this.username;
-        delete this.usernaming; // ?
-        delete this.usernameFailed;
-        delete this.tryingName;
 
         this.addFbUser(fbUser);
 
@@ -123,6 +114,8 @@ export default class Session {
      * Get user from Firestore, or create new
      */
     getUser() {
+        debugger;
+
         return this.userRef.get()
             .then(this.gotDoc.bind(this))
             .then(() => {
@@ -157,6 +150,8 @@ export default class Session {
     }
 
     gotDoc(doc) {
+        debugger;
+
         const { photoURL } = this;
 
         this.doc = doc;
@@ -174,6 +169,8 @@ export default class Session {
     }
 
     getUsername() {
+        debugger;
+
         if (!this.doc || !this.doc.data) {
             return;
         }
@@ -181,17 +178,9 @@ export default class Session {
         this.username = this.doc.data().username;
     }
 
-    signInWithPopup({ user : fbUser }) {
-        this.authorized = true;
-
-        delete this.authorizing;
-
-        this.addFbUser(fbUser);
-
-        return this.getUser();
-    }
-
     signInWithPopupCatch(err) {
+        debugger;
+
         console.error(err);
 
         this.deleteAll();

@@ -20,7 +20,7 @@ export default State => ({
         State.session.tryingAuthProvider(provType);
 
         return firebase.auth().signInWithPopup(provider)
-            .then(res => session.signInWithPopup(res))
+            // .then(res => session.signInWithPopup(res))
             .then(() => {
                 firebase.auth().setPersistence(local);
             })
