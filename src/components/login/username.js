@@ -27,8 +27,8 @@ export default {
                         [ vnode.state.disabled, css.formDisabled, css.form ]
                     ),
                     novalidate : true,
-                    oncreate(formVnode) {
-                        formDom = formVnode.dom;
+                    oncreate({ dom }) {
+                        formDom = dom;
                         validateForm(formDom, formErrors);
                     },
                     onsubmit(e) {

@@ -14,8 +14,8 @@ export default {
             m("div", {
                     class : cssIn,
 
-                    onbeforeremove(divVnode) {
-                        return animResolve(divVnode.dom, cssOut);
+                    onbeforeremove({ dom }) {
+                        return animResolve(dom, cssOut);
                     }
                 },
 

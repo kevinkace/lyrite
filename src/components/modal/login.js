@@ -53,8 +53,8 @@ export default {
 
             m("label", {
                 tabindex : 1,
-                oncreate(labelVnode) {
-                    labelVnode.dom.focus();
+                oncreate({ dom }) {
+                    dom.focus();
                 }
             }),
 

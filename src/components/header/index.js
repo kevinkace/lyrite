@@ -10,13 +10,13 @@ import logo from "../../icons/lyrite-logo2.svg";
 import animResolve from "animation-resolve";
 
 export default {
-    oncreate(vnode) {
+    oncreate({ dom }) {
         state.header = {
-            height : vnode.dom.offsetHeight
+            height : dom.offsetHeight
         };
     },
-    onbeforeremove(vnode) {
-        return animResolve(vnode.dom, css.headerOut);
+    onbeforeremove({ dom }) {
+        return animResolve(dom, css.headerOut);
     },
     onremove() {
         // todo: should be in an action

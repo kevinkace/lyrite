@@ -18,8 +18,8 @@ export default {
         update(vnode);
     },
 
-    onbeforeremove(vnode) {
-        return animResolve(vnode.dom, css.editOut);
+    onbeforeremove({ dom }) {
+        return animResolve(dom, css.editOut);
     },
 
     view(vnode) {

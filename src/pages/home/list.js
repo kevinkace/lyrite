@@ -22,8 +22,8 @@ export default {
                             key   : song.id,
                             class : get(state, [ "deleted", song.id ]) ? css.deleted : null,
 
-                            onbeforeremove(songVnode) {
-                                return animResolve(songVnode.dom, css.songOut);
+                            onbeforeremove({ dom }) {
+                                return animResolve(dom, css.songOut);
                             }
                         },
                         m("a", {

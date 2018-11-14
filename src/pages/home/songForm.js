@@ -88,8 +88,8 @@ export default {
                 class      : css.center,
                 novalidate : true,
 
-                oncreate(formVnode) {
-                    formDom = formVnode.dom;
+                oncreate({ dom }) {
+                    formDom = dom;
                     validateForm(formDom, formErrors);
                 },
                 onsubmit
@@ -114,8 +114,8 @@ export default {
                     required    : true,
                     name        : "title",
 
-                    oncreate(titleVnode) {
-                        vs.titleDom = titleVnode.dom;
+                    oncreate({ dom }) {
+                        vs.titleDom = dom;
                     },
 
                     onfocus(e) {
@@ -154,8 +154,8 @@ export default {
                     required    : true,
                     name        : "artist",
 
-                    oncreate(artistVnode) {
-                        vs.artistDom = artistVnode.dom;
+                    oncreate({ dom }) {
+                        vs.artistDom = dom;
                     },
 
                     onfocus(e) {
@@ -195,8 +195,8 @@ export default {
                     required    : true,
                     name        : "lyrics",
 
-                    oncreate(lyricsVnode) {
-                        vs.lyricsDom = lyricsVnode.dom;
+                    oncreate({ dom }) {
+                        vs.lyricsDom = dom;
                     },
 
                     onfocus(e) {
@@ -228,8 +228,8 @@ export default {
                     disabled,
                     class : css.loadBtn,
                     type  : "submit",
-                    oncreate(buttonVnode) {
-                        submitDom = buttonVnode.dom;
+                    oncreate({ dom }) {
+                        submitDom = dom;
                     }
                 }, "load song")
             )
