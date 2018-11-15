@@ -36,7 +36,7 @@ export default {
             }, 1000);
         }
     },
-    view() {
+    view() { // eslint-disable-line complexity
         const {
             authorized,
             authorizing,
@@ -71,7 +71,7 @@ export default {
                 null,
 
             // 2 - authorizing
-            authorizing ?
+            authorizing || (usernaming && !tryingName) ?
                 m("div", { class : cssJoin(css.step, css.loading) },
                     m("p", `Signing in with ${provider}`),
                     m(loading, { valign : "bottom" })
@@ -108,7 +108,7 @@ export default {
                 null,
 
             // 4 - usernaming
-            usernaming ?
+            usernaming && tryingName ?
                 m("div", { class : cssJoin(css.step, css.loading) },
                     m("p", `Trying username ${tryingName}`),
                     m(loading, { valign : "bottom" })

@@ -9,13 +9,25 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read;
-      allow create: if isSignedIn() && createdIsNow() && updatedIsNow() && hasPhoto() && numFields(3);
-      allow update: if isSignedIn() && isUser(userId) && updatedIsNow() && (updatedSongs() || validUsername() || hasPhoto()) && numFields(2);
+      allow create: if isSignedIn() && createdIsNow() && updatedIsNow() && hasPhoto() && hasFields(['created', 'updated', 'photoURL']) && numFields(3);
+      allow update: if isSignedIn() && isUser(userId) && updatedIsNow() && (addingUsername() || addingPhotoURL());
+    }
+
+    function addingUsername() {
+      return username() && hasFields(['updated', 'username']) && numFields(2);
+    }
+
+    function addingPhotoURL() {
+      return hasPhoto() && hasFields(['updated', 'photoURL']) && numFields(2);
     }
 
     match /usernames/{username} {
       allow read;
-      allow create: if isSignedIn() && userExists() && createdIsNow() && updatedIsNow() && hasOwner();
+      allow create: if isSignedIn() && userExists() && createdIsNow() && updatedIsNow() && hasUser();
+    }
+
+    function hasUser() {
+      return request.resource.data.user == request.auth.id;
     }
 
     function isSignedIn() {
@@ -46,7 +58,7 @@ service cloud.firestore {
       return request.resource.data.deleted == request.time;
     }
 
-    function validUsername() {
+    function username() {
       return request.resource.data.username is string && request.resource.data.username.size() >= 1 && request.resource.data.username.size() <= 30;
     }
 
@@ -70,12 +82,8 @@ service cloud.firestore {
       return validTitle() && validArtist() && validLyrics() && validSlug() && updatedIsNow();
     }
 
-    function hasProvider() {
-      return request.resource.data.provider == "twitter" || request.resource.data.provider == "github" || request.resource.data.provider == "facebook";
-    }
-
     function hasPhoto() {
-      return request.resource.data.photoURL is string;
+      return request.resource.data.photoURL is string && request.resource.data.photoURL.size() <= 500;
     }
 
     function hasOwner() {
@@ -84,7 +92,12 @@ service cloud.firestore {
 
     function numFields(num) {
       // todo: will be replaced by request.data.keys().size()???
-      return request.writeFields.size() == num;
+      // return request.writeFields.size() == num;
+      return request.resource.data.size() == num;
+    }
+
+    function hasFields(fields) {
+    	return request.resource.data.keys().hasAll(fields);
     }
 
     function updatedSongs() {

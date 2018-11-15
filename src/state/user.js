@@ -31,50 +31,11 @@ export default State => ({
         State.session.tryingLogout();
 
         return firebase.auth().signOut()
-            .then(() => State.session.signOut())
+            // onAuthStateChange will pick this up
             .catch(() => State.session.signOutCatch());
     },
 
     ADD_USERNAME(username) {
-        const usernameRef = db.collection("usernames").doc(username);
-
-        State.session.tryingName = username;
-
-        State.session.usernaming = true;
-        delete State.session.usernameFailed;
-
-        return db.runTransaction(tx =>
-            tx.get(usernameRef).then(usernameDoc => {
-                if (usernameDoc.exists) {
-                    throw new Error("unique");
-                }
-
-                // update user with username
-                tx.update(State.session.userRef, {
-                    username,
-                    updated : serverTimestamp()
-                });
-
-                // create username with user ref
-                tx.set(usernameRef, {
-                    user     : State.session.userRef,
-                    provider : State.session.provider,
-                    owner    : State.session.userRef,
-                    created  : serverTimestamp()
-                });
-            })
-        )
-        .then(() => {
-            delete State.session.tryingName;
-            delete State.session.usernaming;
-            State.session.username = username;
-            State.session.loggedIn = true;
-        })
-        .catch(err => {
-            delete State.session.usernaming;
-            State.session.usernameFailed = err.message;
-
-            throw err;
-        });
+        return State.session.addUsername(username);
     }
 });
