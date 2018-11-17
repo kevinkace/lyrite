@@ -27,8 +27,7 @@
     "cssJoin": "github:kevinkace/cssJoin",
     "eol": "^0.9.1",
     "file-loader": "^1.1.11",
-    "firebase": "^5.5.2",
-    "firebase-app": "0.0.1",
+    "firebase": "^5.5.8",
     "marked": "^0.3.19",
     "minireset.css": "0.0.3",
     "mithril": "^1.1.6",
@@ -73,8 +72,8 @@
           "ignoreRestSiblings": false
         }
       ],
-
-      "no-restricted-syntax": ["error",
+      "no-restricted-syntax": [
+        "error",
         "ExperimentalRestProperty",
         "ExperimentalSpreadProperty",
         "WithStatement",
