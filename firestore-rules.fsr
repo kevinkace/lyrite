@@ -9,25 +9,26 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read;
-      allow create: if isSignedIn() && createdIsNow() && updatedIsNow() && hasPhoto() && hasFields(['created', 'updated', 'photoURL']) && numFields(3);
-      allow update: if isSignedIn() && isUser(userId) && updatedIsNow() && (addingUsername() || addingPhotoURL());
-    }
-
-    function addingUsername() {
-      return username() && hasFields(['updated', 'username']) && numFields(2);
-    }
-
-    function addingPhotoURL() {
-      return hasPhoto() && hasFields(['updated', 'photoURL']) && numFields(2);
+      allow create: if isSignedIn() && createdIsNow() && updatedIsNow() && validPhotoURL() && hasFields(['created', 'updated', 'photoURL']) && numFields(3);
+      allow update: if isSignedIn() && updatedIsNow() && (addingUsername() || addingPhotoURL());
     }
 
     match /usernames/{username} {
       allow read;
-      allow create: if isSignedIn() && userExists() && createdIsNow() && updatedIsNow() && hasUser();
+      allow create: if isSignedIn() && userExists() && createdIsNow() && updatedIsNow() && validUser() && validUsername(username) && hasFields(['created', 'updated', 'user']) && numFields(3);
     }
 
-    function hasUser() {
-      return request.resource.data.user == request.auth.id;
+    function addingUsername() {
+      return validUsername() && hasFields(['updated', 'username']) && numFieldsUpdate(2);
+    }
+
+    function addingPhotoURL() {
+      // return validPhotoURL() && hasFields(['updated', 'photoURL']) && numFields(2);
+      return false;
+    }
+
+    function validUser() {
+      return request.resource.data.user == /databases/$(database)/documents/users/$(request.auth.uid);
     }
 
     function isSignedIn() {
@@ -58,8 +59,12 @@ service cloud.firestore {
       return request.resource.data.deleted == request.time;
     }
 
-    function username() {
+    function validUsername() {
       return request.resource.data.username is string && request.resource.data.username.size() >= 1 && request.resource.data.username.size() <= 30;
+    }
+
+    function validUsernameKey(username) {
+      return username.size() >= 1 && username.size() <= 30;
     }
 
     function validTitle() {
@@ -82,7 +87,7 @@ service cloud.firestore {
       return validTitle() && validArtist() && validLyrics() && validSlug() && updatedIsNow();
     }
 
-    function hasPhoto() {
+    function validPhotoURL() {
       return request.resource.data.photoURL is string && request.resource.data.photoURL.size() <= 500;
     }
 
@@ -91,13 +96,18 @@ service cloud.firestore {
     }
 
     function numFields(num) {
-      // todo: will be replaced by request.data.keys().size()???
-      // return request.writeFields.size() == num;
-      return request.resource.data.size() == num;
+      // works on create
+      return request.resource.data.keys().size() == num;
+    }
+
+    function numFieldsUpdate(num) {
+      // works up update
+    	return request.writeFields.size() == num;
     }
 
     function hasFields(fields) {
-    	return request.resource.data.keys().hasAll(fields);
+    	// works on create
+    	return request.resource.data.keys().hasAll(fields); // this works
     }
 
     function updatedSongs() {
