@@ -25,6 +25,7 @@ export default {
     },
 
     view(vnode) {
+        const { expand } = vnode.state;
         const { username, photoURL } = state.session;
 
         vnode.state.handleHandler();
@@ -35,7 +36,7 @@ export default {
                     onclick(e) {
                         e.preventDefault();
 
-                        vnode.state.expand = !vnode.state.expand;
+                        vnode.state.expand = !expand;
                     }
                 },
                 m("img", {
@@ -47,7 +48,8 @@ export default {
             m("div", {
                     class : css.panel,
                     style : {
-                        maxHeight : vnode.state.expand ? `${vnode.state.height + 10}px` : 0
+                        maxHeight : expand ? `${vnode.state.height + 10}px` : 0,
+                        transform : expand ? "translateY(0)" : "translateY(-0.6em)"
                     }
                 },
                 m("div", {
