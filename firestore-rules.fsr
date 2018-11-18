@@ -15,7 +15,7 @@ service cloud.firestore {
 
     match /usernames/{username} {
       allow read;
-      allow create: if isSignedIn() && userExists() && createdIsNow() && updatedIsNow() && validUser() && validUsername(username) && hasFields(['created', 'updated', 'user']) && numFields(3);
+      allow create: if isSignedIn() && userExists() && createdIsNow() && updatedIsNow() && validUser() && validUsernameKey(username) && hasFields(['created', 'updated', 'user']) && numFields(3);
     }
 
     function addingUsername() {
@@ -23,8 +23,7 @@ service cloud.firestore {
     }
 
     function addingPhotoURL() {
-      // return validPhotoURL() && hasFields(['updated', 'photoURL']) && numFields(2);
-      return false;
+      return validPhotoURL() && hasFields(['updated', 'photoURL']) && numFieldsUpdate(2);
     }
 
     function validUser() {
