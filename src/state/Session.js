@@ -4,7 +4,9 @@ import State from ".";
 export default class Session {
     constructor() {
         this.init = true;
-        // loggingIn
+        // loggingIn,
+        // loggingOut,
+        // loggedIn,
         // authorized,
         // authorizing,
         // authFailed,
@@ -12,8 +14,7 @@ export default class Session {
         // usernaming,
         // usernameFailed,
         // tryingName,
-        // provider,
-        // loggedIn
+        // provider
     }
 
     deleteAll(keep = []) {
@@ -56,6 +57,8 @@ export default class Session {
 
         this.usernaming = true;
         this.getUser();
+
+        m.redraw();
     }
 
     addAuthData(authData) {
@@ -91,18 +94,19 @@ export default class Session {
                     });
                 }
 
-                debugger;
-
                 return userRef.update({
                     updated : serverTimestamp(),
                     photoURL
                 })
                 .then(() => {
-                    if (doc.data().username) {
+                    const username = doc.data().username;
+
+                    if (username) {
                         // fucking done!
                         delete this.usernaming;
                         delete this.loggingIn;
                         this.loggedIn = true;
+                        this.username = username;
 
                         return m.redraw();
                     }
@@ -183,14 +187,16 @@ export default class Session {
     }
 
     tryingLogout() {
-        delete this.authorizing;
-        delete this.authFailed;
-        delete this.username;
-        delete this.usernaming;
-        delete this.usernameFailed;
-        delete this.tryingName;
-        delete this.provider;
-        delete this.loggedIn;
+        // delete this.authorizing;
+        // delete this.authFailed;
+        // delete this.username;
+        // delete this.usernaming;
+        // delete this.usernameFailed;
+        // delete this.tryingName;
+        // delete this.provider;
+        // delete this.loggedIn;
+        // this.deleteAll([ "authorized" ]);
+        this.loggingOut = true;
     }
 
     signOut() {

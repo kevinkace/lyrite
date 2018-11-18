@@ -12,14 +12,28 @@ import animResolve from "animation-resolve";
 export default {
     view(vnode) {
         const { header : _header, bug, login : _login } = vnode.attrs;
+        const { loggedIn, loggingIn, loggingOut } = state.session;
 
         return m("div",
 
             _login ?
                 m("div", { class : css.login },
-                    state.session.loggedIn ?
+                    loggedIn ?
                         m(logout) :
-                        [m(logout), m(login)]
+                        null,
+
+                    loggingIn ?
+                        m("div", "logging in...") :
+                        null,
+
+                    loggingOut ?
+                        m("div", "logging out...") :
+                        null,
+
+                    !loggedIn && !loggingIn ?
+                        // todo: remove logout
+                        m(login) :
+                        null
                 ) :
                 null,
 

@@ -1,6 +1,93 @@
 @value * as colors from "../../palette.css";
 
+.user {
+    margin: 0.2em 1.2em 0 0;
+
+    > button {
+        position: relative;
+        height: 2.2em;
+        width: 2.2em;
+        padding: 0;
+
+        background: none;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            &:after {
+                border-top-color: #fff;
+            }
+        }
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: -0.2em;
+            left: 100%;
+            margin: 50% 0 0 0.4em;
+            height: 0;
+            width: 0;
+
+            border: solid transparent 0.3em;
+            border-top-color: colors.grey;
+        }
+
+        img {
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+}
+
+.panel {
+    position: absolute;
+    right: 0.8em;
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height 0.1s;
+
+    > div {
+        position: relative;
+        padding: 0.6em;
+        margin-top: 0.4em;
+
+        border-radius: 0.2em;
+        background: #fff2;
+
+        &:before {
+            position: absolute;
+            content: "";
+            bottom: 100%;
+            right: 1em;
+            height: 0;
+            width: 0;
+
+            border: solid transparent 0.4em;
+            border-bottom-color: #fff2;
+        }
+    }
+
+    hr {
+        margin: 0.6em -0.6em;
+    }
+
+    a {
+        display: block;
+        color: colors.ctaLight;
+        text-decoration: none;
+    }
+}
+
+.username {
+    white-space: nowrap;
+}
+
 .logout {
+    padding: 0;
+
     background: none;
     border: none;
     color: colors.ctaLight;
