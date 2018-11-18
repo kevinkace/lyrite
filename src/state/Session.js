@@ -35,8 +35,6 @@ export default class Session {
     }
 
     onAuthStateChanged(authData) {
-        debugger;
-
         // app startup, never logged in
         if (!authData) {
             this.deleteAll([ "init" ]);
@@ -52,6 +50,7 @@ export default class Session {
 
         this.deleteAll([ "provider", "loggingIn" ]);
 
+        this.loggingIn = true;
         this.authorized = true;
         this.addAuthData(authData);
 
@@ -73,7 +72,6 @@ export default class Session {
      * Get user from Firestore, or create new
      */
     getUser() {
-        debugger;
         const { uid, photoURL } = this;
         const userRef = db.collection("users").doc(uid);
 
@@ -86,11 +84,14 @@ export default class Session {
                         photoURL
                     })
                     .then(() => {
+                        State.modal = "login";
                         delete this.usernaming;
 
                         m.redraw();
                     });
                 }
+
+                debugger;
 
                 return userRef.update({
                     updated : serverTimestamp(),
@@ -99,20 +100,21 @@ export default class Session {
                 .then(() => {
                     if (doc.data().username) {
                         // fucking done!
-                        m.redraw();
+                        delete this.usernaming;
+                        delete this.loggingIn;
+                        this.loggedIn = true;
 
-                        return;
+                        return m.redraw();
                     }
 
-                    debugger;
-
+                    // else wait for username modal submit
                     State.modal = "login";
                     delete this.usernaming;
                 });
             })
             .catch(err => {
-                console.error(err);
                 debugger;
+                console.error(err);
 
                 this.authFailed = true;
 
@@ -134,8 +136,6 @@ export default class Session {
     }
 
     addUsername(username) {
-        debugger;
-
         const { uid } = this;
         const usernameRef = db.collection("usernames").doc(username);
         const userRef     = db.collection("users").doc(uid);
@@ -143,6 +143,8 @@ export default class Session {
         this.tryingName = username;
         this.usernaming = true;
         delete this.usernameFailed;
+
+        debugger;
 
         return db.runTransaction(tx =>
             tx.get(usernameRef).then(usernameDoc => {
@@ -158,7 +160,7 @@ export default class Session {
 
                 // create username with user ref
                 tx.set(usernameRef, {
-                    user    : this.userRef,
+                    user    : userRef,
                     created : serverTimestamp(),
                     updated : serverTimestamp()
                 });
@@ -167,12 +169,12 @@ export default class Session {
         .then(() => {
             delete this.tryingName;
             delete this.usernaming;
+            delete this.loggingIn;
             this.username = username;
             this.loggedIn = true;
             m.redraw();
         })
         .catch(err => {
-            debugger;
             delete this.usernaming;
             this.usernameFailed = err.message;
 
@@ -181,8 +183,6 @@ export default class Session {
     }
 
     tryingLogout() {
-        debugger;
-
         delete this.authorizing;
         delete this.authFailed;
         delete this.username;
@@ -194,8 +194,6 @@ export default class Session {
     }
 
     signOut() {
-        debugger;
-
         delete this.provider;
         delete this.authorized;
         delete this.authorizing;
