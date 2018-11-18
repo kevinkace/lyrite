@@ -17,10 +17,10 @@ export default State => ({
 
         // ensure modal is open when logging in (could have clicked provider from song form area)
         State.modal = "login";
-        State.session.tryingAuthProvider(provType);
+
+        session.tryingAuthProvider(provType);
 
         return firebase.auth().signInWithPopup(provider)
-            // .then(res => session.signInWithPopup(res))
             .then(() => {
                 firebase.auth().setPersistence(local);
             })
@@ -32,6 +32,7 @@ export default State => ({
 
         return firebase.auth().signOut()
             // onAuthStateChange will pick this up
+            .then(res => State.session.signedOut())
             .catch(() => State.session.signOutCatch());
     },
 

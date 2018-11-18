@@ -4,8 +4,8 @@ import State from ".";
 export default class Session {
     constructor() {
         this.init = true;
-        // loggingIn,
-        // loggingOut,
+        // loggingIn - over the whole login process, user or cached session
+        // loggingOut - from user initiation,
         // loggedIn,
         // authorized,
         // authorizing,
@@ -17,13 +17,21 @@ export default class Session {
         // provider
     }
 
-    deleteAll(keep = []) {
+    deleteAll(keep = [], newValues) {
         for (const prop in this) {
             if (keep.indexOf(prop) >= 0) {
                 continue;
             }
 
             delete this[prop];
+        }
+
+        if (!newValues) {
+            return;
+        }
+
+        for (const prop in newValues) {
+            this[prop] = newValues[prop];
         }
     }
 
@@ -36,11 +44,14 @@ export default class Session {
     }
 
     onAuthStateChanged(authData) {
-        // app startup, never logged in
+        console.info(`authed: ${authData ? "true" : "false"}`);
+
+        // app startup, never logged in || no cached auth
         if (!authData) {
             this.deleteAll([ "init" ]);
 
             if (!this.init) {
+                console.log("!init");
                 // logged out?
                 // auth failed?
                 // perms revoked?
@@ -49,26 +60,21 @@ export default class Session {
             return;
         }
 
-        this.deleteAll([ "provider", "loggingIn" ]);
+        // add auth data to state.session
+        this.deleteAll([ "provider" ], {
+            loggingIn  : true,
+            authorized : true,
+            usernaming : true,
 
-        this.loggingIn = true;
-        this.authorized = true;
-        this.addAuthData(authData);
+            authData, // todo: is this necessary?
+            uid      : authData.uid,
+            photoURL : authData.photoURL
+        });
 
-        this.usernaming = true;
+        // get user...
         this.getUser();
 
         m.redraw();
-    }
-
-    addAuthData(authData) {
-        const { uid, photoURL } = authData;
-
-        Object.assign(this, {
-            authData,
-            uid,
-            photoURL
-        });
     }
 
     /**
@@ -80,6 +86,7 @@ export default class Session {
 
         return userRef.get()
             .then(doc => {
+                // no user in FS, create user and ensure username modal
                 if (!doc.exists) {
                     return userRef.set({
                         created : serverTimestamp(),
@@ -94,6 +101,7 @@ export default class Session {
                     });
                 }
 
+                // user exists
                 return userRef.update({
                     updated : serverTimestamp(),
                     photoURL
@@ -101,8 +109,8 @@ export default class Session {
                 .then(() => {
                     const username = doc.data().username;
 
+                    // if there's a username, done!
                     if (username) {
-                        // fucking done!
                         delete this.usernaming;
                         delete this.loggingIn;
                         this.loggedIn = true;
@@ -111,7 +119,7 @@ export default class Session {
                         return m.redraw();
                     }
 
-                    // else wait for username modal submit
+                    // else username modal
                     State.modal = "login";
                     delete this.usernaming;
                 });
@@ -120,21 +128,12 @@ export default class Session {
                 debugger;
                 console.error(err);
 
-                this.authFailed = true;
-
-                delete this.authorized;
-                delete this.authorizing;
-                delete this.username;
-                delete this.usernaming;
-                delete this.usernameFailed;
-                delete this.tryingName;
-                delete this.provider;
-                delete this.loggedIn;
+                this.deleteAll([], { authFailed : true });
 
                 // todo: is this necessary?
                 firebase.auth().signOut();
 
-                throw err;
+                // throw err;
             })
             .finally(() => m.redraw());
     }
@@ -147,8 +146,6 @@ export default class Session {
         this.tryingName = username;
         this.usernaming = true;
         delete this.usernameFailed;
-
-        debugger;
 
         return db.runTransaction(tx =>
             tx.get(usernameRef).then(usernameDoc => {
@@ -187,26 +184,13 @@ export default class Session {
     }
 
     tryingLogout() {
-        // delete this.authorizing;
-        // delete this.authFailed;
-        // delete this.username;
-        // delete this.usernaming;
-        // delete this.usernameFailed;
-        // delete this.tryingName;
-        // delete this.provider;
-        // delete this.loggedIn;
-        // this.deleteAll([ "authorized" ]);
         this.loggingOut = true;
     }
 
-    signOut() {
-        delete this.provider;
-        delete this.authorized;
-        delete this.authorizing;
-        delete this.username;
-        delete this.user;
-        delete this.tryingName;
-        delete this.loggedIn;
+    signedOut() {
+        this.deleteAll([], {
+            init : true
+        });
     }
 
     signOutCatch(err) {
@@ -214,16 +198,17 @@ export default class Session {
 
         // maybe still logged in?
 
-        this.signOut;
+        // return this.signOut();
     }
 
     signInWithPopupCatch(err) {
-        debugger;
+        // console.info(err);
+        this.deleteAll([], {
+            authFailed : true,
+            init       : true
+        });
 
-        console.error(err);
-
-        this.deleteAll();
-
-        this.authFailed = true;
+        // this.authFailed = true;
+        // this.init = true;
     }
 }
