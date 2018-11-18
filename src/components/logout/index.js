@@ -12,6 +12,9 @@ export default {
         m.redraw();
     },
 
+    /**
+     * Close logged in panel when clicking outside panel
+     */
     handleHandler() {
         if (!this.expand && this.attached) {
             document.removeEventListener("click", this.boundHandler);
