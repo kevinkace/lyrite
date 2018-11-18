@@ -79,6 +79,7 @@ export default class Session {
 
     /**
      * Get user from Firestore, or create new
+     * If new, or existing without a username - show login modal
      */
     getUser() {
         const { uid, photoURL } = this;
@@ -96,8 +97,6 @@ export default class Session {
                     .then(() => {
                         State.modal = "login";
                         delete this.usernaming;
-
-                        m.redraw();
                     });
                 }
 
@@ -116,7 +115,7 @@ export default class Session {
                         this.loggedIn = true;
                         this.username = username;
 
-                        return m.redraw();
+                        return;
                     }
 
                     // else username modal
@@ -195,20 +194,14 @@ export default class Session {
 
     signOutCatch(err) {
         debugger;
-
         // maybe still logged in?
-
         // return this.signOut();
     }
 
     signInWithPopupCatch(err) {
-        // console.info(err);
         this.deleteAll([], {
             authFailed : true,
             init       : true
         });
-
-        // this.authFailed = true;
-        // this.init = true;
     }
 }
