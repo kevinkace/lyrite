@@ -71,10 +71,10 @@ export default class Session {
             photoURL : authData.photoURL
         });
 
-        // get user...
-        this.getUser();
-
         m.redraw();
+
+        // get user...
+        return this.getUser();
     }
 
     /**
@@ -172,7 +172,6 @@ export default class Session {
             delete this.loggingIn;
             this.username = username;
             this.loggedIn = true;
-            m.redraw();
         })
         .catch(err => {
             delete this.usernaming;
