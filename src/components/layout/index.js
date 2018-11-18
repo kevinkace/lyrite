@@ -9,6 +9,23 @@ import logout from "../logout";
 import ghLogo from "../../icons/github.svg";
 import animResolve from "animation-resolve";
 
+const loadMsg = {
+    oninit({ state : _state }) {
+        _state.ellipses = [ ".", ".", "." ];
+    },
+    view({ state : _state, attrs }) {
+        const { ellipses } = _state;
+        const { text } = attrs;
+
+        return m("div", { class : css.loadMsg },
+            text,
+            m("span",
+                ellipses.map((ell, idx) => m("i", { class : css[`ell${idx}`] }, ell))
+            )
+        );
+    }
+}
+
 export default {
     view(vnode) {
         const { header : _header, bug, login : _login } = vnode.attrs;
@@ -23,11 +40,11 @@ export default {
                         null,
 
                     loggingIn ?
-                        m("div", "logging in...") :
+                        m(loadMsg, { text : "logging in" }) :
                         null,
 
                     loggingOut ?
-                        m("div", "logging out...") :
+                        m(loadMsg, { text : "logging out" }) :
                         null,
 
                     !loggedIn && !loggingIn ?

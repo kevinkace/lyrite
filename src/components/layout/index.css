@@ -1,4 +1,4 @@
-@value fontSerif, animDur from "../../index.css";
+@value fontSerif, fontDisplay, animDur from "../../index.css";
 @value * as colors from "../../palette.css";
 
 .bug {
@@ -7,12 +7,56 @@
     bottom: 1em;
 }
 
+.layout {
+    position: relative;
+}
+
 .login {
     position: fixed;
     top: 0.2em;
     right: 0.2em;
 
     font-size: 0.8em;
+}
+
+.loadMsg {
+    color: colors.cta;
+    font: 300 0.95em/1.9 fontDisplay;
+
+    i {
+        opacity: 1;
+        padding: 0 0.1em;
+        font-weight: bold;
+        font-style: normal;
+
+        animation : infinite loadMsg0 steps(1, start) 1s;
+    }
+
+    .ell1 {
+        animation-name: loadMsg1;
+    }
+
+    .ell2 {
+        animation-name: loadMsg2;
+    }
+}
+
+@keyframes loadMsg0 {
+    25% {
+        opacity: 0;
+    }
+}
+
+@keyframes loadMsg1 {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes loadMsg2 {
+    75% {
+        opacity: 0;
+    }
 }
 
 .github {
