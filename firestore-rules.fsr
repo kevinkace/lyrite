@@ -2,15 +2,15 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /songs/{song} {
       allow read;
-      allow create: if isSignedIn() && userExists() && createdIsNow() && hasOwner() && validSong() && numFields(7);
-      allow update: if isSignedIn() && userExists() && songOwner(resource) && validSong() || deletedIsNow();
-      allow delete: if isSignedIn() && userExists() && songOwner(resource) && markedForDelete(resource);
+      allow create: if isSignedIn() && userExists() && createdIsNow() && updatedIsNow() && hasOwner() && validSong() && hasFields(['created', 'updated', 'title', 'artist', 'lyrics', 'slug', 'owner']) && numFields(7);
+      allow update: if isSignedIn() && userExists() && updatedIsNow() && songOwner(resource) && ( (validLyrics() && numFieldsUpdate(2)) || (deletedIsNow() && numFieldsUpdate(2)) );
+      allow delete: if isSignedIn() && userExists() && updatedIsNow() && songOwner(resource) && markedForDelete(resource);
     }
 
     match /users/{userId} {
       allow read;
       allow create: if isSignedIn() && createdIsNow() && updatedIsNow() && validPhotoURL() && hasFields(['created', 'updated', 'photoURL']) && numFields(3);
-      allow update: if isSignedIn() && updatedIsNow() && (addingUsername() || addingPhotoURL());
+      allow update: if isSignedIn() && updatedIsNow() && (addingUsername() || addingPhotoURL() || addingSong());
     }
 
     match /usernames/{username} {
@@ -24,6 +24,10 @@ service cloud.firestore {
 
     function addingPhotoURL() {
       return validPhotoURL() && hasFields(['updated', 'photoURL']) && numFieldsUpdate(2);
+    }
+
+    function addingSong() {
+      return updatedSongs() && hasFields(['songs', 'updated'])
     }
 
     function validUser() {
@@ -83,7 +87,7 @@ service cloud.firestore {
     }
 
     function validSong() {
-      return validTitle() && validArtist() && validLyrics() && validSlug() && updatedIsNow();
+      return validTitle() && validArtist() && validLyrics() && validSlug();
     }
 
     function validPhotoURL() {
@@ -91,7 +95,8 @@ service cloud.firestore {
     }
 
     function hasOwner() {
-      return request.resource.data.owner == request.auth.uid;
+      return request.resource.data.owner == /databases/$(database)/documents/users/$(request.auth.uid);
+      // return request.resource.data.owner == request.auth.uid;
     }
 
     function numFields(num) {
@@ -110,7 +115,7 @@ service cloud.firestore {
     }
 
     function updatedSongs() {
-      return request.resource.data.songs is map;
+      return request.resource.data.songs is array;
     }
 
     function markedForDelete(resource) {
