@@ -1,9 +1,10 @@
 @value * as colors from "../../palette.css";
 @value fontSans, animDur from "../../index.css";
+@value headerHeight from "../../components/header/index.css";
 
 .lyredit {
     position: relative;
-    height: 95vh;
+    height: calc(100vh - headerHeight);
     overflow-y: auto;
     overflow-x: hidden;
 }

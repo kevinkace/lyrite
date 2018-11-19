@@ -1,5 +1,6 @@
 @value fontSerif, fontDisplay, animDur from "../../index.css";
 @value * as colors from "../../palette.css";
+@value headerHeight from "../header/index.css";
 
 .bug {
     position: fixed;
@@ -15,15 +16,17 @@
     position: fixed;
     top: 0;
     right: 0;
-    height: 5vh;
+    height: headerHeight;
     padding-right: 1em;
     z-index: 2;
 
     display: flex;
     align-items: center;
 
-    font-size: 0.9em;
-    line-height: 1.9;
+    > * {
+        font-size: 0.9em;
+        line-height: 1.9;
+    }
 }
 
 .loadMsg {

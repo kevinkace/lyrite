@@ -1,9 +1,11 @@
 @value * as colors from "../../palette.css";
 @value fontSerif, animDur from "../../index.css";
 
+@value headerHeight: 2.6em;
+
 .header {
     position: relative;
-    height: 5vh;
+    height: headerHeight;
     display: flex;
     align-items: center;
     justify-content: center;
