@@ -20,10 +20,14 @@ export default {
 
         const { tabindex } = vnode.attrs;
 
+        if (visibleErrors) {
+            vnode.state.persist = true;
+        }
+
         return [
             m("form", {
                     class : cssJoin(
-                        [ visibleErrors, css.usernameErrors, css.username ],
+                        [ visibleErrors || vnode.state.persist, css.usernameErrors, css.username ],
                         [ vnode.state.disabled, css.formDisabled, css.form ]
                     ),
                     novalidate : true,
@@ -99,7 +103,9 @@ export default {
                 m(error, {
                     show   : vnode.state.showErrors,
                     errors : formErrors.username,
-                    align  : "bottom",
+                    // align  : "top",
+                    // align  : "left",
+                    align : "bottom",
                     // valign : "bottom",
                     labels : {
                         all    : "1-30 characters, letters, numbers,  -",

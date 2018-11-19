@@ -10,7 +10,7 @@
 .usernameErrors {
     composes: username;
 
-    padding-bottom: 2em;
+    padding-bottom: 1.4em;
 }
 
 .form {

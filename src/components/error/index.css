@@ -49,6 +49,7 @@
 
 .errorInBottom {
     composes: errorBottom;
+    bottom: 0;
 
     animation: forwards slideInBottom 0.3s;
 }

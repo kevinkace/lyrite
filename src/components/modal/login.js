@@ -81,21 +81,22 @@ export default {
             // 3b, 5b - username field
             authorized && !username && !usernaming ?
                 m("div", { class : css.step },
+                    m("p", { class : cssJoin(css.signedIn, css[provider]) },
+                        m.trust(providerIcons[provider]),
+                        " signed in!"
+                    ),
 
                     // no error
                     !usernameFailed ?
-                        [
-                            m("p", { class : cssJoin(css.signedIn, css[provider]) },
-                                m.trust(providerIcons[provider]),
-                                " signed in!"
-                            ),
-                            m("p", "Choose a username")
-                        ] :
+                        m("p", "Choose a username") :
                         null,
 
                     // error - username already taken
                     usernameFailed === "unique" ?
-                        m("p", `"${tryingName}" is unavailable, try again`) :
+                        m("p",
+                            m("span", { class : css.username }, tryingName),
+                            " is unavailable, try something else"
+                        ) :
                         null,
 
                     // error - prob firebase error

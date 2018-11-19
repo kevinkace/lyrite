@@ -1,3 +1,5 @@
+@value fontDisplay from "../../index.css";
+
 @value * as colors from "../../palette.css";
 
 .login {
@@ -47,6 +49,12 @@
 }
 .facebook svg {
     fill: colors.facebook;
+}
+
+.username {
+    font-weight: bold;
+    font-family: fontDisplay;
+    color: colors.cta;
 }
 
 .logout {
