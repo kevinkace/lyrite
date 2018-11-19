@@ -8,6 +8,7 @@ import loading from "../loading";
 import twitterSvg from "../../icons/twitter.svg";
 import githubSvg from "../../icons/github.svg";
 import facebookSvg from "../../icons/facebook.svg";
+import keySvg from "../../icons/key.svg";
 
 // ## login/account creation steps
 // 1 - not authed, {}
@@ -33,7 +34,7 @@ export default {
         if (state.session.loggedIn) {
             setTimeout(() => {
                 state.action("CLOSE_MODAL");
-            }, 1000);
+            }, 2000);
         }
     },
     view() { // eslint-disable-line complexity
@@ -117,7 +118,15 @@ export default {
                 null,
 
             // 3c, 5a - DONE
-            loggedIn ? m("div", "Logged in!") : null
+            loggedIn ?
+                m("div", { class : css.loggedIn },
+                    m.trust(keySvg),
+                    m("p",
+                        "Logged in as ",
+                        m("span", { class : css.username }, username)
+                    )
+                ) :
+                null
         );
     }
 };

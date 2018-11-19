@@ -3,6 +3,8 @@
 .user {
     margin: 0.2em 0.5em 0 0;
 
+    animation: 1s linear fadeIn;
+
     > button {
         display: block;
         position: relative;
@@ -49,6 +51,15 @@
                 opacity: 0;
             }
         }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }
 

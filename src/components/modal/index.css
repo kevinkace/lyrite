@@ -11,7 +11,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    z-index: 1;
+    z-index: 2;
 
     background: colors.modalBg;
 }
@@ -49,7 +49,7 @@
 .content {
     padding: 1em 1.6em;
     margin-top: 3em;
-    min-width: 400px;
+    min-width: 300px;
     max-width: 600px;
 
     border-radius: 0.2em;
