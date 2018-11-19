@@ -1,9 +1,10 @@
 @value * as colors from "../../palette.css";
 
 .user {
-    margin: 0.2em 1.2em 0 0;
+    margin: 0.2em 0.5em 0 0;
 
     > button {
+        display: block;
         position: relative;
         height: 2.2em;
         width: 2.2em;
@@ -17,7 +18,7 @@
 
         &:hover {
             &:after {
-                border-top-color: #fff;
+                opacity: 1;
             }
         }
 
@@ -32,17 +33,28 @@
 
             border: solid transparent 0.3em;
             border-top-color: colors.grey;
+
+            opacity: 0.5;
+
+            transition: opacity 0.2s;
         }
 
         img {
             border-radius: 50%;
             object-fit: cover;
         }
+
+        &.hideChev {
+            &:after {
+                opacity: 0;
+            }
+        }
     }
 }
 
 .panel {
     position: absolute;
+    top: 5vh;
     right: 0.8em;
     max-height: 0;
     overflow: hidden;
@@ -51,8 +63,8 @@
 
     > div {
         position: relative;
-        padding: 0.6em;
-        margin-top: 0.4em;
+        padding: 0.6em 1em;
+        margin-top: 0.8em;
 
         border-radius: 0.2em;
         background: colors.loggedInPanel;
@@ -61,31 +73,37 @@
             position: absolute;
             content: "";
             bottom: 100%;
-            right: 1em;
+            right: 1.2em;
             height: 0;
             width: 0;
 
-            border: solid transparent 0.4em;
+            border: solid transparent 0.6em;
             border-bottom-color: colors.loggedInPanel;
         }
     }
 
     hr {
-        margin: 0.6em -0.6em;
+        margin: 0.6em -1em;
     }
 
     a {
         display: block;
         color: colors.ctaLight;
-        text-decoration: none;
     }
 }
 
-.username {
+.signedIn {
     white-space: nowrap;
 }
 
+.username {
+    padding-left: 0.1em;
+    font-weight: bold;
+}
+
 .logout {
+    composes: a from "../../index.css";
+
     padding: 0;
 
     background: none;

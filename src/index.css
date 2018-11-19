@@ -75,8 +75,14 @@ button {
 
 }
 
-a {
-    color: #fff;
+a,
+.a {
+    text-decoration: none;
+    font: inherit;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 svg {
@@ -120,4 +126,10 @@ hr {
     &:first-letter {
         letter-spacing: -0.1em;
     }
+}
+
+.username {
+    font-weight: bold;
+    font-family: fontDisplay;
+    color: colors.cta;
 }

@@ -33,6 +33,7 @@ export default {
 
         return m("div", { class : css.user },
             m("button", {
+                    class        : expand ? css.hideChev : "",
                     "aria-label" : "profile settings",
                     onclick(e) {
                         e.preventDefault();
@@ -55,14 +56,20 @@ export default {
                 },
                 m("div", {
                         oncreate({ dom }) {
-                            vnode.state.height = dom.offsetHeight;
+                            vnode.state.height = dom.offsetHeight + 10;
                         }
                     },
-                    m("div", { class : css.username }, `signed in as ${username}`),
+                    m("div", { class : css.signedIn },
+                        "signed in as ",
+                        m("span", { class : css.username }, username)
+                    ),
 
                     m("hr"),
 
-                    m("a", { href : `/users/${username}` }, "my songs"),
+                    m("a", {
+                        href : `/users/${username}`,
+                        oncreate : m.route.link
+                    }, "my songs"),
 
                     m("button", {
                             class : css.logout,

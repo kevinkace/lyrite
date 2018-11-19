@@ -52,9 +52,7 @@
 }
 
 .username {
-    font-weight: bold;
-    font-family: fontDisplay;
-    color: colors.cta;
+    composes: username from "../../index.css";
 }
 
 .logout {

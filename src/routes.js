@@ -13,7 +13,7 @@ export default {
             state.action("LOAD_SONGS_LIST");
         },
         render() {
-            return m(layout, { header : false, bug : true, login : true }, m(home));
+            return m(layout, { header : false, bug : true }, m(home));
         }
     },
 
@@ -30,9 +30,9 @@ export default {
         }
     },
 
-    "/users" : {
+    "/users/:username" : {
         render() {
-            return m(layout, { login : true }, m(users));
+            return m(layout, m(users));
         }
     }
 };
