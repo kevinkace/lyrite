@@ -122,8 +122,8 @@ export default {
                 m("div", { class : css.loggedIn },
                     m.trust(keySvg),
                     m("p",
-                        "Logged in as ",
-                        m("span", { class : css.username }, username)
+                        "Signed in as ",
+                        m("div", { class : css.username }, username)
                     )
                 ) :
                 null

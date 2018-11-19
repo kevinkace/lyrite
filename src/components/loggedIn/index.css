@@ -1,9 +1,9 @@
 @value * as colors from "../../palette.css";
 
 .user {
+    position: absolute;
+    right: 0.8em;
     margin: 0.2em 0.5em 0 0;
-
-    animation: 1s linear fadeIn;
 
     > button {
         display: block;
@@ -54,12 +54,33 @@
     }
 }
 
+.userIn {
+    composes: user;
+
+    animation: 0.3s linear forwards fadeIn;
+}
+
+.userOut {
+    composes: user;
+
+    animation: 0.3s linear forwards fadeOut;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
     }
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
     }
 }
 

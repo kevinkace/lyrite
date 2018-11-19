@@ -106,24 +106,34 @@
             stroke-dasharray: 500;
             stroke-dashoffset: 500;
 
-            animation: 2s ease-in 500ms forwards dash;
+            animation: 1s ease-in 500ms forwards dash;
         }
 
         :global(.strokeBg) {
             stroke: #bbb;
-        }
-
-        :global(.fill) {
-            opacity: 0;
-            fill: #328656;
-            animation: 2s ease-in 500ms forwards fadeIn;
+            fill: #fff;
         }
 
         :global(.bg) {
             fill: #bbb;
         }
 
+        :global(.fill) {
+            opacity: 0;
+            stroke: green;
+            stroke-width: 1px;
+            fill: #88b98b;
+
+            animation: 200ms ease-in 800ms forwards fadeIn;
+        }
+
         :global
+    }
+
+    p {
+        margin: 0;
+        text-align: center;
+        line-height: 1.4;
     }
 }
 
