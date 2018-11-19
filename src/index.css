@@ -43,10 +43,12 @@ input {
 }
 
 label {
+    position: relative;
+
     :global(.placeholder) {
         position: absolute;
         top: 1em;
-        left: 0.7em;
+        left: 0.8em;
 
         line-height: 1.4;
         color: colors.placeholder;

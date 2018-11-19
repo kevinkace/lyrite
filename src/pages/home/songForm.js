@@ -85,7 +85,7 @@ export default {
         const { title, artist, lyrics } = formState;
 
         return m("form", {
-                class      : css.center,
+                class      : css.songForm,
                 novalidate : true,
 
                 oncreate({ dom }) {
@@ -96,7 +96,7 @@ export default {
             },
 
             // title input
-            m("div", { class : isFocused(titleDom, css.titleFocused, css.title) },
+            m("label", { class : isFocused(titleDom, css.titleFocused, css.title) },
                 m(error, {
                     show   : showErrors && !isFocused(titleDom),
                     errors : formErrors.title,
@@ -106,13 +106,13 @@ export default {
                 }),
 
                 m("input", {
-                    value       : title,
-                    placeholder : isFocused(titleDom, "", "Song Title"),
-                    minlength   : 1,
-                    maxlength   : 50,
+                    class     : title ? "focus" : "",
+                    value     : title,
+                    minlength : 1,
+                    maxlength : 50,
                     disabled,
-                    required    : true,
-                    name        : "title",
+                    required  : true,
+                    name      : "title",
 
                     oncreate({ dom }) {
                         vs.titleDom = dom;
@@ -132,11 +132,15 @@ export default {
                         formState.title = value;
                         validateForm(formDom, formErrors);
                     })
-                })
+                }),
+
+                m("div", { class : "placeholder" },
+                    "Song title"
+                )
             ),
 
             // artist input
-            m("div", { class : isFocused(artistDom, css.artistFocused, css.artist) },
+            m("label", { class : isFocused(artistDom, css.artistFocused, css.artist) },
                 m(error, {
                     show   : showErrors && !isFocused(artistDom),
                     errors : formErrors.artist,
@@ -146,13 +150,13 @@ export default {
                 }),
 
                 m("input", {
-                    value       : artist,
-                    placeholder : isFocused(artistDom, "", "Artist"),
-                    minlength   : 1,
-                    maxlength   : 50,
+                    class     : artist ? "focus" : "",
+                    value     : artist,
+                    minlength : 1,
+                    maxlength : 50,
                     disabled,
-                    required    : true,
-                    name        : "artist",
+                    required  : true,
+                    name      : "artist",
 
                     oncreate({ dom }) {
                         vs.artistDom = dom;
@@ -172,11 +176,13 @@ export default {
                         formState.artist = value;
                         validateForm(formDom, formErrors);
                     })
-                })
+                }),
+
+                m("div", { class : "placeholder" }, "Artist")
             ),
 
             // lyrics input
-            m("div", { class : css.dash },
+            m("label", { class : css.dash },
                 m(error, {
                     show   : showErrors && !isFocused(lyricsDom),
                     errors : formErrors.lyrics,

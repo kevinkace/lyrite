@@ -112,7 +112,10 @@ export default {
             // 4 - usernaming
             usernaming && tryingName ?
                 m("div", { class : cssJoin(css.step, css.loading) },
-                    m("p", `Trying username ${tryingName}`),
+                    m("p",
+                        "Trying username",
+                        m("span", { class : css.username }, tryingName)
+                    ),
                     m(loading, { valign : "bottom" })
                 ) :
                 null,

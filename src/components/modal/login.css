@@ -53,6 +53,8 @@
 
 .username {
     composes: username from "../../index.css";
+
+    margin-left: 0.2em;
 }
 
 .logout {

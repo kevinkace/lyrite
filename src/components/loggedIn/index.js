@@ -35,20 +35,22 @@ export default {
 
         vnode.state.handleHandler();
 
-        return m("div", { class : css.userIn },
-            m("button", {
-                    class        : expand ? css.hideChev : "",
-                    "aria-label" : "profile settings",
-                    onclick(e) {
-                        e.preventDefault();
+        return [
+            m("div", { class : css.userIn },
+                m("button", {
+                        class        : expand ? css.hideChev : "",
+                        "aria-label" : "profile settings",
+                        onclick(e) {
+                            e.preventDefault();
 
-                        vnode.state.expand = !expand;
-                    }
-                },
-                m("img", {
-                    src : photoURL,
-                    alt : `${username} avatar`
-                })
+                            vnode.state.expand = !expand;
+                        }
+                    },
+                    m("img", {
+                        src : photoURL,
+                        alt : `${username} avatar`
+                    })
+                )
             ),
 
             m("div", {
@@ -85,6 +87,6 @@ export default {
                     )
                 )
             )
-        );
+        ];
     }
 };

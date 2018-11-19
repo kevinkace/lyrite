@@ -1,55 +1,44 @@
 @value * as colors from "../../palette.css";
 @value animDur from "../../index.css";
 
-.center {
+.songForm {
+    display: flex;
+    flex-direction: column;
     width: 23em;
     margin: 0 auto;
 
     text-align: center;
 }
 
-.input {
-    position: relative;
-    margin: 0 0.6em;
-    padding: 0.4em;
-
-    border-bottom: solid 1px #fff2;
-
+.label {
     input {
-        padding: 0;
-        margin: 0;
         width: 100%;
 
         color: #fff;
-        border: none;
         background: transparent;
-
-        &:focus {
-            outline: none;
-        }
     }
 }
 
-.inputFocused {
+.labelFocused {
     background: #fff1;
 }
 
 .title {
-    composes: input;
+    composes: label;
 }
 
 .titleFocused {
     composes: title;
-    composes: inputFocused;
+    composes: labelFocused;
 }
 
 .artist {
-    composes: input;
+    composes: label;
 }
 
 .artistFocused {
     composes: artist;
-    composes: inputFocused;
+    composes: labelFocused;
 }
 
 .dash {
