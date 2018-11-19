@@ -90,7 +90,7 @@ export default (State) => ({
 
         // update user
         batch.update(userRef, {
-            udpated : serverTimestamp(),
+            updated : serverTimestamp(),
             songs   : arrayUnion(songRef)
         });
 
