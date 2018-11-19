@@ -39,9 +39,9 @@ git.tag((str) => {
 });
 
 module.exports = {
-    entry     : "./src/index.js",
+    entry : "./src/index.js",
 
-    devtool   : "source-map",
+    devtool : "source-map",
 
     devServer : {
         historyApiFallback : true,
@@ -75,6 +75,7 @@ module.exports = {
         // Modular CSS
         new CSSPlugin({
             css    : "./index.css",
+            map    : true,
             before : [ postcssNested ]
         }),
         // Tells webpack to use this plugin to generate the output
