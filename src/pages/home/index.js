@@ -1,9 +1,11 @@
 import state from "../../state";
 
+import { get } from "object-path";
+
 import css from "./index.css";
 
 import logo from "../../icons/lyrite-logo2.svg";
-import list from "./list";
+import list from "../../components/list";
 import songForm from "./songForm";
 import tabs from "../../components/tabs";
 import providers from "../../components/login/providers";
@@ -36,7 +38,7 @@ export default {
                         ]
                     },
 
-                    m(list),
+                    m(list, { songs : get(state, [ "songs", "songs" ]) }),
 
                     state.session.loggedIn ?
                         m(songForm) :

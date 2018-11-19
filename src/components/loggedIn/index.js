@@ -73,9 +73,9 @@ export default {
                     m("hr"),
 
                     m("a", {
-                        href : `/users/${username}`,
+                        href     : `/users/${username}`,
                         oncreate : m.route.link
-                    }, "my songs"),
+                    }, "my lyrics"),
 
                     m("button", {
                             class : css.logout,

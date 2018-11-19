@@ -2,15 +2,15 @@ import state from "../../state";
 
 import { get } from "object-path";
 
-import css from "./list.css";
+import css from "./index.css";
 import animResolve from "animation-resolve";
-import loading from "../../components/loading";
+import loading from "../loading";
 
 import createdByCurrentUser from "../../lib/createdByCurrentUser";
 
 export default {
-    view() {
-        const songs = get(state, [ "songs", "songs" ]);
+    view(vnode) {
+        const { songs } = vnode.attrs;
 
         return m("ul", { class : css.list },
             songs ?

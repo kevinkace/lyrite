@@ -12,6 +12,8 @@ import user from "./user";
  * @property {object} font - font size
  * @property {object} cols - number of columns
  * @property {object} session - just uid ATM
+ * @property {array} songs - array of all songs
+ * @property {object} userSongs - user songs for /users/:username
  * @property {object} deleted - ids of songs that are mid-delete
  * @property {function} err - future error handling
  * @property {object} events - just mousemove() ATM
@@ -32,6 +34,9 @@ const State = {
     cols   : { count : 3 },
 
     session : {},
+
+    songs     : [],
+    userSongs : {},
 
     deleted : {},
 

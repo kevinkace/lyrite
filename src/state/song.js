@@ -49,8 +49,7 @@ export default (State) => ({
             loading : true,
             songs   : undefined // State.songs.songs !@#$@
         };
-
-        db.collection("songs").orderBy("created", "desc").onSnapshot(snap => {
+        return db.collection("songs").orderBy("created", "desc").onSnapshot(snap => {
             delete State.songs.loading;
             State.songs.loaded = Date.now();
             State.songs.songs = [];
@@ -197,5 +196,35 @@ export default (State) => ({
                 delete State.deleted[id];
                 m.redraw();
             });
+    },
+
+    GET_SONGS_BY_USERNAME(username) {
+        return db.collection("usernames").doc(username).get().then(usernameDoc => {
+            return usernameDoc.data().user.onSnapshot(userSnapshot => {
+                return Promise.all(
+                    (userSnapshot.data().songs || []).map((songRef, idx) => {
+                        return songRef.get();
+                    })
+                )
+                .then(data => {
+                    data.forEach((d, idx) => {
+                        if (!idx) {
+                            State.userSongs[username] = [];
+                        }
+
+                        State.userSongs[username].push({ id : d.id, data : d.data() });
+                    });
+                });
+            });
+
+            // return usernameDoc.data().user.get().then(userDoc => {
+            //     debugger;
+            // });
+        });
+        // db.collection("users").where("username", "==", username).get()
+        // .then((doc) => {
+        //     debugger;
+        //     doc.docs.forEach
+        // });
     }
 });

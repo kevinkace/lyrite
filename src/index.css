@@ -82,6 +82,8 @@ a,
     text-decoration: none;
     font: inherit;
 
+    color: colors.ctaLight;
+
     &:hover {
         text-decoration: underline;
     }

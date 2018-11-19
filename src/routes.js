@@ -3,6 +3,7 @@ import state from "./state";
 import layout from "./components/layout";
 import lyrics from "./pages/lyrics";
 import users from "./pages/users";
+import user from "./pages/user";
 import error from "./pages/error";
 import home from "./pages/home";
 
@@ -30,9 +31,15 @@ export default {
         }
     },
 
-    "/users/:username" : {
+    "/users" : {
         render() {
             return m(layout, m(users));
+        }
+    },
+
+    "/users/:username" : {
+        render() {
+            return m(layout, m(user));
         }
     }
 };
