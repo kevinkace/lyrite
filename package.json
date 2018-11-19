@@ -44,7 +44,7 @@
       "node": true
     },
     "parserOptions": {
-      "ecmaVersion": 6,
+      "ecmaVersion": 9,
       "sourceType": "module"
     },
     "globals": {
@@ -77,7 +77,6 @@
         "ExperimentalRestProperty",
         "ExperimentalSpreadProperty",
         "WithStatement",
-        "RestElement",
         "YieldExpression",
         "JSXIdentifier",
         "JSXNamespacedName",
