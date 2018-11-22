@@ -45,8 +45,8 @@ function onsubmit(e) {
     loading = true;
 
     state.action("IMPORT_SONG_LYRICS", formState)
-        .then(({ slug, id }) => {
-            m.route.set(`/songs/${slug}-${id}`);
+        .then(({ slugAndId }) => {
+            m.route.set(`/songs/${slugAndId}`);
         })
         .catch(err => {
             console.error(err);

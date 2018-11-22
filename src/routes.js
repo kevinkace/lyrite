@@ -7,6 +7,8 @@ import user from "./pages/user";
 import error from "./pages/error";
 import home from "./pages/home";
 
+import Song from "./state/classes/Song.js";
+
 export default {
     "/" : {
         onmatch() {
@@ -20,8 +22,8 @@ export default {
 
     "/songs/:slugAndId" : {
         onmatch(args) {
-            if (!args.slugAndId) {
-                m.route.set("/");
+            if (!args.slugAndId || !Song.validateSlugAndId(args.slugAndId)) {
+                return m.route.set("/");
             }
 
             state.action("LOAD_SONG_BY_SLUG_AND_ID", args.slugAndId);

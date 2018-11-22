@@ -23,6 +23,11 @@ export default (State) => ({
             });
         }
 
+        if (State.song.id === id && State.unsubscribe) {
+            // already have a listener
+            return;
+        }
+
         State.unsubscribe = db.collection("songs").doc(id)
             .onSnapshot(doc => {
                 if (!doc.exists) {
@@ -88,12 +93,20 @@ export default (State) => ({
             songs   : arrayUnion(songRef)
         });
 
-        return batch.commit().then(() => {
-            // todo: add data to constructor;
-            State.song = new Song();
+        return batch.commit()
+            .then(() => {
+                State.song = new Song({
+                    slug,
+                    id : songRef.id,
+                    title,
+                    artist,
+                    lyrics
+                });
 
-            return { slug, id : songRef.id };
-        });
+                return State.song;
+
+                // return { slug, id : songRef.id };
+            });
     },
 
     CLOSE_SONG() {
