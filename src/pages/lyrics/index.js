@@ -12,6 +12,9 @@ function addBr(text) {
 }
 
 export default {
+    oninit() {
+        state.action("LOAD_SONG_BY_SLUG_AND_ID", m.route.param("slugAndId"));
+    },
     view() {
         const isLoading = !state.song || state.song.loading;
 

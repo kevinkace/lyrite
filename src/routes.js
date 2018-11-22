@@ -23,8 +23,6 @@ export default {
             if (!args.slugAndId) {
                 m.route.set("/");
             }
-
-            state.action("LOAD_SONG_BY_SLUG_AND_ID", args.slugAndId);
         },
         render() {
             return m(layout, m(lyrics));
