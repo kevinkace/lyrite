@@ -1,18 +1,22 @@
 @value * as colors from "../../palette.css";
-@value animDur from "../../index.css";
+@value animDur, fontDisplay from "../../index.css";
 
 .tools {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
-    padding-right: 0.4em;
 
-    display: flex;
+    min-width: 200px;
+    width: 10vw;
+
+    font-family: fontDisplay;
 
     background: colors.bg;
 
     transition: transform 0.2s;
+    box-shadow: -2px 0 1em rgba(0, 0, 0, 0.3);
+    border-left: solid 1px #222;
 }
 
 .toolsHide {
@@ -21,23 +25,19 @@
     transform: translateX(100%);
 }
 
-.setting {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 0.2em 0 0.2em 0.4em;
+.pipe {
+    border-bottom: solid 2px #222;
 }
 
-.show {
-    position: absolute;
-    top: 0;
-    right: 100%;
-    bottom: 0;
+.setting {
+}
 
+/* header button */
+.show {
     display: flex;
     align-items: center;
-    padding: 0 0.4em 0 0.6em;
+    width: 105%;
+    margin-left: -0.3em;
 
     color: #fff;
     text-align: center;
@@ -52,7 +52,6 @@
     svg {
         display: block;
         width: 1em;
-        margin: 0 auto;
 
         fill: #fff;
     }
@@ -61,26 +60,38 @@
         margin-left: 0.6em;
         padding-top: 0.1em;
 
-        font-size: 0.75em;
         text-transform: uppercase;
     }
 }
 
 .label {
     display: block;
-    font-size: 0.7em;
+    padding: 0.5em 0.4em 0.4em;
     text-transform: uppercase;
 }
 
 .control {
+    display: flex;
+    flex-wrap: wrap;
     position: relative;
     overflow: visible;
+    justify-content: space-between;
 }
 
 .button {
-    composes: button from "../../index.css";
+    flex: 0 0 33.333%;
+    height: 4vh;
 
     font-family: monospace;
+
+    color: var(--color);
+    background: var(--color);
+
+    opacity: 0.8;
+
+    &:hover {
+        color: #fff;
+    }
 }
 
 .button:first-child {
@@ -149,23 +160,9 @@
     font-family: monospace;
 }
 
-.range {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 6em;
-
-    transition: opacity animDur;
-
-    transform: translateX(-50%) rotate(-90deg) translateX(-50%);
-}
-
-.rangeHide {
-    composes: range;
-
-    pointer-events: none;
-
-    opacity: 0;
+.fontSize {
+    height: 4vh;
+    width: 4vh;
 }
 
 .dec,

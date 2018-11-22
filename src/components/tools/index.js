@@ -4,10 +4,15 @@ import css from "./index.css";
 import tooltipCss from "./tooltip.css";
 
 import edit from "../../icons/quill.svg";
+import fontSizeUp from "../../icons/font-sizeUp.svg";
+import fontSizeDown from "../../icons/font-sizeDown.svg";
 import createdByCurrentUser from "../../lib/createdByCurrentUser";
 import forkOrLogin from "./forkOrLogin";
 
 export default {
+    oninit(vnode) {
+        vnode.state.show = true;
+    },
     view(vnode) {
         return m("div", { class : vnode.state.show ? css.tools : css.toolsHide },
 
@@ -26,138 +31,123 @@ export default {
                 m("div", "tools")
             ),
 
-            createdByCurrentUser(state.song) ?
-                [
-                    // Style buttons
-                    m("div", { class : css.setting },
-                        m("label", { class : css.label }, "styles "),
+            // Color buttons
+            m("div", { class : css.setting },
+                m("label", { class : css.label }, "colors "),
 
-                        m("div", { class : css.control },
-                            state.styles.map((style, idx) =>
-                                m("button", {
-                                    class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
+                m("div", { class : css.control },
+                    state.styles.map((style, idx) =>
+                        m("button", {
+                            class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
 
-                                    onclick() {
-                                        state.action("CLICK_STYLE", idx);
-                                    }
-                                }, idx)
-                            )
-                        )
+                            onclick() {
+                                state.action("CLICK_STYLE", idx);
+                            }
+                        }, idx)
+                    )
+                )
+            ),
+
+            // Font choices
+            m("div", { class : css.setting },
+                m("label", { class : css.label }, "font "),
+
+                m("div", { class : css.control },
+                    // m("label", {
+                    //     class : css.font,
+
+                    //     onmouseover() {
+                    //         vnode.state.range = Date.now();
+                    //     },
+
+                    //     onmouseout() {
+                    //         let now = Date.now();
+
+                    //         setTimeout(() => {
+                    //             if (now < vnode.state.range) {
+                    //                 return;
+                    //             }
+
+                    //             vnode.state.range = false;
+
+                    //             m.redraw();
+                    //         }, 300);
+                    //     }
+                    // }, parseFloat(state.font.size, 10).toFixed(2)),
+
+                    m("button", {
+                            class : css.fontSize,
+                            onclick(e) {
+                                state.action("INC_FONT_SIZE");
+                            }
+                        },
+                        m.trust(fontSizeUp)
                     ),
 
-                    // Font choices
-                    m("div", { class : css.setting },
-                        m("label", { class : css.label }, "font "),
+                    m("button", {
+                            class : css.fontSize,
+                            onclick(e) {
+                                state.action("INC_FONT_DOWN");
+                            }
+                        },
+                        m.trust(fontSizeDown)
+                    )
 
-                        m("div", { class : css.control },
-                            m("label", {
-                                class : css.font,
 
-                                onmouseover() {
-                                    vnode.state.range = Date.now();
-                                },
+                )
+            ),
 
-                                onmouseout() {
-                                    let now = Date.now();
+            // Column
+            m("div", { class : css.setting },
+                m("label", { class : css.label }, "cols "),
 
-                                    setTimeout(() => {
-                                        if (now < vnode.state.range) {
-                                            return;
-                                        }
+                m("div", { class : css.control },
+                    m("button", {
+                        class : css.dec,
 
-                                        vnode.state.range = false;
+                        onclick() {
+                            if (state.cols.count === 1) {
+                                return;
+                            }
 
-                                        m.redraw();
-                                    }, 300);
-                                }
-                            }, parseFloat(state.font.size, 10).toFixed(2)),
+                            --state.cols.count;
+                        }
+                    }, "<"),
 
-                            m("input", {
-                                type : "range",
-                                min  : 0.7,
-                                max  : 3,
-                                step : 0.05,
+                    m("label", { class : css.cols }, state.cols.count),
 
-                                class : vnode.state.range ? css.range : css.rangeHide,
+                    m("button", {
+                        class : css.inc,
+                        onclick() {
+                            ++state.cols.count;
+                        }
+                    }, ">")
+                )
+            ),
 
-                                onmouseover() {
-                                    vnode.state.range = Date.now();
-                                },
+            // edit lyrics
+            // m("div", { class : css.setting },
+            //     m("label", { class : css.label }, m.trust("&nbsp;")), // I'm a terrible person
 
-                                onmouseout() {
-                                    let now = Date.now();
+            //     m("div", { class : css.control },
+            //         m("button", {
+            //             class : css.edit,
 
-                                    setTimeout(() => {
-                                        if (now < vnode.state.range) {
-                                            return;
-                                        }
+            //             onclick() {
+            //                 state.action("TOGGLE_EDIT_CURRENT_SONG");
+            //             }
+            //         }, "edit")
+            //     )
+            // ),
 
-                                        vnode.state.range = false;
+            // Style tooltip
+            state.style ?
+                m("div", {
+                    class : tooltipCss[`s${state.style.idx}`],
+                    style : state.tooltip.style
+                }) :
+                null
 
-                                        m.redraw();
-                                    }, 300);
-                                },
-
-                                value   : state.font.size,
-                                oninput : m.withAttr("value", (value) => {
-                                    state.font.size = value;
-                                })
-                            })
-                        )
-                    ),
-
-                    // Column
-                    m("div", { class : css.setting },
-                        m("label", { class : css.label }, "cols "),
-
-                        m("div", { class : css.control },
-                            m("button", {
-                                class : css.dec,
-
-                                onclick() {
-                                    if (state.cols.count === 1) {
-                                        return;
-                                    }
-
-                                    --state.cols.count;
-                                }
-                            }, "<"),
-
-                            m("label", { class : css.cols }, state.cols.count),
-
-                            m("button", {
-                                class : css.inc,
-                                onclick() {
-                                    ++state.cols.count;
-                                }
-                            }, ">")
-                        )
-                    ),
-
-                    m("div", { class : css.setting },
-                        m("label", { class : css.label }, m.trust("&nbsp;")), // I'm a terrible person
-
-                        m("div", { class : css.control },
-                            m("button", {
-                                class : css.edit,
-
-                                onclick() {
-                                    state.action("TOGGLE_EDIT_CURRENT_SONG");
-                                }
-                            }, "edit")
-                        )
-                    ),
-
-                    // Style tooltip
-                    state.style ?
-                        m("div", {
-                            class : tooltipCss[`s${state.style.idx}`],
-                            style : state.tooltip.style
-                        }) :
-                        null
-                ] :
-
-                m(forkOrLogin)
         );
     }
 };
