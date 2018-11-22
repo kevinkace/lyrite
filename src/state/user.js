@@ -1,6 +1,6 @@
 import db, { firebase, serverTimestamp } from "../db";
 // import checkAuth from "../db/checkAuth";
-import Session from "./Session";
+import Session from "./classes/Session";
 
 export default State => ({
     INIT() {
