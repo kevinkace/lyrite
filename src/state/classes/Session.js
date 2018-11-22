@@ -1,5 +1,5 @@
-import db, { firebase, serverTimestamp } from "../db";
-import State from ".";
+import db, { firebase, serverTimestamp } from "../../db";
+import State from "../";
 
 export default class Session {
     constructor() {
