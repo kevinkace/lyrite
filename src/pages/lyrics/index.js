@@ -12,11 +12,8 @@ function addBr(text) {
 }
 
 export default {
-    oninit() {
-        state.action("LOAD_SONG_BY_SLUG_AND_ID", m.route.param("slugAndId"));
-    },
     view() {
-        const isLoading = !state.song || state.song.loading;
+        const { loading : _loading } = state.song;
 
         return m("div", { class : css.lyredit },
             m("div", {
@@ -26,7 +23,7 @@ export default {
                         columnCount : state.cols.count
                     }
                 },
-                isLoading ?
+                _loading ?
                     m(loading, { text : true }) :
                     state.song.parsedLyrics.map((part, idx) =>
                         m("p", {

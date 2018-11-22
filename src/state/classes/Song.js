@@ -31,7 +31,7 @@ export default class Song {
     }
 
     updateSnapshot(doc) {
-        this.loading = false;
+        delete this.loading;
 
         this.loaded = Date.now();
         this.doc    = this.doc;
