@@ -16,8 +16,8 @@ export default {
             songs ?
 
                 songs
-                .filter((song) => !song.data.deleted)
-                .map((song) =>
+                .filter(song => !song.data.deleted)
+                .map(song =>
                     m("li", {
                             key   : song.id,
                             class : get(state, [ "deleted", song.id ]) ? css.deleted : null,
