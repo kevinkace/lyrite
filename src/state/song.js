@@ -2,42 +2,36 @@ import slugify from "slugify";
 
 import db, { _delete, serverTimestamp, arrayUnion, arrayRemove } from "../db";
 
+import Song from "./classes/Song";
+
 import parseLyrics from "../lib/parseLyrics";
 import { getSongFromId } from "../lib/song";
 
 const slugIdRegex = /\-(?!.*\-.*)/;
 
 export default (State) => ({
-    SET_SLUG(slug) {
-        State.slug = slug;
-    },
-
     LOAD_SONG_BY_SLUG_AND_ID(slugAndId) {
         const [ slug, id ] = slugAndId.split(slugIdRegex);
 
-        State.song = {
-            slug,
-            loading : true
-        };
+        // current song..?
+        if (!State.song || State.song.id !== id) {
+            State.song = new Song({
+                loading : true,
+                slugAndId,
+                slug,
+                id
+            });
+        }
 
         State.unsubscribe = db.collection("songs").doc(id)
             .onSnapshot(doc => {
-                delete State.song.loading;
-
                 if (!doc.exists) {
                     State.error = "404";
 
                     return m.route.set("/");
                 }
 
-                delete State.song.loading;
-                State.song.loaded = Date.now();
-
-                State.song.doc  = doc;
-                State.song.id   = doc.id;
-                State.song.data = doc.data();
-
-                State.song.parsedLyrics = parseLyrics(State.song.data.lyrics);
+                State.song.updateSnapshot(doc);
 
                 m.redraw();
             });
@@ -49,6 +43,7 @@ export default (State) => ({
             loading : true,
             songs   : undefined // State.songs.songs !@#$@
         };
+
         return db.collection("songs").orderBy("created", "desc").onSnapshot(snap => {
             delete State.songs.loading;
             State.songs.loaded = Date.now();
@@ -93,7 +88,12 @@ export default (State) => ({
             songs   : arrayUnion(songRef)
         });
 
-        return batch.commit().then(() => ({ slug, id : songRef.id }));
+        return batch.commit().then(() => {
+            // todo: add data to constructor;
+            State.song = new Song();
+
+            return { slug, id : songRef.id };
+        });
     },
 
     CLOSE_SONG() {
