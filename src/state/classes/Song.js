@@ -32,7 +32,7 @@ export default class Song {
         }
 
         if (this.id && this.slug) {
-            this.slugAndId = this._setSlugAndId();
+            this._setSlugAndId();
         }
     }
 
