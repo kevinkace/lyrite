@@ -3,8 +3,6 @@ import { get } from "object-path";
 import state from "../../state";
 
 import css from "./index.css";
-import tools from "../tools";
-
 import logo from "../../icons/lyrite-logo2.svg";
 
 import animResolve from "animation-resolve";
@@ -36,9 +34,7 @@ export default {
                     m.trust(logo),
                     m("div", "Lyrite")
                 )
-            ),
-
-            state.song ? m(tools) : null
+            )
         );
     }
 };

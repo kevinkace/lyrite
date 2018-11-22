@@ -2,6 +2,7 @@ import state from "../../state";
 
 import css from "./index.css";
 import edit from "./edit";
+import tools from "../../components/tools";
 
 import marked from "marked";
 import loading from "../../components/loading";
@@ -42,7 +43,9 @@ export default {
                     )
             ),
 
-            state.edit ? m(edit) : null
-        )
+            state.edit ? m(edit) : null,
+
+            m(tools)
+        );
     }
 };
