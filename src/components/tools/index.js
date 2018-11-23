@@ -3,31 +3,25 @@ import state from "../../state";
 import css from "./index.css";
 import tooltipCss from "./tooltip.css";
 
-import edit from "../../icons/quill.svg";
-import fontSizeUp from "../../icons/font-sizeUp.svg";
-import fontSizeDown from "../../icons/font-sizeDown.svg";
+import quillSvg from "../../icons/quill.svg";
+import fontSizeUpSvg from "../../icons/font-sizeUp.svg";
+import fontSizeDownSvg from "../../icons/font-sizeDown.svg";
+
 import createdByCurrentUser from "../../lib/createdByCurrentUser";
 import forkOrLogin from "./forkOrLogin";
 
 export default {
-    oninit(vnode) {
-        vnode.state.show = true;
-    },
     view(vnode) {
-        return m("div", { class : vnode.state.show ? css.tools : css.toolsHide },
+        return m("div", { class : css.tools },
 
             // Show/hide tool button
             m("button", {
-                    class : css.show,
+                    class : !state.toolsOpen ? css.showEdit : css.show,
                     onclick() {
-                        vnode.state.show = !vnode.state.show;
-
-                        if (!vnode.state.show) {
-                            state.action("HIDE_TOOLS");
-                        }
+                        state.action("TOGGLE_TOOLS");
                     }
                 },
-                m.trust(edit),
+                m.trust(quillSvg),
                 m("div", "tools")
             ),
 
@@ -78,19 +72,19 @@ export default {
                     m("button", {
                             class : css.fontSize,
                             onclick(e) {
-                                state.action("INC_FONT_SIZE");
+                                state.action("INC_FONT_DOWN");
                             }
                         },
-                        m.trust(fontSizeUp)
+                        m.trust(fontSizeDownSvg)
                     ),
 
                     m("button", {
                             class : css.fontSize,
                             onclick(e) {
-                                state.action("INC_FONT_DOWN");
+                                state.action("INC_FONT_SIZE");
                             }
                         },
-                        m.trust(fontSizeDown)
+                        m.trust(fontSizeUpSvg)
                     )
 
 
@@ -124,21 +118,6 @@ export default {
                     }, ">")
                 )
             ),
-
-            // edit lyrics
-            // m("div", { class : css.setting },
-            //     m("label", { class : css.label }, m.trust("&nbsp;")), // I'm a terrible person
-
-            //     m("div", { class : css.control },
-            //         m("button", {
-            //             class : css.edit,
-
-            //             onclick() {
-            //                 state.action("TOGGLE_EDIT_CURRENT_SONG");
-            //             }
-            //         }, "edit")
-            //     )
-            // ),
 
             // Style tooltip
             state.style ?

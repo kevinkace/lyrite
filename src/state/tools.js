@@ -1,5 +1,13 @@
 import { get } from "object-path";
 
+function hideTools(State) {
+    delete State.selected;
+    delete State.style;
+    delete State.tooltip;
+
+    window.removeEventListener("mousemove", State.events.mousemove);
+}
+
 export default (State) => ({
     CLICK_LYRIC(idx) {
         const lineStyleIsSetStyle = get(State, "style.idx") === get(State, `song.lyrics.${idx}.style.idx`);
@@ -51,13 +59,29 @@ export default (State) => ({
         State.song.parsedLyrics[State.selected].style = { idx };
     },
 
-    HIDE_TOOLS() {
-        delete State.selected;
-        delete State.style;
-        delete State.tooltip;
+    OPEN_TOOLS() {
+        State.toolsOpen = true;
+    },
 
-        State.action("CLOSE_EDIT_CURRENT_SONG");
+    TOGGLE_TOOLS() {
+        State.toolsOpen = !State.toolsOpen;
 
-        window.removeEventListener("mousemove", State.events.mousemove);
+        if (State.toolsOpen) {
+            hideTools(State);
+        }
+    },
+
+    CLOSE_TOOLS() {
+        delete State.toolsOpen;
+
+        hideTools(State);
+    },
+
+    INC_FONT_SIZE() {
+        State.font.size += 0.1;
+    },
+
+    DEC_FONT_SIZE() {
+        State.font.size += 0.1;
     }
 });

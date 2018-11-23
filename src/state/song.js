@@ -118,20 +118,6 @@ export default (State) => ({
         delete State.song;
     },
 
-    TOGGLE_EDIT_CURRENT_SONG() {
-        return State.edit ?
-            State.action("CLOSE_EDIT_CURRENT_SONG") :
-            State.action("OPEN_EDIT_CURRENT_SONG");
-    },
-
-    OPEN_EDIT_CURRENT_SONG() {
-        State.edit = true;
-    },
-
-    CLOSE_EDIT_CURRENT_SONG() {
-        State.edit = false;
-    },
-
     UPDATE_PARSED_LYRICS(lyrics) {
         const doc = db.collection("songs").doc(State.song.id);
 

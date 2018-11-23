@@ -5,14 +5,29 @@
 .lyredit {
     position: relative;
     height: calc(100vh - headerHeight);
+}
+
+.scroll {
+    height: 100%;
+
     overflow-y: auto;
     overflow-x: hidden;
+
+    transition: transform animDur;
+}
+
+.scrollEdit {
+    composes: scroll;
+
+    transform: translateX(-20%);
+
 }
 
 .lyrics {
     padding: 0.5em;
     column-gap: 1em;
-    transform-origin: 0 0;
+
+    transform-origin: 100% 0;
 
     transition: transform animDur;
 }
@@ -20,7 +35,25 @@
 .lyricsEdit {
     composes: lyrics;
 
-    transform: scale(0.7);
+    transform: scale(0.8);
+}
+
+.tools {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 20vw;
+
+    transform: translateX(100%);
+    transition: transform animDur;
+}
+
+.toolsEdit {
+    composes: tools;
+
+    transform: translateX(0);
 }
 
 .line {

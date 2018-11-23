@@ -2,13 +2,7 @@
 @value animDur, fontDisplay from "../../index.css";
 
 .tools {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-
-    min-width: 200px;
-    width: 10vw;
+    width: 100%;
 
     font-family: fontDisplay;
 
@@ -19,17 +13,8 @@
     border-left: solid 1px #222;
 }
 
-.toolsHide {
-    composes: tools;
-
-    transform: translateX(100%);
-}
-
 .pipe {
     border-bottom: solid 2px #222;
-}
-
-.setting {
 }
 
 /* header button */
@@ -49,6 +34,8 @@
 
     background: colors.cta;
 
+    transition: transform 0.2s, opacity 0.3s;
+
     svg {
         display: block;
         width: 1em;
@@ -62,6 +49,14 @@
 
         text-transform: uppercase;
     }
+}
+
+.showEdit {
+    composes: show;
+
+    opacity: 0.6;
+    transform: translateX(-1.5em);
+    transition-delay: 0.12s;
 }
 
 .label {
