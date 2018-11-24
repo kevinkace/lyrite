@@ -2,7 +2,6 @@ import state from "../../state";
 
 import css from "./index.css";
 import cssJoin from "cssJoin";
-import edit from "./edit";
 import tools from "../../components/tools";
 
 import marked from "marked";
@@ -15,15 +14,18 @@ function addBr(text) {
 class Scroll {
     constructor() {
         this.init = true;
-        // this.barHeight = 1;
-        // this.barTop = 0;
-        // this.scrollTop = 0;
         this.heightDelta = 0;
         this.heightRatio = 1;
         this.scrollAmt = 0;
+        this.barAmt = 0;
 
         // this.content // height of content dom
         // this.scroll // height of scroll dom
+
+        // this.barHeight = 1;
+        // this.barDelta = 0;
+
+        // todo: debounce
         this.scrollListener = this.scroll.bind(this);
 
         document.addEventListener("wheel", this.scrollListener);
@@ -32,13 +34,6 @@ class Scroll {
 
     destructor() {
         document.removeEventListener("wheel", this.scrollListener);
-    }
-
-    reset() {
-        // this.barHeight = 1;
-        // this.barTop = 0;
-        // this.scrollTop = 0;
-        this.heightRatio = 1;
     }
 
     createDom(key, dom) {
@@ -54,8 +49,6 @@ class Scroll {
 
         if (oldVal !== this[key]) {
             this.updateBarHeight();
-        } else {
-            console.log("same");
         }
     }
 
@@ -66,19 +59,21 @@ class Scroll {
 
         this.heightDelta = this.content - this.scroll;
         this.heightRatio = this.scroll / this.content;
-
-        console.log("heightDelta", this.heightDelta);
-        console.log("heightRatio", this.heightRatio);
+        this.barHeight   = this.scroll * this.heightRatio;
+        this.barDelta    = this.scroll - this.barHeight;
 
         m.redraw();
     }
 
     scroll(e) {
         const change = parseInt(e.deltaY, 10) / 5;
+        const _barAmt = this.barAmt;
+        const _scrollAmt = this.scrollAmt;
 
         if (this.heightDelta < 0) {
             this.scrollAmt = 0;
 
+            return;
         }
 
         this.scrollAmt += change;
@@ -89,6 +84,12 @@ class Scroll {
 
         if (this.scrollAmt > this.heightDelta) {
             this.scrollAmt = this.heightDelta;
+        }
+
+        this.barAmt = this.barDelta * (this.scrollAmt / this.heightDelta);
+
+        if (this.barAmt === _barAmt && this.scrollAmt === _scrollAmt) {
+            return;
         }
 
         m.redraw();
@@ -105,6 +106,7 @@ export default {
     },
     view(vnode) {
         const { loading : _loading } = state.song;
+        const { barHeight, heightDelta, barAmt } = vnode.state.scroll;
 
         return m("div", { class : css.lyredit },
             m("div", {
@@ -118,16 +120,16 @@ export default {
                         vnode.state.scroll.updateDom("scroll", dom);
                     }
                 },
-                m("div", { style : { position  : "absolute", color : "#f00" } },
-                    vnode.state.scroll.scrollAmt
-                ),
+                // m("div", { style : { position  : "absolute", color : "#f00" } },
+                //     scrollAmt
+                // ),
                 m("div", {
                     class : css.bar,
                     style : {
-                        height  : `${vnode.state.scroll.heightRatio * 100}%`,
-                        opacity : vnode.state.scroll.heightDelta <= 0 ? 0 : 1
+                        height    : barHeight ? `${barHeight}px` : 0,
+                        transform : `translateY(${barAmt}px)`,
+                        opacity   : heightDelta <= 0 ? 0 : 1
                     }
-                    // "data-attrs" : JSON.stringify(vnode.state.scroll.style)
                 }),
                 m("div", {
                         class : css.content,
