@@ -1,0 +1,50 @@
+.line {
+    padding : 0.5em 0.5em;
+    margin: 0;
+    break-inside: avoid;
+
+    border: solid 1px transparent;
+    border-radius: 0.2em;
+    color: var(--color);
+
+    cursor: default;
+}
+
+.lineSelected {
+    composes: line;
+
+    border-color: #ddd5;
+}
+
+.s0,
+.s1,
+.s2,
+.s3,
+.s4,
+.s5 {
+    composes: line;
+}
+
+.s0 {
+    --color: colors.color0;
+}
+
+.s1 {
+    --color: colors.color1;
+}
+
+.s2 {
+    --color: colors.color2;
+}
+
+.s3 {
+    --color: colors.color3;
+}
+
+.s4 {
+    --color: colors.color4;
+}
+
+.s5 {
+    --color: colors.color5;
+}

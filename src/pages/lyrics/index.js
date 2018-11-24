@@ -1,16 +1,11 @@
 import state from "../../state";
 
 import css from "./index.css";
-import cssJoin from "cssJoin";
+import lyrics from "./lyrics";
+// todo: move to ./pages/lyrics
 import tools from "../../components/tools";
 
-import marked from "marked";
-import loading from "../../components/loading";
 import Scroll from "../../components/scroll/Scroll.js";
-
-function addBr(text) {
-    return text.replace(/\n/g, "<br>");
-}
 
 export default {
     oninit(vnode) {
@@ -76,24 +71,8 @@ export default {
                                 vnode.state.scroll.updateDom("content", vnode.state.contentDom);
                             }
                         },
-                        _loading ?
-                            m(loading, { text : true }) :
-                            state.song.parsedLyrics.map((part, idx) =>
-                                m("p", {
-                                        id    : part.hash,
-                                        class : [
-                                            state.selected === idx ? css.lineSelected : css.line,
-                                            part.style ? css[`s${part.style.idx}`] : null
-                                        ].join(" "),
 
-                                        onclick() {
-                                            state.action("CLICK_LYRIC", idx);
-                                        }
-                                    },
-
-                                    m.trust(marked(addBr(part.text)))
-                                )
-                            )
+                        m(lyrics)
                     )
                 )
             ),
