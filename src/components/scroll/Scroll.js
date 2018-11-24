@@ -1,3 +1,4 @@
+import { throttle } from "throttle-debounce";
 export default class Scroll {
     constructor() {
         this.init = true;
@@ -13,7 +14,7 @@ export default class Scroll {
         // this.barDelta = 0;
 
         // todo: debounce
-        this.scrollListener = this.scroll.bind(this);
+        this.scrollListener = throttle(100, this.scroll.bind(this));
 
         document.addEventListener("wheel", this.scrollListener);
         window.scroll = this;

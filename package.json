@@ -34,6 +34,7 @@
     "object-path": "^0.11.4",
     "slugify": "^1.3.0",
     "string-hash": "^1.1.3",
+    "throttle-debounce": "^2.0.1",
     "url-parse": "^1.4.3"
   },
   "eslintConfig": {
