@@ -2,34 +2,79 @@
 @value fontSans, animDur from "../../index.css";
 @value headerHeight from "../../components/header/index.css";
 
+@value dur: 0.2s;
 .lyredit {
     position: relative;
     height: calc(100vh - headerHeight);
 }
 
 .scroll {
+    position: relative;
     height: 100%;
 
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden;
 
-    transition: transform animDur;
+    transform-origin: 0 0;
+
+    transition: height dur, transform dur;
+
+    .bar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0.5em;
+        height: 100%;
+        z-index: 1;
+
+        transition: height dur, right dur, opacity dur;
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0.2em;
+            right: 0.1em;
+            bottom: 0.2em;
+            left: 0.1em;
+
+            opacity: 0.4;
+            border-radius: 0.15em;
+            background: #000;
+
+            transition: opacity dur;
+        }
+
+        &:hover:after {
+            opacity: 1;
+        }
+    }
 }
 
 .scrollEdit {
     composes: scroll;
 
-    transform: translateX(-20%);
+    .bar {
+        right: 20%;
+    }
+}
 
+.content {
+    position: relative;
+    transition: transform dur;
 }
 
 .lyrics {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+
     padding: 0.5em;
+
     column-gap: 1em;
 
-    transform-origin: 100% 0;
-
-    transition: transform animDur;
+    transform-origin: 0 0;
+    transition: transform dur;
 }
 
 .lyricsEdit {
@@ -43,11 +88,12 @@
     top: 0;
     right: 0;
     bottom: 0;
-
     width: 20vw;
 
+    z-index: 1;
+
     transform: translateX(100%);
-    transition: transform animDur;
+    transition: transform dur;
 }
 
 .toolsEdit {
