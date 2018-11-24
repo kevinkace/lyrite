@@ -16,7 +16,7 @@ export default class Scroll {
         // todo: debounce
         this.scrollListener = throttle(100, this.scroll.bind(this));
 
-        document.addEventListener("wheel", this.scrollListener);
+        document.addEventListener("wheel", this.scrollListener, { passive : true });
         window.scroll = this;
     }
 
@@ -25,7 +25,7 @@ export default class Scroll {
     }
 
     createDom(key, dom) {
-        this.key = dom.getBoundingClientRect().height;
+        this[key] = dom.getBoundingClientRect().height;
 
         this.updateBarHeight();
     }
