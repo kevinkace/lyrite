@@ -1,5 +1,6 @@
 import state from "../state";
 
+// todo: static method in Song class
 function getSongFromId(id) {
     let song;
 

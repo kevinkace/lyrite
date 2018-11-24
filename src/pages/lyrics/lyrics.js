@@ -17,7 +17,7 @@ export default {
         return _loading ?
             m(loading, { text : true }) :
             state.song.parsedLyrics.map((part, idx) =>
-                m("p", {
+                m("div", {
                         id    : part.hash,
                         class : [
                             state.selected === idx ? css.lineSelected : css.line,
