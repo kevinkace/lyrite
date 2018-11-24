@@ -117,6 +117,7 @@
 
     hr {
         margin: 0.6em -1em;
+        border-color: colors.header;
     }
 
     a {
