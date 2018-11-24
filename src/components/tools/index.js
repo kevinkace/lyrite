@@ -72,7 +72,7 @@ export default {
                     m("button", {
                             class : css.fontSize,
                             onclick(e) {
-                                state.action("INC_FONT_DOWN");
+                                state.action("DEC_FONT_SIZE");
                             }
                         },
                         m.trust(fontSizeDownSvg)

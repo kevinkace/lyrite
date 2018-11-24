@@ -82,6 +82,6 @@ export default (State) => ({
     },
 
     DEC_FONT_SIZE() {
-        State.font.size += 0.1;
+        State.font.size -= 0.1;
     }
 });
