@@ -113,7 +113,7 @@
     left: 0;
 
     display: flex;
-    flex-flow: column;
+    flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
 }
