@@ -1,4 +1,4 @@
-import parseLyricString from "../../lib/parseLyrics";
+import hash from "string-hash";
 
 const slugAndIdRegex = /.+-.+/;
 
@@ -40,6 +40,15 @@ export default class Song {
         return slugAndIdRegex.test(slugAndId);
     }
 
+    static parseLyricString(lyricString) {
+        return lyricString
+            .split("\n\n")
+            .map((text) => ({
+                hash : hash(text),
+                text
+            }));
+    }
+
     _setSlugAndId() {
         this.slugAndId = `${this.slug}-${this.id}`;
     }
@@ -50,7 +59,7 @@ export default class Song {
         this.loaded       = Date.now();
         this.doc          = doc;
         this.data         = doc.data();
-        this.parsedLyrics = parseLyricString(this.data.lyrics);
+        this.parsedLyrics = Song.parseLyricString(this.data.lyrics);
 
         // this will never happen
         if (doc.id !== this.id) {
@@ -65,5 +74,4 @@ export default class Song {
 
         // todo: set history here if slug changed
     }
-
 };
