@@ -29,9 +29,11 @@ const State = {
     // added to doc in script via webpack
     ver, // eslint-disable-line no-undef
 
-    styles : [ "s0", "s1", "s2", "s3", "s4", "s5" ],
+    colors : [ "s0", "s1", "s2", "s3", "s4", "s5" ],
     font   : { size : 1.3 },
     cols   : { count : 3 },
+
+    selectedColor : undefined,
 
     session : {},
 
@@ -42,18 +44,6 @@ const State = {
 
     error(err) {
         console.error(err);
-    },
-
-    events : {
-        mousemove(e) {
-            State.tooltip.style = {
-                left    : `${e.clientX}px`,
-                top     : `${e.clientY}px`,
-                opacity : e.clientY > State.header.height ? 0.8 : 0
-            };
-
-            m.redraw();
-        }
     },
 
     actions : {}

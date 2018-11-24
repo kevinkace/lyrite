@@ -1,6 +1,7 @@
 import state from "../../state";
 
 import css from "./index.css";
+import colorsCss from "./colors.css";
 import tooltipCss from "./tooltip.css";
 
 import quillSvg from "../../icons/quill.svg";
@@ -30,15 +31,23 @@ export default {
                 m("label", { class : css.label }, "colors "),
 
                 m("div", { class : css.control },
-                    state.styles.map((style, idx) =>
-                        m("button", {
-                            class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
+                    state.colors.map((color, idx) => {
+                        let className = colorsCss[color];
+
+                        if (!isNaN(state.selectedColor)) {
+                            className = state.selectedColor === idx ?
+                                colorsCss[`${color}Selected`] :
+                                colorsCss[`${color}Unselected`];
+                        }
+
+                        return m("button", {
+                            class : className,
 
                             onclick() {
-                                state.action("CLICK_STYLE", idx);
+                                state.action("CLICK_COLOR", idx);
                             }
                         }, idx)
-                    )
+                    })
                 )
             ),
 

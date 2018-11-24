@@ -9,8 +9,6 @@
     background: colors.bg;
 
     transition: transform 0.2s;
-    box-shadow: -2px 0 1em rgba(0, 0, 0, 0.3);
-    border-left: solid 1px #222;
 }
 
 .pipe {
@@ -92,68 +90,6 @@
     &:hover {
         color: #fff;
     }
-}
-
-.button:first-child {
-    margin-left: 0;
-}
-
-.s0,
-.s1,
-.s2,
-.s3,
-.s4,
-.s5 {
-    composes: button;
-}
-
-.s0 {
-    --color: colors.color0;
-}
-.s1 {
-    --color: colors.color1;
-}
-.s2 {
-    --color: colors.color2;
-}
-.s3 {
-    --color: colors.color3;
-}
-.s4 {
-    --color: colors.color4;
-}
-.s5 {
-    --color: colors.color5;
-}
-
-.selected {
-    border-color: var(--color);
-    color: var(--color);
-    background: transparent;
-}
-
-.s0Selected {
-    composes: s0, selected;
-}
-
-.s1Selected {
-    composes: s1, selected;
-}
-
-.s2Selected {
-    composes: s2, selected;
-}
-
-.s3Selected {
-    composes: s3, selected;
-}
-
-.s4Selected {
-    composes: s4, selected;
-}
-
-.s5Selected {
-    composes: s5, selected;
 }
 
 .font {

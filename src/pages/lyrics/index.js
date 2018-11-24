@@ -1,5 +1,6 @@
 import state from "../../state";
 
+import cssJoin from "cssJoin";
 import css from "./index.css";
 import lyrics from "./lyrics";
 // todo: move to ./pages/lyrics
@@ -19,6 +20,7 @@ export default {
     },
     view(vnode) {
         const { barHeight, heightDelta, barAmt } = scroll;
+        const isSelectedColor = !isNaN(state.selectedColor);
 
         return m("div", { class : css.lyredit },
             m("div", {
@@ -47,7 +49,11 @@ export default {
                         }
                     },
                     m("div", {
-                            class : state.toolsOpen ? css.lyricsEdit : css.lyrics,
+                            class : cssJoin(
+                                [ state.toolsOpen, css.lyricsEdit, css.lyrics ],
+                                [ isSelectedColor, css.crosshair ],
+                                [ isSelectedColor, css[`s${state.selectedColor}Hover`] ]
+                            ),
                             style : {
                                 fontSize    : `${state.font.size}em`,
                                 columnCount : state.cols.count
