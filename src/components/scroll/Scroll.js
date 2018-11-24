@@ -54,7 +54,7 @@ export default class Scroll {
     }
 
     scroll(e) {
-        const change = parseInt(e.deltaY, 10) / 5;
+        const change = parseInt(e.deltaY, 10) / 2;
         const _barAmt = this.barAmt;
         const _scrollAmt = this.scrollAmt;
 

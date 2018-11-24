@@ -72,7 +72,7 @@ button {
     transition: transform 0.3s;
 
     &:focus {
-        /* outline: none; */
+        outline: none;
     }
 
 }
