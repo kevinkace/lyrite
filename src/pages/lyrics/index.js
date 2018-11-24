@@ -7,17 +7,18 @@ import tools from "../../components/tools";
 
 import Scroll from "../../components/scroll/Scroll.js";
 
+let scroll;
+
 export default {
     oninit(vnode) {
         state.action("OPEN_TOOLS");
-        vnode.state.scroll = new Scroll();
+        scroll = new Scroll();
     },
     onremove(vnode) {
-        vnode.state.scroll.destructor();
+        scroll.destructor();
     },
     view(vnode) {
-        const { loading : _loading } = state.song;
-        const { barHeight, heightDelta, barAmt } = vnode.state.scroll;
+        const { barHeight, heightDelta, barAmt } = scroll;
 
         return m("div", { class : css.lyredit },
             m("div", {
@@ -25,10 +26,10 @@ export default {
                     style : {
                     },
                     oncreate({ dom }) {
-                        vnode.state.scroll.createDom("scroll", dom);
+                        scroll.createDom("scroll", dom);
                     },
                     onupdate({ dom }) {
-                        vnode.state.scroll.updateDom("scroll", dom);
+                        scroll.updateDom("scroll", dom);
                     }
                 },
                 m("div", {
@@ -42,7 +43,7 @@ export default {
                 m("div", {
                         class : css.content,
                         style : {
-                            transform : `translateY(-${vnode.state.scroll.scrollAmt}px)`
+                            transform : `translateY(-${scroll.scrollAmt}px)`
                         }
                     },
                     m("div", {
@@ -52,7 +53,7 @@ export default {
                                 columnCount : state.cols.count
                             },
                             oncreate({ dom }) {
-                                vnode.state.scroll.createDom("content", dom);
+                                scroll.createDom("content", dom);
                                 vnode.state.contentDom = dom;
                             },
                             onupdate({ dom }) {
@@ -60,7 +61,7 @@ export default {
                                     return;
                                 }
 
-                                vnode.state.scroll.updateDom("content", dom);
+                                scroll.updateDom("content", dom);
                             },
                             ontransitionstart(e) {
                                 vnode.state.contentScaling = true;
@@ -68,7 +69,7 @@ export default {
                             ontransitionend(e) {
                                 delete vnode.state.contentScaling;
 
-                                vnode.state.scroll.updateDom("content", vnode.state.contentDom);
+                                scroll.updateDom("content", vnode.state.contentDom);
                             }
                         },
 
