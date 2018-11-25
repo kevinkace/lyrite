@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const git = require("git-rev");
 
-const CSSPlugin = require("modular-css-webpack/plugin");
+const CSSPlugin = require("@modular-css/webpack/plugin");
 const postcssNested = require("postcss-nested");
 
 // Bundling assets for HtmlWebpackIncludeAssetsPlugi;
@@ -59,10 +59,10 @@ module.exports = {
             loader  : "babel-loader"
         }, {
             test   : /\.css$/,
-            loader : "modular-css-webpack/loader"
+            loader : "@modular-css/webpack/loader"
         }, {
-            test   : /\.(txt|svg)$/,
-            use: "raw-loader"
+            test : /\.(txt|svg)$/,
+            use  : "raw-loader"
         }, {
             test   : /\.ico$/,
             loader : "file-loader?name=[name].[ext]"
