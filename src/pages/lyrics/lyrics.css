@@ -11,12 +11,6 @@
     color: var(--color);
 }
 
-.lineSelected {
-    composes: line;
-
-    border-color: #ddd5;
-}
-
 .s0,
 .s1,
 .s2,
@@ -24,6 +18,12 @@
 .s4,
 .s5 {
     composes: line;
+
+    background: transparent !important;
+
+    &:hover {
+        color: var(--color);
+    }
 }
 
 .s0 {

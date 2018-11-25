@@ -10,20 +10,25 @@ function addBr(text) {
     return text.replace(/\n/g, "<br>");
 }
 
+function isntNaN(val) {
+    return !isNaN(val);
+}
+
 export default {
     view() {
         const { loading : _loading } = state.song;
 
         return _loading ?
+
             m(loading, { text : true }) :
-            state.song.parsedLyrics.map((lyric, idx) =>
-                m("div", {
-                        "data-color" : isNaN(state.song.colorsByHash[lyric.hash]) ? false : state.song.colorsByHash[lyric.hash],
+
+            state.song.parsedLyrics.map((lyric, idx) => {
+                const color = state.song.colorsByHash[lyric.hash]
+                const hasColor = isntNaN(color);
+
+                return m("div", {
                         id    : lyric.hash,
-                        class : [
-                            state.selected === idx ? css.lineSelected : css.line,
-                            lyric.style ? css[`s${lyric.style.idx}`] : null
-                        ].join(" "),
+                        class : hasColor ? css[`s${color}`] : css.line,
 
                         onclick() {
                             state.action("CLICK_LYRIC", idx);
@@ -31,7 +36,7 @@ export default {
                     },
 
                     m.trust(marked(addBr(lyric.text)))
-                )
-            );
+                );
+            });
     }
-}
+};

@@ -92,34 +92,54 @@
     cursor: crosshair;
 }
 
+.hover {
+    user-select: none;
+}
+
+
+.s0Hover,
+.s1Hover,
+.s2Hover,
+.s3Hover,
+.s4Hover,
+.s5Hover {
+    > *:hover {
+        background: var(--color);
+        color: #000;
+        border: solid 1px var(--color);
+    }
+}
+
+
+
 .s0Hover {
     > *:hover {
-        background-color: colors.color0;
+        --color: colors.color0;
     }
 }
 .s1Hover {
     > *:hover {
-        background-color: colors.color1;
+        --color: colors.color1;
     }
 }
 .s2Hover {
     > *:hover {
-        background-color: colors.color2;
+        --color: colors.color2;
     }
 }
 .s3Hover {
     > *:hover {
-        background-color: colors.color3;
+        --color: colors.color3;
     }
 }
 .s4Hover {
     > *:hover {
-        background-color: colors.color4;
+        --color: colors.color4;
     }
 }
 .s5Hover {
     > *:hover {
-        background-color: colors.color5;
+        --color: colors.color5;
     }
 }
 
