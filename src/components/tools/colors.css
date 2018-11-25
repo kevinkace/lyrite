@@ -63,7 +63,7 @@
 
 .unselected {
     border-color: var(--color);
-    opacity: 0.3;
+    opacity: 0.3 !important; /* composition css order */
 }
 
 .s0Unselected {
