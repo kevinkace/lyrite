@@ -33,7 +33,7 @@ export default {
                         class : cssJoin(
                             css.line,
                             [ hasColor, css[`s${color}`] ],
-                            [ isSelectedColor, css.hover ]
+                            [ isSelectedColor, css[`s${selectedColor}Hover`] ]
                         ),
 
                         onclick() {

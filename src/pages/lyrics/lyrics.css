@@ -19,6 +19,8 @@
 }
 
 .s0 {
+    composes: color;
+
     --color: colors.color0;
 }
 
@@ -56,5 +58,95 @@
     &:hover {
         background: var(--color);
         color: #000;
+    }
+}
+
+.s0Hover {
+    composes: hover;
+
+    &:hover {
+        --color: colors.color0;
+    }
+
+    &.s0:hover {
+        color: var(--color);
+        background: transparent;
+
+        border: solid 1px var(--color);
+    }
+}
+
+.s1Hover {
+    composes: hover;
+
+    &:hover {
+        --color: colors.color1;
+    }
+
+    &.s1:hover {
+        color: var(--color);
+        background: transparent;
+
+        border: solid 1px var(--color);
+    }
+}
+
+.s2Hover {
+    composes: hover;
+
+    &:hover {
+        --color: colors.color2;
+    }
+
+    &.s2:hover {
+        color: var(--color);
+        background: transparent;
+
+        border: solid 1px var(--color);
+    }
+}
+
+.s3Hover {
+    composes: hover;
+
+    &:hover {
+        --color: colors.color3;
+    }
+
+    &.s3:hover {
+        color: var(--color);
+        background: transparent;
+
+        border: solid 1px var(--color);
+    }
+}
+
+.s4Hover {
+    composes: hover;
+
+    &:hover {
+        --color: colors.color4;
+    }
+
+    &.s4:hover {
+        color: var(--color);
+        background: transparent;
+
+        border: solid 1px var(--color);
+    }
+}
+
+.s5Hover {
+    composes: hover;
+
+    &:hover {
+        --color: colors.color5;
+    }
+
+    &.s5:hover {
+        color: var(--color);
+        background: transparent;
+
+        border: solid 1px var(--color);
     }
 }
