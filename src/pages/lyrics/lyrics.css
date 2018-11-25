@@ -12,7 +12,6 @@
 
 .color {
     color: var(--color);
-    background: transparent !important;
 
     &:hover {
         color: var(--color);
