@@ -4,7 +4,6 @@ import db, { _delete, serverTimestamp, arrayUnion, arrayRemove } from "../db";
 
 import Song from "./classes/Song";
 
-import parseLyrics from "../lib/parseLyrics";
 import { getSongFromId } from "../lib/song";
 
 const slugIdRegex = /\-(?!.*\-.*)/;

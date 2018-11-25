@@ -17,7 +17,7 @@ export default {
         return _loading ?
             m(loading, { text : true }) :
             state.song.parsedLyrics.map((lyric, idx) =>
-                m("p", {
+                m("div", {
                         "data-color" : isNaN(state.song.colorsByHash[lyric.hash]) ? false : state.song.colorsByHash[lyric.hash],
                         id    : lyric.hash,
                         class : [

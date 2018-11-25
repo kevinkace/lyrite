@@ -76,7 +76,7 @@
     transform-origin: 0 0;
     transition: transform dur;
 
-    p {
+    > * {
         transition: background-color dur;
     }
 }
@@ -93,32 +93,32 @@
 }
 
 .s0Hover {
-    > p:hover {
+    > *:hover {
         background-color: colors.color0;
     }
 }
 .s1Hover {
-    > p:hover {
+    > *:hover {
         background-color: colors.color1;
     }
 }
 .s2Hover {
-    > p:hover {
+    > *:hover {
         background-color: colors.color2;
     }
 }
 .s3Hover {
-    > p:hover {
+    > *:hover {
         background-color: colors.color3;
     }
 }
 .s4Hover {
-    > p:hover {
+    > *:hover {
         background-color: colors.color4;
     }
 }
 .s5Hover {
-    > p:hover {
+    > *:hover {
         background-color: colors.color5;
     }
 }
