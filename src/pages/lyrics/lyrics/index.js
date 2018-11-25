@@ -1,10 +1,10 @@
-import state from "../../state";
+import state from "../../../state";
 
 import cssJoin from "cssJoin";
 import marked from "marked";
 
-import css from "./lyrics.css";
-import loading from "../../components/loading";
+import css from "./index.css";
+import loading from "../../../components/loading";
 
 function addBr(text) {
     return text.replace(/\n/g, "<br>");

@@ -4,7 +4,7 @@ import cssJoin from "cssJoin";
 import css from "./index.css";
 import lyrics from "./lyrics";
 // todo: move to ./pages/lyrics
-import tools from "../../components/tools";
+import tools from "./tools";
 
 import Scroll from "../../components/scroll/Scroll.js";
 

@@ -1,0 +1,30 @@
+.fontSize {
+    height: 4vh;
+    width: 4vh;
+}
+
+.dec,
+.inc {
+    composes: button from "../index.css";
+
+    padding-right: 0.3em;
+    padding-left: 0.3em;
+
+    --color: #fff4;
+    opacity: 0.8;
+}
+
+.dec:hover,
+.inc:hover {
+    opacity: 1;
+}
+
+.dec {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.inc {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

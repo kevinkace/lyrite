@@ -1,5 +1,5 @@
-@value * as colors from "../../palette.css";
-@value animDur, fontDisplay from "../../index.css";
+@value * as colors from "../../../palette.css";
+@value animDur, fontDisplay from "../../../index.css";
 
 .tools {
     width: 100%;
@@ -88,69 +88,6 @@
     }
 }
 
-.colors {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.color {
-    composes: button;
-
-    flex: 0 0 33.333%;
-
-    color: var(--color);
-    background: var(--color);
-
-    opacity: 0.8;
-
-    &:hover {
-        color: #fff;
-        opacity: 1;
-    }
-}
-
-.font {
-    font-family: monospace;
-}
-
-.fontSize {
-    height: 4vh;
-    width: 4vh;
-}
-
-.dec,
-.inc {
-    composes: button;
-
-    padding-right: 0.3em;
-    padding-left: 0.3em;
-
-    --color: #fff4;
-    opacity: 0.8;
-}
-
-.dec:hover,
-.inc:hover {
-    opacity: 1;
-}
-
-.dec {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.inc {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
 .cols {
     font-family: monospace;
-}
-
-.edit {
-    composes: button;
-
-    color: #fff;
-    --color: colors.cta;
 }

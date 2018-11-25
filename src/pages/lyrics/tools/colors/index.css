@@ -1,10 +1,19 @@
-@value * as colors from "../../palette.css";
+@value * as colors from "../../../../palette.css";
+
 
 .color {
-    composes: button from "./index.css";
+    composes: button from "../index.css";
+
+    flex: 0 0 33.333%;
+
+    color: var(--color);
+    background: var(--color);
+
+    opacity: 0.8;
 
     &:hover {
-        opacity: 1 !important;
+        color: #fff;
+        opacity: 1;
     }
 }
 
