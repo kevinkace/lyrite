@@ -115,7 +115,7 @@ export default {
 
                             --state.cols.count;
                         }
-                    }, "<"),
+                    }, "-"),
 
                     m("label", { class : css.cols }, state.cols.count),
 
@@ -124,7 +124,7 @@ export default {
                         onclick() {
                             ++state.cols.count;
                         }
-                    }, ">")
+                    }, "+")
                 )
             ),
 
