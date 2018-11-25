@@ -25,7 +25,7 @@ export default {
             m(loading, { text : true }) :
 
             state.song.parsedLyrics.map((lyric, idx) => {
-                const color = state.song.colorsByHash[lyric.hash]
+                const color = state.song.colorsByHash[lyric.hash];
                 const hasColor = isntNaN(color);
 
                 return m("div", {
