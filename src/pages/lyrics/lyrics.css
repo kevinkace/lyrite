@@ -1,3 +1,6 @@
+@value * as colors from "../../palette.css";
+
+
 .line {
     padding : 0.5em 0.5em;
     margin: 0;
@@ -6,8 +9,6 @@
     border: solid 1px transparent;
     border-radius: 0.2em;
     color: var(--color);
-
-    cursor: default;
 }
 
 .lineSelected {
