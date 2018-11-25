@@ -51,8 +51,7 @@ export default {
                     m("div", {
                             class : cssJoin(
                                 [ state.toolsOpen, css.lyricsEdit, css.lyrics ],
-                                [ isSelectedColor, css.crosshair ],
-                                [ isSelectedColor, css[`s${state.selectedColor}Hover`] ]
+                                [ isSelectedColor, css.crosshair ]
                             ),
                             style : {
                                 fontSize    : `${state.font.size}em`,

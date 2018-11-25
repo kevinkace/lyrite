@@ -77,10 +77,26 @@
 }
 
 .button {
-    flex: 0 0 33.333%;
     height: 4vh;
 
     font-family: monospace;
+
+    opacity: 0.8;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+.colors {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.color {
+    composes: button;
+
+    flex: 0 0 33.333%;
 
     color: var(--color);
     background: var(--color);
@@ -89,6 +105,7 @@
 
     &:hover {
         color: #fff;
+        opacity: 1;
     }
 }
 

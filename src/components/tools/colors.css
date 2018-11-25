@@ -1,34 +1,41 @@
 @value * as colors from "../../palette.css";
 
-.s0,
-.s1,
-.s2,
-.s3,
-.s4,
-.s5 {
+.color {
     composes: button from "./index.css";
 
     &:hover {
-        opacity: 1;
+        opacity: 1 !important;
     }
 }
 
 .s0 {
+    composes: color;
+
     --color: colors.color0;
 }
 .s1 {
+    composes: color;
+
     --color: colors.color1;
 }
 .s2 {
+    composes: color;
+
     --color: colors.color2;
 }
 .s3 {
+    composes: color;
+
     --color: colors.color3;
 }
 .s4 {
+    composes: color;
+
     --color: colors.color4;
 }
 .s5 {
+    composes: color;
+
     --color: colors.color5;
 }
 
@@ -37,55 +44,7 @@
     color: #fff;
 }
 
-.s0Selected {
-    composes: s0, selected;
-}
-
-.s1Selected {
-    composes: s1, selected;
-}
-
-.s2Selected {
-    composes: s2, selected;
-}
-
-.s3Selected {
-    composes: s3, selected;
-}
-
-.s4Selected {
-    composes: s4, selected;
-}
-
-.s5Selected {
-    composes: s5, selected;
-}
-
 .unselected {
     border-color: var(--color);
     opacity: 0.3 !important; /* composition css order */
-}
-
-.s0Unselected {
-    composes: s0, unselected;
-}
-
-.s1Unselected {
-    composes: s1, unselected;
-}
-
-.s2Unselected {
-    composes: s2, unselected;
-}
-
-.s3Unselected {
-    composes: s3, unselected;
-}
-
-.s4Unselected {
-    composes: s4, unselected;
-}
-
-.s5Unselected {
-    composes: s5, unselected;
 }

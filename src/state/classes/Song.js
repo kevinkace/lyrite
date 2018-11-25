@@ -80,7 +80,12 @@ export default class Song {
     setColorByIdx({ idx, color }) {
         const lyric = this.parsedLyrics[idx];
 
+        if (this.colorsByHash[lyric.hash] === color) {
+            delete this.colorsByHash[lyric.hash];
+
+            return;
+        }
+
         this.colorsByHash[lyric.hash] = color;
     }
-
-};
+}

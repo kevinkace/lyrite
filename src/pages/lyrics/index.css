@@ -90,57 +90,7 @@
 .crosshair,
 .crosshair * {
     cursor: crosshair;
-}
-
-.hover {
     user-select: none;
-}
-
-
-.s0Hover,
-.s1Hover,
-.s2Hover,
-.s3Hover,
-.s4Hover,
-.s5Hover {
-    > *:hover {
-        background: var(--color);
-        color: #000;
-        border: solid 1px var(--color);
-    }
-}
-
-
-
-.s0Hover {
-    > *:hover {
-        --color: colors.color0;
-    }
-}
-.s1Hover {
-    > *:hover {
-        --color: colors.color1;
-    }
-}
-.s2Hover {
-    > *:hover {
-        --color: colors.color2;
-    }
-}
-.s3Hover {
-    > *:hover {
-        --color: colors.color3;
-    }
-}
-.s4Hover {
-    > *:hover {
-        --color: colors.color4;
-    }
-}
-.s5Hover {
-    > *:hover {
-        --color: colors.color5;
-    }
 }
 
 .tools {

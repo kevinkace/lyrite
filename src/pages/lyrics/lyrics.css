@@ -8,17 +8,10 @@
 
     border: solid 1px transparent;
     border-radius: 0.2em;
-    color: var(--color);
 }
 
-.s0,
-.s1,
-.s2,
-.s3,
-.s4,
-.s5 {
-    composes: line;
-
+.color {
+    color: var(--color);
     background: transparent !important;
 
     &:hover {
@@ -31,21 +24,38 @@
 }
 
 .s1 {
+    composes: color;
+
     --color: colors.color1;
 }
 
 .s2 {
+    composes: color;
+
     --color: colors.color2;
 }
 
 .s3 {
+    composes: color;
+
     --color: colors.color3;
 }
 
 .s4 {
+    composes: color;
+
     --color: colors.color4;
 }
 
 .s5 {
+    composes: color;
+
     --color: colors.color5;
+}
+
+.hover {
+    &:hover {
+        background: var(--color);
+        color: #000;
+    }
 }

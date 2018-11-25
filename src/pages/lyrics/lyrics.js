@@ -17,6 +17,8 @@ function isntNaN(val) {
 export default {
     view() {
         const { loading : _loading } = state.song;
+        const isSelectedColor = isntNaN(state.selectedColor);
+        const selectedColor = state.selectedColor;
 
         return _loading ?
 
@@ -28,7 +30,11 @@ export default {
 
                 return m("div", {
                         id    : lyric.hash,
-                        class : hasColor ? css[`s${color}`] : css.line,
+                        class : cssJoin(
+                            css.line,
+                            [ hasColor, css[`s${color}`] ],
+                            [ isSelectedColor, css.hover ]
+                        ),
 
                         onclick() {
                             state.action("CLICK_LYRIC", idx);

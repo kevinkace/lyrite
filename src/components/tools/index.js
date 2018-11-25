@@ -1,5 +1,6 @@
 import state from "../../state";
 
+import cssJoin from "cssJoin";
 import css from "./index.css";
 import colorsCss from "./colors.css";
 import tooltipCss from "./tooltip.css";
@@ -30,18 +31,22 @@ export default {
             m("div", { class : css.setting },
                 m("label", { class : css.label }, "colors "),
 
-                m("div", { class : css.control },
+                m("div", { class : css.colors },
                     state.colors.map((color, idx) => {
-                        let className = colorsCss[color];
+                        let className;
 
                         if (!isNaN(state.selectedColor)) {
                             className = state.selectedColor === idx ?
-                                colorsCss[`${color}Selected`] :
-                                colorsCss[`${color}Unselected`];
+                                colorsCss.selected :
+                                colorsCss.unselected;
                         }
 
                         return m("button", {
-                            class : className,
+                            class : cssJoin(
+                                css.color,
+                                colorsCss[color],
+                                [ className, className ]
+                            ),
 
                             onclick() {
                                 state.action("CLICK_COLOR", idx);
@@ -56,27 +61,6 @@ export default {
                 m("label", { class : css.label }, "font "),
 
                 m("div", { class : css.control },
-                    // m("label", {
-                    //     class : css.font,
-
-                    //     onmouseover() {
-                    //         vnode.state.range = Date.now();
-                    //     },
-
-                    //     onmouseout() {
-                    //         let now = Date.now();
-
-                    //         setTimeout(() => {
-                    //             if (now < vnode.state.range) {
-                    //                 return;
-                    //             }
-
-                    //             vnode.state.range = false;
-
-                    //             m.redraw();
-                    //         }, 300);
-                    //     }
-                    // }, parseFloat(state.font.size, 10).toFixed(2)),
 
                     m("button", {
                             class : css.fontSize,
