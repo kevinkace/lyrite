@@ -45,7 +45,7 @@ module.exports = {
 
     devServer : {
         historyApiFallback : true,
-        contentBase : "./dist"
+        contentBase        : "./dist"
     },
 
     externals : { mithril : "m" },
