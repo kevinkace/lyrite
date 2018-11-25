@@ -20,7 +20,7 @@ export default class Song {
 
             // "fontSize",
             // "columns",
-            // "colors",
+            // "colors",}
         ];
 
         for (let key in data) {
@@ -34,6 +34,8 @@ export default class Song {
         if (this.id && this.slug) {
             this._setSlugAndId();
         }
+
+        this.colorsByHash = {};
     }
 
     static validateSlugAndId(slugAndId) {
@@ -64,6 +66,13 @@ export default class Song {
         }
 
         // todo: set history here if slug changed
+    }
+
+
+    setColorByIdx({ idx, color }) {
+        const lyric = this.parsedLyrics[idx];
+
+        this.colorsByHash[lyric.hash] = color;
     }
 
 };

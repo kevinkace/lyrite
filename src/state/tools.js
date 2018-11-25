@@ -6,6 +6,15 @@ function hideTools(State) {
 
 export default (State) => ({
     CLICK_LYRIC(idx) {
+        if (isNaN(State.selectedColor)) {
+            // todo: switch to edit view
+            return;
+        }
+
+        State.song.setColorByIdx({
+            idx,
+            color : State.selectedColor
+        });
     },
 
     CLICK_COLOR(idx) {

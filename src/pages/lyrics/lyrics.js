@@ -16,12 +16,13 @@ export default {
 
         return _loading ?
             m(loading, { text : true }) :
-            state.song.parsedLyrics.map((part, idx) =>
+            state.song.parsedLyrics.map((lyric, idx) =>
                 m("p", {
-                        id    : part.hash,
+                        "data-color" : isNaN(state.song.colorsByHash[lyric.hash]) ? false : state.song.colorsByHash[lyric.hash],
+                        id    : lyric.hash,
                         class : [
                             state.selected === idx ? css.lineSelected : css.line,
-                            part.style ? css[`s${part.style.idx}`] : null
+                            lyric.style ? css[`s${lyric.style.idx}`] : null
                         ].join(" "),
 
                         onclick() {
@@ -29,7 +30,7 @@ export default {
                         }
                     },
 
-                    m.trust(marked(addBr(part.text)))
+                    m.trust(marked(addBr(lyric.text)))
                 )
             );
     }
