@@ -1,8 +1,9 @@
 @value * as colors from "../../palette.css";
-@value fontSans, animDur from "../../index.css";
+@value fontSans, fontDisplay, fontSerif, fontSystem, fontMono, fontArial, animDur from "../../index.css";
 @value headerHeight from "../../components/header/index.css";
 
 @value dur: 0.2s;
+
 .lyredit {
     position: relative;
     height: calc(100vh - headerHeight);
@@ -91,6 +92,25 @@
 .crosshair * {
     cursor: crosshair;
     user-select: none;
+}
+
+.latoFont {
+    font-family: fontSans;
+}
+.systemFont {
+    font-family: fontSystem;
+}
+.monoFont {
+    font-family: fontMono;
+}
+.ralewayFont {
+    font-family: fontDisplay;
+}
+.bitterFont {
+    font-family: fontSerif;
+}
+.arialFont {
+    font-family: fontArial;
 }
 
 .tools {

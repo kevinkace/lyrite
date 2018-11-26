@@ -46,15 +46,15 @@ export default (State) => ({
     },
 
     SET_FONT(key) {
-        console.log("set font");
+        State.fontFamily = key;
     },
 
     INC_FONT_SIZE() {
-        State.font.size += 0.1;
+        State.fontSize += 0.1;
     },
 
     DEC_FONT_SIZE() {
-        State.font.size -= 0.1;
+        State.fontSize -= 0.1;
     },
 
     INC_COLS() {

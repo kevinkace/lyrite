@@ -4,23 +4,6 @@ import css from "./index.css";
 import fontSizeUpSvg from "../../../../icons/font-sizeUp.svg";
 import fontSizeDownSvg from "../../../../icons/font-sizeDown.svg";
 
-const fonts = [{
-    value : "lato",
-    label : "Lato"
-}, {
-    value : "system",
-    label : "System"
-}, {
-    value : "mono",
-    label : "Monospace"
-}, {
-    value : "raleway",
-    label : "Raleway"
-}, {
-    value : "bitter",
-    label : "Bitter"
-}];
-
 export default {
     view() {
         return m("div", { class : css.fonts },
@@ -31,7 +14,7 @@ export default {
                         state.action("SET_FONT", value);
                     })
                 },
-                fonts.map(({ value, label }) =>
+                state.fontFamilies.map(({ value, label }) =>
                     m("option", { value }, label)
                 )
             ),

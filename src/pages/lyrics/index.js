@@ -51,10 +51,11 @@ export default {
                     m("div", {
                             class : cssJoin(
                                 [ state.toolsOpen, css.lyricsEdit, css.lyrics ],
-                                [ isSelectedColor, css.crosshair ]
+                                [ isSelectedColor, css.crosshair ],
+                                css[`${state.fontFamily}Font`]
                             ),
                             style : {
-                                fontSize    : `${state.font.size}em`,
+                                fontSize    : `${state.fontSize}em`,
                                 columnCount : state.cols
                             },
                             oncreate({ dom }) {

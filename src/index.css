@@ -3,6 +3,10 @@
 @value fontSans: Lato, sans-serif;
 @value fontDisplay: Raleway, sans-serif;
 @value fontSerif: Bitter, serif;
+@value fontSystem: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+@value fontMono: monospace;
+@value fontArial: Arial Black, Arial Bold, Gadget, sans-serif;
+
 @value animDur: 0.3s;
 
 html {

@@ -29,9 +29,29 @@ const State = {
     // added to doc in script via webpack
     ver, // eslint-disable-line no-undef
 
-    colors : [ "s0", "s1", "s2", "s3", "s4", "s5" ],
-    font   : { size : 1.3 },
-    cols   : 3,
+    colors       : [ "s0", "s1", "s2", "s3", "s4", "s5" ],
+    fontSize     : 1.3,
+    cols         : 3,
+    fontFamily   : "lato",
+    fontFamilies : [{
+        value : "lato",
+        label : "Lato"
+    }, {
+        value : "system",
+        label : "System"
+    }, {
+        value : "mono",
+        label : "Monospace"
+    }, {
+        value : "raleway",
+        label : "Raleway"
+    }, {
+        value : "bitter",
+        label : "Bitter"
+    }, {
+        value : "arial",
+        label : "Arial Black"
+    }],
 
     selectedColor : undefined,
 
