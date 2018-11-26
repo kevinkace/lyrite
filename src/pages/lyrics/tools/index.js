@@ -44,16 +44,16 @@ export default {
             m("div", { class : css.setting },
                 m("label", { class : css.label }, "columns"),
 
-                m("div", { class : css.control },
+                m("div", { class : css.columns },
                     m("button", {
                         class : css.colCount,
 
                         onclick() {
-                            state.action("DEC_C0LS");
+                            state.action("DEC_COLS");
                         }
                     }, m.trust(minusSvg)),
 
-                    m("label", { class : css.cols }, state.cols),
+                    m("label", { class : css.colsLabel }, state.cols),
 
                     m("button", {
                         class : css.colCount,

@@ -75,6 +75,7 @@
     position: relative;
     overflow: visible;
     justify-content: space-between;
+    align-items: center;
 }
 
 .button {
@@ -90,8 +91,17 @@
     }
 }
 
-.cols {
-    font-family: monospace;
+.columns {
+    composes: control;
+
+    background: #0004;
+}
+
+.colsLabel {
+    composes: label;
+
+    margin: 0;
+    padding: 0;
 }
 
 .colCount {
