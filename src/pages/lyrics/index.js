@@ -55,7 +55,7 @@ export default {
                             ),
                             style : {
                                 fontSize    : `${state.font.size}em`,
-                                columnCount : state.cols.count
+                                columnCount : state.cols
                             },
                             oncreate({ dom }) {
                                 scroll.createDom("content", dom);

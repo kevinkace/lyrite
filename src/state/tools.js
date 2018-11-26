@@ -5,28 +5,6 @@ function hideTools(State) {
 }
 
 export default (State) => ({
-    CLICK_LYRIC(idx) {
-        if (isNaN(State.selectedColor)) {
-            // todo: switch to edit view
-            return;
-        }
-
-        State.song.setColorByIdx({
-            idx,
-            color : State.selectedColor
-        });
-    },
-
-    CLICK_COLOR(idx) {
-        if (State.selectedColor !== idx) {
-            State.selectedColor = idx;
-
-            return;
-        }
-
-        delete State.selectedColor;
-    },
-
     OPEN_TOOLS() {
         State.toolsOpen = true;
     },
@@ -45,6 +23,32 @@ export default (State) => ({
         hideTools(State);
     },
 
+    CLICK_COLOR(idx) {
+        if (State.selectedColor !== idx) {
+            State.selectedColor = idx;
+
+            return;
+        }
+
+        delete State.selectedColor;
+    },
+
+    CLICK_LYRIC(idx) {
+        if (isNaN(State.selectedColor)) {
+            // todo: switch to edit view
+            return;
+        }
+
+        State.song.setColorByIdx({
+            idx,
+            color : State.selectedColor
+        });
+    },
+
+    SET_FONT(key) {
+        console.log("set font");
+    },
+
     INC_FONT_SIZE() {
         State.font.size += 0.1;
     },
@@ -53,7 +57,15 @@ export default (State) => ({
         State.font.size -= 0.1;
     },
 
-    SET_FONT(key) {
-        console.log("set font");
+    INC_COLS() {
+        ++State.cols;
+    },
+
+    DEC_COLS() {
+        if (State.cols === 1) {
+            return;
+        }
+
+        --State.cols;
     }
 });

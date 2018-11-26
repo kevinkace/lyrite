@@ -8,6 +8,7 @@ import fonts from "./fonts";
 import quillSvg from "../../../icons/quill.svg";
 import minusSvg from "../../../icons/minus.svg";
 import plusSvg from "../../../icons/plus.svg";
+import State from "../../../state";
 
 // import createdByCurrentUser from "../../../lib/createdByCurrentUser";
 // import forkOrLogin from "./forkOrLogin";
@@ -48,20 +49,16 @@ export default {
                         class : css.colCount,
 
                         onclick() {
-                            if (state.cols.count === 1) {
-                                return;
-                            }
-
-                            --state.cols.count;
+                            state.action("DEC_C0LS");
                         }
                     }, m.trust(minusSvg)),
 
-                    m("label", { class : css.cols }, state.cols.count),
+                    m("label", { class : css.cols }, state.cols),
 
                     m("button", {
                         class : css.colCount,
                         onclick() {
-                            ++state.cols.count;
+                            state.action("INC_COLS");
                         }
                     }, m.trust(plusSvg))
                 )
