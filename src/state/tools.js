@@ -51,5 +51,9 @@ export default (State) => ({
 
     DEC_FONT_SIZE() {
         State.font.size -= 0.1;
+    },
+
+    SET_FONT(key) {
+        console.log("set font");
     }
 });

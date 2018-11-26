@@ -7,17 +7,8 @@
 }
 
 .fontSize {
-    height: 4vh;
-    width: 4vh;
-}
-
-.dec,
-.inc {
     composes: button from "../index.css";
 
-    padding-right: 0.3em;
-    padding-left: 0.3em;
-
-    --color: #fff4;
-    opacity: 0.8;
+    height: 4vh;
+    width: 4vh;
 }

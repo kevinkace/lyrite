@@ -27,9 +27,9 @@ export default {
             m("select", {
                     class : css.select,
 
-                    onchange(e) {
-                        debugger;
-                    }
+                    onchange : m.withAttr("value", value => {
+                        state.action("SET_FONT", value);
+                    })
                 },
                 fonts.map(({ value, label }) =>
                     m("option", { value }, label)
