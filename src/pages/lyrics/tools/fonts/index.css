@@ -1,3 +1,11 @@
+.fonts {
+    display: flex;
+}
+
+.select {
+    flex: 1 0 auto;
+}
+
 .fontSize {
     height: 4vh;
     width: 4vh;

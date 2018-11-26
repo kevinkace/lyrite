@@ -1,5 +1,9 @@
 @value * as colors from "../../../../palette.css";
 
+.colors {
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .color {
     composes: button from "../index.css";

@@ -28,19 +28,13 @@ export default {
             // Color buttons
             m("div", { class : css.setting },
                 m("label", { class : css.label }, "colors "),
-
-                m("div", { class : css.control },
-                    m(colors)
-                )
+                m(colors)
             ),
 
             // Font choices
             m("div", { class : css.setting },
                 m("label", { class : css.label }, "font "),
-
-                m("div", { class : css.control },
-                    m(fonts)
-                )
+                m(fonts)
             ),
 
             // Column
