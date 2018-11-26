@@ -21,18 +21,3 @@
     --color: #fff4;
     opacity: 0.8;
 }
-
-.dec:hover,
-.inc:hover {
-    opacity: 1;
-}
-
-.dec {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.inc {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}

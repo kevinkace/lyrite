@@ -64,6 +64,7 @@
 
 .label {
     display: block;
+    margin-top: 1em;
     padding: 0.5em 0.4em 0.4em;
     text-transform: uppercase;
 }
@@ -85,9 +86,16 @@
 
     &:hover {
         color: #fff;
+        opacity: 1;
     }
 }
 
 .cols {
     font-family: monospace;
+}
+
+.colCount {
+    composes: button;
+
+    width: 4vh;
 }
