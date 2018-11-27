@@ -48,7 +48,7 @@ export default (State) => ({
             songs   : undefined // State.songs.songs !@#$@
         };
 
-        return db.collection("songs").orderBy("created", "desc").onSnapshot(snap => {
+        return db.collection("songs").orderBy("created", "desc").limit(20).onSnapshot(snap => {
             delete State.songs.loading;
             State.songs.loaded = Date.now();
             State.songs.songs = [];
