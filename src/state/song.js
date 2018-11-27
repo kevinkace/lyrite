@@ -75,6 +75,12 @@ export default (State) => ({
         const { title, artist, lyrics } = songObj;
         const slug = slugify(title);
 
+        State.song = new Song({
+            loading : true,
+            id      : songRef.id,
+            slug
+        });
+
         // update song
         batch.set(songRef, {
             created : serverTimestamp(),
