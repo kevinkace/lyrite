@@ -15,25 +15,17 @@ export default {
             });
     },
     view(vnode) {
-        console.log(state.userSongs);
-
         const { username } = vnode.state;
         const songs = state.userSongs[username] || [];
 
         return m("div", { class : css.userSongs },
-            vnode.state.loaded ?
-                m(list, { songs }) :
-                // m("ol",
-                //     songs.map(song =>
-                //         m("li",
-                //             m("a", {
-                //                 href     : `/songs/${song.slug}-${song.id}`,
-                //                 oncreate : m.route.link
-                //             }, song.title)
-                //         )
-                //     )
-                // ) :
-                m(loading, { text : true })
+                    m("h2", { class : css.h2 }, `${username}'s Songs`),
+
+                    m("div", { class : css.list },
+                        vnode.state.loaded ?
+                            m(list, { songs }) :
+                            m(loading, { text : true })
+                    )
         );
     }
 };

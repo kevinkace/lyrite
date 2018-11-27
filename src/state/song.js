@@ -212,6 +212,8 @@ export default (State) => ({
 
                         State.userSongs[username].push({ id : d.id, data : d.data() });
                     });
+
+                    m.redraw();
                 });
             });
 
