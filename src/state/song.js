@@ -78,6 +78,7 @@ export default (State) => ({
         State.song = new Song({
             loading : true,
             id      : songRef.id,
+            lyrics,
             slug
         });
 

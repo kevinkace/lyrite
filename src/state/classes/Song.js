@@ -8,10 +8,10 @@ export default class Song {
             "slugAndId",
             "slug",
             "id",
-            "loading"
-            // "title",
-            // "artist",
-            // "lyrics",
+            "loading",
+            "title",
+            "artist",
+            "lyrics",
 
             // "doc",
 
