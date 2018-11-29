@@ -8,10 +8,10 @@ export default class Song {
             "slugAndId",
             "slug",
             "id",
-            "loading"
-            // "title",
-            // "artist",
-            // "lyrics",
+            "loading",
+            "title",
+            "artist",
+            "lyrics",
 
             // "doc",
 
@@ -36,6 +36,10 @@ export default class Song {
         }
 
         this.colorsByHash = {};
+
+        if (this.lyrics) {
+            this.parsedLyrics = Song.parseLyricString(this.data.lyrics);
+        }
     }
 
     static validateSlugAndId(slugAndId) {

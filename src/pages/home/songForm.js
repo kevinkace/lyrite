@@ -11,7 +11,6 @@ let formDom,
     submitDom,
     disabled,
     showErrors,
-    loading,
     formErrors = {},
     formState  = {};
 
@@ -42,8 +41,6 @@ function onsubmit(e) {
         return;
     }
 
-    loading = true;
-
     state.action("IMPORT_SONG_LYRICS", formState)
         .then(({ slugAndId }) => {
             m.route.set(`/songs/${slugAndId}`);
@@ -52,7 +49,6 @@ function onsubmit(e) {
             console.error(err);
 
             disabled = false;
-            loading = false;
             pushError(formErrors, "firebase", err);
             m.redraw();
         });
@@ -63,7 +59,6 @@ export default {
         const vs = vnode.state;
 
         disabled = false;
-        loading = false;
         showErrors = false;
 
         vs.focused = "";

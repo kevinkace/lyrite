@@ -10,7 +10,7 @@ service cloud.firestore {
     match /users/{userId} {
       allow read;
       allow create: if isSignedIn() && createdIsNow() && updatedIsNow() && validPhotoURL() && hasFields(['created', 'updated', 'photoURL']) && numFields(3);
-      allow update: if isSignedIn() && updatedIsNow() && (addingUsername() || addingPhotoURL() || addingSong());
+      allow update: if isSignedIn() && updatedIsNow() && (addingUsername() || addingPhotoURL() || addingSong() || removingSong());
     }
 
     match /usernames/{username} {
@@ -28,6 +28,10 @@ service cloud.firestore {
 
     function addingSong() {
       return updatedSongs() && hasFields(['songs', 'updated'])
+    }
+
+    function removingSong() {
+      return hasFields(['updated', 'songs']) && numFieldsUpdate(2);
     }
 
     function validUser() {
@@ -115,7 +119,8 @@ service cloud.firestore {
     }
 
     function updatedSongs() {
-      return request.resource.data.songs is array;
+      // maybe should be array
+      return request.resource.data.songs is map;
     }
 
     function markedForDelete(resource) {
