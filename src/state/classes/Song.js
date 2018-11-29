@@ -20,7 +20,7 @@ export default class Song {
 
             // "fontSize",
             // "columns",
-            // "colors",}
+            // "colors",
         ];
 
         for (let key in data) {
