@@ -38,7 +38,7 @@ export default class Song {
         this.colorsByHash = {};
 
         if (this.lyrics) {
-            this.parsedLyrics = Song.parseLyricString(this.data.lyrics);
+            this.parsedLyrics = Song.parseLyricString(this.lyrics);
         }
     }
 

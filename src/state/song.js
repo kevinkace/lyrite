@@ -77,9 +77,11 @@ export default (State) => ({
 
         State.song = new Song({
             loading : true,
+            slug,
             id      : songRef.id,
-            lyrics,
-            slug
+            title,
+            artist,
+            lyrics
         });
 
         // update song
@@ -101,17 +103,9 @@ export default (State) => ({
 
         return batch.commit()
             .then(() => {
-                State.song = new Song({
-                    slug,
-                    id : songRef.id,
-                    title,
-                    artist,
-                    lyrics
-                });
+                State.song.loading = false;
 
                 return State.song;
-
-                // return { slug, id : songRef.id };
             });
     },
 
