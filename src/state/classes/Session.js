@@ -44,7 +44,7 @@ export default class Session {
     }
 
     onAuthStateChanged(authData) {
-        console.info(`authed: ${authData ? "true" : "false"}`);
+        // console.info(`authed: ${authData ? "true" : "false"}`);
 
         // app startup, never logged in || no cached auth
         if (!authData) {
