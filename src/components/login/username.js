@@ -1,6 +1,6 @@
 import state from "../../state";
 
-import cssJoin from "cssJoin";
+import cssjoiner from "cssjoiner";
 import css from "./username.css";
 import error from "../error";
 import loading from "../loading";
@@ -26,7 +26,7 @@ export default {
 
         return [
             m("form", {
-                    class : cssJoin(
+                    class : cssjoiner(
                         [ visibleErrors || vnode.state.persist, css.usernameErrors, css.username ],
                         [ vnode.state.disabled, css.formDisabled, css.form ]
                     ),

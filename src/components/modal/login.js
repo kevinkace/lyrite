@@ -1,6 +1,6 @@
 import state from "../../state";
 
-import cssJoin from "cssJoin";
+import cssJoiner from "cssJoiner";
 import css from "./login.css";
 import providers from "../login/providers";
 import usernameC from "../login/username";
@@ -73,7 +73,7 @@ export default {
 
             // 2 - authorizing
             authorizing || (usernaming && !tryingName) ?
-                m("div", { class : cssJoin(css.step, css.loading) },
+                m("div", { class : cssJoiner(css.step, css.loading) },
                     m("p", `Signing in with ${provider}`),
                     m(loading, { valign : "bottom" })
                 ) :
@@ -82,7 +82,7 @@ export default {
             // 3b, 5b - username field
             authorized && !username && !usernaming ?
                 m("div", { class : css.step },
-                    m("p", { class : cssJoin(css.signedIn, css[provider]) },
+                    m("p", { class : cssJoiner(css.signedIn, css[provider]) },
                         m.trust(providerIcons[provider]),
                         " signed in!"
                     ),
@@ -111,7 +111,7 @@ export default {
 
             // 4 - usernaming
             usernaming && tryingName ?
-                m("div", { class : cssJoin(css.step, css.loading) },
+                m("div", { class : cssJoiner(css.step, css.loading) },
                     m("p",
                         "Trying username",
                         m("span", { class : css.username }, tryingName)

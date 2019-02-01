@@ -1,6 +1,6 @@
 import state from "../../../../state";
 
-import cssJoin from "cssJoin";
+import cssJoiner from "cssJoiner";
 import css from "./index.css";
 
 export default {
@@ -16,7 +16,7 @@ export default {
                 }
 
                 return m("button", {
-                    class : cssJoin(
+                    class : cssJoiner(
                         css.color,
                         css[color],
                         [ className, className ]
