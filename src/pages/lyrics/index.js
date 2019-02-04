@@ -1,6 +1,6 @@
 import state from "../../state";
 
-import cssJoiner from "cssJoiner";
+import cssjoiner from "cssjoiner";
 import css from "./index.css";
 import lyrics from "./lyrics";
 // todo: move to ./pages/lyrics
@@ -49,7 +49,7 @@ export default {
                         }
                     },
                     m("div", {
-                            class : cssJoiner(
+                            class : cssjoiner(
                                 [ state.toolsOpen, css.lyricsEdit, css.lyrics ],
                                 [ isSelectedColor, css.crosshair ],
                                 css[`${state.fontFamily}Font`]

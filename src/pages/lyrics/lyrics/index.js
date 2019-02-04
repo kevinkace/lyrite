@@ -1,6 +1,6 @@
 import state from "../../../state";
 
-import cssJoiner from "cssJoiner";
+import cssjoiner from "cssjoiner";
 import marked from "marked";
 
 import css from "./index.css";
@@ -30,7 +30,7 @@ export default {
 
                 return m("div", {
                         id    : lyric.hash,
-                        class : cssJoiner(
+                        class : cssjoiner(
                             css.line,
                             [ hasColor, css[`s${color}`] ],
                             [ isSelectedColor, css[`s${selectedColor}Hover`] ]
