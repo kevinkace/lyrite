@@ -8,14 +8,12 @@ import loading from "../loading";
 
 import createdByCurrentUser from "../../lib/createdByCurrentUser";
 
-export default {
+const list = {
     view(vnode) {
         const { songs } = vnode.attrs;
 
-        return m("ul", { class : css.list },
-            songs ?
-
-                songs
+        return songs.length ?
+            songs
                 .filter(song => !song.data.deleted)
                 .map(song =>
                     m("li", {
@@ -47,7 +45,17 @@ export default {
                             null
                     )
                 ) :
+            "No songs!";
+    }
+};
 
+export default {
+    view(vnode) {
+        const { songs } = vnode.attrs;
+
+        return m("ul", { class : css.list },
+            songs ?
+                m(list, { songs }) :
                 m(loading, { text : true })
         );
     }
