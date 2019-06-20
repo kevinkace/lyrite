@@ -36,62 +36,6 @@
     "throttle-debounce": "^2.1.0",
     "url-parse": "^1.4.4"
   },
-  "eslintConfig": {
-    "extends": "arenanet",
-    "env": {
-      "browser": true,
-      "es6": true,
-      "node": true
-    },
-    "parserOptions": {
-      "ecmaVersion": 9,
-      "sourceType": "module"
-    },
-    "globals": {
-      "m": true
-    },
-    "rules": {
-      "eol-last": [
-        "error",
-        "always"
-      ],
-      "no-console": 0,
-      "radix": [
-        "warn",
-        "always"
-      ],
-      "semi": [
-        "error",
-        "always"
-      ],
-      "no-unused-vars": [
-        "warn",
-        {
-          "vars": "all",
-          "args": "after-used",
-          "ignoreRestSiblings": false
-        }
-      ],
-      "no-restricted-syntax": [
-        "error",
-        "ExperimentalRestProperty",
-        "ExperimentalSpreadProperty",
-        "WithStatement",
-        "YieldExpression",
-        "JSXIdentifier",
-        "JSXNamespacedName",
-        "JSXMemberExpression",
-        "JSXEmptyExpression",
-        "JSXExpressionContainer",
-        "JSXElement",
-        "JSXClosingElement",
-        "JSXOpeningElement",
-        "JSXAttribute",
-        "JSXSpreadAttribute",
-        "JSXText"
-      ]
-    }
-  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@modular-css/webpack": "^17.1.2",
@@ -101,7 +45,7 @@
     "clean-webpack-plugin": "^1.0.1",
     "copy-webpack-plugin": "^4.6.0",
     "eslint": "^5.12.1",
-    "eslint-config-arenanet": "^4.4.1",
+    "eslint-config-arenanet": "^4.4.2",
     "file-loader": "^2.0.0",
     "firestore-security-tests": "^1.4.0",
     "git-rev": "^0.2.1",

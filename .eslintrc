@@ -1,0 +1,57 @@
+{
+    "extends": "arenanet",
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 9,
+        "sourceType": "module"
+    },
+    "globals": {
+        "m": true
+    },
+    "rules": {
+        "eol-last": [
+            "error",
+            "always"
+        ],
+        "key-spacing": "off",
+        "no-console": 0,
+        "no-unused-vars": [
+            "warn",
+            {
+                "vars": "all",
+                "args": "after-used",
+                "ignoreRestSiblings": false
+            }
+        ],
+        "no-restricted-syntax": [
+            "error",
+            "ExperimentalRestProperty",
+            "ExperimentalSpreadProperty",
+            "WithStatement",
+            "YieldExpression",
+            "JSXIdentifier",
+            "JSXNamespacedName",
+            "JSXMemberExpression",
+            "JSXEmptyExpression",
+            "JSXExpressionContainer",
+            "JSXElement",
+            "JSXClosingElement",
+            "JSXOpeningElement",
+            "JSXAttribute",
+            "JSXSpreadAttribute",
+            "JSXText"
+        ],
+        "radix": [
+            "warn",
+            "always"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+}
