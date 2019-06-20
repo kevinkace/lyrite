@@ -9,5 +9,27 @@
         "slugify",
         "spaceholder",
         "usernaming"
-    ]
+    ],
+    "workbench.colorCustomizations": {
+        "editorCursor.foreground": "#fff9",
+        "editorCursor.background": "#000",
+        "editor.findMatchBorder": "#0f06",
+        "editor.findMatchHighlightBorder": "#0f09",
+        "editor.lineHighlightBackground": "#fff2",
+        "editor.selectionBackground": "#f777",
+        "editorLineNumber.activeForeground": "#f44",
+        "editorOverviewRuler.wordHighlightStrongForeground": "#f00",
+        "activityBar.background": "#43627a",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#bb84a3",
+        "activityBarBadge.foreground": "#15202b",
+        "titleBar.activeBackground": "#43627a",
+        "titleBar.inactiveBackground": "#43627a99",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "statusBar.background": "#43627a",
+        "statusBarItem.hoverBackground": "#557c9b",
+        "statusBar.foreground": "#e7e7e7"
+    }
 }
