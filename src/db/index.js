@@ -9,7 +9,8 @@ firebase.initializeApp(config);
 const db = firebase.firestore();
 const { delete : _delete, serverTimestamp, arrayUnion, arrayRemove } = firebase.firestore.FieldValue;
 
-db.settings({ timestampsInSnapshots : true });
+// requires a param
+db.settings({});
 
 window.fb = firebase;
 
