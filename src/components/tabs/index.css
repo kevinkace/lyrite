@@ -7,7 +7,7 @@
 .buttons {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 0.4em;
+    padding: 0;
     margin-bottom: 0.6em;
 
     border-bottom: solid 1px colors.border;
@@ -16,17 +16,26 @@
 
 .tab {
     display: block;
-    padding: 0.2em 0;
+    padding: 0.2em 0.4em;
     border: none;
     color: colors.cta;
     background: none;
 
-    &:hover {
+    &:hover:not(.tabSelected) {
         color: colors.ctaLight;
+        background: colors.buttonHover;
 
         svg {
             fill: colors.ctaLight;
         }
+    }
+
+    &:first-child {
+        border-right: solid 1px colors.border;
+    }
+
+    &:last-child {
+        border-left: solid 1px colors.border;
     }
 
     svg {

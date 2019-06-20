@@ -9,6 +9,7 @@
 @value placeholderBorder: #9994;
 @value placeholder: #666;
 @value loggedInPanel: #2c292d;
+@value buttonHover: #fff2;
 
 /* Monokai */
 @value color0: #ff6188;
@@ -22,4 +23,4 @@
 
 @value twitter: #1da1f2;
 @value facebook: #4267b2;
-@value github: #222;
+@value github: #999;

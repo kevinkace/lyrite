@@ -10,8 +10,8 @@ import songForm from "./songForm";
 import tabs from "../../components/tabs";
 import providers from "../../components/login/providers";
 
-import newIcon from "../../icons/new.svg";
-import addIcon from "../../icons/plus.svg";
+import newestIcon from "../../icons/newest.svg";
+import addIcon    from "../../icons/plus.svg";
 
 export default {
     view() {
@@ -29,13 +29,13 @@ export default {
                 ),
 
                 m(tabs, {
-                        tabs : [
-                            "newest lyrics",
-                            {
-                                icon  : addIcon,
-                                label : "add lyrics"
-                            }
-                        ]
+                        tabs : [{
+                            icon  : newestIcon,
+                            label : "newest lyrics"
+                        }, {
+                            icon  : addIcon,
+                            label : "add lyrics"
+                        }]
                     },
 
                     m(list, { songs : get(state, [ "songs", "songs" ]) }),
