@@ -1,15 +1,15 @@
-@value bg: #2c292d;
-@value header: #fff1;
-@value cta: #4571a9;
-@value ctaLight: #6b97d0;
-@value modalBg: #222e;
-@value modal: #eee;
-@value grey: #fff9;
-@value border: #fff5;
+@value bg:                #2c292d;
+@value header:            #fff1;
+@value cta:               #4571a9;
+@value ctaLight:          #6b97d0;
+@value modalBg:           #222e;
+@value modal:             #eee;
+@value grey:              #fff9;
+@value border:            #fff5;
 @value placeholderBorder: #9994;
-@value placeholder: #666;
-@value loggedInPanel: #2c292d;
-@value buttonHover: #fff2;
+@value placeholder:       #666;
+@value loggedInPanel:     #2c292d;
+@value buttonHover:       #fff2;
 
 /* Monokai */
 @value color0: #ff6188;
@@ -21,6 +21,6 @@
 @value color6: #4571a9;
 @value color7: #fff;
 
-@value twitter: #1da1f2;
+@value twitter:  #1da1f2;
 @value facebook: #4267b2;
-@value github: #999;
+@value github:   #5a5a5a;
