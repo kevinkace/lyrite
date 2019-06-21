@@ -17,11 +17,9 @@
     top: 0;
     right: 0;
     height: headerHeight;
-    padding-right: 1em;
     z-index: 2;
 
     display: flex;
-    align-items: center;
 
     > * {
         font-size: 0.9em;
@@ -29,7 +27,13 @@
     }
 }
 
+.loginRegion {
+    padding: 0 1.4em;
+}
+
 .loadMsg {
+    composes: loginRegion;
+
     color: colors.cta;
     font: 300 0.95em/1.9 fontDisplay;
 

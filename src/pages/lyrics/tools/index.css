@@ -64,8 +64,9 @@
 
 .label {
     display: block;
-    margin-top: 1em;
-    padding: 0.5em 0.4em 0.4em;
+    margin-top: 2em;
+    padding: 0.6em 0.6em 0.5em;
+
     text-transform: uppercase;
 }
 

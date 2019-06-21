@@ -1,8 +1,14 @@
 @value * as colors from "../../palette.css";
 
 .login {
-    padding: 0;
+    composes: loginRegion from "../layout/index.css";
+
     background: none;
     border: none;
     color: colors.ctaLight;
+
+    &:focus,
+    &:hover {
+        background: colors.buttonHover;
+    }
 }

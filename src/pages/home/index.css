@@ -3,7 +3,7 @@
 
 .home {
     padding: 1em 0.5em 0;
-    max-width: 500px;
+    max-width: 600px;
     margin: 1.6em auto 0;
 }
 
@@ -42,7 +42,7 @@
     h3 {
         margin: 1em 0;
         font-size: 1.3em;
-        color: colors.grey;
+        color: #fff;
         text-align: center;
     }
 
