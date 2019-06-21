@@ -7,8 +7,9 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const git = require("git-rev");
 
-const ModularCSS = require("@modular-css/webpack/plugin");
-const postcssNested = require("postcss-nested");
+const ModularCSS           = require("@modular-css/webpack/plugin");
+const postcssNested        = require("postcss-nested");
+const postcssColorFunction = require("postcss-color-function");
 
 // Bundling assets for HtmlWebpackIncludeAssetsPlugi;
 const assets = [{
@@ -77,6 +78,7 @@ module.exports = {
             css     : "./index.css",
             map     : true,
             before  : [ postcssNested ],
+            after   : [ postcssColorFunction ],
             verbose : true
         }),
         // Tells webpack to use this plugin to generate the output

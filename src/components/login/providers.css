@@ -51,18 +51,33 @@
 .twitter {
     composes: button;
 
-    background: colors.twitter;
+    background: color(colors.twitter a(70%));
+
+    &:focus,
+    &:hover {
+        background: colors.twitter;
+    }
 }
 
 .facebook {
     composes: button;
 
-    background: colors.facebook;
+    background: color(colors.facebook a(70%));
+
+    &:focus,
+    &:hover {
+        background: colors.facebook;
+    }
 }
 
 .github {
     composes: button;
 
-    background: colors.github;
+    background: color(colors.github a(70%));
     box-shadow: 0 0 1px #fff8;
+
+    &:focus,
+    &:hover {
+        background: colors.github;
+    }
 }
