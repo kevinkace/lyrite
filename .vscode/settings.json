@@ -6,8 +6,10 @@
         "lyrite",
         "maxlength",
         "minlength",
+        "reged",
         "slugify",
         "spaceholder",
+        "unauthed",
         "usernaming"
     ],
     "workbench.colorCustomizations": {
