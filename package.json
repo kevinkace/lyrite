@@ -38,7 +38,7 @@
     "marked": "^0.3.19",
     "minireset.css": "0.0.3",
     "mithril": "^1.1.6",
-    "modular-css-webpack": "^8.2.0",
+    "modular-css-webpack": "^15.0.0",
     "object-path": "^0.11.4",
     "postcss-nested": "^3.0.0",
     "raw-loader": "^4.0.0",
