@@ -30,7 +30,7 @@
     "copy-webpack-plugin": "^5.1.1",
     "eol": "^0.9.1",
     "eslint": "^6.8.0",
-    "file-loader": "^1.1.11",
+    "file-loader": "^5.0.2",
     "git-rev": "^0.2.1",
     "html-webpack-include-assets-plugin": "^1.0.4",
     "html-webpack-plugin": "^3.2.0",
