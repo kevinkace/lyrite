@@ -35,7 +35,7 @@
     "html-webpack-include-assets-plugin": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-template": "^6.2.0",
-    "marked": "^1.2.5",
+    "marked": "^1.2.8",
     "minireset.css": "0.0.6",
     "mithril": "^1.1.7",
     "modular-css-webpack": "^15.0.0",
