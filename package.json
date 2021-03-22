@@ -42,7 +42,7 @@
     "object-path": "^0.11.5",
     "postcss-nested": "^4.2.3",
     "raw-loader": "^4.0.0",
-    "slugify": "^1.3.6",
+    "slugify": "^1.5.0",
     "string-hash": "^1.1.3",
     "url-parse": "^1.4.7",
     "webpack": "^4.8.3",
