@@ -29,7 +29,7 @@
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^5.1.1",
     "eol": "^0.9.1",
-    "eslint": "^6.8.0",
+    "eslint": "^7.26.0",
     "file-loader": "^6.2.0",
     "git-rev": "^0.2.1",
     "html-webpack-include-assets-plugin": "^2.0.0",
