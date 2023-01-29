@@ -2,10 +2,10 @@ import m from "mithril";
 
 import state from "../../state";
 
-import css from "./index.css";
+import css   from "./index.css";
 import tools from "../tools";
 
-import logo from "../icons/lyrite-logo2.svg";
+import logo from "../icons/lyrite-logo2.svg?raw";
 
 import animResolve from "../../lib/animResolve";
 
@@ -16,7 +16,7 @@ export default {
         };
     },
     onbeforeremove : (vnode) => animResolve(vnode.dom, css.headerOut),
-    onremove : () => {
+    onremove       : () => {
         delete state.header;
     },
     view : () =>

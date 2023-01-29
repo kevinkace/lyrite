@@ -1,6 +1,6 @@
-import m              from "mithril";
-import { marked }     from "marked";
-import * as DOMPurify from "dompurify";
+import m          from "mithril";
+import { marked } from "marked";
+import DOMPurify  from "dompurify";
 
 import state from "../../state";
 
