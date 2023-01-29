@@ -1,10 +1,10 @@
-import m         from "mithril";
-import marked    from "marked";
-import DOMPurify from "dompurify";
+import m              from "mithril";
+import { marked }     from "marked";
+import * as DOMPurify from "dompurify";
 
 import state from "../../state";
 
-import css from "./index.css";
+import css  from "./index.css";
 import edit from "./edit";
 
 function addBr(text) {
