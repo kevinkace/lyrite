@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build-prod",
-    "build": "webpack",
-    "build-prod": "webpack --mode=production",
-    "start": "webpack-dev-server --open",
+    "test": "npm run build",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "lyrics": "node genSong.js",
     "addTag": "git tag -a",
     "pushTag": "git push origin --tags"
@@ -24,26 +24,17 @@
   },
   "homepage": "https://github.com/kevinkace/lyrite#readme",
   "dependencies": {
-    "clean-webpack-plugin": "^0.1.19",
-    "copy-webpack-plugin": "^5.1.1",
     "dompurify": "^2.4.3",
     "eol": "^0.9.1",
-    "file-loader": "^6.2.0",
     "git-rev": "^0.2.1",
-    "html-webpack-include-assets-plugin": "^2.0.0",
-    "html-webpack-plugin": "^3.2.0",
-    "html-webpack-template": "^6.2.0",
     "marked": "^4.2.12",
     "minireset.css": "0.0.6",
     "mithril": "^1.1.7",
-    "modular-css-webpack": "^15.0.0",
     "object-path": "^0.11.8",
     "postcss-nested": "^4.2.3",
     "raw-loader": "^4.0.0",
     "slugify": "^1.6.5",
-    "string-hash": "^1.1.3",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.11.0"
+    "string-hash": "^1.1.3"
   },
   "devDependencies": {
     "eslint": "^8.33.0",
