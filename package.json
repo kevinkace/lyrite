@@ -31,14 +31,16 @@
     "minireset.css": "0.0.6",
     "mithril": "^1.1.7",
     "object-path": "^0.11.8",
-    "postcss-nested": "^4.2.3",
     "raw-loader": "^4.0.0",
     "slugify": "^1.6.5",
     "string-hash": "^1.1.3"
   },
   "devDependencies": {
+    "@modular-css/vite": "^29.1.3",
     "eslint": "^8.33.0",
     "eslint-config-arenanet": "^5.7.4",
+    "postcss": "^8.4.21",
+    "postcss-nesting": "^11.0.1",
     "vite": "^4.0.4"
   }
 }
