@@ -1,4 +1,5 @@
 # Lyrite - a tool to format lyrics
+
 [![Build Status](https://travis-ci.org/kevinkace/lyrite.svg?branch=master)](https://travis-ci.org/kevinkace/lyrite)
 
 
