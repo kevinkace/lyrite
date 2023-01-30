@@ -1,5 +1,5 @@
-@value * as colors from "../../palette.css";
-@value fontSerif, animDur from "../../index.css";
+@value * as colors from "../../palette.mcss";
+@value fontSerif, animDur from "../../index.mcss";
 
 .header {
     position: relative;

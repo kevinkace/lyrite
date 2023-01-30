@@ -2,7 +2,7 @@ import m from "mithril";
 
 import state from "../../state";
 
-import css from "./list.css";
+import css from "./list.mcss";
 
 export default {
     view : (vnode) =>

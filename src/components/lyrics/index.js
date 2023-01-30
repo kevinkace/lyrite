@@ -1,11 +1,11 @@
-import m from "mithril";
+import m          from "mithril";
+import { marked } from "marked";
+import DOMPurify  from "dompurify";
 
 import state from "../../state";
 
-import css from "./index.css";
+import css  from "./index.mcss";
 import edit from "./edit";
-
-import marked from "marked";
 
 function addBr(text) {
     return text.replace(/\n/g, "<br>");
@@ -41,7 +41,7 @@ export default {
                                 }
                             },
 
-                            m.trust(marked(addBr(part.text)))
+                            m.trust(DOMPurify.sanitize(marked.parse(addBr(part.text))))
                         )
                     )
             ),
