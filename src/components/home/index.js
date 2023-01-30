@@ -3,7 +3,7 @@ import m from "mithril";
 import state from "../../state";
 import db    from "../../state/db";
 
-import css from "./index.css";
+import css from "./index.mcss";
 
 import logo from "../icons/lyrite-logo2.svg?raw";
 import list from "./list";

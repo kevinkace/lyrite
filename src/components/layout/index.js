@@ -2,7 +2,7 @@ import m from "mithril";
 
 import state from "../../state";
 
-import css    from "./index.css";
+import css    from "./index.mcss";
 import header from "../header";
 import modal  from "../modal";
 

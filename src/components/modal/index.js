@@ -3,7 +3,7 @@ import m from "mithril";
 import state from "../../state";
 import animResolve from "../../lib/animResolve";
 
-import css from "./index.css";
+import css from "./index.mcss";
 import title from "./title";
 
 const modals = { title };

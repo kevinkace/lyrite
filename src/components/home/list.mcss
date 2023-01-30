@@ -1,5 +1,5 @@
-@value * as colors from "../../palette.css";
-@value fontSans, fontSerif, fontDisplay, animDur from "../../index.css";
+@value * as colors from "../../palette.mcss";
+@value fontSans, fontSerif, fontDisplay, animDur from "../../index.mcss";
 
 .list {
     max-width: 30em;

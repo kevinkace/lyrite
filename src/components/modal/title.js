@@ -2,7 +2,7 @@ import m from "mithril";
 
 import state from "../../state";
 
-import css from "./title.css";
+import css from "./title.mcss";
 
 export default {
     view : (vnode) =>
@@ -10,7 +10,7 @@ export default {
                 onsubmit : (e) => {
                     e.preventDefault();
 
-                    if(!vnode.state.value) {
+                    if (!vnode.state.value) {
                         return;
                     }
 

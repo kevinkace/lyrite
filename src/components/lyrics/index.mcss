@@ -1,5 +1,5 @@
-@value * as colors from "../../palette.css";
-@value fontSans, animDur from "../../index.css";
+@value * as colors from "../../palette.mcss";
+@value fontSans, animDur from "../../index.mcss";
 
 .lyredit {
     position: relative;

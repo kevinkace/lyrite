@@ -1,4 +1,4 @@
-@value * as colors from "./palette.css";
+@value * as colors from "./palette.mcss";
 
 @value fontSans: Lato, sans-serif;
 @value fontDisplay: Raleway, sans-serif;

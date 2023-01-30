@@ -1,7 +1,7 @@
 "use strict";
 
 import "minireset.css";
-import "./index.css";
+import "./index.mcss";
 
 import m from "mithril";
 

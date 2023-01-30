@@ -31,7 +31,7 @@ export default defineConfig({
             before : [
                 postcssNesting
             ],
-            include : "**/*.css"
+            // include : "**/*.css"
         }),
         createHtmlPlugin({
             inject : {

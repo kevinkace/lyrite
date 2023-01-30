@@ -13,10 +13,13 @@
     <!-- <link rel="manifest" href="/site.webmanifest?v=Omy60dJY2W"> -->
     <link rel="mask-icon" href="/safari-pinned-tab.svg?v=Omy60dJY2W" color="#4672a9">
     <link rel="shortcut icon" href="/favicon.ico?v=Omy60dJY2W">
+
     <meta name="apple-mobile-web-app-title" content="Lyrite">
     <meta name="application-name" content="Lyrite">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#4672a9">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway|Slabo+27px|Bitter:400,700|Lato:400,700">
 </head>
 
 <body>
@@ -24,28 +27,28 @@
 
     <script>
 
-        // const q = {};
-        // function desanitize(path) {
-        //     return path.replace(/~and~/g, "&")
-        // }
-        // function checkRedirect() {
-        //     if(!location.search) {
-        //         return;
-        //     }
-        //     location.search.slice(1).split("&").forEach(function(params) {
-        //         const [ key, value ] = params.split("=");
-        //         q[key] = desanitize(value);
-        //     });
-        //     if(q.p === undefined) {
-        //         return;
-        //     }
-        //     history.replaceState(null, null,
-        //         location.pathname.slice(0, -1) + (q.p || "") +
-        //         (q.q ? ("?" + q.q) : "") +
-        //         location.hash
-        //     );
-        // }
-        // checkRedirect();
+        const q = {};
+        function desanitize(path) {
+            return path.replace(/~and~/g, "&")
+        }
+        function checkRedirect() {
+            if(!location.search) {
+                return;
+            }
+            location.search.slice(1).split("&").forEach(function(params) {
+                const [ key, value ] = params.split("=");
+                q[key] = desanitize(value);
+            });
+            if(q.p === undefined) {
+                return;
+            }
+            history.replaceState(null, null,
+                location.pathname.slice(0, -1) + (q.p || "") +
+                (q.q ? ("?" + q.q) : "") +
+                location.hash
+            );
+        }
+        checkRedirect();
 
         const ver = <%- JSON.stringify(ver) %>;
     </script>
@@ -54,11 +57,11 @@
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-WG5XVWB');</script>
-        <!-- End Google Tag Manager -->
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WG5XVWB');</script>
+    <!-- End Google Tag Manager -->
 </body>
 
 </html>

@@ -4,7 +4,7 @@ import DOMPurify  from "dompurify";
 
 import state from "../../state";
 
-import css  from "./index.css";
+import css  from "./index.mcss";
 import edit from "./edit";
 
 function addBr(text) {

@@ -2,7 +2,7 @@ import m from "mithril";
 
 import state from "../../state";
 
-import css   from "./index.css";
+import css   from "./index.mcss";
 import tools from "../tools";
 
 import logo from "../icons/lyrite-logo2.svg?raw";

@@ -2,8 +2,8 @@ import m from "mithril";
 
 import state from "../../state";
 
-import css        from "./index.css";
-import tooltipCss from "./tooltip.css";
+import css        from "./index.mcss";
+import tooltipCss from "./tooltip.mcss";
 
 import edit from "../icons/quill.svg?raw";
 

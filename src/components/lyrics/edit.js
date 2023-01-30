@@ -2,7 +2,7 @@ import m from "mithril";
 
 import state from "../../state";
 
-import css from "./edit.css";
+import css from "./edit.mcss";
 import animResolve from "../../lib/animResolve";
 
 export default {

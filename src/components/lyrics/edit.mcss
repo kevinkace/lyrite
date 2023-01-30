@@ -1,4 +1,4 @@
-@value animDur from "../../index.css";
+@value animDur from "../../index.mcss";
 
 .edit {
     position: absolute;
