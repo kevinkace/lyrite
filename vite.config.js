@@ -4,7 +4,8 @@ import gitRev from "git-rev";
 
 import { createHtmlPlugin } from "vite-plugin-html";
 import mcss                 from "@modular-css/vite";
-import postcssNesting       from "postcss-nesting";
+import shortnames           from "@modular-css/shortnames";
+import nested               from "postcss-nested";
 
 const ver = {};
 
@@ -28,10 +29,13 @@ gitRev.tag((str) => {
 export default defineConfig({
     plugins : [
         mcss({
+            // map : {
+            //     inline : false
+            // },
+            namer  : shortnames(),
             before : [
-                postcssNesting
-            ],
-            // include : "**/*.css"
+                nested()
+            ]
         }),
         createHtmlPlugin({
             inject : {
@@ -43,6 +47,7 @@ export default defineConfig({
         })
     ],
     build : {
-        sourcemap : true
+        sourcemap : true,
+        manifest  : true
     }
 });
