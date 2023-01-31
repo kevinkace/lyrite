@@ -30,7 +30,7 @@
     "git-rev": "^0.2.1",
     "marked": "^4.2.12",
     "minireset.css": "0.0.6",
-    "mithril": "^1.1.7",
+    "mithril": "^2.2.2",
     "object-path": "^0.11.8",
     "postcss-nested": "^6.0.0",
     "slugify": "^1.6.5",
