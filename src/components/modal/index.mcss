@@ -1,5 +1,5 @@
-@value * as colors from "../../palette.css";
-@value animDur from "../../index.css";
+@value * as colors from "../../palette.mcss";
+@value animDur from "../../index.mcss";
 
 .modal {
     position: fixed;

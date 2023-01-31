@@ -1,4 +1,4 @@
-@value * as colors from "../../palette.css";
+@value * as colors from "../../palette.mcss";
 
 .label {
     display: block;
@@ -19,13 +19,13 @@
 }
 
 .add {
-    composes: button from "../../index.css";
+    composes: button from "../../index.mcss";
 
     --color: colors.cta;
     color: #fff;
 }
 
 .cancel {
-    composes: button from "../../index.css";
+    composes: button from "../../index.mcss";
     color: #999;
 }

@@ -1,24 +1,24 @@
 import m from "mithril";
 
 import state from "../../state";
-import db from "../../state/db";
+import db    from "../../state/db";
 
-import css from "./index.css";
+import css from "./index.mcss";
 
-import logo from "../icons/lyrite-logo2.svg";
+import logo from "../icons/lyrite-logo2.svg?raw";
 import list from "./list";
 
 export default {
     oninit : (vnode) => {
-        vnode.state.timestamp = db.timestamp();
+        vnode.state.timestamp    = db.timestamp();
         vnode.state.defaultSongs = db.get("songs?default=true");
-        vnode.state.customSongs = db.get("songs?default=undefined");
+        vnode.state.customSongs  = db.get("songs?default=undefined");
     },
     onbeforeupdate : (vnode) => {
-        if(vnode.state.timestamp !== db.timestamp()) {
-            vnode.state.timestamp = db.timestamp();
+        if (vnode.state.timestamp !== db.timestamp()) {
+            vnode.state.timestamp    = db.timestamp();
             vnode.state.defaultSongs = db.get("songs?default=true");
-            vnode.state.customSongs = db.get("songs?default=undefined");
+            vnode.state.customSongs  = db.get("songs?default=undefined");
 
             return true;
         }
@@ -41,8 +41,8 @@ export default {
                         class       : vnode.state.focused ? css.textareaFocused : css.textarea,
                         value       : vnode.state.lyricString,
                         placeholder : vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
-                        onfocus : () => {
-                            vnode.state.focused = true;
+                        onfocus     : () => {
+                            vnode.state.focused         = true;
                             vnode.state.hidePlaceholder = true;
                         },
                         onblur : () => {
@@ -50,7 +50,7 @@ export default {
                         },
                         oninput : m.withAttr("value", (v) => {
                             vnode.state.lyricString = v;
-                            vnode.state.loadable = v.length;
+                            vnode.state.loadable    = v.length;
                         })
                     })
                 ),
@@ -58,7 +58,7 @@ export default {
                 vnode.state.loadable ?
                     m("div", { class : css.btnWrap },
                         m("button", {
-                            class : css.loadBtn,
+                            class   : css.loadBtn,
                             onclick : () => {
                                 let slug = state.action("IMPORT SONG LYRICS", {
                                     lyricString : vnode.state.lyricString,
@@ -77,12 +77,12 @@ export default {
 
             // loaded songs list
             Object.keys(vnode.state.customSongs).length ?
-                m(list, { songs : vnode.state.customSongs, header : "your songs"}) :
+                m(list, { songs : vnode.state.customSongs, header : "your songs" }) :
                 null,
 
             // loaded songs list
             Object.keys(vnode.state.defaultSongs).length ?
-                m(list, { songs : vnode.state.defaultSongs, header : "default songs"}) :
+                m(list, { songs : vnode.state.defaultSongs, header : "default songs" }) :
                 null
         )
     ]

@@ -2,10 +2,10 @@ import m from "mithril";
 
 import state from "../../state";
 
-import css from "./index.css";
-import tooltipCss from "./tooltip.css";
+import css        from "./index.mcss";
+import tooltipCss from "./tooltip.mcss";
 
-import edit from "../icons/quill.svg";
+import edit from "../icons/quill.svg?raw";
 
 export default {
     view : (vnode) =>
@@ -13,11 +13,11 @@ export default {
 
             // Show/hide tool button
             m("button", {
-                    class : css.show,
+                    class   : css.show,
                     onclick : () => {
                         vnode.state.show = !vnode.state.show;
 
-                        if(!vnode.state.show) {
+                        if (!vnode.state.show) {
                             state.action("HIDE TOOLS");
                         }
                     }
@@ -47,7 +47,7 @@ export default {
                 m("label", { class : css.label }, "font "),
                 m("div", { class : css.control },
                     m("label", {
-                        class : css.font,
+                        class       : css.font,
                         onmouseover : () => {
                             vnode.state.range = Date.now();
                         },
@@ -55,7 +55,7 @@ export default {
                             let now = Date.now();
 
                             setTimeout(() => {
-                                if(now < vnode.state.range) {
+                                if (now < vnode.state.range) {
                                     return;
                                 }
 
@@ -67,10 +67,10 @@ export default {
                     }, parseFloat(state.font.size, 10).toFixed(2)),
 
                     m("input", {
-                        type  : "range",
-                        min   : 0.7,
-                        max   : 3,
-                        step  : 0.05,
+                        type : "range",
+                        min  : 0.7,
+                        max  : 3,
+                        step : 0.05,
 
                         class : vnode.state.range ? css.range : css.rangeHide,
 
@@ -81,7 +81,7 @@ export default {
                             let now = Date.now();
 
                             setTimeout(() => {
-                                if(now < vnode.state.range) {
+                                if (now < vnode.state.range) {
                                     return;
                                 }
 
@@ -91,8 +91,10 @@ export default {
                             }, 300);
                         },
 
-                        value : state.font.size,
-                        oninput : m.withAttr("value", (v) => { state.font.size = v; })
+                        value   : state.font.size,
+                        oninput : m.withAttr("value", (v) => {
+ state.font.size = v;
+})
                     })
                 )
             ),
@@ -102,9 +104,9 @@ export default {
                 m("label", { class : css.label }, "cols "),
                 m("div", { class : css.control },
                     m("button", {
-                        class : css.dec,
+                        class   : css.dec,
                         onclick : () => {
-                            if(state.cols.count === 1) {
+                            if (state.cols.count === 1) {
                                 return;
                             }
 
@@ -113,7 +115,7 @@ export default {
                     }, "<"),
                     m("label", { class : css.cols }, state.cols.count),
                     m("button", {
-                        class : css.inc,
+                        class   : css.inc,
                         onclick : () => {
                             ++state.cols.count;
                         }
@@ -125,7 +127,7 @@ export default {
                 m("label", { class : css.label }, m.trust("&nbsp;")), // I'm a terrible person
                 m("div", { class : css.control },
                     m("button", {
-                        class : css.edit,
+                        class   : css.edit,
                         onclick : () => {
                             state.action("TOGGLE EDIT CURRENT SONG");
                         }

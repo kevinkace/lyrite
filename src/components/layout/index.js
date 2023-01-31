@@ -2,11 +2,11 @@ import m from "mithril";
 
 import state from "../../state";
 
-import css from "./index.css";
+import css    from "./index.mcss";
 import header from "../header";
-import modal from "../modal";
+import modal  from "../modal";
 
-import ghLogo from "../icons/github.svg";
+import ghLogo from "../icons/github.svg?raw";
 
 export default {
     view : (vnode) =>
@@ -20,7 +20,6 @@ export default {
                         class   : css.clear,
                         onclick : () => {
                             state.action("CLEAR DB");
-
                         }
                     }, "clear"),
 
