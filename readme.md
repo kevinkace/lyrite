@@ -1,5 +1,6 @@
 # Lyrite - a tool to format lyrics
-[![Build Status](https://travis-ci.org/kevinkace/lyrite.svg?branch=master)](https://travis-ci.org/kevinkace/lyrite)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8fc9f924-59cb-42ae-8a9e-3a16db1bccd6/deploy-status)](https://app.netlify.com/sites/effervescent-valkyrie-30f7c5/deploys)
 
 
 ## What is Lyrite?
