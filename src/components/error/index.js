@@ -9,10 +9,9 @@ export default {
         m("div", { class : css.error },
             m("h1", state.error),
 
-            m("a", {
-                class    : css.home,
-                href     : "/",
-                oncreate : m.route.link
+            m(m.route.Link, {
+                class : css.home,
+                href  : "/"
             }, "return to home")
         )
 };

@@ -1,17 +1,15 @@
-"use strict";
-
 import m from "mithril";
 
 import state from "./state";
 
 import layout from "./components/layout";
 import lyrics from "./components/lyrics";
-import error from "./components/error";
-import home from "./components/home";
+import error  from "./components/error";
+import home   from "./components/home";
 
 export default {
     "/" : {
-        onmatch : () => {
+        onmatch() {
             state.action("CLOSE SONG");
         },
         render : () => m(layout, m(home))
@@ -19,7 +17,7 @@ export default {
 
     "/:slug" : {
         onmatch : (args) =>
-            state.action("LOAD SONG BY SLUG", args.slug) ? lyrics : error,
+            (state.action("LOAD SONG BY SLUG", args.slug) ? lyrics : error),
         render : (comp) => m(layout, { header : true }, m(comp.tag))
     }
 };

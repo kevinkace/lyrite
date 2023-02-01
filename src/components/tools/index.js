@@ -13,8 +13,8 @@ export default {
 
             // Show/hide tool button
             m("button", {
-                    class   : css.show,
-                    onclick : () => {
+                    class : css.show,
+                    onclick() {
                         vnode.state.show = !vnode.state.show;
 
                         if (!vnode.state.show) {
@@ -34,7 +34,7 @@ export default {
                         m("button", {
                             class : state.style && state.style.idx === idx ? css[`${style}Selected`] : css[style],
 
-                            onclick : () => {
+                            onclick() {
                                 state.action("CLICK STYLE", idx);
                             }
                         }, `${idx}`)
@@ -47,11 +47,11 @@ export default {
                 m("label", { class : css.label }, "font "),
                 m("div", { class : css.control },
                     m("label", {
-                        class       : css.font,
-                        onmouseover : () => {
+                        class : css.font,
+                        onmouseover() {
                             vnode.state.range = Date.now();
                         },
-                        onmouseout : () => {
+                        onmouseout() {
                             let now = Date.now();
 
                             setTimeout(() => {
@@ -74,10 +74,10 @@ export default {
 
                         class : vnode.state.range ? css.range : css.rangeHide,
 
-                        onmouseover : () => {
+                        onmouseover() {
                             vnode.state.range = Date.now();
                         },
-                        onmouseout : () => {
+                        onmouseout() {
                             let now = Date.now();
 
                             setTimeout(() => {
@@ -91,10 +91,11 @@ export default {
                             }, 300);
                         },
 
-                        value   : state.font.size,
-                        oninput : m.withAttr("value", (v) => {
- state.font.size = v;
-})
+                        value : state.font.size,
+
+                        oninput(e) {
+                            state.font.size = e.target.value;
+                        }
                     })
                 )
             ),
@@ -104,8 +105,9 @@ export default {
                 m("label", { class : css.label }, "cols "),
                 m("div", { class : css.control },
                     m("button", {
-                        class   : css.dec,
-                        onclick : () => {
+                        class : css.dec,
+
+                        onclick() {
                             if (state.cols.count === 1) {
                                 return;
                             }
@@ -115,8 +117,9 @@ export default {
                     }, "<"),
                     m("label", { class : css.cols }, state.cols.count),
                     m("button", {
-                        class   : css.inc,
-                        onclick : () => {
+                        class : css.inc,
+
+                        onclick() {
                             ++state.cols.count;
                         }
                     }, ">")
@@ -127,8 +130,9 @@ export default {
                 m("label", { class : css.label }, m.trust("&nbsp;")), // I'm a terrible person
                 m("div", { class : css.control },
                     m("button", {
-                        class   : css.edit,
-                        onclick : () => {
+                        class : css.edit,
+
+                        onclick() {
                             state.action("TOGGLE EDIT CURRENT SONG");
                         }
                     }, "edit")

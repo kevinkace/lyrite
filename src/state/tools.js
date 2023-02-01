@@ -6,7 +6,7 @@ export default (State) => ({
 
         // Deselect lyric
         // selected lyric without a style set
-        if(State.selected === idx && (!State.style || lineStyleIsSetStyle)) {
+        if (State.selected === idx && (!State.style || lineStyleIsSetStyle)) {
             delete State.selected;
 
             return;
@@ -15,7 +15,7 @@ export default (State) => ({
         // Always set selected otherwise
         State.selected = idx;
 
-        if(!State.style) {
+        if (!State.style) {
             return;
         }
 
@@ -29,16 +29,16 @@ export default (State) => ({
         State.style = { idx };
 
         // Clicking first style after opening tools
-        if(!State.tooltip) {
+        if (!State.tooltip) {
             // create tt obj
-            State.tooltip  = { style : {} };
+            State.tooltip = { style : {} };
 
             // add listing for tt position
             window.addEventListener("mousemove", State.events.mousemove);
         }
 
         // Nothing is selected so don"t color anything
-        if(!State.selected && State.selected !== 0) {
+        if (!State.selected && State.selected !== 0) {
             return;
         }
 

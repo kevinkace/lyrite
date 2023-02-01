@@ -7,7 +7,7 @@ import css from "./title.mcss";
 export default {
     view : (vnode) =>
         m("form", {
-                onsubmit : (e) => {
+                onsubmit(e) {
                     e.preventDefault();
 
                     if (!vnode.state.value) {
@@ -21,11 +21,12 @@ export default {
                 value       : vnode.state.value,
                 placeholder : state.song.title,
                 class       : css.input,
-                oninput     : m.withAttr("value", (v) => {
-                    vnode.state.value = v;
-                }),
-                oncreate : (inputVnode) => {
-                    inputVnode.dom.focus();
+
+                oninput(e) {
+                    vnode.state.value = e.target.value;
+                },
+                oncreate({ dom }) {
+                    dom.focus();
                 }
             }),
             m("div", { class : css.buttons },
@@ -36,8 +37,9 @@ export default {
                     "add title"
                 ),
                 m("button", {
-                        class   : css.cancel,
-                        onclick : (e) => {
+                        class : css.cancel,
+
+                        onclick(e) {
                             e.preventDefault();
 
                             state.action("CLOSE MODAL");

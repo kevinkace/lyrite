@@ -24,10 +24,7 @@ export default {
             m("h1", { class : css.title }, state.song ? state.song.title : state.appName),
 
             m("div", { class : css.logo },
-                m("a", {
-                        href     : "/",
-                        oncreate : m.route.link,
-                    },
+                m(m.route.Link, { href : "/" },
                     m.trust(logo),
                     m("div", "Lyrite")
                 )
