@@ -5,8 +5,8 @@ import state from "../../state";
 import css from "./title.mcss";
 
 export default {
-    view : (vnode) =>
-        m("form", {
+    view(vnode) {
+        return m("form", {
                 onsubmit(e) {
                     e.preventDefault();
 
@@ -48,5 +48,6 @@ export default {
                     "cancel"
                 )
             )
-        )
+        );
+    }
 };

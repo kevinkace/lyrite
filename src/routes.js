@@ -12,12 +12,17 @@ export default {
         onmatch() {
             state.action("CLOSE SONG");
         },
-        render : () => m(layout, m(home))
+        render() {
+            return m(layout, m(home));
+        }
     },
 
     "/:slug" : {
-        onmatch : (args) =>
-            (state.action("LOAD SONG BY SLUG", args.slug) ? lyrics : error),
-        render : (comp) => m(layout, { header : true }, m(comp.tag))
+        onmatch(args) {
+            return state.action("LOAD SONG BY SLUG", args.slug) ? lyrics : error;
+        },
+        render(comp) {
+            return m(layout, { header : true }, m(comp.tag));
+        }
     }
 };

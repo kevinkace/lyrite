@@ -18,8 +18,8 @@ export default {
     //         state.action("OPEN TITLE MODAL");
     //     }
     // },
-    view : () =>
-        m("div", { class : css.lyredit },
+    view() {
+        return m("div", { class : css.lyredit },
             m("div", {
                     class : state.edit ? css.lyricsEdit : css.lyrics,
                     style : {
@@ -36,7 +36,7 @@ export default {
                                     part.style ? css[`s${part.style.idx}`] : null
                                 ].join(" "),
 
-                                onclick : () => {
+                                onclick() {
                                     state.action("CLICK LYRIC", idx);
                                 }
                             },
@@ -47,5 +47,6 @@ export default {
             ),
 
             state.edit ? m(edit) : null
-        )
+        );
+    }
 };

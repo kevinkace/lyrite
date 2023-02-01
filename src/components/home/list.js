@@ -5,8 +5,8 @@ import state from "../../state";
 import css from "./list.mcss";
 
 export default {
-    view : (vnode) =>
-        m("div", { class : css.list },
+    view(vnode) {
+        return m("div", { class : css.list },
             m("h3", vnode.attrs.header),
 
             Object.keys(vnode.attrs.songs).map((slug) =>
@@ -20,13 +20,15 @@ export default {
                     ),
                     vnode.attrs.songs[slug].userSong ?
                         m("button", {
-                            onclick : () => {
+                            "aria-label" : "delete",
+
+                            onclick() {
                                 state.action("DELETE SONG BY SLUG", slug);
-                            },
-                            "aria-label" : "delete"
+                            }
                         }, "🗙") :
                         null
                 )
             )
-        )
+        );
+    }
 };

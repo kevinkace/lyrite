@@ -54,12 +54,24 @@ function Table(key) {
     };
 }
 
+function parseValue(value) {
+    if (value === "true") {
+        value = true;
+    } else if (value === "false") {
+        value = false;
+    }
+    // todo: int, float
+
+    return value;
+}
+
 function parseQueryParams(queryParams) {
     if (typeof queryParams !== "string") {
         return queryParams;
     }
 
-    return queryParams.split("&")
+    return queryParams
+        .split("&")
         .reduce((acc, keyVal) => {
             let [ key, value ] = keyVal.split("=");
 
@@ -112,17 +124,6 @@ function applyQueryParams(data, queryParams) {
     }, {});
 }
 
-function parseValue(value) {
-    if (value === "true") {
-        value = true;
-    } else if (value === "false") {
-        value = false;
-    }
-    // todo: int, float
-
-    return value;
-}
-
 // create Tables
 const db = {
     timestamp : Date.now(),
@@ -132,9 +133,11 @@ const db = {
 };
 
 export default {
-    timestamp : () => db.timestamp,
+    timestamp() {
+        return db.timestamp;
+    },
 
-    get : (query) => {
+    get(query) {
         const parsed = parseQuery(query);
 
         if (!parsed.key) {
@@ -149,7 +152,8 @@ export default {
 
         return applyQueryParams(data, parsed.queryParams);
     },
-    set : (query, data) => {
+
+    set(query, data) {
         const parsed = parseQuery(query);
 
         if (!parsed.key) {
@@ -160,7 +164,8 @@ export default {
 
         return db.tables[parsed.key].set(parsed.path, data);
     },
-    del : (query) => {
+
+    del(query) {
         const parsed = parseQuery(query);
 
         if (!parsed.key) {
@@ -169,10 +174,11 @@ export default {
 
         db.timestamp = Date.now();
 
-        
-return db.tables[parsed.key].del(parsed.path);
+
+        return db.tables[parsed.key].del(parsed.path);
     },
-    clear : () => {
+
+    clear() {
         localStorage.clear();
     }
 };

@@ -1,15 +1,16 @@
-import m from "mithril";
+import m  from "mithril";
+import ar from "animation-resolve";
 
 import state from "../../state";
 
-import css         from "./edit.mcss";
-import animResolve from "../../lib/animResolve";
+import css from "./edit.mcss";
 
 export default {
-    onbeforeremove : (vnode) =>
-        animResolve(vnode.dom, css.editOut),
-    view : () =>
-        m("div", { class : css.editIn },
+    onbeforeremove({ dom }) {
+        return ar(dom, css.editOut);
+    },
+    view() {
+        return m("div", { class : css.editIn },
             m("textarea", {
                 class : css.textarea,
                 value : state.song.lyricString,
@@ -19,5 +20,6 @@ export default {
                     state.action("UPDATE PARSED LYRICS");
                 }
             })
-        )
+        );
+    }
 };

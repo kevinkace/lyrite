@@ -25,6 +25,7 @@
   "homepage": "https://github.com/kevinkace/lyrite#readme",
   "dependencies": {
     "@modular-css/shortnames": "^28.0.0",
+    "animation-resolve": "^3.2.3",
     "dompurify": "^2.4.3",
     "eol": "^0.9.1",
     "git-rev": "^0.2.1",

@@ -1,4 +1,5 @@
-import m from "mithril";
+import m  from "mithril";
+import ar from "animation-resolve";
 
 import state from "../../state";
 
@@ -7,20 +8,20 @@ import tools from "../tools";
 
 import logo from "../icons/lyrite-logo2.svg?raw";
 
-import animResolve from "../../lib/animResolve";
-
 export default {
-    oncreate : (vnode) => {
+    oncreate({ dom }) {
         state.header = {
-            height : vnode.dom.offsetHeight
+            height : dom.offsetHeight
         };
     },
-    onbeforeremove : (vnode) => animResolve(vnode.dom, css.headerOut),
-    onremove       : () => {
+    onbeforeremove({ dom }) {
+        return ar(dom, css.headerOut);
+    },
+    onremove() {
         delete state.header;
     },
-    view : () =>
-        m("div", { class : css.headerIn },
+    view() {
+        return m("div", { class : css.headerIn },
             m("h1", { class : css.title }, state.song ? state.song.title : state.appName),
 
             m("div", { class : css.logo },
@@ -31,5 +32,6 @@ export default {
             ),
 
             state.song ? m(tools) : null
-        )
+        );
+    }
 };

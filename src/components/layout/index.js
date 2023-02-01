@@ -9,16 +9,17 @@ import modal  from "../modal";
 import ghLogo from "../icons/github.svg?raw";
 
 export default {
-    view : (vnode) =>
-        m("div",
-            vnode.attrs.header ? m(header) : null,
+    view({ attrs, children }) {
+        return m("div",
+            attrs.header ? m(header) : null,
 
-            vnode.children,
+            children,
 
             state.debug ? [
                     m("button", {
-                        class   : css.clear,
-                        onclick : () => {
+                        class : css.clear,
+
+                        onclick() {
                             state.action("CLEAR DB");
                         }
                     }, "clear"),
@@ -39,5 +40,6 @@ export default {
             ),
 
             state.modal ? m(modal) : null
-        )
+        );
+    }
 };
