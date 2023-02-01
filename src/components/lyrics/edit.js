@@ -2,7 +2,7 @@ import m from "mithril";
 
 import state from "../../state";
 
-import css from "./edit.mcss";
+import css         from "./edit.mcss";
 import animResolve from "../../lib/animResolve";
 
 export default {
@@ -11,12 +11,13 @@ export default {
     view : () =>
         m("div", { class : css.editIn },
             m("textarea", {
-                class   : css.textarea,
-                value   : state.song.lyricString,
-                oninput : m.withAttr("value", (v) => {
-                    state.song.lyricString = v;
+                class : css.textarea,
+                value : state.song.lyricString,
+
+                oninput(e) {
+                    state.song.lyricString = e.target.value;
                     state.action("UPDATE PARSED LYRICS");
-                })
+                }
             })
         )
 };

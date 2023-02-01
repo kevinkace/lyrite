@@ -41,25 +41,25 @@ export default {
                         class       : vnode.state.focused ? css.textareaFocused : css.textarea,
                         value       : vnode.state.lyricString,
                         placeholder : vnode.state.hidePlaceholder ? "" : "paste or drop lyrics",
-                        onfocus     : () => {
+                        onfocus() {
                             vnode.state.focused         = true;
                             vnode.state.hidePlaceholder = true;
                         },
-                        onblur : () => {
+                        onblur() {
                             vnode.state.hidePlaceholder = false;
                         },
-                        oninput : m.withAttr("value", (v) => {
-                            vnode.state.lyricString = v;
-                            vnode.state.loadable    = v.length;
-                        })
+                        oninput(e) {
+                            vnode.state.lyricString = e.target.value;
+                            vnode.state.loadable    = e.target.value.length;
+                        }
                     })
                 ),
 
                 vnode.state.loadable ?
                     m("div", { class : css.btnWrap },
                         m("button", {
-                            class   : css.loadBtn,
-                            onclick : () => {
+                            class : css.loadBtn,
+                            onclick() {
                                 let slug = state.action("IMPORT SONG LYRICS", {
                                     lyricString : vnode.state.lyricString,
                                     userSong    : true

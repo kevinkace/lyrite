@@ -1,5 +1,3 @@
-"use strict";
-
 import "minireset.css";
 import "./index.mcss";
 
@@ -13,7 +11,7 @@ const mountEl = document.getElementById("mount");
 // state.debug = true;
 state.action("IMPORT DEFAULT SONGS");
 
-m.route.prefix("");
+m.route.prefix = "";
 m.route(mountEl, "/", routes);
 
 

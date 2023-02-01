@@ -11,10 +11,7 @@ export default {
 
             Object.keys(vnode.attrs.songs).map((slug) =>
                 m("div",
-                    m("a", {
-                            oncreate : m.route.link,
-                            href     : `/${vnode.attrs.songs[slug].slug}`
-                        },
+                    m(m.route.Link, { href : `/${vnode.attrs.songs[slug].slug}` },
                         m("strong", vnode.attrs.songs[slug].title),
 
                         vnode.attrs.songs[slug].artist ?
