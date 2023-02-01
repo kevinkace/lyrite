@@ -1,5 +1,5 @@
-import eol from "eol";
-import hash from "string-hash";
+import eol     from "eol";
+import hash    from "string-hash";
 import slugify from "slugify";
 
 import db from "./db";
@@ -19,10 +19,10 @@ function parseLyricString(lyricString) {
 
 function parseSongString(songString) {
     const [ meta, lyricString ] = eol.lf(songString).split(titleSplit);
-    const [ title, artist ] = meta.split("\n");
+    const [ title, artist ]     = meta.split("\n");
 
     return {
-        slug : slugify(title),
+        slug        : slugify(title),
         title,
         artist,
         lyricString : lyricString,
@@ -40,7 +40,7 @@ export default (State) => ({
             const songObj = parseSongString(songString);
 
             // don't add if already in DB
-            if(songObj.slug in savedSongs) {
+            if (songObj.slug in savedSongs) {
                 return;
             }
 
@@ -53,8 +53,8 @@ export default (State) => ({
     // import song
     "IMPORT SONG LYRICS" : (songObj) => {
         const untitledSongs = db.get("songs?untitled");
-        const title = `untitled ${Object.keys(untitledSongs).length + 1}`;
-        const slug = slugify(title);
+        const title         = `untitled ${Object.keys(untitledSongs).length + 1}`;
+        const slug          = slugify(title);
 
         db.set(`songs.${slug}`, Object.assign(songObj, {
             title,
@@ -74,7 +74,7 @@ export default (State) => ({
         const oldSlug = State.song.slug;
 
         State.song.title = title;
-        State.song.slug = slugify(State.song.title);
+        State.song.slug  = slugify(State.song.title);
         delete State.song.untitled;
 
         db.set(`songs.${State.song.slug}`, State.song);
@@ -84,7 +84,7 @@ export default (State) => ({
     "LOAD SONG BY SLUG" : (slug) => {
         State.song = db.get(`songs.${slug}`);
 
-        if(!State.song) {
+        if (!State.song) {
             State.error = "song not found";
 
             return;
@@ -97,9 +97,7 @@ export default (State) => ({
         delete State.song;
     },
 
-    "TOGGLE EDIT CURRENT SONG" : () => {
-        return State.edit ? State.action("CLOSE EDIT CURRENT SONG") : State.action("OPEN EDIT CURRENT SONG");
-    },
+    "TOGGLE EDIT CURRENT SONG" : () => (State.edit ? State.action("CLOSE EDIT CURRENT SONG") : State.action("OPEN EDIT CURRENT SONG")),
 
     "OPEN EDIT CURRENT SONG" : () => {
         State.edit = true;

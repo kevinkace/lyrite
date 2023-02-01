@@ -2,7 +2,7 @@ import { get, set } from "object-path";
 
 // Table class, one created for each top level
 function Table(key) {
-    if(!key) {
+    if (!key) {
         throw new Error("Must provide key");
     }
 
@@ -18,7 +18,7 @@ function Table(key) {
     }
 
     // init table data if needed
-    if(!_getTable()) {
+    if (!_getTable()) {
         _setTable({});
     }
 
@@ -40,7 +40,7 @@ function Table(key) {
     this.del = (path) => {
         const data = _getTable();
 
-        if(!path) {
+        if (!path) {
             return;
         }
 
@@ -55,7 +55,7 @@ function Table(key) {
 }
 
 function parseQueryParams(queryParams) {
-    if(typeof queryParams !== "string") {
+    if (typeof queryParams !== "string") {
         return queryParams;
     }
 
@@ -64,7 +64,7 @@ function parseQueryParams(queryParams) {
             let [ key, value ] = keyVal.split("=");
 
             // value is implicit true (for a query like post?untitied)
-            if(!value) {
+            if (!value) {
                 value = true;
             } else {
                 // parse "true", "false"
@@ -97,7 +97,7 @@ function applyQueryParams(data, queryParams) {
     Object.keys(queryParams).forEach((queryKey) => {
         filtered = filtered.filter((slug) => {
             // special case, eg songs?untitled=undefined
-            if(queryParams[queryKey] === "undefined") {
+            if (queryParams[queryKey] === "undefined") {
                 return data[slug][queryKey] === undefined;
             }
 
@@ -113,9 +113,9 @@ function applyQueryParams(data, queryParams) {
 }
 
 function parseValue(value) {
-    if(value === "true") {
+    if (value === "true") {
         value = true;
-    } else if(value === "false") {
+    } else if (value === "false") {
         value = false;
     }
     // todo: int, float
@@ -137,13 +137,13 @@ export default {
     get : (query) => {
         const parsed = parseQuery(query);
 
-        if(!parsed.key) {
+        if (!parsed.key) {
             return;
         }
 
         const data = db.tables[parsed.key].get(parsed.path);
 
-        if(!parsed.queryParams) {
+        if (!parsed.queryParams) {
             return data;
         }
 
@@ -152,7 +152,7 @@ export default {
     set : (query, data) => {
         const parsed = parseQuery(query);
 
-        if(!parsed.key) {
+        if (!parsed.key) {
             return;
         }
 
@@ -163,12 +163,14 @@ export default {
     del : (query) => {
         const parsed = parseQuery(query);
 
-        if(!parsed.key) {
+        if (!parsed.key) {
             return;
         }
 
         db.timestamp = Date.now();
-        return db.tables[parsed.key].del(parsed.path);
+
+        
+return db.tables[parsed.key].del(parsed.path);
     },
     clear : () => {
         localStorage.clear();

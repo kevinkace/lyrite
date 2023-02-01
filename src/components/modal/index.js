@@ -1,12 +1,12 @@
 import m from "mithril";
 
-import state from "../../state";
+import state       from "../../state";
 import animResolve from "../../lib/animResolve";
 
-import css from "./index.mcss";
+import css   from "./index.mcss";
 import title from "./title";
 
-const modals = { title };
+const modals   = { title };
 const hasClose = [];
 
 export default {
