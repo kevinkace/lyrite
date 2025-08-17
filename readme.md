@@ -26,8 +26,8 @@ With Lyrite you can easily have all lyrics on a single page with columns and fon
 
 ## Technology
 
-A single page application built with [Mithril](https://mithril.js.org/) & [Modular-CSS](https://github.com/tivac/modular-css), bundled with [vite](https://vitejs.dev/), and hosted on [Netlify](https://www.netlify.com/).  
-It uses [localstorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) for saving [custom songs](https://github.com/kevinkace/lyrite/blob/master/src/state/db.js).
+- NextJS
+- SupaBase
 
 ## How to pronounce?
 
