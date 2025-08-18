@@ -14,7 +14,7 @@ export default function LoginPage() {
         const checkSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
-                router.replace("/"); // redirect if logged in
+                router.replace("/");
             }
         };
         checkSession();
