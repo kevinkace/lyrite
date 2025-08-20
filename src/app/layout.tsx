@@ -7,23 +7,28 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 
 import Link from "next/link";
 
+import { ErrorProvider } from "@/contexts/errorContext";
+import { SongsProvider } from "@/contexts/songsContext";
+import { UserProvider }  from "@/contexts/userContext";
+
+import ErrorModal from "@/components/errorModal";
+
 import "./globals.css";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     const user = useSupabaseAuth();
-    const [loading, setLoading] = useState(true);
+    const [ loading, setLoading ] = useState(true);
 
-    // optional: clear access_token fragment on all pages
     useEffect(() => {
         if (window.location.hash.includes("access_token")) {
             window.history.replaceState({}, document.title, window.location.pathname);
         }
+
         setLoading(false);
     }, []);
 
     const handleSignOut = async () => {
         await supabase.auth.signOut();
-        // page will automatically reflect logged-out state
     };
 
     return (
@@ -43,7 +48,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                         </p>
                     )}
                 </header>
-                <main>{children}</main>
+
+                <ErrorProvider>
+                    <UserProvider>
+                        <SongsProvider limit={10}>
+                            <main>{children}</main>
+                        </SongsProvider>
+
+                        <ErrorModal />
+                    </UserProvider>
+                </ErrorProvider>
             </body>
         </html>
     );
