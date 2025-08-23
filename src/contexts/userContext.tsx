@@ -6,46 +6,54 @@ import { supabase } from "@/lib/supabaseClient";
 import type { User } from "@supabase/supabase-js";
 
 type UserContextType = {
-  user: User | null;
-  loading: boolean;
+    user: User | null;
+    loading: boolean;
+    handleSignOut: () => Promise<void>;
 };
 
 const UserContext = createContext<UserContextType>({
-  user: null,
-  loading: true,
+    user: null,
+    loading: true,
+    handleSignOut: async () => {},
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Check current session
-    const getSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
-      setLoading(false);
+    // signout
+    const handleSignOut = async () => {
+        await supabase.auth.signOut();
     };
-    getSession();
 
-    // Listen for auth changes
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    useEffect(() => {
+        // Check current session
+        const getSession = async () => {
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
 
-    return () => {
-      listener.subscription.unsubscribe();
-    };
-  }, []);
+            setUser(session?.user ?? null);
+            setLoading(false);
+        };
+        getSession();
 
-  return (
-    <UserContext.Provider value={{ user, loading }}>
-      {children}
-    </UserContext.Provider>
-  );
+        // Listen for auth changes
+        const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+            setLoading(false);
+        });
+
+        return () => {
+            listener.subscription.unsubscribe();
+        };
+    }, []);
+
+    return (
+        <UserContext.Provider value={{ user, loading }}>
+            {children}
+        </UserContext.Provider>
+    );
 };
 
 export const useUser = () => useContext(UserContext);

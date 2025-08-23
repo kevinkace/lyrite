@@ -3,9 +3,13 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+import { useUser } from "@/contexts/userContext";
+import Link from "next/link";
 
 export default function HomePage() {
     const router = useRouter();
+
+    const { user, loading } = useUser();
 
     useEffect(() => {
         if (window.location.hash.includes("access_token")) {
@@ -18,11 +22,7 @@ export default function HomePage() {
             <h1>Lyrite</h1>
 
             {/* if logged in, show a button to create a new song */}
-            {user && (
-                <Link href="/songs/new">
-                    <button>Create New Song</button>
-                </Link>
-            )}
+            {user && <Link href="/songs/new">Create New Song</Link>}
         </main>
     );
 }

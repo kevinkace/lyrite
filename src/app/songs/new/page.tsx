@@ -1,16 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
-import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 
 import { useError } from "@/contexts/errorContext";
 import { useSongs } from "@/contexts/songsContext";
+import { useUser }  from "@/contexts/userContext";
 
 export default function NewSongPage() {
-  const user = useSupabaseAuth();
   const { setError } = useError();
   const { fetchSongs } = useSongs();
+  const { user } = useUser();
 
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
