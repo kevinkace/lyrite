@@ -3,18 +3,20 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
-import type { User } from "@supabase/supabase-js";
+import type { User, AuthError } from "@supabase/supabase-js";
 
 type UserContextType = {
     user: User | null;
     loading: boolean;
     handleSignOut: () => Promise<void>;
+    signInWithGithub: () => Promise<{ error: AuthError | null; }>;
 };
 
 const UserContext = createContext<UserContextType>({
     user: null,
     loading: true,
     handleSignOut: async () => {},
+    signInWithGithub: async () => {}
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -24,6 +26,21 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     // signout
     const handleSignOut = async () => {
         await supabase.auth.signOut();
+    };
+
+    const signInWithGithub = async () => {
+        setLoading(true);
+
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: "github",
+            options: {
+                redirectTo: window.location.origin // redirect back to app
+            }
+        });
+
+        setLoading(false);
+
+        return { error };
     };
 
     useEffect(() => {
@@ -50,7 +67,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, loading }}>
+        <UserContext.Provider value={{ user, loading, handleSignOut, signInWithGithub }}>
             {children}
         </UserContext.Provider>
     );

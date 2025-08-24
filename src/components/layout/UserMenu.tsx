@@ -66,7 +66,7 @@ export default function UserMenu() {
                             ))}
 
                             <button
-                                onClick={handleSignOut}
+                                onClick={() => handleSignOut()}
                                 className={css.signout}
                             >
                                 Sign out
