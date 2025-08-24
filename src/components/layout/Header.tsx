@@ -2,21 +2,21 @@ import Link from "next/link";
 
 import { useUser } from "@/contexts/userContext";
 
+import css from "./Header.module.css"
+import UserMenu from "./UserMenu";
+
 export default function Header() {
-    const { user, loading, handleSignOut } = useUser();
+    const { user } = useUser();
 
     return (
-        <header>
-            {loading ? (
-                <p>Loading...</p>
-            ) : user ? (
-                <p>
-                    Logged in as {user.email} |{" "}
-                    <button onClick={handleSignOut}>Sign out</button>
-                </p>
+        <header className={css.header}>
+            <h1><Link href="/">lyrite</Link></h1>
+
+            {user ? (
+                    <UserMenu />
             ) : (
                 <p>
-                    Not logged in | <Link href="/login">Login</Link> | <Link href="/register">Register</Link>
+                    <Link href="/login">Login</Link> | <Link href="/register">Register</Link>
                 </p>
             )}
         </header>

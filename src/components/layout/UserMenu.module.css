@@ -1,0 +1,29 @@
+.userMenu {
+    --image-size: 2em;
+
+    position: relative;
+}
+
+.avatarButton {
+
+    border-radius: 50%;
+    height: var(--image-size);
+    aspect-ratio: 1;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    overflow: hidden;
+
+    img {
+        height: 100%;
+        width: 100%;
+        display: block;
+    }
+
+}
+
+.nav {
+    position: absolute;
+    top: var(--image-size);
+    right: 0;
+}

@@ -1,24 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-
 import { useUser } from "@/contexts/userContext";
 import Link from "next/link";
 
+import css from "./page.module.css"
+
 export default function HomePage() {
-    const router = useRouter();
-
-    const { user, loading } = useUser();
-
-    useEffect(() => {
-        if (window.location.hash.includes("access_token")) {
-            router.replace("/"); // clears the fragment
-        }
-    }, [router]);
+    const { user } = useUser();
 
     return (
-        <main>
+        <main className={css.main}>
             <h1>Lyrite</h1>
 
             {/* if logged in, show a button to create a new song */}

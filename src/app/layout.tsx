@@ -7,10 +7,11 @@ import { ErrorProvider } from "@/contexts/errorContext";
 import { SongsProvider } from "@/contexts/songsContext";
 import { UserProvider }  from "@/contexts/userContext";
 
-import ErrorModal from "@/components/errorModal";
-
 import "./globals.css";
-import Header from "@/components/layout/Header";
+
+import ErrorModal from "@/components/errorModal";
+import Header     from "@/components/layout/Header";
+import Loading    from "@/components/Loading";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     const [ loading, setLoading ] = useState(true);
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <ErrorProvider>
                     <UserProvider>
                         <SongsProvider limit={10}>
+                            {loading && <Loading />}
 
                             <Header/>
 

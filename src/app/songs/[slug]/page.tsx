@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { useUser } from "@/contexts/userContext";
 import { useSong } from "@/contexts/songContext";
 
@@ -12,7 +10,6 @@ export default function SongPage({ params }: { params: { id: string } }) {
 
     if (loading) return <p>Loading...</p>;
     if (!song) return <p>Song not found</p>;
-
 
 
     if (!song) return <p>Loading...</p>;
