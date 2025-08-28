@@ -23,7 +23,7 @@ export default function RegisterPage() {
     };
 
     return (
-        <main>
+        <>
             <h1>Register</h1>
             <input
                 type="email"
@@ -40,6 +40,6 @@ export default function RegisterPage() {
             <button onClick={handleRegister}>Register</button>
             {error && <p style={{ color: "red" }}>{error}</p>}
             {message && <p style={{ color: "green" }}>{message}</p>}
-        </main>
+        </>
     );
 }

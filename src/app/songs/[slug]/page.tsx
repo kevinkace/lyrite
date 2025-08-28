@@ -15,12 +15,12 @@ export default function SongPage({ params }: { params: { id: string } }) {
     if (!song) return <p>Loading...</p>;
 
     return (
-        <main>
+        <>
             <h1>{song.title}</h1>
             {song.artist && <h2>{song.artist}</h2>}
             <pre>{song.lyrics}</pre>
 
             {user && <button onClick={() => handleFork({ user })}>Fork</button>}
-        </main>
+        </>
     );
 }

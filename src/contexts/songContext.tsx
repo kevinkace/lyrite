@@ -10,6 +10,7 @@ type SongContextType = {
     loading: boolean;
     fetchSong: () => Promise<void>;
     handleFork: ({ user }: { user: User | null }) => Promise<void>;
+    handleSave: ({ user }: { user: User | null }) => Promise<void>;
 };
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
@@ -26,7 +27,7 @@ export function SongProvider({ children, slug }: SongProviderProps) {
     const fetchSong = async () => {
         setLoading(true);
 
-        let { data, error } = await supabase
+        const { data, error } = await supabase
             .from("songs")
             .select("*")
             .eq("is_public", true)
@@ -58,12 +59,33 @@ export function SongProvider({ children, slug }: SongProviderProps) {
         alert("Forked!");
     };
 
+    const handleSave = async ({ user }: { user: User | null }) => {
+        if (!song || !user) return;
+
+        await supabase.from("songs").insert({
+            title: song.title,
+            artist: song.artist,
+            lyrics: song.lyrics,
+            owner_id: user.id,
+            is_public: false,
+            allow_in_setlists: false,
+        });
+
+        alert("new!");
+    };
+
     useEffect(() => {
         fetchSong();
     }, [slug]);
 
     return (
-        <SongContext.Provider value={{ song, loading, fetchSong, handleFork }}>
+        <SongContext.Provider value={{
+            song,
+            loading,
+            fetchSong,
+            handleFork,
+            handleSave
+        }}>
             {children}
         </SongContext.Provider>
     );

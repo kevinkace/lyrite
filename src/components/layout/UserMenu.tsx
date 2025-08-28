@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useUser } from "@/contexts/userContext";
 
 import css from "./UserMenu.module.css"
-import { link } from "framer-motion/m";
 
 export default function UserMenu() {
     const { user, handleSignOut } = useUser();

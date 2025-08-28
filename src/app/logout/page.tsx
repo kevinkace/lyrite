@@ -8,8 +8,6 @@ export default function logoutPage() {
     }
 
     return (
-        <main>
-            <button onClick={signOut}>Sign out</button>
-        </main>
+        <button onClick={signOut}>Sign out</button>
     )
 }

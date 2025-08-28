@@ -8,6 +8,7 @@ import { SongsProvider } from "@/contexts/songsContext";
 import { UserProvider }  from "@/contexts/userContext";
 
 import "./globals.css";
+import css from "./layout.module.css"
 
 import ErrorModal from "@/components/errorModal";
 import Header     from "@/components/layout/Header";
@@ -26,16 +27,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
     return (
         <html>
-            <body>
+            <body className={css.body}>
                 <ErrorProvider>
                     <UserProvider>
                         <SongsProvider limit={10}>
                             {loading && <Loading />}
 
-                            <Header/>
+                            <header className={css.header}>
+                                <Header />
+                            </header>
 
-
-                            <main>{children}</main>
+                            <main className={css.main}>{children}</main>
                         </SongsProvider>
 
                         <ErrorModal />

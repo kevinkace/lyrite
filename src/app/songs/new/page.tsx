@@ -3,12 +3,12 @@
 import { useState } from "react";
 
 import { useError } from "@/contexts/errorContext";
-import { useSongs } from "@/contexts/songsContext";
+import { useSong } from "@/contexts/songContext";
 import { useUser }  from "@/contexts/userContext";
 
 export default function NewSongPage() {
   const { setError } = useError();
-  const { fetchSongs } = useSongs();
+  const { handleSave } = useSong();
   const { user } = useUser();
 
   const [title, setTitle] = useState("");
@@ -17,43 +17,12 @@ export default function NewSongPage() {
   // const [isPublic, setIsPublic] = useState(false);
   // const [allowInSetlists, setAllowInSetlists] = useState(false);
 
-  const handleSave = async (e: React.FormEvent) => {
-    e.preventDefault();
 
-    if (!user) {
-      setError("User not authenticated");
-      return;
-    }
-
-    const { error } = await supabase.from("songs").insert({
-      title,
-      artist,
-      content,
-      owner_id: user.id,
-      is_public: false,
-      allow_in_setlists: false,
-    });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      setTitle("");
-      setArtist("");
-      setContent("");
-      setError(null);
-
-      // refresh list so new song appears in context
-      fetchSongs();
-
-      // You might want to route somewhere else, too:
-      // router.push(`/users/${user.username}/songs`);
-    }
-  };
 
   return (
-    <main>
+    <>
       <h1>New Song</h1>
-      <form onSubmit={handleSave}>
+      <form onSubmit={() => handleSave({ user })}>
         <input
           type="text"
           placeholder="Title"
@@ -73,6 +42,6 @@ export default function NewSongPage() {
         />
         <button type="submit">Save</button>
       </form>
-    </main>
+    </>
   );
 }

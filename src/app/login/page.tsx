@@ -29,10 +29,10 @@ export default function LoginPage() {
     };
 
     return (
-        <main className={css.main}>
+        <div className={css.main}>
             <h1>Login</h1>
             {error && <p style={{ color: "red" }}>{error}</p>}
             {loading ? <p>Loading...</p> : <button onClick={handleLogin}>Sign in with GitHub</button>}
-        </main>
+        </div>
     );
 }
