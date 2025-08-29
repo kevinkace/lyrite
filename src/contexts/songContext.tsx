@@ -1,14 +1,15 @@
-// context/SongContext.tsx
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+
+import { useError } from "./errorContext";
+
 import { Song, User } from "@/types";
 
 type SongContextType = {
     song: Song | null;
     loading: boolean;
-    fetchSong: () => Promise<void>;
     handleFork: ({ user }: { user: User | null }) => Promise<void>;
     handleSave: ({ user }: { user: User | null }) => Promise<void>;
 };
@@ -21,28 +22,9 @@ type SongProviderProps = {
 };
 
 export function SongProvider({ children, slug }: SongProviderProps) {
-    const [song, setSong] = useState<Song|null>(null);
+    const [song, setSong] = useState<Song | null>(null);
     const [loading, setLoading] = useState(true);
-
-    const fetchSong = async () => {
-        setLoading(true);
-
-        const { data, error } = await supabase
-            .from("songs")
-            .select("*")
-            .eq("is_public", true)
-            .eq("slug", slug)
-            .single();
-
-        if (error) {
-            console.error(error);
-            setLoading(false);
-            return;
-        }
-
-        setSong(data as Song);
-        setLoading(false);
-    };
+    const { setError } = useError();
 
     const handleFork = async ({ user }: { user: User | null }) => {
         if (!song || !user) return;
@@ -75,14 +57,39 @@ export function SongProvider({ children, slug }: SongProviderProps) {
     };
 
     useEffect(() => {
+        if (!slug) {
+            setSong(null);
+            setLoading(false);
+            return;
+        }
+
+        const fetchSong = async () => {
+            setLoading(true);
+            const { data, error } = await supabase
+                .from("songs")
+                .select("*")
+                .eq("is_public", true)
+                .eq("slug", slug)
+                .single();
+
+            if (error) {
+                setError(error.message);
+                setLoading(false);
+                return;
+            }
+
+            setSong(data as Song);
+            setLoading(false);
+        };
+
         fetchSong();
-    }, [slug]);
+    }, [slug, setError]);
+
 
     return (
         <SongContext.Provider value={{
             song,
             loading,
-            fetchSong,
             handleFork,
             handleSave
         }}>
