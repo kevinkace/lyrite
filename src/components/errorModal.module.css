@@ -1,15 +1,15 @@
 .backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(10, 10, 10, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .modal {
-    background: white;
     padding: 1rem;
     border-radius: 6px;
     min-width: 250px;
+    background: rgb(40, 40, 40)
 }

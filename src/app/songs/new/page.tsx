@@ -1,47 +1,81 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+
 
 import { useError } from "@/contexts/errorContext";
 import { useSong } from "@/contexts/songContext";
-import { useUser }  from "@/contexts/userContext";
+import { useUser } from "@/contexts/userContext";
+
+import css from "./page.module.css";
+import { getErrorMessage } from "@/lib/getErrorMessage";
 
 export default function NewSongPage() {
-  const { setError } = useError();
-  const { handleSave } = useSong();
-  const { user } = useUser();
+    const router = useRouter();
+    const { setError } = useError();
+    const { handleSave } = useSong();
+    const { user } = useUser();
 
-  const [title, setTitle] = useState("");
-  const [artist, setArtist] = useState("");
-  const [content, setContent] = useState("");
-  // const [isPublic, setIsPublic] = useState(false);
-  // const [allowInSetlists, setAllowInSetlists] = useState(false);
-
+    const [title, setTitle] = useState("");
+    const [artist, setArtist] = useState("");
+    const [lyrics, setLyrics] = useState("");
 
 
-  return (
-    <>
-      <h1>New Song</h1>
-      <form onSubmit={() => handleSave({ user })}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Artist"
-          value={artist}
-          onChange={(e) => setArtist(e.target.value)}
-        />
-        <textarea
-          placeholder="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
-        <button type="submit">Save</button>
-      </form>
-    </>
-  );
-}
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!user) {
+            setError("You must be logged in to create a song.");
+            return;
+        }
+
+        try {
+            const newSong = await handleSave({
+                user,
+                song: {
+                    title,
+                    artist,
+                    lyrics,
+                    is_public: false,
+                    allow_in_setlists: false
+                }
+            });
+
+            router.push(`/songs/${user.id}/${newSong.slug}`);
+        } catch (err: unknown) {
+            setError(getErrorMessage(err));
+        }
+    };
+
+    return (
+        <>
+            <h1>New Song</h1>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    placeholder="Title"
+                    value={title}
+                    required
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="Artist"
+                    value={artist}
+                    required
+                    onChange={(e) => setArtist(e.target.value)}
+                />
+                <textarea
+                    className={css.lyrics}
+                    placeholder="Lyrics"
+                    value={lyrics}
+                    required
+                    onChange={(e) => setLyrics(e.target.value)}
+                />
+                <button type="submit">Save</button>
+            </form>
+        </>
+    );
+};

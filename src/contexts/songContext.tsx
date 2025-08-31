@@ -5,35 +5,37 @@ import { supabase } from "@/lib/supabaseClient";
 
 import { useError } from "./errorContext";
 
-import { Song, User } from "@/types";
+import { Song } from "@/types";
+import type { User as SupabaseUser } from '@supabase/auth-js';
 
 type SongContextType = {
     song: Song | null;
     loading: boolean;
-    handleFork: ({ user }: { user: User | null }) => Promise<void>;
-    handleSave: ({ user }: { user: User | null }) => Promise<void>;
+    handleFork: ({ user }: { user: SupabaseUser | null }) => Promise<void>;
+    handleSave: ({ user, song }: { user: SupabaseUser | null; song: Song }) => Promise<Song>;
 };
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
 type SongProviderProps = {
     children: React.ReactNode;
+    userId?: string;
     slug?: string;
 };
 
-export function SongProvider({ children, slug }: SongProviderProps) {
+export function SongProvider({ children, userId, slug }: SongProviderProps) {
     const [song, setSong] = useState<Song | null>(null);
     const [loading, setLoading] = useState(true);
     const { setError } = useError();
 
-    const handleFork = async ({ user }: { user: User | null }) => {
+    const handleFork = async ({ user }: { user: SupabaseUser | null }) => {
         if (!song || !user) return;
 
         await supabase.from("songs").insert({
             title: song.title,
             artist: song.artist,
             lyrics: song.lyrics,
-            owner_id: user.id,
+            user_id: user.id,
             is_public: false,
             allow_in_setlists: false,
         });
@@ -41,36 +43,55 @@ export function SongProvider({ children, slug }: SongProviderProps) {
         alert("Forked!");
     };
 
-    const handleSave = async ({ user }: { user: User | null }) => {
-        if (!song || !user) return;
+    const handleSave = async ({
+        user,
+        song
+    }: {
+        user: SupabaseUser | null;
+        song: Song;
+    }) => {
+        if (!user) return;
 
-        await supabase.from("songs").insert({
-            title: song.title,
-            artist: song.artist,
-            lyrics: song.lyrics,
-            owner_id: user.id,
-            is_public: false,
-            allow_in_setlists: false,
-        });
+        const slug = song.title.toLowerCase().replace(/\s+/g, "-"); // simple slug
+        const { data, error } = await supabase
+            .from("songs")
+            .insert({
+                title: song.title,
+                artist: song.artist,
+                lyrics: song.lyrics,
+                user_id: user.id,
+                slug,
+                is_public: false,
+                allow_in_setlists: false,
+            })
+            .select()
+            .single();
 
-        alert("new!");
+        if (error) throw error;
+
+        return data as Song;
     };
 
     useEffect(() => {
-        if (!slug) {
-            setSong(null);
-            setLoading(false);
+        if (!slug || !userId) {
+            console.log("missing slug or userId", { slug, userId });
             return;
         }
 
+        console.log("fetching song", { slug, userId });
+
         const fetchSong = async () => {
             setLoading(true);
+
             const { data, error } = await supabase
                 .from("songs")
                 .select("*")
-                .eq("is_public", true)
+                // .eq("is_public", true)
+                .eq("user_id", userId)
                 .eq("slug", slug)
                 .single();
+
+            console.log(data);
 
             if (error) {
                 setError(error.message);
@@ -83,8 +104,7 @@ export function SongProvider({ children, slug }: SongProviderProps) {
         };
 
         fetchSong();
-    }, [slug, setError]);
-
+    }, [slug, userId, setError]);
 
     return (
         <SongContext.Provider value={{
@@ -97,6 +117,7 @@ export function SongProvider({ children, slug }: SongProviderProps) {
         </SongContext.Provider>
     );
 }
+
 
 export function useSong() {
     const ctx = useContext(SongContext);
