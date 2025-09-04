@@ -1,5 +1,7 @@
 "use client";
 
+import { use } from "react";
+
 import { SongProvider } from "@/contexts/songContext";
 
 export default function SongLayout({
@@ -7,10 +9,12 @@ export default function SongLayout({
     params,
 }: {
     children: React.ReactNode;
-    params: { userId?: string; slug?: string };
+    params: Promise<{ userId?: string; slug?: string }>;
 }) {
+    const { userId, slug } = use(params);
+
     return (
-        <SongProvider userId={params.userId} slug={params.slug}>
+        <SongProvider userId={userId} slug={slug}>
             {children}
         </SongProvider>
     );
