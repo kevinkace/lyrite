@@ -11,7 +11,6 @@ import type { User as SupabaseUser } from '@supabase/auth-js';
 type SongContextType = {
     song: Song | null;
     loading: boolean;
-    handleFork: ({ user }: { user: SupabaseUser | null }) => Promise<void>;
     handleSave: ({ user, song }: { user: SupabaseUser | null; song: Song }) => Promise<Song>;
 };
 
@@ -28,21 +27,6 @@ export function SongProvider({ children, userId, slug }: SongProviderProps) {
     const [loading, setLoading] = useState(true);
     const { setError } = useError();
 
-    const handleFork = async ({ user }: { user: SupabaseUser | null }) => {
-        if (!song || !user) return;
-
-        await supabase.from("songs").insert({
-            title: song.title,
-            artist: song.artist,
-            lyrics: song.lyrics,
-            user_id: user.id,
-            is_public: false,
-            allow_in_setlists: false,
-        });
-
-        alert("Forked!");
-    };
-
     const handleSave = async ({
         user,
         song
@@ -50,7 +34,9 @@ export function SongProvider({ children, userId, slug }: SongProviderProps) {
         user: SupabaseUser | null;
         song: Song;
     }) => {
-        if (!user) return;
+        if (!user) {
+            throw new Error("No user provided");
+        }
 
         const slug = song.title.toLowerCase().replace(/\s+/g, "-"); // simple slug
         const { data, error } = await supabase
@@ -110,7 +96,6 @@ export function SongProvider({ children, userId, slug }: SongProviderProps) {
         <SongContext.Provider value={{
             song,
             loading,
-            handleFork,
             handleSave
         }}>
             {children}
