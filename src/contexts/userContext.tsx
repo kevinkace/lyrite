@@ -8,15 +8,15 @@ import type { User, AuthError } from "@supabase/supabase-js";
 type UserContextType = {
     user: User | null;
     loading: boolean;
-    handleSignOut: () => Promise<void>;
-    signInWithGithub: () => Promise<{ error: AuthError | null; }>;
+    handleSignOut: () => Promise<{ error: AuthError | null }>;
+    signInWithGithub: () => Promise<{ error: AuthError | null }>;
 };
 
 const UserContext = createContext<UserContextType>({
     user: null,
     loading: true,
-    handleSignOut: async () => {},
-    signInWithGithub: async () => {}
+    handleSignOut: async () => ({ error: null }),
+    signInWithGithub: async () => ({ error: null }),
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -24,11 +24,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState(true);
 
     // signout
-    const handleSignOut = async () => {
-        await supabase.auth.signOut();
+    const handleSignOut = async (): Promise<{ error: AuthError | null }> => {
+        return supabase.auth.signOut();
     };
 
-    const signInWithGithub = async () => {
+    const signInWithGithub = async (): Promise<{ error: AuthError | null }> => {
         setLoading(true);
 
         const { error } = await supabase.auth.signInWithOAuth({
@@ -53,6 +53,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             setUser(session?.user ?? null);
             setLoading(false);
         };
+
         getSession();
 
         // Listen for auth changes
