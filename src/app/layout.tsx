@@ -4,13 +4,12 @@ import { ReactNode, useEffect, useState } from "react";
 
 
 import { ErrorProvider } from "@/contexts/errorContext";
-import { SongsProvider } from "@/contexts/songsContext";
 import { UserProvider }  from "@/contexts/userContext";
 
 import "./globals.css";
 import css from "./layout.module.css"
 
-import ErrorModal from "@/components/errorModal";
+import ErrorModal from "@/components/error/errorModal";
 import Header     from "@/components/layout/Header";
 import Loading    from "@/components/Loading";
 
@@ -30,7 +29,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <body className={css.body}>
                 <ErrorProvider>
                     <UserProvider>
-                        <SongsProvider limit={10}>
                             {loading && <Loading />}
 
                             <header className={css.header}>
@@ -38,7 +36,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                             </header>
 
                             <main className={css.main}>{children}</main>
-                        </SongsProvider>
 
                         <ErrorModal />
                     </UserProvider>

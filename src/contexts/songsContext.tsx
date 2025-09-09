@@ -1,57 +1,127 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { useAuth } from "@/contexts/AuthContext";
 import { Song } from "@/types";
 
 type SongsContextType = {
-    songs: Song[];
+    songsById: Record<string, Song>;
     loading: boolean;
-    fetchSongs: () => Promise<void>;
+    getSong: (id: string) => Promise<Song | null>;
+    getSongs: (ids: string[]) => Promise<Song[]>;
+    querySongs: (opts: {
+        username?: string;
+        limit?: number;
+        songIds?: string[];
+    }) => Promise<Song[]>;
 };
 
 const SongsContext = createContext<SongsContextType | undefined>(undefined);
 
-type SongsProviderProps = {
-    children: React.ReactNode;
-    username?: string; // filter by user
-    limit?: number;    // limit results
-};
+export function SongsProvider({ children }: { children: React.ReactNode }) {
+    const [songsById, setSongsById] = useState<Record<string, Song>>({});
+    const [loading, setLoading] = useState(false);
 
-export function SongsProvider({ children, username, limit }: SongsProviderProps) {
-    const [songs, setSongs] = useState<Song[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { user } = useAuth();
 
-    const fetchSongs = async () => {
-        setLoading(true);
+    // helper to merge fetched songs into cache
+    const addToCache = (songs: Song[]) => {
+        setSongsById((prev) => {
+            const updated = { ...prev };
 
-        let query = supabase
+            songs.forEach((s) => {
+                updated[s.id] = s;
+            });
+            return updated;
+        });
+    };
+
+    const getSong = async (id: string): Promise<Song | null> => {
+        if (songsById[id]) return songsById[id];
+
+        const { data, error } = await supabase
             .from("songs")
             .select("*")
-            .eq("is_public", true)
-            .order("created_at", { ascending: false });
-
-        if (username) query = query.eq("username", username);
-        if (limit) query = query.limit(limit);
-
-        const { data, error } = await query;
+            .eq("id", id)
+            .single();
 
         if (error) {
             console.error(error);
-            setLoading(false);
-            return;
+            return null;
         }
-
-        setSongs(data as Song[]);
-        setLoading(false);
+        addToCache([data as Song]);
+        return data as Song;
     };
 
-    useEffect(() => {
-        fetchSongs();
-    }, [username, limit]);
+    const getSongs = async (ids: string[]): Promise<Song[]> => {
+        const missing = ids.filter((id) => !songsById[id]);
+        if (missing.length > 0) {
+            console.log("Fetching songs from Supabase:", missing);
+            const { data, error } = await supabase
+                .from("songs")
+                .select("*")
+                .in("id", missing);
+            console.log({ data, error });
+
+            if (error) {
+                console.error(error);
+                return ids.map((id) => songsById[id]).filter(Boolean);
+            }
+            addToCache(data as Song[]);
+        }
+        return ids.map((id) => songsById[id]).filter(Boolean);
+    };
+
+    const querySongs = async ({
+        username,
+        limit,
+        songIds,
+    }: {
+        username?: string;
+        limit?: number;
+        songIds?: string[];
+    }): Promise<Song[]> => {
+        setLoading(true);
+
+        let query;
+
+        if (songIds && songIds.length > 0) {
+            query = supabase
+                .from("songs")
+                .select("*")
+                .in("id", songIds);
+        } else {
+            query = supabase
+                .from("songs")
+                .select("*")
+                .order("created_at", { ascending: false });
+
+            if (username) {
+                query = query.eq("profiles.username", username).eq("is_public", true);
+            } else if (user) {
+                query = query.eq("user_id", user.id);
+            }
+
+            if (limit) query = query.limit(limit);
+        }
+
+        const { data, error } = await query;
+        setLoading(false);
+
+        if (error) {
+            console.error(error);
+            return [];
+        }
+
+        addToCache(data as Song[]);
+        return data as Song[];
+    };
 
     return (
-        <SongsContext.Provider value={{ songs, loading, fetchSongs }}>
+        <SongsContext.Provider
+            value={{ songsById, loading, getSong, getSongs, querySongs }}
+        >
             {children}
         </SongsContext.Provider>
     );
@@ -61,4 +131,36 @@ export function useSongs() {
     const ctx = useContext(SongsContext);
     if (!ctx) throw new Error("useSongs must be used within SongsProvider");
     return ctx;
+}
+
+// ---------- Convenience hooks ----------
+
+export function useSongsByIds(ids: string[] | undefined) {
+    const { getSongs, loading } = useSongs();
+    const [songs, setSongs] = useState<Song[]>([]);
+
+    useEffect(() => {
+        if (!ids || ids.length === 0) {
+            return;
+        }
+
+        getSongs(ids).then(setSongs);
+    }, [ids?.join(","), getSongs]);
+
+    return { songs, loading };
+}
+
+export function useQuerySongs(opts: {
+    username?: string;
+    limit?: number;
+    songIds?: string[];
+}) {
+    const { querySongs, loading } = useSongs();
+    const [songs, setSongs] = useState<Song[]>([]);
+
+    useEffect(() => {
+        querySongs(opts).then(setSongs);
+    }, [JSON.stringify(opts), querySongs]);
+
+    return { songs, loading };
 }

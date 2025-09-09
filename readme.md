@@ -24,6 +24,44 @@ The need for this app came from a real-world scenario; jamming with friends and 
 
 With Lyrite you can easily have all lyrics on a single page with columns and font size adjustment. You can also color sections of lyrics making them easier to track visually.
 
+## Pages
+
+- `/`
+    - link to `/songs/new`
+    - listing of demo songs
+- `/songs`
+    - anon: listing of demo songs
+    - user: listing of user songs
+- `/songs/new`
+    - song form
+        - anon: creates public song
+        - user: creates song
+- `/songs/{guid}`
+    - public: song
+    - private: 404
+- `/users`
+    - listing of user songs
+- `/users/{userId}`
+    - anon: listing of {user} public songs
+    - user: listing of {user} public songs
+- `/users/{userId}/{slug}`
+    - anon: private: 404
+    - anon: public: song
+    - {user}: song
+- `/login`
+    - anon: login form
+    - user: redirect to `/`
+- `/logout`
+    - anon: redirect to `/`
+    - user: force logout
+- `/register`
+    - anon: register form
+    - user: redirect to `/`
+- `/profile`
+    - anon: redirect to `/`
+    - user: user profile
+        - listing of songs
+
 ## Technology
 
 - NextJS
@@ -31,13 +69,13 @@ With Lyrite you can easily have all lyrics on a single page with columns and fon
 
 ## How to pronounce?
 
-It's a portmanteau of "lyrics" and "write"; Lyrite.
+It's a portmanteau of "lyrics" and "write" - *lee-rite*.
 
 ## Contributors & Thanks
 
-Kevin Cameron - Most things (dev, design, features)  
-Neil Hagar - jamming buddy, and sounding board  
-Eli Scheer - logo, and fonts
+- **Kevin Cameron** - Most things (dev, design, features)
+- **Neil Hagar** - jamming buddy, and sounding board
+- **Eli Scheer** - logo, and fonts
 
 <details>
 <summary>

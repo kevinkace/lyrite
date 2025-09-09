@@ -1,15 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 
-import { useUser } from "@/contexts/userContext";
+import { motion, AnimatePresence } from "framer-motion";
+
+import Link  from "next/link";
+import Image from "next/image";
+
+import { useAuth } from "@/contexts/AuthContext";
 
 import css from "./UserMenu.module.css"
 
 export default function UserMenu() {
-    const { user, handleSignOut } = useUser();
+    const { user, signOut } = useAuth();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -33,9 +36,13 @@ export default function UserMenu() {
                 className={css.avatarButton}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <img
-                    src={user?.user_metadata?.avatar_url}
-                    alt={`${user?.user_metadata?.preferred_username} avatar`} className={css.avatar}
+                <Image
+                    src={user?.user_metadata?.avatar_url || "/default-avatar.png"}
+                    alt={`${user?.user_metadata?.preferred_username || "User"} avatar`}
+                    className={css.avatar}
+                    width={40}
+                    height={40}
+                    unoptimized={!user?.user_metadata?.avatar_url?.startsWith("https://")}
                 />
             </button>
 
@@ -65,7 +72,7 @@ export default function UserMenu() {
                             ))}
 
                             <button
-                                onClick={() => handleSignOut()}
+                                onClick={() => signOut()}
                                 className={css.signout}
                             >
                                 Sign out

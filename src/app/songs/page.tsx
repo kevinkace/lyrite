@@ -1,6 +1,6 @@
 "use client";
 
-import SongList from "@/components/SongsList";
+import SongList from "@/components/songs/SongsList";
 
 export default function SongsPage() {
     return (

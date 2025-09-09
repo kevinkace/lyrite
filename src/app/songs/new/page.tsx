@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 
 
 import { useError } from "@/contexts/errorContext";
-import { useSong } from "@/contexts/songContext";
-import { useUser } from "@/contexts/userContext";
+import { useSong }  from "@/contexts/songContext";
+import { useAuth }  from "@/contexts/AuthContext";
 
 import css from "./page.module.css";
 import { getErrorMessage } from "@/lib/getErrorMessage";
@@ -16,20 +16,22 @@ export default function NewSongPage() {
     const router = useRouter();
     const { setError } = useError();
     const { handleSave } = useSong();
-    const { user } = useUser();
+    const { user } = useAuth();
 
     const [title, setTitle] = useState("");
     const [artist, setArtist] = useState("");
     const [lyrics, setLyrics] = useState("");
 
+    // redirect to home if not logged in
+    if (!user) {
+        router.replace("/");
+
+        return null;
+    }
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        if (!user) {
-            setError("You must be logged in to create a song.");
-            return;
-        }
 
         try {
             const newSong = await handleSave({
