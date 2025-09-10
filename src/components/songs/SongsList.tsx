@@ -1,8 +1,9 @@
 import React from "react";
-import { Song } from "@/types";
+import { Songs } from "@/types";
+import Link from "next/link";
 
 type SongsListProps = {
-  songs: Song[];
+  songs: Songs;
 };
 
 export default function SongsList({ songs }: SongsListProps) {
@@ -12,9 +13,9 @@ export default function SongsList({ songs }: SongsListProps) {
     <ul>
       {songs.map((song) => (
         <li key={song.id}>
-          <strong>{song.title}</strong>
-           —
-          {song.artist}
+          <Link href={`/songs/${song.id}`}>
+            <strong>{song.title}</strong> — {song.artist}
+          </Link>
         </li>
       ))}
     </ul>

@@ -20,21 +20,4 @@ export type Song = {
     updated_at?: string;
 };
 
-export type Setlist = {
-    id: string;
-    name: string;
-    description: string | null;
-    is_public: boolean;
-    user_id: string;
-    created_at?: string;
-    updated_at?: string;
-};
-
-export type SetlistSong = {
-    id: string;
-    setlist_id: string;
-    song_id: string;
-    position: number;
-    created_at?: string;
-    updated_at?: string;
-};
+export type Songs = Song[];

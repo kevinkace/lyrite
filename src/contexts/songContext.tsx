@@ -2,11 +2,10 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-
 import { useError } from "./errorContext";
 
 import { Song } from "@/types";
-import type { User as SupabaseUser } from '@supabase/auth-js';
+import type { User as SupabaseUser } from "@supabase/auth-js";
 
 type SongContextType = {
     song: Song | null;
@@ -18,18 +17,19 @@ const SongContext = createContext<SongContextType | undefined>(undefined);
 
 type SongProviderProps = {
     children: React.ReactNode;
+    id?: string;      // <- allow direct songId
     userId?: string;
     slug?: string;
 };
 
-export function SongProvider({ children, userId, slug }: SongProviderProps) {
+export function SongProvider({ children, id, userId, slug }: SongProviderProps) {
     const [song, setSong] = useState<Song | null>(null);
     const [loading, setLoading] = useState(true);
     const { setError } = useError();
 
     const handleSave = async ({
         user,
-        song
+        song,
     }: {
         user: SupabaseUser | null;
         song: Song;
@@ -59,50 +59,42 @@ export function SongProvider({ children, userId, slug }: SongProviderProps) {
     };
 
     useEffect(() => {
-        if (!slug || !userId) {
-            console.log("missing slug or userId", { slug, userId });
+        if (!id && (!slug || !userId)) {
+            console.log("missing identifiers", { id, slug, userId });
             return;
         }
-
-        console.log("fetching song", { slug, userId });
 
         const fetchSong = async () => {
             setLoading(true);
 
-            const { data, error } = await supabase
-                .from("songs")
-                .select("*")
-                // .eq("is_public", true)
-                .eq("user_id", userId)
-                .eq("slug", slug)
-                .single();
+            let query = supabase.from("songs").select("*").single();
 
-            console.log(data);
+            if (id) {
+                query = query.eq("id", id);
+            } else if (userId && slug) {
+                query = query.eq("user_id", userId).eq("slug", slug);
+            }
+
+            const { data, error } = await query;
 
             if (error) {
                 setError(error.message);
-                setLoading(false);
-                return;
+                setSong(null);
+            } else {
+                setSong(data as Song);
             }
-
-            setSong(data as Song);
             setLoading(false);
         };
 
         fetchSong();
-    }, [slug, userId, setError]);
+    }, [id, slug, userId, setError]);
 
     return (
-        <SongContext.Provider value={{
-            song,
-            loading,
-            handleSave
-        }}>
+        <SongContext.Provider value={{ song, loading, handleSave }}>
             {children}
         </SongContext.Provider>
     );
 }
-
 
 export function useSong() {
     const ctx = useContext(SongContext);
