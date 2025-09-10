@@ -11,7 +11,7 @@ const featuredIds = [
 export default function FeaturedSongs() {
     const { songs, loading } = useSongsByIds(featuredIds);
 
-    if (loading) return <p>Loading…</p>;
+    if (loading || songs === undefined) return <p>Loading…</p>;
 
     return <SongsList songs={songs} />;
 }

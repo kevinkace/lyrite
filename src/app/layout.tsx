@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useState } from "react";
 
 
 import { ErrorProvider } from "@/contexts/errorContext";
-import { UserProvider }  from "@/contexts/userContext";
+import { AuthProvider }  from "@/contexts/AuthContext";
 
 import "./globals.css";
 import css from "./layout.module.css"
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html>
             <body className={css.body}>
                 <ErrorProvider>
-                    <UserProvider>
+                    <AuthProvider>
                             {loading && <Loading />}
 
                             <header className={css.header}>
@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                             <main className={css.main}>{children}</main>
 
                         <ErrorModal />
-                    </UserProvider>
+                    </AuthProvider>
                 </ErrorProvider>
             </body>
         </html>

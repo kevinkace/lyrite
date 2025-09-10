@@ -1,11 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
-import { motion, AnimatePresence } from "framer-motion";
-
 import Link  from "next/link";
-import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -36,13 +33,13 @@ export default function UserMenu() {
                 className={css.avatarButton}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                     src={user?.user_metadata?.avatar_url || "/default-avatar.png"}
                     alt={`${user?.user_metadata?.preferred_username || "User"} avatar`}
                     className={css.avatar}
                     width={40}
                     height={40}
-                    unoptimized={!user?.user_metadata?.avatar_url?.startsWith("https://")}
                 />
             </button>
 

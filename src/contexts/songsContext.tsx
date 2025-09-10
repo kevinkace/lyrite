@@ -137,7 +137,7 @@ export function useSongs() {
 
 export function useSongsByIds(ids: string[] | undefined) {
     const { getSongs, loading } = useSongs();
-    const [songs, setSongs] = useState<Song[]>([]);
+    const [songs, setSongs] = useState<Song[]|undefined>(undefined);
 
     useEffect(() => {
         if (!ids || ids.length === 0) {
