@@ -64,6 +64,8 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
             return;
         }
 
+        console.log("Fetching song", { id, slug, userId });
+
         const fetchSong = async () => {
             setLoading(true);
 

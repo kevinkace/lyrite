@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { useAuth } from "@/contexts/AuthContext";
 import { Song } from "@/types";
 
 type SongsContextType = {
@@ -11,6 +10,7 @@ type SongsContextType = {
     getSong: (id: string) => Promise<Song | null>;
     getSongs: (ids: string[]) => Promise<Song[]>;
     querySongs: (opts: {
+        userId?: string;
         username?: string;
         limit?: number;
         songIds?: string[];
@@ -23,16 +23,18 @@ export function SongsProvider({ children }: { children: React.ReactNode }) {
     const [songsById, setSongsById] = useState<Record<string, Song>>({});
     const [loading, setLoading] = useState(false);
 
-    const { user } = useAuth();
-
     // helper to merge fetched songs into cache
     const addToCache = (songs: Song[]) => {
         setSongsById((prev) => {
+            console.log("prev:", prev);
+
             const updated = { ...prev };
 
             songs.forEach((s) => {
                 updated[s.id] = s;
             });
+
+            console.log("updated:", updated);
             return updated;
         });
     };
@@ -48,36 +50,47 @@ export function SongsProvider({ children }: { children: React.ReactNode }) {
 
         if (error) {
             console.error(error);
+
             return null;
         }
+
         addToCache([data as Song]);
+
         return data as Song;
     };
 
     const getSongs = async (ids: string[]): Promise<Song[]> => {
         const missing = ids.filter((id) => !songsById[id]);
+
         if (missing.length > 0) {
-            console.log("Fetching songs from Supabase:", missing);
+            console.log("missing:", missing);
+
             const { data, error } = await supabase
                 .from("songs")
                 .select("*")
                 .in("id", missing);
+
             console.log({ data, error });
 
             if (error) {
                 console.error(error);
+
                 return ids.map((id) => songsById[id]).filter(Boolean);
             }
+
             addToCache(data as Song[]);
         }
+
         return ids.map((id) => songsById[id]).filter(Boolean);
     };
 
     const querySongs = async ({
+        userId,
         username,
         limit,
         songIds,
     }: {
+        userId?: string;
         username?: string;
         limit?: number;
         songIds?: string[];
@@ -99,14 +112,15 @@ export function SongsProvider({ children }: { children: React.ReactNode }) {
 
             if (username) {
                 query = query.eq("profiles.username", username).eq("is_public", true);
-            } else if (user) {
-                query = query.eq("user_id", user.id);
+            } else if (userId) {
+                query = query.eq("user_id", userId);
             }
 
             if (limit) query = query.limit(limit);
         }
 
         const { data, error } = await query;
+
         setLoading(false);
 
         if (error) {
@@ -115,8 +129,10 @@ export function SongsProvider({ children }: { children: React.ReactNode }) {
         }
 
         addToCache(data as Song[]);
+
         return data as Song[];
     };
+
 
     return (
         <SongsContext.Provider
@@ -137,7 +153,7 @@ export function useSongs() {
 
 export function useSongsByIds(ids: string[] | undefined) {
     const { getSongs, loading } = useSongs();
-    const [songs, setSongs] = useState<Song[]|undefined>(undefined);
+    const [songs, setSongs] = useState<Song[] | undefined>(undefined);
 
     useEffect(() => {
         if (!ids || ids.length === 0) {
@@ -150,17 +166,17 @@ export function useSongsByIds(ids: string[] | undefined) {
     return { songs, loading };
 }
 
-export function useQuerySongs(opts: {
+export function useQuerySongs({ userId, username, limit }: {
+    userId?: string;
     username?: string;
     limit?: number;
-    songIds?: string[];
 }) {
     const { querySongs, loading } = useSongs();
     const [songs, setSongs] = useState<Song[]>([]);
 
     useEffect(() => {
-        querySongs(opts).then(setSongs);
-    }, [JSON.stringify(opts), querySongs]);
+        querySongs({ userId, username, limit }).then(setSongs);
+    }, [userId, username, limit, querySongs]);
 
     return { songs, loading };
 }
