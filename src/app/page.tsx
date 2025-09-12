@@ -17,8 +17,6 @@ export default function HomePage() {
             <div className={css.main}>
                 <h1>Lyrite</h1>
 
-
-
                 {user && <Link href="/songs/new">Create New Song</Link>}
                 {!user && !loading && <Link href="/login">Login</Link>}
 
