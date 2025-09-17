@@ -1,142 +1,90 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+    createContext,
+    useContext,
+    useState,
+    useEffect,
+    ReactNode,
+} from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { Song } from "@/types";
+
+type Song = {
+    id: string;
+    title: string;
+    artist: string;
+    // add fields you need
+};
 
 type SongsContextType = {
-    songsById: Record<string, Song>;
+    songs: Song[];
     loading: boolean;
-    getSong: (id: string) => Promise<Song | null>;
-    getSongs: (ids: string[]) => Promise<Song[]>;
-    querySongs: (opts: {
-        userId?: string;
-        username?: string;
-        limit?: number;
-        songIds?: string[];
-    }) => Promise<Song[]>;
+    error: string | null;
+    page: number;
+    search: string;
+    hasMore: boolean;
 };
 
 const SongsContext = createContext<SongsContextType | undefined>(undefined);
 
-export function SongsProvider({ children }: { children: React.ReactNode }) {
-    const [songsById, setSongsById] = useState<Record<string, Song>>({});
+export function SongsProvider({
+    children,
+    userId,
+    page,
+    search,
+    pageSize = 20,
+}: {
+    children: ReactNode;
+    userId: string;
+    page: number;
+    search: string;
+    pageSize?: number;
+}) {
+    const [songs, setSongs] = useState<Song[]>([]);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [hasMore, setHasMore] = useState(false);
 
-    // helper to merge fetched songs into cache
-    const addToCache = (songs: Song[]) => {
-        setSongsById((prev) => {
-            console.log("prev:", prev);
+    useEffect(() => {
+        const fetchSongs = async () => {
+            setLoading(true);
+            setError(null);
 
-            const updated = { ...prev };
-
-            songs.forEach((s) => {
-                updated[s.id] = s;
-            });
-
-            console.log("updated:", updated);
-            return updated;
-        });
-    };
-
-    const getSong = async (id: string): Promise<Song | null> => {
-        if (songsById[id]) return songsById[id];
-
-        const { data, error } = await supabase
-            .from("songs")
-            .select("*")
-            .eq("id", id)
-            .single();
-
-        if (error) {
-            console.error(error);
-
-            return null;
-        }
-
-        addToCache([data as Song]);
-
-        return data as Song;
-    };
-
-    const getSongs = async (ids: string[]): Promise<Song[]> => {
-        const missing = ids.filter((id) => !songsById[id]);
-
-        if (missing.length > 0) {
-            console.log("missing:", missing);
-
-            const { data, error } = await supabase
+            let query = supabase
                 .from("songs")
                 .select("*")
-                .in("id", missing);
+                .eq("user_id", userId)
+                .range((page - 1) * pageSize, page * pageSize - 1);
 
-            console.log({ data, error });
+            if (search) {
+                query = query.ilike("title", `%${search}%`);
+            }
+
+            const { data, error } = await query;
 
             if (error) {
-                console.error(error);
-
-                return ids.map((id) => songsById[id]).filter(Boolean);
+                setError(error.message);
+            } else {
+                setSongs(data || []);
+                setHasMore((data?.length ?? 0) === pageSize);
             }
 
-            addToCache(data as Song[]);
-        }
+            setLoading(false);
+        };
 
-        return ids.map((id) => songsById[id]).filter(Boolean);
-    };
-
-    const querySongs = async ({
-        userId,
-        username,
-        limit,
-        songIds,
-    }: {
-        userId?: string;
-        username?: string;
-        limit?: number;
-        songIds?: string[];
-    }): Promise<Song[]> => {
-        setLoading(true);
-
-        let query;
-
-        if (songIds && songIds.length > 0) {
-            query = supabase
-                .from("songs")
-                .select("*")
-                .in("id", songIds);
-        } else {
-            query = supabase
-                .from("songs")
-                .select("*")
-                .order("created_at", { ascending: false });
-
-            if (username) {
-                query = query.eq("profiles.username", username).eq("is_public", true);
-            } else if (userId) {
-                query = query.eq("user_id", userId);
-            }
-
-            if (limit) query = query.limit(limit);
-        }
-
-        const { data, error } = await query;
-
-        setLoading(false);
-
-        if (error) {
-            console.error(error);
-            return [];
-        }
-
-        addToCache(data as Song[]);
-
-        return data as Song[];
-    };
-
+        fetchSongs();
+    }, [userId, page, search, pageSize]);
 
     return (
         <SongsContext.Provider
-            value={{ songsById, loading, getSong, getSongs, querySongs }}
+            value={{
+                songs,
+                loading,
+                error,
+                page,
+                search,
+                hasMore,
+            }}
         >
             {children}
         </SongsContext.Provider>
@@ -147,36 +95,4 @@ export function useSongs() {
     const ctx = useContext(SongsContext);
     if (!ctx) throw new Error("useSongs must be used within SongsProvider");
     return ctx;
-}
-
-// ---------- Convenience hooks ----------
-
-export function useSongsByIds(ids: string[] | undefined) {
-    const { getSongs, loading } = useSongs();
-    const [songs, setSongs] = useState<Song[] | undefined>(undefined);
-
-    useEffect(() => {
-        if (!ids || ids.length === 0) {
-            return;
-        }
-
-        getSongs(ids).then(setSongs);
-    }, [ids?.join(","), getSongs]);
-
-    return { songs, loading };
-}
-
-export function useQuerySongs({ userId, username, limit }: {
-    userId?: string;
-    username?: string;
-    limit?: number;
-}) {
-    const { querySongs, loading } = useSongs();
-    const [songs, setSongs] = useState<Song[]>([]);
-
-    useEffect(() => {
-        querySongs({ userId, username, limit }).then(setSongs);
-    }, [userId, username, limit, querySongs]);
-
-    return { songs, loading };
 }

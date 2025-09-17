@@ -2,7 +2,7 @@
 
 import { use } from "react";
 
-import { SongProvider } from "@/contexts/songContext";
+import { SongProvider } from "@/contexts/SongContext";
 
 export default function SongLayout({
     children,

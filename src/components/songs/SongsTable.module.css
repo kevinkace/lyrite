@@ -1,0 +1,51 @@
+.wrapper {
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 0.5rem;
+}
+
+.searchInput {
+  margin-bottom: 1rem;
+  padding: 0.4rem;
+  width: 100%;
+  max-width: 300px;
+  font-size: 1rem;
+}
+
+.error {
+  color: red;
+  margin-bottom: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.table th {
+  background-color: #363636ff;
+}
+
+.pagination {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pagination button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background: #eee;
+}

@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { useError } from "./errorContext";
+import { useError } from "./ErrorContext";
 
 import { Song } from "@/types";
 import type { User as SupabaseUser } from "@supabase/auth-js";

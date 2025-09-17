@@ -1,4 +1,4 @@
-import { useSong } from "@/contexts/songContext";
+import { useSong } from "@/contexts/SongContext";
 
 export default function EditSong() {
   const { song, loading } = useSong();

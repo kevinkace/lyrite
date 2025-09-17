@@ -2,7 +2,7 @@
 
 import styles from "./errorModal.module.css";
 
-import { useError } from "@/contexts/errorContext";
+import { useError } from "@/contexts/ErrorContext";
 
 export default function ErrorModal() {
     const { error, setError } = useError();

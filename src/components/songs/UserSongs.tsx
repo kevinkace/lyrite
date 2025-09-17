@@ -1,4 +1,4 @@
-import { useQuerySongs } from "@/contexts/songsContext";
+import { useQuerySongs } from "@/contexts/SongsContext";
 
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -8,13 +8,15 @@ import SongsList from "./SongsList";
 export default function FeaturedSongs() {
     const { user } = useAuth();
 
-    const { songs, loading } = useQuerySongs({
-        userId: user?.id
-    });
+    // const { songs, loading } = useQuerySongs({
+    //     userId: user?.id
+    // });
 
-    console.log({songs});
+    // console.log({songs});
 
-    if (loading || songs === undefined) return <p>Loading…</p>;
+    return <div>songslist</div>
 
-    return <SongsList songs={songs} />;
+    // if (loading || songs === undefined) return <p>Loading…</p>;
+
+    // return <SongsList songs={songs} />;
 }

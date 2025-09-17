@@ -1,7 +1,7 @@
 "use client";
 
 import EditSong from "@/components/song/EditSong";
-import { SongProvider } from "@/contexts/songContext";
+import { SongProvider } from "@/contexts/SongContext";
 import { use } from "react";
 
 export default function SongPage({

@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState } from "react";
 
 
-import { ErrorProvider } from "@/contexts/errorContext";
+import { ErrorProvider } from "@/contexts/ErrorContext";
 import { AuthProvider }  from "@/contexts/AuthContext";
 
 import "./globals.css";

@@ -1,4 +1,4 @@
-import { useSongsByIds } from "@/contexts/songsContext";
+import { useSongsByIds } from "@/contexts/SongsContext";
 
 import SongsList from "./SongsList";
 

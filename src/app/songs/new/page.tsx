@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 
 
 
-import { useError } from "@/contexts/errorContext";
-import { useSong }  from "@/contexts/songContext";
+import { useError } from "@/contexts/ErrorContext";
+import { useSong }  from "@/contexts/SongContext";
 import { useAuth }  from "@/contexts/AuthContext";
 
 import css from "./page.module.css";
