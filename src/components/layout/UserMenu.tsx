@@ -18,8 +18,8 @@ export default function UserMenu() {
     }
 
     const links = [
-        { href: "/profile", label: "Profile" },
-        { href: "/settings", label: "Settings" }
+        { href: "/profile",          label: "Profile" },
+        { href: "/profile/settings", label: "Settings" }
     ];
 
     return (

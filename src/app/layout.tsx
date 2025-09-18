@@ -6,12 +6,12 @@ import { ReactNode, useEffect, useState } from "react";
 import { ErrorProvider } from "@/contexts/ErrorContext";
 import { AuthProvider }  from "@/contexts/AuthContext";
 
-import "./globals.css";
-import css from "./layout.module.css"
-
 import ErrorModal from "@/components/error/errorModal";
 import Header     from "@/components/layout/Header";
 import Loading    from "@/components/Loading";
+
+import "./globals.css";
+import css from "./layout.module.css"
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     const [ loading, setLoading ] = useState(true);
