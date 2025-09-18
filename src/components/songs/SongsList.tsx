@@ -7,7 +7,7 @@ type SongsListProps = {
 };
 
 export default function SongsList({ songs }: SongsListProps) {
-  if (!songs.length) return <p>No songs found.</p>;
+  if (!songs?.length) return null;
 
   return (
     <ul>

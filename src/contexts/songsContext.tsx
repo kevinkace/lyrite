@@ -9,12 +9,7 @@ import {
 } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
-type Song = {
-    id: string;
-    title: string;
-    artist: string;
-    // add fields you need
-};
+import { Song } from "@/types";
 
 type SongsContextType = {
     songs: Song[];
@@ -30,14 +25,16 @@ const SongsContext = createContext<SongsContextType | undefined>(undefined);
 export function SongsProvider({
     children,
     userId,
+    ids,
     page,
     search,
     pageSize = 20,
 }: {
     children: ReactNode;
-    userId: string;
-    page: number;
-    search: string;
+    userId?: string;
+    ids?: string[];
+    page?: number;
+    search?: string;
     pageSize?: number;
 }) {
     const [songs, setSongs] = useState<Song[]>([]);
@@ -47,17 +44,26 @@ export function SongsProvider({
 
     useEffect(() => {
         const fetchSongs = async () => {
+            if (!userId && (!ids || ids.length === 0)) {
+                setSongs([]);
+                return;
+            }
+
             setLoading(true);
             setError(null);
 
-            let query = supabase
-                .from("songs")
-                .select("*")
-                .eq("user_id", userId)
-                .range((page - 1) * pageSize, page * pageSize - 1);
+            let query = supabase.from("songs").select("*");
 
-            if (search) {
-                query = query.ilike("title", `%${search}%`);
+            if (ids && ids.length > 0) {
+                query = query.in("id", ids);
+            } else if (userId) {
+                query = query
+                    .eq("user_id", userId)
+                    .range((page - 1) * pageSize, page * pageSize - 1);
+
+                if (search) {
+                    query = query.ilike("title", `%${search}%`);
+                }
             }
 
             const { data, error } = await query;
@@ -66,14 +72,16 @@ export function SongsProvider({
                 setError(error.message);
             } else {
                 setSongs(data || []);
-                setHasMore((data?.length ?? 0) === pageSize);
+                setHasMore(
+                    !ids && (data?.length ?? 0) === pageSize // only paginate if userId query
+                );
             }
 
             setLoading(false);
         };
 
         fetchSongs();
-    }, [userId, page, search, pageSize]);
+    }, [userId, ids, page, search, pageSize]);
 
     return (
         <SongsContext.Provider
