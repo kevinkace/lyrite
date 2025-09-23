@@ -15,9 +15,10 @@ type SongsContextType = {
     songs: Song[];
     loading: boolean;
     error: string | null;
-    page: number;
-    search: string;
+    page: number | undefined;
+    search: string | undefined;
     hasMore: boolean;
+    deleteSong: (id: string) => Promise<void>;
 };
 
 const SongsContext = createContext<SongsContextType | undefined>(undefined);
@@ -83,6 +84,15 @@ export function SongsProvider({
         fetchSongs();
     }, [userId, ids, page, search, pageSize]);
 
+    const deleteSong = async (id: string) => {
+        const { error } = await supabase.from("songs").delete().eq("id", id);
+        if (error) {
+            setError(error.message);
+        } else {
+            setSongs((prev) => prev.filter((song) => song.id !== id));
+        }
+    };
+
     return (
         <SongsContext.Provider
             value={{
@@ -92,6 +102,7 @@ export function SongsProvider({
                 page,
                 search,
                 hasMore,
+                deleteSong,
             }}
         >
             {children}

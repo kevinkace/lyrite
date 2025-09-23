@@ -1,11 +1,16 @@
 "use client";
 
+import Link from "next/link";
+
 import { useSongs } from "@/contexts/SongsContext";
 import { useRouter, useSearchParams } from "next/navigation";
-import css from "./SongsTable.module.css"; // import CSS module
+
+import css from "./SongsTable.module.css";
+
+const MAX_LEN = 100;
 
 export default function SongsTable() {
-    const { songs, loading, error, page, search, hasMore } = useSongs();
+    const { songs, loading, error, page, search, hasMore, deleteSong } = useSongs();
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -44,24 +49,34 @@ export default function SongsTable() {
                     <tr>
                         <th>Title</th>
                         <th>Artist</th>
+                        <th>Lyrics</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {songs.map((song) => (
                         <tr key={song.id}>
-                            <td>{song.title}</td>
+                            <td>
+                                <Link href={`/songs/${song.id}`} className={css.songLink}>
+                                    {song.title}
+                                </Link>
+                            </td>
                             <td>{song.artist}</td>
+                            <td>{song.lyrics?.slice(0, MAX_LEN)}{song.lyrics?.length > MAX_LEN && "..."}</td>
+                            <td>
+                                <button className={css.deleteButton} onClick={() => deleteSong(song.id)}>delete</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
-            <div className={css.pagination}>
+            {page && (<div className={css.pagination}>
                 {page > 1 && (
                     <button onClick={() => goToPage(page - 1)}>Previous</button>
                 )}
                 {hasMore && <button onClick={() => goToPage(page + 1)}>Next</button>}
-            </div>
+            </div>)}
         </div>
     );
 }

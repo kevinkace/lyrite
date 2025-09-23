@@ -7,7 +7,7 @@ export type User = {
 };
 
 export type Song = {
-    id?: string;
+    id: string;
     slug?: string;
     title: string;
     artist: string | null;
