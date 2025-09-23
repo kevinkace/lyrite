@@ -16,22 +16,6 @@
   margin-bottom: 1rem;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1rem;
-}
-
-.table th,
-.table td {
-  border: 1px solid #ddd;
-  padding: 0.5rem;
-  text-align: left;
-}
-
-.table th {
-}
-
 .pagination {
   display: flex;
   gap: 0.5rem;

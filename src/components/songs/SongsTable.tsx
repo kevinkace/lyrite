@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-import { IconButton, Switch, TextField } from "@radix-ui/themes";
+import { IconButton, Switch, Table, TextField } from "@radix-ui/themes";
 import { TrashIcon } from "@radix-ui/react-icons";
 
 import { useSongs } from "@/contexts/SongsContext";
@@ -47,47 +47,47 @@ export default function SongsTable() {
             {loading && <p>Loading...</p>}
             {error && <p className={css.error}>{error}</p>}
 
-            <table className={css.table}>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Artist</th>
-                        <th>Lyrics</th>
-                        <th>Public</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table.Root>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell>Artist</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell>Lyrics</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell>Public</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell>Actions</Table.ColumnHeaderCell>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
                     {songs.map((song) => (
-                        <tr key={song.id}>
-                            <td>
+                        <Table.Row key={song.id}>
+                            <Table.Cell>
                                 <Link href={`/songs/${song.id}`} className={css.songLink}>
                                     {song.title}
                                 </Link>
-                            </td>
+                            </Table.Cell>
 
-                            <td>{song.artist}</td>
+                            <Table.Cell>{song.artist}</Table.Cell>
 
-                            <td>{song.lyrics.slice(0, MAX_LEN)}{song.lyrics.length > MAX_LEN && "..."}</td>
+                            <Table.Cell>{song.lyrics.slice(0, MAX_LEN)}{song.lyrics.length > MAX_LEN && "..."}</Table.Cell>
 
-                            <td>
+                            <Table.Cell>
                                 <Switch
                                     checked={song.is_public}
                                     onCheckedChange={(checked) => {
                                         updateSong(song.id, { is_public: checked })
                                     }}
                                 />
-                            </td>
+                            </Table.Cell>
 
-                            <td>
+                            <Table.Cell>
                                 <IconButton color="crimson" onClick={() => deleteSong(song.id)}>
                                     <TrashIcon />
                                 </IconButton>
-                            </td>
-                        </tr>
+                            </Table.Cell>
+                        </Table.Row>
                     ))}
-                </tbody>
-            </table>
+                </Table.Body>
+            </Table.Root>
 
             {page && (<div className={css.pagination}>
                 {page > 1 && (
