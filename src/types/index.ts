@@ -10,8 +10,8 @@ export type Song = {
     id: string;
     slug?: string;
     title: string;
-    artist: string | null;
-    lyrics: string | null;
+    artist: string;
+    lyrics: string;
     is_public: boolean;
     user_id?: string;
     created_at?: string;

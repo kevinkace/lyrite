@@ -1,6 +1,7 @@
 "use client";
 
 import { supabase } from "@/lib/supabaseClient";
+import { Button } from "@radix-ui/themes";
 
 export default function logoutPage() {
     const signOut = async () => {
@@ -8,6 +9,6 @@ export default function logoutPage() {
     }
 
     return (
-        <button onClick={signOut}>Sign out</button>
+        <Button color="crimson" onClick={signOut}>Sign out</Button>
     )
 }

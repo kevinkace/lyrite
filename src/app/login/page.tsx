@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import css from "./login.module.css"
 import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@radix-ui/themes";
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ export default function LoginPage() {
 
             {error && <p style={{ color: "red" }}>{error}</p>}
 
-            {loading ? <p>Loading...</p> : <button onClick={handleLogin}>Sign in with GitHub</button>}
+            {loading ? <p>Loading...</p> : <Button color="gray" onClick={handleLogin}>Sign in with GitHub</Button>}
         </div>
     );
 }

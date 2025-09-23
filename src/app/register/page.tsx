@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { Button } from "@radix-ui/themes";
 
 export default function RegisterPage() {
     const [email, setEmail] = useState("");
@@ -37,8 +38,11 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={handleRegister}>Register</button>
+
+            <Button onClick={handleRegister}>Register</Button>
+
             {error && <p style={{ color: "red" }}>{error}</p>}
+
             {message && <p style={{ color: "green" }}>{message}</p>}
         </>
     );

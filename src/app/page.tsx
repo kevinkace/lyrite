@@ -1,10 +1,10 @@
 "use client";
 
-import Link       from "next/link";
+import Link from "next/link";
 import { Button } from "@radix-ui/themes";
 
 import { SongsProvider } from "@/contexts/SongsContext";
-import { useAuth }       from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 import FeaturedSongs from "@/components/songs/FeaturedSongs";
 
@@ -23,7 +23,14 @@ export default function HomePage() {
             <div className={css.main}>
                 <h1>Lyrite</h1>
 
-                {user && <Button variant="classic" color="gray"><Link href="/songs/new">Create New Song</Link></Button>}
+                {user && (
+
+                    <Button asChild={true}>
+                        <Link href="/songs/new">
+                                Create New Song
+                        </Link>
+                    </Button>
+                )}
                 {!user && !loading && <Link href="/login">Login</Link>}
 
                 <FeaturedSongs />

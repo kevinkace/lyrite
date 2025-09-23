@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 
 import css from "./UserMenu.module.css"
+import { Button } from "@radix-ui/themes";
 
 export default function UserMenu() {
     const { user, signOut } = useAuth();
@@ -29,7 +30,7 @@ export default function UserMenu() {
             onMouseLeave={() => setIsOpen(false)}
         >
 
-            <button
+            <div
                 className={css.avatarButton}
                 onClick={() => setIsOpen(!isOpen)}
             >
@@ -41,7 +42,7 @@ export default function UserMenu() {
                     width={40}
                     height={40}
                 />
-            </button>
+            </div>
 
             <AnimatePresence>
                 {isOpen && (
@@ -68,12 +69,13 @@ export default function UserMenu() {
                                 </Link>
                             ))}
 
-                            <button
+                            <Button
                                 onClick={() => signOut()}
-                                className={css.signout}
+                                color="crimson"
+                                variant="soft"
                             >
                                 Sign out
-                            </button>
+                            </Button>
                         </nav>
 
 

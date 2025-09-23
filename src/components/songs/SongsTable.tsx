@@ -1,9 +1,12 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
+import { IconButton } from "@radix-ui/themes";
+import { TrashIcon } from "@radix-ui/react-icons";
+
 import { useSongs } from "@/contexts/SongsContext";
-import { useRouter, useSearchParams } from "next/navigation";
 
 import css from "./SongsTable.module.css";
 
@@ -62,9 +65,11 @@ export default function SongsTable() {
                                 </Link>
                             </td>
                             <td>{song.artist}</td>
-                            <td>{song.lyrics?.slice(0, MAX_LEN)}{song.lyrics?.length > MAX_LEN && "..."}</td>
+                            <td>{song.lyrics.slice(0, MAX_LEN)}{song.lyrics.length > MAX_LEN && "..."}</td>
                             <td>
-                                <button className={css.deleteButton} onClick={() => deleteSong(song.id)}>delete</button>
+                                <IconButton color="crimson" onClick={() => deleteSong(song.id)}>
+                                    <TrashIcon />
+                                </IconButton>
                             </td>
                         </tr>
                     ))}

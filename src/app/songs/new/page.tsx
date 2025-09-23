@@ -3,6 +3,8 @@
 import { useState }  from "react";
 import { useRouter } from "next/navigation";
 
+import { Checkbox, TextArea, TextField, Text, Flex, Button } from "@radix-ui/themes";
+
 import { useError } from "@/contexts/ErrorContext";
 import { useSong }  from "@/contexts/SongContext";
 import { useAuth }  from "@/contexts/AuthContext";
@@ -52,29 +54,38 @@ export default function NewSongPage() {
     return (
         <>
             <h1>New Song</h1>
+
             <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
+                <TextField.Root
                     placeholder="Title"
                     value={title}
                     required
                     onChange={(e) => setTitle(e.target.value)}
                 />
-                <input
-                    type="text"
+
+                <TextField.Root
                     placeholder="Artist"
                     value={artist}
                     required
                     onChange={(e) => setArtist(e.target.value)}
                 />
-                <textarea
+
+                <TextArea
                     className={css.lyrics}
                     placeholder="Lyrics"
                     value={lyrics}
                     required
                     onChange={(e) => setLyrics(e.target.value)}
                 />
-                <button type="submit">Save</button>
+
+                <Text as="label">
+                    <Flex gap="2">
+                        <Checkbox/>
+                        public?
+                    </Flex>
+                </Text>
+
+                <Button>Save</Button>
             </form>
         </>
     );

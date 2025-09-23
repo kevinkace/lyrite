@@ -15,11 +15,9 @@ export default function Header() {
         <>
             <h1><Link href="/">lyrite</Link></h1>
 
-        <div>
-            <Button variant="classic" color="gray">
+            <Button asChild={true}>
                 <Link href="/songs/new">Add Song</Link>
             </Button>
-            </div>
 
             {user && (<UserMenu />)}
 
