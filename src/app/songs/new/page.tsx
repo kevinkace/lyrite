@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState }  from "react";
 import { useRouter } from "next/navigation";
-
-
+import { Button }    from "@radix-ui/themes";
 
 import { useError } from "@/contexts/ErrorContext";
 import { useSong }  from "@/contexts/SongContext";
 import { useAuth }  from "@/contexts/AuthContext";
 
-import css from "./page.module.css";
 import { getErrorMessage } from "@/lib/getErrorMessage";
+
+import css from "./page.module.css";
 
 export default function NewSongPage() {
     const router = useRouter();
@@ -18,9 +18,9 @@ export default function NewSongPage() {
     const { handleSave } = useSong();
     const { user } = useAuth();
 
-    const [title, setTitle] = useState("");
-    const [artist, setArtist] = useState("");
-    const [lyrics, setLyrics] = useState("");
+    const [ title, setTitle ] = useState("");
+    const [ artist, setArtist ] = useState("");
+    const [ lyrics, setLyrics ] = useState("");
 
     // redirect to home if not logged in
     if (!user) {
@@ -40,8 +40,7 @@ export default function NewSongPage() {
                     title,
                     artist,
                     lyrics,
-                    is_public: false,
-                    allow_in_setlists: false
+                    is_public: false
                 }
             });
 
