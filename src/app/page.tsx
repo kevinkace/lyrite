@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Theme, ThemePanel } from "@radix-ui/themes";
 
 import { SongsProvider } from "@/contexts/SongsContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -18,15 +19,18 @@ export default function HomePage() {
     const { user, loading } = useAuth();
 
     return (
-        <SongsProvider ids={featuredIds} pageSize={10}>
-            <div className={css.main}>
-                <h1>Lyrite</h1>
+        <Theme appearance="dark" hasBackground={false}>
+            <ThemePanel />
+            <SongsProvider ids={featuredIds} pageSize={10}>
+                <div className={css.main}>
+                    <h1>Lyrite</h1>
 
-                {user && <Link href="/songs/new">Create New Song</Link>}
-                {!user && !loading && <Link href="/login">Login</Link>}
+                    {user && <Link href="/songs/new">Create New Song</Link>}
+                    {!user && !loading && <Link href="/login">Login</Link>}
 
-                <FeaturedSongs />
-            </div>
-        </SongsProvider>
+                    <FeaturedSongs />
+                </div>
+            </SongsProvider>
+        </Theme>
     );
 }

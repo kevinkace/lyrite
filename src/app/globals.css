@@ -1,3 +1,5 @@
+@import "@radix-ui/themes/styles.css";
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
