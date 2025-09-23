@@ -1,0 +1,5 @@
+.addSong {
+    composes: button from "../buttons/Button.module.css";
+
+    color: red;
+}

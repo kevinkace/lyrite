@@ -1,6 +1,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-accent: #0070f3;
 
   box-sizing: border-box;
 }
