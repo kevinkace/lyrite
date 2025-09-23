@@ -24,11 +24,7 @@ export default function UserMenu() {
     ];
 
     return (
-        <div
-            className={css.userMenu}
-            onMouseEnter={() => setIsOpen(true)}
-            onMouseLeave={() => setIsOpen(false)}
-        >
+        <div className={css.userMenu}>
 
             <div
                 className={css.avatarButton}

@@ -1,10 +1,9 @@
 "use client";
 
-import { IconButton } from "@radix-ui/themes";
-import styles from "./errorModal.module.css";
+import { Dialog, Flex, IconButton, Button } from "@radix-ui/themes";
+import { Cross2Icon } from "@radix-ui/react-icons";
 
 import { useError } from "@/contexts/ErrorContext";
-import { Cross2Icon } from "@radix-ui/react-icons";
 
 export default function ErrorModal() {
     const { error, setError } = useError();
@@ -12,13 +11,31 @@ export default function ErrorModal() {
     if (!error) return null;
 
     return (
-        <div className={styles.backdrop} onClick={() => setError(null)}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <Dialog.Root open={!!error} onOpenChange={() => !open && setError(null)}>
+            <Dialog.Content>
+                <Dialog.Title>
+                    <Flex justify="between" align="center" mb="3">
+                        Error
+
+                        <IconButton
+                            variant="ghost"
+                            size="1"
+                            color="gray"
+                            onClick={() => setError(null)}
+                        >
+                            <Cross2Icon />
+                        </IconButton>
+                    </Flex>
+                </Dialog.Title>
+
                 <p>{error}</p>
-                <IconButton onClick={() => setError(null)}>
-                    <Cross2Icon/>
-                </IconButton>
-            </div>
-        </div>
+
+                <Flex justify="end">
+                    <Button color="red" onClick={() => setError(null)}>
+                        Close
+                    </Button>
+                </Flex>
+            </Dialog.Content>
+        </Dialog.Root>
     );
 }

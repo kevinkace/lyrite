@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import UserMenu from "./UserMenu";
 
 import css from "./Header.module.css";
+import ErrorButton from "../error/ErrorButton";
 
 export default function Header() {
     const { user, loading } = useAuth();
@@ -18,6 +19,8 @@ export default function Header() {
             <Button asChild={true}>
                 <Link href="/songs/new">Add Song</Link>
             </Button>
+
+            <ErrorButton />
 
             {user && (<UserMenu />)}
 

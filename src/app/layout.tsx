@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html>
             <body className={css.body}>
                 <Theme appearance="dark" hasBackground={false}>
-                    <ThemePanel />
+                    {/* <ThemePanel /> */}
                     <ErrorProvider>
                         <AuthProvider>
                             {loading && <Loading />}
