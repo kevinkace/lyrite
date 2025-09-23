@@ -1,24 +1,26 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+
 import { supabase } from "@/lib/supabaseClient";
+
 import { useError } from "./ErrorContext";
+import { useAuth } from "./AuthContext";
 
 import { NewSong, Song } from "@/types";
-import type { User as SupabaseUser } from "@supabase/auth-js";
 
 type SongContextType = {
     song: Song | null;
     loading: boolean;
-    handleSave: ({ user, song }: { user: SupabaseUser | null; song: NewSong }) => Promise<Song>;
+    handleSave: ({ song }: { song: NewSong }) => Promise<Song>;
 };
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
 type SongProviderProps = {
     children: React.ReactNode;
-    id?: string;
-    userId?: string;
+    id: string;
+    userId: string;
     slug?: string;
 };
 
@@ -26,15 +28,14 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
     const [song, setSong] = useState<Song | null>(null);
     const [loading, setLoading] = useState(true);
     const { setError } = useError();
+    const { user } = useAuth();
 
     const handleSave = async ({
-        user,
         song,
     }: {
-        user: SupabaseUser | null;
-        song: Song;
+        song: NewSong;
     }) => {
-        if (!user) {
+        if (!user?.id) {
             throw new Error("No user provided");
         }
 
