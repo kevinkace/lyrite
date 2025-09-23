@@ -19,6 +19,8 @@ type SongsContextType = {
     search: string | undefined;
     hasMore: boolean;
     deleteSong: (id: string) => Promise<void>;
+    updateSongInState: (id: string, updates: Partial<Song>) => void;
+    updateSong: (id: string, updates: Partial<Song>) => Promise<void>;
 };
 
 const SongsContext = createContext<SongsContextType | undefined>(undefined);
@@ -93,6 +95,42 @@ export function SongsProvider({
         }
     };
 
+    const updateSongInState = (id: string, updates: Partial<Song>) => {
+        setSongs((prev) =>
+            prev.map((song) =>
+                song.id === id ? { ...song, ...updates } : song
+            )
+        )
+    };
+
+    const updateSong = async (id: string, updates: Partial<Song>) => {
+        let previous: Song | undefined;
+
+        setSongs((prev) => {
+            const next = prev.map((song) => {
+                if (song.id === id) {
+                    previous = song; // keep reference to rollback
+                    return { ...song, ...updates }; // optimistic update
+                }
+                return song;
+            });
+            return next;
+        });
+
+        const { error } = await supabase
+            .from("songs")
+            .update(updates)
+            .eq("id", id);
+
+        if (error && previous) {
+            // rollback to previous snapshot
+            setSongs((prev) =>
+                prev.map((song) => (song.id === id ? previous! : song))
+            );
+            setError(error.message);
+        }
+    };
+
     return (
         <SongsContext.Provider
             value={{
@@ -103,6 +141,8 @@ export function SongsProvider({
                 search,
                 hasMore,
                 deleteSong,
+                updateSongInState,
+                updateSong,
             }}
         >
             {children}

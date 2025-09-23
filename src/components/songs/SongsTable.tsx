@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-import { IconButton } from "@radix-ui/themes";
+import { IconButton, Switch, TextField } from "@radix-ui/themes";
 import { TrashIcon } from "@radix-ui/react-icons";
 
 import { useSongs } from "@/contexts/SongsContext";
@@ -13,7 +13,7 @@ import css from "./SongsTable.module.css";
 const MAX_LEN = 100;
 
 export default function SongsTable() {
-    const { songs, loading, error, page, search, hasMore, deleteSong } = useSongs();
+    const { songs, loading, error, page, search, hasMore, deleteSong, updateSong } = useSongs();
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -36,7 +36,7 @@ export default function SongsTable() {
 
     return (
         <div className={css.wrapper}>
-            <input
+            <TextField.Root
                 type="text"
                 defaultValue={search}
                 placeholder="Search songs..."
@@ -53,6 +53,7 @@ export default function SongsTable() {
                         <th>Title</th>
                         <th>Artist</th>
                         <th>Lyrics</th>
+                        <th>Public</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -64,8 +65,20 @@ export default function SongsTable() {
                                     {song.title}
                                 </Link>
                             </td>
+
                             <td>{song.artist}</td>
+
                             <td>{song.lyrics.slice(0, MAX_LEN)}{song.lyrics.length > MAX_LEN && "..."}</td>
+
+                            <td>
+                                <Switch
+                                    checked={song.is_public}
+                                    onCheckedChange={(checked) => {
+                                        updateSong(song.id, { is_public: checked })
+                                    }}
+                                />
+                            </td>
+
                             <td>
                                 <IconButton color="crimson" onClick={() => deleteSong(song.id)}>
                                     <TrashIcon />
