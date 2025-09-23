@@ -42,7 +42,6 @@
 
 .email {
     font-size: 12px;
-    color: #666;
     margin: 0;
 }
 
@@ -67,6 +66,4 @@
 
 .signout {
     composes: link;
-
-    color: rgba(224, 47, 47, 1);
 }

@@ -47,8 +47,7 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
                 lyrics: song.lyrics,
                 user_id: user.id,
                 slug,
-                is_public: false,
-                allow_in_setlists: false,
+                is_public: false
             })
             .select()
             .single();

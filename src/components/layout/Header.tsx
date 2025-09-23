@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { Button } from "@radix-ui/themes";
 
 import { useAuth } from "@/contexts/AuthContext";
@@ -14,9 +15,11 @@ export default function Header() {
         <>
             <h1><Link href="/">lyrite</Link></h1>
 
-            <Button>
+        <div>
+            <Button variant="classic" color="gray">
                 <Link href="/songs/new">Add Song</Link>
             </Button>
+            </div>
 
             {user && (<UserMenu />)}
 

@@ -13,8 +13,6 @@ export type Song = {
     artist: string | null;
     lyrics: string | null;
     is_public: boolean;
-    allow_in_setlists: boolean;
-    parent_id?: string | null;   // forked from this song
     user_id?: string;
     created_at?: string;
     updated_at?: string;
