@@ -4,20 +4,20 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useError } from "./ErrorContext";
 
-import { Song } from "@/types";
+import { NewSong, Song } from "@/types";
 import type { User as SupabaseUser } from "@supabase/auth-js";
 
 type SongContextType = {
     song: Song | null;
     loading: boolean;
-    handleSave: ({ user, song }: { user: SupabaseUser | null; song: Song }) => Promise<Song>;
+    handleSave: ({ user, song }: { user: SupabaseUser | null; song: NewSong }) => Promise<Song>;
 };
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
 type SongProviderProps = {
     children: React.ReactNode;
-    id?: string;      // <- allow direct songId
+    id?: string;
     userId?: string;
     slug?: string;
 };

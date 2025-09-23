@@ -18,4 +18,14 @@ export type Song = {
     updated_at?: string;
 };
 
+export type NewSong = {
+    title: string;
+    artist: string | null;
+    lyrics: string | null;
+    is_public: boolean;
+    user_id?: string;
+    slug?: string;
+    id?: string;
+};
+
 export type Songs = Song[];
