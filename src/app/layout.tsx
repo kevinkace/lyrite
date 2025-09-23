@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
+import { Theme, ThemePanel } from "@radix-ui/themes";
 
 
 import { ErrorProvider } from "@/contexts/ErrorContext";
@@ -11,6 +12,7 @@ import Header     from "@/components/layout/Header";
 import Loading    from "@/components/Loading";
 
 import "./globals.css";
+
 import css from "./layout.module.css"
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -27,8 +29,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html>
             <body className={css.body}>
-                <ErrorProvider>
-                    <AuthProvider>
+                <Theme appearance="dark" hasBackground={false}>
+                    <ThemePanel />
+                    <ErrorProvider>
+                        <AuthProvider>
                             {loading && <Loading />}
 
                             <header className={css.header}>
@@ -37,9 +41,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
                             <main className={css.main}>{children}</main>
 
-                        <ErrorModal />
-                    </AuthProvider>
-                </ErrorProvider>
+                            <ErrorModal />
+                        </AuthProvider>
+                    </ErrorProvider>
+                </Theme>
             </body>
         </html>
     );
