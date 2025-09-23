@@ -1,16 +1,12 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+
 import { supabase } from "@/lib/supabaseClient";
 
 import type { User, AuthError } from "@supabase/supabase-js";
 
-type UserContextType = {
-    user: User | null;
-    loading: boolean;
-    handleSignOut: () => Promise<{ error: AuthError | null }>;
-    signInWithGithub: () => Promise<{ error: AuthError | null }>;
-};
+import type { UserContextType } from "@/types";
 
 const UserContext = createContext<UserContextType>({
     user: null,

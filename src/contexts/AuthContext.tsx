@@ -2,16 +2,11 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-import type { User, AuthError } from "@supabase/supabase-js";
-
 import { supabase } from "@/lib/supabaseClient";
 
-type AuthContextType = {
-  user: User | null;
-  loading: boolean;
-  signInWithGithub: () => Promise<{ error: AuthError | null }>;
-  signOut: () => Promise<{ error: AuthError | null }>;
-};
+import type { User, AuthError } from "@supabase/supabase-js";
+
+import type { AuthContextType } from "@/types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -39,13 +34,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const signInWithGithub = async (): Promise<{ error: AuthError | null }> => {
         setLoading(true);
+
         const { error } = await supabase.auth.signInWithOAuth({
             provider: "github",
             options: {
                 redirectTo: window.location.href,
             },
         });
+
         setLoading(false);
+
         return { error };
     };
 

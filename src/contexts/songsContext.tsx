@@ -4,24 +4,11 @@ import {
     createContext,
     useContext,
     useState,
-    useEffect,
-    ReactNode,
+    useEffect
 } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
-import { Song } from "@/types";
-
-type SongsContextType = {
-    songs: Song[];
-    loading: boolean;
-    error: string | null;
-    page: number | undefined;
-    search: string | undefined;
-    hasMore: boolean;
-    deleteSong: (id: string) => Promise<void>;
-    updateSongInState: (id: string, updates: Partial<Song>) => void;
-    updateSong: (id: string, updates: Partial<Song>) => Promise<void>;
-};
+import { Song, SongsContextType, SongsProviderProps } from "@/types";
 
 const SongsContext = createContext<SongsContextType | undefined>(undefined);
 
@@ -32,14 +19,7 @@ export function SongsProvider({
     page,
     search,
     pageSize = 20,
-}: {
-    children: ReactNode;
-    userId?: string;
-    ids?: string[];
-    page?: number;
-    search?: string;
-    pageSize?: number;
-}) {
+}: SongsProviderProps) {
     const [songs, setSongs] = useState<Song[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);

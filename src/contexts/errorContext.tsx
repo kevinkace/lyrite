@@ -2,10 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
-type ErrorContextType = {
-    error: string | null;
-    setError: (msg: string | null) => void;
-};
+import type { ErrorContextType } from "@/types";
 
 const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
 

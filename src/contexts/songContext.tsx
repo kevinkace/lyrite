@@ -7,22 +7,9 @@ import { supabase } from "@/lib/supabaseClient";
 import { useError } from "./ErrorContext";
 import { useAuth } from "./AuthContext";
 
-import { NewSong, Song } from "@/types";
-
-type SongContextType = {
-    song: Song | null;
-    loading: boolean;
-    handleSave: ({ song }: { song: NewSong }) => Promise<Song>;
-};
+import { NewSong, Song, SongContextType, SongProviderProps } from "@/types";
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
-
-type SongProviderProps = {
-    children: React.ReactNode;
-    id: string;
-    userId: string;
-    slug?: string;
-};
 
 export function SongProvider({ children, id, userId, slug }: SongProviderProps) {
     const [song, setSong] = useState<Song | null>(null);

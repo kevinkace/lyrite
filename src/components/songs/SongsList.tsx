@@ -1,10 +1,8 @@
 import React from "react";
-import { Songs } from "@/types";
+
 import Link from "next/link";
 
-type SongsListProps = {
-  songs: Songs;
-};
+import { SongsListProps } from "@/types";
 
 export default function SongsList({ songs }: SongsListProps) {
   if (!songs?.length) return null;
