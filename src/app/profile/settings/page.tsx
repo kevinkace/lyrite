@@ -1,5 +1,11 @@
 "use client";
 
+import { Button } from "@radix-ui/themes";
+
 export default function SettingsPage() {
-    return <h1>Settings Page</h1>;
+    return (
+        <div>
+            <Button color="red">Delete Account</Button>
+        </div>
+    );
 }

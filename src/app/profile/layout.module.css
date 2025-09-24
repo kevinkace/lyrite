@@ -1,11 +1,11 @@
 .container {
-  margin: 0 auto;
   display: flex;
   gap: 1.5rem;
-  align-items: stretch; /* makes children fill vertical space */
+
+  width: 100%;
+  margin: 0 auto;
 
   border-top: 1px solid var(--gray-3);
-
 }
 
 .rail {
@@ -51,5 +51,7 @@
 
 .content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   margin-top: 1.5rem;
 }
