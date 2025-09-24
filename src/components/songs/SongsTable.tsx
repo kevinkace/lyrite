@@ -8,10 +8,11 @@ import { TrashIcon } from "@radix-ui/react-icons";
 
 import { useSongs } from "@/contexts/SongsContext";
 
-import css from "./SongsTable.module.css";
-import Pagination from "../pagination/Pagination";
+import Pagination from "@/components/pagination/Pagination";
 
-const MAX_LEN = 200;
+import css from "./SongsTable.module.css";
+
+const MAX_LYRIC_LEN = 200;
 
 export default function SongsTable() {
     const { songs, loading, error, page, search, hasMore, deleteSong, updateSong } = useSongs();
@@ -61,7 +62,7 @@ export default function SongsTable() {
 
                             <Table.Cell>{song.artist}</Table.Cell>
 
-                            <Table.Cell>{song.lyrics.slice(0, MAX_LEN)}{song.lyrics.length > MAX_LEN && "..."}</Table.Cell>
+                            <Table.Cell>{song.lyrics.slice(0, MAX_LYRIC_LEN)}{song.lyrics.length > MAX_LYRIC_LEN && "..."}</Table.Cell>
 
                             <Table.Cell>
                                 <Switch

@@ -3,11 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Flex, Button } from "@radix-ui/themes";
 
-type PaginationProps = {
-    currentPage: number;
-    totalPages?: number; // optional if you only want prev/next
-    hasMore?: boolean;   // fallback if you don’t have totalPages
-};
+import { PaginationProps } from "@/types";
 
 export default function Pagination({
     currentPage,
@@ -19,7 +15,13 @@ export default function Pagination({
 
     const goToPage = (page: number) => {
         const params = new URLSearchParams(searchParams.toString());
-        params.set("page", page.toString());
+        // unset page if going to first page
+        if (page === 1) {
+            params.delete("page");
+        } else {
+            params.set("page", page.toString());
+        }
+
         router.push(`?${params.toString()}`);
     };
 

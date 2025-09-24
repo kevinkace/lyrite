@@ -90,3 +90,10 @@ export type SongsContextType = {
     updateSongInState: (id: string, updates: Partial<Song>) => void;
     updateSong: (id: string, updates: Partial<Song>) => Promise<void>;
 };
+
+
+export type PaginationProps = {
+    currentPage: number;
+    totalPages?: number;
+    hasMore?: boolean;
+};
