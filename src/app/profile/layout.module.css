@@ -1,0 +1,55 @@
+.container {
+  margin: 0 auto;
+  display: flex;
+  gap: 1.5rem;
+  align-items: stretch; /* makes children fill vertical space */
+
+  border-top: 1px solid var(--gray-3);
+
+}
+
+.rail {
+  width: 16rem;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 1.5rem;
+}
+
+.profileCard {
+  margin-bottom: 1.5rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navLink {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.navLink:hover {
+  background-color: var(--gray-3);
+}
+
+.separator {
+  height: auto;       /* reset Radix defaults */
+  flex: 0 0 auto;     /* don’t shrink */
+  align-self: stretch;/* stretch inside flex */
+  min-height: 100%;   /* force to fill parent flex row */
+  background: var(--gray-3);
+}
+
+.content {
+  flex: 1;
+  margin-top: 1.5rem;
+}

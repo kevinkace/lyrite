@@ -26,6 +26,7 @@
     top: var(--image-size);
     right: 0;
     width: 250px;
+    z-index: 1;
 
     padding: 1em;
 

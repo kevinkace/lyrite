@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 import css from "./UserMenu.module.css"
 import { Button } from "@radix-ui/themes";
+import { userLinks } from "@/data/consts";
 
 export default function UserMenu() {
     const { user, signOut } = useAuth();
@@ -18,10 +19,6 @@ export default function UserMenu() {
         return null;
     }
 
-    const links = [
-        { href: "/profile",          label: "Profile" },
-        { href: "/profile/settings", label: "Settings" }
-    ];
 
     return (
         <div className={css.userMenu}>
@@ -55,7 +52,7 @@ export default function UserMenu() {
                         </div>
 
                         <nav className={css.links}>
-                            {links.map(link => (
+                            {userLinks.map(link => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
