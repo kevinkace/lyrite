@@ -1,11 +1,14 @@
 "use client";
 
+import { UserData } from "@/components/user/UserData";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function ProfilePage() {
     const { user } = useAuth();
 
     return (
-        <p>profile page</p>
+        <div>
+            <UserData user={user}/>
+        </div>
     );
 }
