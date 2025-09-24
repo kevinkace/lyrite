@@ -9,21 +9,14 @@ import { TrashIcon } from "@radix-ui/react-icons";
 import { useSongs } from "@/contexts/SongsContext";
 
 import css from "./SongsTable.module.css";
+import Pagination from "../pagination/Pagination";
 
-const MAX_LEN = 100;
+const MAX_LEN = 200;
 
 export default function SongsTable() {
     const { songs, loading, error, page, search, hasMore, deleteSong, updateSong } = useSongs();
     const router = useRouter();
     const searchParams = useSearchParams();
-
-    const goToPage = (newPage: number) => {
-        const params = new URLSearchParams(searchParams.toString());
-
-        params.set("page", String(newPage));
-
-        router.push(`?${params.toString()}`);
-    };
 
     const setSearch = (value: string) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -89,12 +82,12 @@ export default function SongsTable() {
                 </Table.Body>
             </Table.Root>
 
-            {page && (<div className={css.pagination}>
-                {page > 1 && (
-                    <button onClick={() => goToPage(page - 1)}>Previous</button>
-                )}
-                {hasMore && <button onClick={() => goToPage(page + 1)}>Next</button>}
-            </div>)}
+            {page && (
+                <Pagination
+                    currentPage={page}
+                    hasMore={hasMore}
+                />
+            )}
         </div>
     );
 }

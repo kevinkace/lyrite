@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Button } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 
 import { FilePlusIcon } from "@radix-ui/react-icons";
 
@@ -25,16 +25,20 @@ export default function Header() {
                 </Link>
             </h1>
 
-            <Button asChild={true}  variant="surface">
-                <Link href="/songs/new">
-                    <FilePlusIcon />
-                    lyric sheet
-                </Link>
-            </Button>
-
             {/* <ErrorButton /> */}
 
-            {user && (<UserMenu />)}
+            {user && (
+                <Flex gap="3">
+                    <Button asChild={true}  variant="surface" size="2" radius="full">
+                        <Link href="/songs/new">
+                            <FilePlusIcon />
+                            new sheet
+                        </Link>
+                    </Button>
+
+                    <UserMenu />
+                </Flex>
+            )}
 
             {!user && !loading && (
                 <p>

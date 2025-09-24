@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { useAuth }       from "@/contexts/AuthContext";
 
@@ -24,6 +25,12 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
             <h1>Profile</h1>
 
             <h2>{user?.user_metadata?.preferred_username}</h2>
+
+            <nav>
+                <Link href="/profile">Overview</Link>
+                <Link href="/profile/songs">Songs</Link>
+                <Link href="/profile/settings">Settings</Link>
+            </nav>
             {children}
         </div>
     );

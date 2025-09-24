@@ -25,7 +25,8 @@ export default function HomePage() {
                     <em className={css.tagOrganize}>Organize</em>,{" "}
                     <em className={css.tagColor}>color</em>, and{" "}
                     <em className={css.tagStyle}>style</em>{" "}
-                    your lyrics for a flawless performance
+                    your lyrics <br />
+                    for a flawless performance
                 </h2>
 
                 {user && (

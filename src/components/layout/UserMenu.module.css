@@ -30,8 +30,8 @@
     padding: 1em;
 
     border-radius: 4px;
-    background: #fff2;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: #121212;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .username {
