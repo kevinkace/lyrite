@@ -3,6 +3,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-grow: 1;
+}
+
+.usp {
+    text-align: center;
+    font-size: 2.4rem;
+    line-height: 2;
 }
 
 .tagOrganize {
@@ -14,6 +21,7 @@
     outline-style: dashed;
     border-radius: 0.1em;
 }
+
 .tagColor {
     background: linear-gradient(90deg, #ff7e5f, #b54ffeff);
     -webkit-background-clip: text;
@@ -21,6 +29,7 @@
     background-clip: text;
     text-fill-color: transparent;
     margin-left: 0.2em;
+    font-style: normal;
 }
 
 .tagStyle {
@@ -29,4 +38,8 @@
     text-underline-offset: 4px;
     font-weight: normal;
     letter-spacing: 0.08em;
+}
+
+.ctaButtons {
+    margin-bottom: 3rem;
 }

@@ -1,27 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 
 import { SongsProvider } from "@/contexts/SongsContext";
-import { useAuth } from "@/contexts/AuthContext";
 
 import FeaturedSongs from "@/components/songs/FeaturedSongs";
 
 import css from "./page.module.css"
+import { FilePlusIcon } from "@radix-ui/react-icons";
 
 const featuredIds = [
-    "8cb14731-d89e-4159-81f4-491187ba2b52",
-    "13f08d51-9295-431c-8e35-3ddc6459fa2f"
+    "f4f5302c-57a5-49ea-aeaa-70c9c84bd656",
+    "13f08d51-9295-431c-8e35-3ddc6459fa2f",
+    "df7ebbdf-eb10-4a11-b87b-504a7f5c91a1"
 ];
 
 export default function HomePage() {
-    const { user, loading } = useAuth();
-
     return (
         <SongsProvider ids={featuredIds} pageSize={10}>
             <div className={css.main}>
-                <h2>
+                <h2 className={css.usp}>
                     <em className={css.tagOrganize}>Organize</em>,{" "}
                     <em className={css.tagColor}>color</em>, and{" "}
                     <em className={css.tagStyle}>style</em>{" "}
@@ -29,15 +28,20 @@ export default function HomePage() {
                     for a flawless performance
                 </h2>
 
-                {user && (
 
+                <Flex gap="6" align="center" justify="center" className={css.ctaButtons}>
                     <Button asChild={true} size="4" variant="surface">
                         <Link href="/songs/new">
+                            <FilePlusIcon width="1em" height="auto" />
                             Create lyric sheet
                         </Link>
                     </Button>
-                )}
-                {!user && !loading && <Link href="/login">Login</Link>}
+
+
+                    <Button asChild={true} size="4" variant="classic">
+                        <Link href="/register">Create a free account</Link>
+                    </Button>
+                </Flex>
 
                 <FeaturedSongs />
             </div>

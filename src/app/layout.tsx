@@ -35,11 +35,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                         <AuthProvider>
                             {loading && <Loading />}
 
-                            <header className={css.header}>
-                                <Header />
-                            </header>
+                            <div className={css.layout}>
+                                <header className={css.header}>
+                                    <Header />
+                                </header>
 
-                            <main className={css.main}>{children}</main>
+                                <main className={css.main}>{children}</main>
+                            </div>
 
                             <ErrorModal />
                         </AuthProvider>

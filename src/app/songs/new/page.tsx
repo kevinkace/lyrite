@@ -45,7 +45,7 @@ export default function NewSongPage() {
                 }
             });
 
-            router.push(`/songs/${user.id}/${newSong.slug}`);
+            router.push(`/songs/${newSong.id}`);
         } catch (err: unknown) {
             setError(getErrorMessage(err));
         }

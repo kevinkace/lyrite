@@ -1,0 +1,47 @@
+.cards {
+    width: 100%;
+}
+
+.cardLink {
+    width: 33.3%;
+}
+.card {
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 12em;
+}
+
+.title {
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.artist {
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.lyrics {
+    position: absolute;
+    top: -1em;
+    right: -1em;
+    bottom: -1em;
+    left: -1em;
+    font-size: 2em;
+    line-height: 1;
+    font-weight: bold;
+
+    z-index: 0;
+
+    background: linear-gradient(to bottom, #fff3, #ffffff06 4em);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}

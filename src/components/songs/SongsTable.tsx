@@ -54,7 +54,7 @@ export default function SongsTable() {
                 </Table.Header>
                 <Table.Body>
                     {songs.map((song) => (
-                        <Table.Row key={song.id}>
+                        <Table.Row key={song.id} data-key={song.id}>
                             <Table.Cell>
                                 <Link href={`/songs/${song.id}`} className={css.songLink}>
                                     {song.title}

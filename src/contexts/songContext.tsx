@@ -17,11 +17,7 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
     const { setError } = useError();
     const { user } = useAuth();
 
-    const handleSave = async ({
-        song,
-    }: {
-        song: NewSong;
-    }) => {
+    const handleSave = async ({ song }: { song: NewSong; }) => {
         if (!user?.id) {
             throw new Error("No user provided");
         }
