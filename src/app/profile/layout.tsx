@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { useAuth } from "@/contexts/AuthContext";
@@ -25,6 +25,9 @@ export default function ProfileLayout({
 }) {
     const { user, loading: authLoading } = useAuth();
     const router = useRouter();
+    const currentPath = usePathname();
+
+    const pageTitle = userLinks.find(link => link.href === currentPath)?.label || "Profile";
 
     if (!user && !authLoading) {
         router.replace("/login");
@@ -63,7 +66,7 @@ export default function ProfileLayout({
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={css.navLink}
+                            className={link.href === currentPath ? css.navLinkActive : css.navLink}
                         >
                             {link.label}
                         </Link>
@@ -76,6 +79,7 @@ export default function ProfileLayout({
 
             {/* Main content */}
             <Box className={css.content}>
+                <h2 className={css.pageTitle}>{pageTitle}</h2>
                 {children}
             </Box>
         </Flex>

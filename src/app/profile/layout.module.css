@@ -27,7 +27,8 @@
   gap: 0.5rem;
 }
 
-.navLink {
+.navLink,
+.navLinkActive {
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
   font-size: 0.875rem;
@@ -35,9 +36,13 @@
   color: inherit;
   text-decoration: none;
   transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: var(--gray-3);
+  }
 }
 
-.navLink:hover {
+.navLinkActive {
   background-color: var(--gray-3);
 }
 
@@ -54,4 +59,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
+}
+.pageTitle {
+  margin-top: 0;
 }

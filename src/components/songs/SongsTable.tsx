@@ -11,6 +11,7 @@ import { useSongs } from "@/contexts/SongsContext";
 import Pagination from "@/components/pagination/Pagination";
 
 import css from "./SongsTable.module.css";
+import DeleteSongDialog from "../deleteSongDialog/DeleteSongDialog";
 
 const MAX_LYRIC_LEN = 200;
 
@@ -41,7 +42,7 @@ export default function SongsTable() {
             {loading && <p>Loading...</p>}
             {error && <p className={css.error}>{error}</p>}
 
-            <Table.Root>
+            <Table.Root className={css.table}>
                 <Table.Header>
                     <Table.Row>
                         <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
@@ -74,9 +75,11 @@ export default function SongsTable() {
                             </Table.Cell>
 
                             <Table.Cell>
-                                <IconButton color="crimson" onClick={() => deleteSong(song.id)}>
-                                    <TrashIcon />
-                                </IconButton>
+                                <DeleteSongDialog
+                                    songId={song.id}
+                                    title={song.title}
+                                    onDelete={deleteSong}
+                                />
                             </Table.Cell>
                         </Table.Row>
                     ))}
