@@ -21,13 +21,18 @@ export default function HomePage() {
     return (
         <SongsProvider ids={featuredIds} pageSize={10}>
             <div className={css.main}>
-                <h2>Organize, color, and style your lyrics for a flawless performance</h2>
+                <h2>
+                    <em className={css.tagOrganize}>Organize</em>,{" "}
+                    <em className={css.tagColor}>color</em>, and{" "}
+                    <em className={css.tagStyle}>style</em>{" "}
+                    your lyrics for a flawless performance
+                </h2>
 
                 {user && (
 
-                    <Button asChild={true}>
+                    <Button asChild={true} size="4" variant="surface">
                         <Link href="/songs/new">
-                                Create lyric sheet
+                            Create lyric sheet
                         </Link>
                     </Button>
                 )}

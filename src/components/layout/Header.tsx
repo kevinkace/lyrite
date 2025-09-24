@@ -8,11 +8,9 @@ import { useAuth } from "@/contexts/AuthContext";
 
 import UserMenu from "./UserMenu";
 
-import logo from "@/components/icons/lyrite.svg";
 
 import css from "./Header.module.css";
-import ErrorButton from "../error/ErrorButton";
-import Image from "next/image";
+import { LogoIcon } from "../icons/LogoIcon";
 
 export default function Header() {
     const { user, loading } = useAuth();
@@ -22,12 +20,12 @@ export default function Header() {
             <h1 className={css.logo}>
                 <Link href="/">
                     {/* lyrite logo svg */}
-                    <Image src={logo} alt="lyrite logo" width={32} height={32} className={css.logo} />
+                    <LogoIcon />
                     lyrite
                 </Link>
             </h1>
 
-            <Button asChild={true}>
+            <Button asChild={true}  variant="surface">
                 <Link href="/songs/new">
                     <FilePlusIcon />
                     lyric sheet

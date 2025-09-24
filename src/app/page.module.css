@@ -4,3 +4,29 @@
     align-items: center;
     justify-content: center;
 }
+
+.tagOrganize {
+    font-family: monospace;
+    font-style: normal;
+    text-transform: uppercase;
+    outline: 0.2em solid #fff5;
+    outline-offset: 0.3em;
+    outline-style: dashed;
+    border-radius: 0.1em;
+}
+.tagColor {
+    background: linear-gradient(90deg, #ff7e5f, #b54ffeff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    margin-left: 0.2em;
+}
+
+.tagStyle {
+    font-style: italic;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: normal;
+    letter-spacing: 0.08em;
+}
