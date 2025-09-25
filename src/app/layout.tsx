@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Theme, ThemePanel } from "@radix-ui/themes";
 
 
@@ -17,6 +18,7 @@ import css from "./layout.module.css"
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     const [ loading, setLoading ] = useState(true);
+    const pathname = usePathname().replaceAll("/", "-");
 
     useEffect(() => {
         if (window.location.hash.includes("access_token")) {
@@ -28,14 +30,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
     return (
         <html>
-            <body className={css.body}>
-                <Theme appearance="dark" hasBackground={false}>
+            <body className={css.body} data-page={pathname}>
+                <Theme appearance="dark" accentColor="cyan">
                     {/* <ThemePanel /> */}
                     <ErrorProvider>
                         <AuthProvider>
                             {loading && <Loading />}
 
-                            <div className={css.layout}>
+                            <div className={css.layout} >
                                 <header className={css.header}>
                                     <Header />
                                 </header>

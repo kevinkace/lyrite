@@ -4,12 +4,15 @@
     align-items: center;
     justify-content: center;
     flex-grow: 1;
+    gap: 3em;
+    margin-bottom: 4em;
 }
 
 .usp {
+    margin: 0;
     text-align: center;
     font-size: 2.4rem;
-    line-height: 2;
+    line-height: 1.8;
 }
 
 .tagOrganize {
@@ -17,7 +20,7 @@
     font-style: normal;
     text-transform: uppercase;
     outline: 0.2em solid #fff5;
-    outline-offset: 0.3em;
+    outline-offset: 0.2em;
     outline-style: dashed;
     border-radius: 0.1em;
 }
@@ -29,6 +32,11 @@
     background-clip: text;
     text-fill-color: transparent;
     margin-left: 0.2em;
+
+    /* otherwise text-clip gets cut off from "," kerning */
+    margin-right: -0.1em;
+    padding-right: 0.1em;
+
     font-style: normal;
 }
 
@@ -41,5 +49,5 @@
 }
 
 .ctaButtons {
-    margin-bottom: 3rem;
+    margin-bottom: 1em;
 }

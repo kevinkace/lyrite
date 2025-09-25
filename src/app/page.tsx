@@ -30,7 +30,7 @@ export default function HomePage() {
 
 
                 <Flex gap="6" align="center" justify="center" className={css.ctaButtons}>
-                    <Button asChild={true} size="4" variant="surface">
+                    <Button asChild={true} size="4" variant="surface" color="violet">
                         <Link href="/songs/new">
                             <FilePlusIcon width="1em" height="auto" />
                             Create lyric sheet
@@ -38,7 +38,7 @@ export default function HomePage() {
                     </Button>
 
 
-                    <Button asChild={true} size="4" variant="classic">
+                    <Button asChild={true} size="4" variant="soft">
                         <Link href="/register">Create a free account</Link>
                     </Button>
                 </Flex>

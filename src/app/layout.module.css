@@ -10,6 +10,12 @@
     flex-direction: column;
     height: 100vh;
     flex: 1;
+
+    [data-page="-"] & {
+        background:
+            linear-gradient(135deg, #1a1a1aee 25%, #121212ff 100%),
+            transparent url(/layout/mesh-50.png) no-repeat 100% 100%/cover;
+    }
 }
 
 .header {

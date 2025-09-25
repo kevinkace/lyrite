@@ -29,7 +29,7 @@ export default function Header() {
 
             {user && (
                 <Flex gap="3">
-                    <Button asChild={true}  variant="surface" size="2" radius="full">
+                    <Button asChild variant="surface" size="2" radius="full" color="violet">
                         <Link href="/songs/new">
                             <FilePlusIcon />
                             new sheet

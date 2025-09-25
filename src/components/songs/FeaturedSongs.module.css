@@ -2,10 +2,8 @@
     width: 100%;
 }
 
-.cardLink {
-    width: 33.3%;
-}
 .card {
+    width: 33.3%;
     position: relative;
     overflow: hidden;
 
@@ -13,23 +11,26 @@
     flex-direction: column;
     justify-content: flex-end;
     height: 12em;
+
 }
 
 .title {
     margin: 0;
     position: relative;
     z-index: 1;
+    font-size: 1.4rem;
 }
 
 .artist {
     margin: 0;
     position: relative;
     z-index: 1;
+    font-size: 1.2rem;
 }
 
 .lyrics {
     position: absolute;
-    top: -1em;
+    top: -1.4em;
     right: -1em;
     bottom: -1em;
     left: -1em;
