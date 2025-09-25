@@ -16,21 +16,29 @@ export default function Header() {
 
     return (
         <header className={css.header}>
-            <h1 className={css.logo}>
-                <Link href="/" data-gid="header-home-link" className={css.logoLink}>
-                    <LogoIcon />
-                    lyrite
-                </Link>
-            </h1>
+            <Flex align="center" gap="6">
+                <h1 className={css.logo}>
+                    <Link href="/" data-gid="header-home-link" className={css.logoLink}>
+                        <LogoIcon />
+                        lyrite
+                    </Link>
+                </h1>
 
-            {/* <ErrorButton /> */}
+                {user && (
+                    <nav className={css.userNav}>
+                        <Link href="/profile/songs" className={css.userNavLink}>
+                            my lyric sheets
+                        </Link>
+                    </nav>
+                )}
+            </Flex>
 
             {user && (
                 <Flex gap="3">
                     <Button asChild variant="surface" size="2" radius="full" color="violet">
                         <Link href="/songs/new">
                             <FilePlusIcon />
-                            new sheet
+                            lyric sheet
                         </Link>
                     </Button>
 

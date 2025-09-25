@@ -1,5 +1,5 @@
 export const userLinks = [
-    { href: "/profile",          label: "Profile" },
-    { href: "/profile/songs",    label: "Songs" },
-    { href: "/profile/settings", label: "Settings" }
+    { href: "/profile",          label: "profile" },
+    { href: "/profile/songs",    label: "lyric sheets" },
+    { href: "/profile/settings", label: "settings" }
 ];
