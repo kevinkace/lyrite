@@ -4,9 +4,6 @@
     position: relative;
 }
 
-.avatarButton {
-}
-
 .dropdown {
     position: absolute;
     top: calc(var(--image-size) + 0.5em);
@@ -15,24 +12,28 @@
     z-index: 1;
 }
 
-.card {
-
-    padding: 1em;
-
-    border-radius: 4px;
-    background: #121212;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+.userCard {
+    display: grid !important;
+    grid-template-columns: var(--image-size) auto;
+    gap: 0.8em;
+    align-items: center;
+    overflow: hidden;
 }
 
+
 .username {
-    font-size: 14px;
-    font-weight: 600;
     margin: 0;
+
+    font-size: 0.9em;
+    font-weight: 600;
 }
 
 .email {
-    font-size: 12px;
     margin: 0;
+
+    font-size: 0.8em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .links {

@@ -49,14 +49,12 @@ export default function UserMenu() {
                         transition={{ duration: 0.2 }}
                     >
                         <Card>
-                            <Card className="dropdown-header">
-                                <Flex align="center" gap="2">
-                                    <Avatar user={user} />
-                                    <div>
-                                        <p className={css.username}>{user.user_metadata.preferred_username}</p>
-                                        <p className={css.email}>{user.email}</p>
-                                    </div>
-                                </Flex>
+                            <Card className={css.userCard}>
+                                <Avatar user={user} />
+                                <div className={css.cardText}>
+                                    <p className={css.username}>{user.user_metadata.preferred_username}</p>
+                                    <p className={css.email}>{user.email}</p>
+                                </div>
                             </Card>
 
 
