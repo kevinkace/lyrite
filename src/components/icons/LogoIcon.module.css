@@ -1,0 +1,35 @@
+.svgPath {
+    fill: none;
+    stroke: white;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    stroke-width: 27;
+    stroke-miterlimit: 10;
+
+
+    [data-gid="header-home-link"]:hover & {
+        stroke: url(#pathGradient);
+        /* Approximate path length, can be made more accurate with JS */
+        stroke-dasharray: 600;
+
+        /* Start animation with an offset equal to the dash length */
+        stroke-dashoffset: 600;
+        animation: draw-loop 1s infinite ease-in-out;
+    }
+
+}
+
+@keyframes draw-loop {
+    0% {
+    /* Starts off-screen */
+    stroke-dashoffset: 600;
+    }
+    50% {
+    /* Fully drawn at the halfway point */
+    stroke-dashoffset: 0;
+    }
+    100% {
+    /* Returns to off-screen, ready to loop smoothly */
+    stroke-dashoffset: -600;
+    }
+}

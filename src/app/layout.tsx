@@ -38,9 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                             {loading && <Loading />}
 
                             <div className={css.layout} >
-                                <header className={css.header}>
-                                    <Header />
-                                </header>
+                                <Header />
 
                                 <main className={css.main}>{children}</main>
                             </div>

@@ -1,25 +1,23 @@
 import Link from "next/link";
 
 import { Button, Flex } from "@radix-ui/themes";
-
 import { FilePlusIcon } from "@radix-ui/react-icons";
 
 import { useAuth } from "@/contexts/AuthContext";
 
+import { LogoIcon } from "@/components/icons/LogoIcon";
+
 import UserMenu from "./UserMenu";
 
-
 import css from "./Header.module.css";
-import { LogoIcon } from "../icons/LogoIcon";
 
 export default function Header() {
     const { user, loading } = useAuth();
 
     return (
-        <>
+        <header className={css.header}>
             <h1 className={css.logo}>
-                <Link href="/">
-                    {/* lyrite logo svg */}
+                <Link href="/" data-gid="header-home-link" className={css.logoLink}>
                     <LogoIcon />
                     lyrite
                 </Link>
@@ -46,6 +44,6 @@ export default function Header() {
                 </p>
             )}
 
-        </>
+        </header>
     );
 }
