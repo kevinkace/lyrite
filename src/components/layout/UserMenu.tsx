@@ -2,13 +2,22 @@
 
 import { useState } from "react";
 import Link  from "next/link";
+import { Button, Card, Flex, Separator } from "@radix-ui/themes";
 import { motion, AnimatePresence } from "framer-motion";
+
+import { FileIcon, PersonIcon, GearIcon } from "@radix-ui/react-icons";
 
 import { useAuth } from "@/contexts/AuthContext";
 
 import css from "./UserMenu.module.css"
-import { Button } from "@radix-ui/themes";
 import { userLinks } from "@/data/consts";
+import { Avatar } from "../user/Avatar";
+
+const iconMap: Record<string, React.ReactNode> = {
+    profile: <PersonIcon />,
+    file: <FileIcon />,
+    settings: <GearIcon />
+};
 
 export default function UserMenu() {
     const { user, signOut } = useAuth();
@@ -27,14 +36,7 @@ export default function UserMenu() {
                 className={css.avatarButton}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    src={user?.user_metadata?.avatar_url || "/default-avatar.png"}
-                    alt={`${user?.user_metadata?.preferred_username || "User"} avatar`}
-                    className={css.avatar}
-                    width={40}
-                    height={40}
-                />
+                <Avatar user={user} />
             </div>
 
             <AnimatePresence>
@@ -46,31 +48,44 @@ export default function UserMenu() {
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
                     >
-                        <div className="dropdown-header">
-                            <p className={css.username}>{user.user_metadata.preferred_username}</p>
-                            <p className={css.email}>{user.email}</p>
-                        </div>
+                        <Card>
+                            <Card className="dropdown-header">
+                                <Flex align="center" gap="2">
+                                    <Avatar user={user} />
+                                    <div>
+                                        <p className={css.username}>{user.user_metadata.preferred_username}</p>
+                                        <p className={css.email}>{user.email}</p>
+                                    </div>
+                                </Flex>
+                            </Card>
 
-                        <nav className={css.links}>
-                            {userLinks.map(link => (
-                                <Link
-                                    key={link.href}
-                                    href={link.href}
-                                    className={css.link}
+
+                            <Flex gap="4" direction="column">
+                                <nav className={css.links}>
+                                    {userLinks.map(link =>
+                                            <Link
+                                                key={link.href}
+                                                href={link.href}
+                                                className={css.link}
+                                            >
+                                                {iconMap[link.icon]}
+                                                {link.label}
+                                            </Link>
+                                        )}
+                                </nav>
+
+                                <Separator orientation="horizontal" size="4"/>
+
+                                <Button
+                                    onClick={() => signOut()}
+                                    color="crimson"
+                                    variant="soft"
                                 >
-                                    {link.label}
-                                </Link>
-                            ))}
+                                    Sign out
+                                </Button>
+                            </Flex>
 
-                            <Button
-                                onClick={() => signOut()}
-                                color="crimson"
-                                variant="soft"
-                            >
-                                Sign out
-                            </Button>
-                        </nav>
-
+                        </Card>
 
                         {/* <pre className="user-name">{JSON.stringify(user, null, 2)}</pre> */}
                     </motion.div>

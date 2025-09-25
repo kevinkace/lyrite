@@ -5,7 +5,7 @@ import { FilePlusIcon } from "@radix-ui/react-icons";
 
 import { useAuth } from "@/contexts/AuthContext";
 
-import { LogoIcon } from "@/components/icons/LogoIcon";
+import { LogoIcon } from "@/components/icons/LogoIcon.svg";
 
 import UserMenu from "./UserMenu";
 
