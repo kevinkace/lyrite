@@ -11,7 +11,6 @@
     flex-direction: column;
     justify-content: flex-end;
     height: 12em;
-
 }
 
 .title {
@@ -31,7 +30,7 @@
 .lyrics {
     position: absolute;
     top: -1.4em;
-    right: -1em;
+    right: -2em;
     bottom: -1em;
     left: -1em;
     font-size: 2em;

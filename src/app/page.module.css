@@ -5,7 +5,10 @@
     justify-content: center;
     flex-grow: 1;
     gap: 3em;
-    margin-bottom: 4em;
+    margin: 0 auto 4em;
+
+    width: 100%;
+    max-width: 1400px;
 }
 
 .usp {
