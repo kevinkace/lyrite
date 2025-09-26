@@ -1,7 +1,17 @@
 .userMenu {
     --image-size: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     position: relative;
+}
+
+.avatarButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .dropdown {

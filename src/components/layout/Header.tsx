@@ -34,7 +34,7 @@ export default function Header() {
             </Flex>
 
             {user && (
-                <Flex gap="3">
+                <Flex gap="3" align="center">
                     <Button asChild variant="surface" size="2" radius="full" color="violet">
                         <Link href="/songs/new">
                             <FilePlusIcon />

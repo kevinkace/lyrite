@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html>
             <body className={css.body} data-page={pathname}>
-                <Theme appearance="dark" accentColor="cyan">
+                <Theme appearance="dark" accentColor="cyan" hasBackground={false}>
                     {/* <ThemePanel /> */}
                     <ErrorProvider>
                         <AuthProvider>
