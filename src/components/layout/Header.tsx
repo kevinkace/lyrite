@@ -1,19 +1,14 @@
 import Link from "next/link";
 
-import { Button, Flex } from "@radix-ui/themes";
-import { FilePlusIcon } from "@radix-ui/react-icons";
-
-import { useAuth } from "@/contexts/AuthContext";
+import { Flex } from "@radix-ui/themes";
 
 import { LogoIcon } from "@/components/icons/LogoIcon.svg";
 
-import UserMenu from "./UserMenu";
-
 import css from "./Header.module.css";
+import { UserNav } from "./UserNav";
+import { UserSection } from "./UserSection";
 
 export default function Header() {
-    const { user, loading } = useAuth();
-
     return (
         <header className={css.header}>
             <Flex align="center" gap="6">
@@ -24,33 +19,14 @@ export default function Header() {
                     </Link>
                 </h1>
 
-                {user && (
-                    <nav className={css.userNav}>
-                        <Link href="/profile/songs" className={css.userNavLink}>
-                            my lyric sheets
-                        </Link>
-                    </nav>
-                )}
+                <UserNav />
             </Flex>
 
-            {user && (
-                <Flex gap="3" align="center">
-                    <Button asChild variant="surface" size="2" radius="full" color="violet">
-                        <Link href="/songs/new">
-                            <FilePlusIcon />
-                            lyric sheet
-                        </Link>
-                    </Button>
+            <Flex align="center" gap="6">
+                song title
+            </Flex>
 
-                    <UserMenu />
-                </Flex>
-            )}
-
-            {!user && !loading && (
-                <p>
-                    <Link href="/login">Login</Link> | <Link href="/register">Register</Link>
-                </p>
-            )}
+            <UserSection />
 
         </header>
     );

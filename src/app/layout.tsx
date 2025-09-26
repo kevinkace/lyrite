@@ -1,49 +1,38 @@
-"use client";
-
-import { ReactNode, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { Theme, ThemePanel } from "@radix-ui/themes";
-
+// app/layout.tsx  (server component, no "use client")
+import type { Metadata } from "next";
+import { Theme } from "@radix-ui/themes";
 
 import { ErrorProvider } from "@/contexts/ErrorContext";
-import { AuthProvider }  from "@/contexts/AuthContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 import ErrorModal from "@/components/error/errorModal";
-import Header     from "@/components/layout/Header";
-import Loading    from "@/components/Loading";
+import Header from "@/components/layout/Header";
+import LoadingGate from "@/components/layout/LoadingGate"; // move your loading logic here
 
 import "./globals.css";
+import css from "./layout.module.css";
 
-import css from "./layout.module.css"
+export const metadata: Metadata = {
+    title: "lyrite",
+    description: "Create and share lyric sheets with ease.",
+};
 
-export default function RootLayout({ children }: { children: ReactNode }) {
-    const [ loading, setLoading ] = useState(true);
-    const pathname = usePathname().replaceAll("/", "-");
-
-    useEffect(() => {
-        if (window.location.hash.includes("access_token")) {
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-
-        setLoading(false);
-    }, []);
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html>
-            <body className={css.body} data-page={pathname}>
+        <html lang="en">
+            <body className={css.body}>
                 <Theme appearance="dark" accentColor="cyan" hasBackground={false}>
-                    {/* <ThemePanel /> */}
                     <ErrorProvider>
                         <AuthProvider>
-                            {loading && <Loading />}
-
-                            <div className={css.layout} >
-                                <Header />
-
-                                <main className={css.main}>{children}</main>
-                            </div>
-
-                            <ErrorModal />
+                            <LoadingGate>
+                                <div className={css.layout}>
+                                    <Header />
+                                    <main className={css.main}>
+                                        {children}
+                                    </main>
+                                </div>
+                                <ErrorModal />
+                            </LoadingGate>
                         </AuthProvider>
                     </ErrorProvider>
                 </Theme>

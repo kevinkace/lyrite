@@ -1,5 +1,7 @@
 import { useSong } from "@/contexts/SongContext";
 
+import css from "./page.module.css";
+
 export default function EditSong() {
   const { song, loading } = useSong();
 
@@ -8,9 +10,7 @@ export default function EditSong() {
 
   return (
     <>
-      <h1>{song.title}</h1>
-      <h2>{song.artist}</h2>
-      <pre>{song.lyrics}</pre>
+      <pre className={css.lyrics}>{song.lyrics}</pre>
     </>
   );
 }
