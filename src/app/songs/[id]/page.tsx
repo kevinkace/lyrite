@@ -1,19 +1,10 @@
-"use client";
-
 import EditSong from "@/components/song/EditSong";
-import { SongProvider } from "@/contexts/SongContext";
-import { use } from "react";
 
-export default function SongPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = use(params);
-
+export default function SongPage({ params }: { params: Promise<{ id: string }> }) {
   return (
-    <SongProvider id={id}>
+    <>
+
       <EditSong />
-    </SongProvider>
+    </>
   );
 }

@@ -1,4 +1,3 @@
-// app/layout.tsx  (server component, no "use client")
 import type { Metadata } from "next";
 import { Theme } from "@radix-ui/themes";
 

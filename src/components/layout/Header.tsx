@@ -2,11 +2,12 @@ import Link from "next/link";
 
 import { Flex } from "@radix-ui/themes";
 
+import { UserNav } from "@/components/layout/UserNav";
+import { UserSection } from "@/components/layout/UserSection";
 import { LogoIcon } from "@/components/icons/LogoIcon.svg";
+import { Title } from "@/components/layout/Title";
 
 import css from "./Header.module.css";
-import { UserNav } from "./UserNav";
-import { UserSection } from "./UserSection";
 
 export default function Header() {
     return (
@@ -22,9 +23,7 @@ export default function Header() {
                 <UserNav />
             </Flex>
 
-            <Flex align="center" gap="6">
-                song title
-            </Flex>
+            <Title />
 
             <UserSection />
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { useSong } from "@/contexts/SongContext";
 
 import css from "./page.module.css";
