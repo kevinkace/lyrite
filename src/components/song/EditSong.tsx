@@ -19,7 +19,7 @@ export default function EditSong() {
             return;
         }
 
-        setHeaderContent(<>{song.title} by {song.artist}</>);
+        setHeaderContent(<><h1>{song.title}</h1><h2>{song.artist}</h2></>);
 
         // Clean up the header content when the component unmounts
         return () => setHeaderContent(null);

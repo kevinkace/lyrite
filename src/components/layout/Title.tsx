@@ -5,6 +5,7 @@ import { Flex } from "@radix-ui/themes";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLayout } from "@/contexts/LayoutContext";
 
+import css from "./Title.module.css";
 
 export const Title = () => {
     const { user } = useAuth();
@@ -14,7 +15,7 @@ export const Title = () => {
         return null;
     }
 
-    return (<Flex align="center" direction="column">
+    return (<Flex align="center" direction="column" className={css.title}>
         {headerContent}
     </Flex>)
 };
