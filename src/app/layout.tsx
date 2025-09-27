@@ -3,14 +3,14 @@ import { Theme } from "@radix-ui/themes";
 
 import { ErrorProvider } from "@/contexts/ErrorContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { LayoutProvider } from "@/contexts/LayoutContext";
 
 import ErrorModal from "@/components/error/errorModal";
 import Header from "@/components/layout/Header";
-import LoadingGate from "@/components/layout/LoadingGate"; // move your loading logic here
+import LoadingGate from "@/components/layout/LoadingGate";
 
 import "./globals.css";
 import css from "./layout.module.css";
-import { LayoutProvider } from "@/contexts/LayoutContext";
 
 export const metadata: Metadata = {
     title: "lyrite",
@@ -27,12 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                             <LoadingGate>
 
                                 <LayoutProvider>
-                                    <div className={css.layout}>
-                                        <Header />
-                                        <main className={css.main}>
-                                            {children}
-                                        </main>
-                                    </div>
+                                    {children}
                                 </LayoutProvider>
 
                                 <ErrorModal />

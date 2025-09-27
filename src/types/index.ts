@@ -81,7 +81,7 @@ export type SongContextType = {
 
 export type SongProviderProps = {
     children: React.ReactNode;
-    id: string;
+    id?: string;
     userId?: string;
     slug?: string;
 };

@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@radix-ui/themes";
+
+import { useAuth } from "@/contexts/AuthContext";
 
 import css from "./login.module.css"
-import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@radix-ui/themes";
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false);
