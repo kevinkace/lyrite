@@ -1,0 +1,11 @@
+.title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: normal;
+}
+.artist {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: normal;
+    opacity: 0.7;
+}

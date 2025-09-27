@@ -1,11 +1,20 @@
 "use client";
 
-import { useAuth } from "@/contexts/AuthContext";
 import { Flex } from "@radix-ui/themes";
+
+import { useAuth } from "@/contexts/AuthContext";
+import { useLayout } from "@/contexts/LayoutContext";
+
 
 export const Title = () => {
     const { user } = useAuth();
-    return <Flex align="center" gap="6">
-        song title
-    </Flex>;
+    const { headerContent } = useLayout();
+
+    if (!headerContent) {
+        return null;
+    }
+
+    return (<Flex align="center" direction="column">
+        {headerContent}
+    </Flex>)
 };

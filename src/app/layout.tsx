@@ -10,6 +10,7 @@ import LoadingGate from "@/components/layout/LoadingGate"; // move your loading 
 
 import "./globals.css";
 import css from "./layout.module.css";
+import { LayoutProvider } from "@/contexts/LayoutContext";
 
 export const metadata: Metadata = {
     title: "lyrite",
@@ -24,13 +25,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <ErrorProvider>
                         <AuthProvider>
                             <LoadingGate>
-                                <div className={css.layout}>
-                                    <Header />
-                                    <main className={css.main}>
-                                        {children}
-                                    </main>
-                                </div>
+
+                                <LayoutProvider>
+                                    <div className={css.layout}>
+                                        <Header />
+                                        <main className={css.main}>
+                                            {children}
+                                        </main>
+                                    </div>
+                                </LayoutProvider>
+
                                 <ErrorModal />
+
                             </LoadingGate>
                         </AuthProvider>
                     </ErrorProvider>

@@ -17,26 +17,33 @@ export type UserContextType = {
     signInWithGithub: () => Promise<{ error: AuthError | null }>;
 };
 
+export type LyricParsed = {
+    id: number;
+    text: string;
+    style : number
+}
+
 export type Song = {
     id: string;
-    slug?: string;
+    slug: string;
     title: string;
     artist: string;
     lyrics: string;
+    lyrics_parsed: LyricParsed[];
     is_public: boolean;
-    user_id?: string;
-    created_at?: string;
-    updated_at?: string;
+    user_id: string;
+    created_at: string;
+    updated_at: string;
 };
 
 export type NewSong = {
     title: string;
-    artist: string | null;
-    lyrics: string | null;
+    artist: string;
+    lyrics: string;
     is_public: boolean;
-    user_id?: string;
-    slug?: string;
-    id?: string;
+    // user_id?: string;
+    // slug?: string;
+    // id?: string;
 };
 
 export type Songs = Song[];

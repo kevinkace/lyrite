@@ -1,4 +1,5 @@
 import { SongProvider } from "@/contexts/SongContext";
+import { use } from "react";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
     return {
@@ -8,8 +9,10 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
 
 export default function SongPage({ children, params }: { children: React.ReactNode, params: { id: string } }) {
+  const { id } = use(params);
+
   return (
-    <SongProvider id={params.id}>
+    <SongProvider id={id}>
         {children}
     </SongProvider>
   );

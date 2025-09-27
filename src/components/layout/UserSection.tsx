@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 
-import { FilePlusIcon } from "@radix-ui/react-icons";
+import { FilePlusIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
 
-import { Flex, Button } from "@radix-ui/themes";
+import { Flex, Button, ChevronDownIcon } from "@radix-ui/themes";
 
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -23,6 +23,12 @@ export const UserSection = () => {
                     <FilePlusIcon />
                     lyric sheet
                 </Link>
+            </Button>
+
+            <Button variant="surface" size="2" radius="full">
+                <MixerHorizontalIcon />
+                tools
+                <ChevronDownIcon />
             </Button>
 
             <UserMenu />

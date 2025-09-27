@@ -1,15 +1,24 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-
 import { supabase } from "@/lib/supabaseClient";
 
 import { useError } from "./ErrorContext";
 import { useAuth } from "./AuthContext";
 
-import { NewSong, Song, SongContextType, SongProviderProps } from "@/types";
+import { NewSong, Song, SongContextType, SongProviderProps, LyricParsed } from "@/types";
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
+
+function parseLyrics(raw: string) : LyricParsed[] {
+    return raw
+        .split(/\n{2,}/)
+        .map((section, i) => ({
+            id: i,
+            text: section.trim(),
+            style: 0
+        }));
+}
 
 export function SongProvider({ children, id, userId, slug }: SongProviderProps) {
     const [song, setSong] = useState<Song | null>(null);
@@ -17,21 +26,25 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
     const { setError } = useError();
     const { user } = useAuth();
 
-    const handleSave = async ({ song }: { song: NewSong; }) => {
+    const handleSave = async ({ song }: { song: NewSong }) => {
         if (!user?.id) {
             throw new Error("No user provided");
         }
 
-        const slug = song.title.toLowerCase().replace(/\s+/g, "-"); // simple slug
+        const slug = song.title.toLowerCase().replace(/\s+/g, "-");
+
+        const parsedLyrics = parseLyrics(song.lyrics);
+
         const { data, error } = await supabase
             .from("songs")
             .insert({
                 title: song.title,
                 artist: song.artist,
                 lyrics: song.lyrics,
+                lyrics_parsed: parsedLyrics,
                 user_id: user.id,
                 slug,
-                is_public: false
+                is_public: false,
             })
             .select()
             .single();
@@ -66,6 +79,10 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
                 setError(error.message);
                 setSong(null);
             } else {
+                if (!data.lyrics_parsed) {
+                    data.lyrics_parsed = parseLyrics(data.lyrics);
+                }
+
                 setSong(data as Song);
             }
             setLoading(false);
