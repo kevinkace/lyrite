@@ -16,27 +16,46 @@ import {
     Separator,
 } from "@radix-ui/themes";
 
+import { useLayout } from "@/contexts/LayoutContext";
+
 import css from "./layout.module.css";
+import { useEffect } from "react";
 
 export default function ProfileLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const { user, loading: authLoading } = useAuth();
+    const { user, loading } = useAuth();
+    const { startLoading, stopLoading } = useLayout();
     const router = useRouter();
     const currentPath = usePathname();
 
     const pageTitle = userLinks.find(link => link.href === currentPath)?.label || "Profile";
 
-    if (!user && !authLoading) {
+    useEffect(() => {
+        if (loading) {
+            startLoading();
+        } else {
+            stopLoading();
+        }
+        return () => {
+            stopLoading();
+        };
+    }, [loading]);
+
+    if (!user && !loading) {
         router.replace("/login");
+
         return null;
     }
 
-    if (authLoading) {
-        return <p>Loading...</p>;
-    }
+    // if (loading) {
+    //     startLoading();
+    //     return <p>Loading...</p>;
+    // } else {
+    //     stopLoading();
+    // }
 
     return (
         <Flex className={css.container} gap="6" align="stretch">

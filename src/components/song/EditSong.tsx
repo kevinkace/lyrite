@@ -1,29 +1,51 @@
 "use client";
 
-import { Card, Flex } from "@radix-ui/themes";
+import { useEffect } from "react";
+
+import { Button, Card, Flex } from "@radix-ui/themes";
+import { MixerHorizontalIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 
 import { useSong } from "@/contexts/SongContext";
 import { useLayout } from "@/contexts/LayoutContext";
 
 import css from "./EditSong.module.css";
-import { useEffect } from "react";
 
 export default function EditSong() {
     const { song, loading } = useSong();
-    const { setHeaderContent } = useLayout();
+    const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
 
     useEffect(() => {
+        if (loading) {
+            startLoading();
+        } else {
+            stopLoading();
+        }
+
         if (loading || !song) {
             setHeaderContent(null);
+
             return;
         }
 
-        setHeaderContent(<><h1>{song.title}</h1><h2>{song.artist}</h2></>);
+        setHeaderContent(<>
+            <h1>{song.title}</h1>
+            <h2>{song.artist}</h2>
+        </>);
 
-        // Clean up the header content when the component unmounts
-        return () => setHeaderContent(null);
-    }, [setHeaderContent, song]);
+        setHeaderUserContent(<>
+            <Button variant="surface" size="2" radius="full">
+                <MixerHorizontalIcon />
+                tools
+                <ChevronDownIcon />
+            </Button>
+        </>);
+
+        return () => {
+            setHeaderContent(null);
+            setHeaderUserContent(null);
+        };
+    }, [setHeaderContent, song, loading]);
 
     if (loading) return <p>Loading…</p>;
     if (!song) return <p>Song not found</p>;

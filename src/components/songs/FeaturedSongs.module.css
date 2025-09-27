@@ -37,11 +37,21 @@
     line-height: 1;
     font-weight: bold;
 
-    z-index: 0;
+    mask-image: linear-gradient(to bottom, #fff3, #ffffff06 4em);
 
-    background: linear-gradient(to bottom, #fff3, #ffffff06 4em);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
+    span {
+        display: inline-block;
+        z-index: 0;
+
+        animation: scrollLyrics 60s ease-out infinite;
+    }
+}
+
+@keyframes scrollLyrics {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
 }

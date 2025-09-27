@@ -9,9 +9,11 @@ import { Flex, Button, ChevronDownIcon } from "@radix-ui/themes";
 import { useAuth } from "@/contexts/AuthContext";
 
 import UserMenu from "@/components/layout/UserMenu";
+import { useLayout } from "@/contexts/LayoutContext";
 
 export const UserSection = () => {
     const { user, loading } = useAuth();
+    const { headerUserContent } = useLayout();
 
     if (!user) return null;
 
@@ -25,11 +27,7 @@ export const UserSection = () => {
                 </Link>
             </Button>
 
-            <Button variant="surface" size="2" radius="full">
-                <MixerHorizontalIcon />
-                tools
-                <ChevronDownIcon />
-            </Button>
+            {headerUserContent}
 
             <UserMenu />
         </Flex>

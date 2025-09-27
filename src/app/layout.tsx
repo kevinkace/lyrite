@@ -6,8 +6,8 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { LayoutProvider } from "@/contexts/LayoutContext";
 
 import ErrorModal from "@/components/error/errorModal";
-import Header from "@/components/layout/Header";
 import LoadingGate from "@/components/layout/LoadingGate";
+import Loading from "@/components/layout/LoadingBar";
 
 import "./globals.css";
 import css from "./layout.module.css";
@@ -27,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                             <LoadingGate>
 
                                 <LayoutProvider>
+                                    <Loading />
                                     {children}
                                 </LayoutProvider>
 
