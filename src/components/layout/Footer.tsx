@@ -1,6 +1,7 @@
 import { Flex } from "@radix-ui/themes";
-import css from "./Footer.module.css";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
+
+import css from "./Footer.module.css";
 
 export default function Footer() {
     return (

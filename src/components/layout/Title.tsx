@@ -2,13 +2,11 @@
 
 import { Flex } from "@radix-ui/themes";
 
-import { useAuth } from "@/contexts/AuthContext";
 import { useLayout } from "@/contexts/LayoutContext";
 
 import css from "./Title.module.css";
 
 export const Title = () => {
-    const { user } = useAuth();
     const { headerContent } = useLayout();
 
     if (!headerContent) {

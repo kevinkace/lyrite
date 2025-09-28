@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 
-import { FilePlusIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
-
-import { Flex, Button, ChevronDownIcon } from "@radix-ui/themes";
+import { FilePlusIcon } from "@radix-ui/react-icons";
+import { Flex, Button } from "@radix-ui/themes";
 
 import { useAuth } from "@/contexts/AuthContext";
+import { useLayout } from "@/contexts/LayoutContext";
 
 import UserMenu from "@/components/layout/UserMenu";
-import { useLayout } from "@/contexts/LayoutContext";
 
 export const UserSection = () => {
     const { user, loading } = useAuth();

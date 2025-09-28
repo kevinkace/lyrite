@@ -4,14 +4,14 @@ import { useState } from "react";
 import Link  from "next/link";
 import { Button, Card, Flex, Separator } from "@radix-ui/themes";
 import { motion, AnimatePresence } from "framer-motion";
-
 import { FileIcon, PersonIcon, GearIcon } from "@radix-ui/react-icons";
 
 import { useAuth } from "@/contexts/AuthContext";
+import { userLinks } from "@/data/consts";
+
+import { Avatar } from "@/components/user/Avatar";
 
 import css from "./UserMenu.module.css"
-import { userLinks } from "@/data/consts";
-import { Avatar } from "../user/Avatar";
 
 const iconMap: Record<string, React.ReactNode> = {
     profile: <PersonIcon />,

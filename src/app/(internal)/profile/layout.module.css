@@ -1,11 +1,14 @@
 .container {
+  --border-color: var(--gray-5);
+  --border: 1px solid var(--border-color);
+
   display: flex;
   gap: 1.5rem;
 
   width: 100%;
   margin: 0 auto;
 
-  border-top: 1px solid var(--gray-3);
+  border-top: var(--border);
 }
 
 .rail {
@@ -31,27 +34,29 @@
 .navLinkActive {
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
+
   font-size: 0.875rem;
   font-weight: 500;
   color: inherit;
   text-decoration: none;
+
   transition: background-color 0.15s ease;
 
   &:hover {
-    background-color: var(--gray-3);
+    background-color: var(--border-color);
   }
 }
 
 .navLinkActive {
-  background-color: var(--gray-3);
+  background-color: var(--border-color);
 }
 
 .separator {
-  height: auto;       /* reset Radix defaults */
-  flex: 0 0 auto;     /* don’t shrink */
-  align-self: stretch;/* stretch inside flex */
-  min-height: 100%;   /* force to fill parent flex row */
-  background: var(--gray-3);
+  height: auto;
+  flex: 0 0 auto;
+  align-self: stretch;
+  min-height: 100%;
+  background: var(--border-color);
 }
 
 .content {

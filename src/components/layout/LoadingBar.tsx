@@ -1,8 +1,10 @@
 "use client";
 
 import React from 'react';
-import css from './LoadingBar.module.css';
+
 import { useLayout } from '@/contexts/LayoutContext';
+
+import css from './LoadingBar.module.css';
 
 export default function LoadingBar() {
     const { isLoading } = useLayout();

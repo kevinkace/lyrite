@@ -2,10 +2,6 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-
-import { useAuth } from "@/contexts/AuthContext";
-import { userLinks } from "@/data/consts";
-
 import {
     Avatar,
     Box,
@@ -16,16 +12,16 @@ import {
     Separator,
 } from "@radix-ui/themes";
 
+import { useAuth } from "@/contexts/AuthContext";
+import { userLinks } from "@/data/consts";
+
 import { useLayout } from "@/contexts/LayoutContext";
 
 import css from "./layout.module.css";
 import { useEffect } from "react";
 
-export default function ProfileLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+
+export default function ProfileLayout({ children }: { children: React.ReactNode; }) {
     const { user, loading } = useAuth();
     const { startLoading, stopLoading } = useLayout();
     const router = useRouter();
@@ -49,13 +45,6 @@ export default function ProfileLayout({
 
         return null;
     }
-
-    // if (loading) {
-    //     startLoading();
-    //     return <p>Loading...</p>;
-    // } else {
-    //     stopLoading();
-    // }
 
     return (
         <Flex className={css.container} gap="6" align="stretch">
@@ -94,7 +83,7 @@ export default function ProfileLayout({
             </Box>
 
             {/* Full-height separator */}
-            <Separator orientation="vertical" className={css.separator} />
+            <Separator orientation="vertical" className={css.separator} color="gray" size="4" />
 
             {/* Main content */}
             <Box className={css.content}>

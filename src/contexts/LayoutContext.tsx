@@ -5,8 +5,10 @@ import { createContext, useContext, useState, ReactNode } from "react";
 type LayoutContextType = {
   headerContent: ReactNode;
   setHeaderContent: (content: ReactNode) => void;
+
   headerUserContent: ReactNode;
   setHeaderUserContent: (content: ReactNode) => void;
+
   isLoading: boolean;
   startLoading: () => void;
   stopLoading: () => void;
