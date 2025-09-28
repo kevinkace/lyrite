@@ -7,6 +7,7 @@ import { useError } from "./ErrorContext";
 import { useAuth } from "./AuthContext";
 
 import { NewSong, Song, SongContextType, SongProviderProps, LyricParsed } from "@/types";
+import { columnDefault, columnsOptions, defaultStyles, fontFamilies, fontSizeDefault } from "@/data/consts";
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
@@ -40,7 +41,7 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
                 artist: song.artist,
                 lyrics: song.lyrics,
                 lyrics_parsed: parseLyrics(song.lyrics),
-                style: {},
+                style: defaultStyles,
                 user_id: user.id,
                 slug,
                 is_public: false,
@@ -52,6 +53,42 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
 
         return data as Song;
     };
+
+    const setColumns = (columns: number) => {
+        if (!song) return;
+
+        const update = { ...song, style: { ...song.style, columns } };
+        setSong(update);
+    };
+
+    const stepColumns = (step: number) => {
+        if (!song) return;
+
+        const minColumns = columnsOptions[0];
+        const maxColumns = columnsOptions[columnsOptions.length - 1];
+
+        let columns = song.style?.columns || columnDefault;
+
+        columns += step;
+
+        if (columns < minColumns) columns = minColumns;
+        if (columns > maxColumns) columns = maxColumns;
+
+        setColumns(columns);
+    };
+
+    const setFontSize = (fontSize: number) => {
+        if (!song) return;
+        const update = { ...song, style: { ...song.style, fontSize } };
+        setSong(update);
+    };
+
+    const setFontFamily = (fontFamily: string) => {
+        if (!song) return;
+        const update = { ...song, style: { ...song.style, fontFamily } };
+        setSong(update);
+    };
+
 
     useEffect(() => {
         if (!id && (!slug || !userId)) {
@@ -78,8 +115,13 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
                 setError(error.message);
                 setSong(null);
             } else {
+
+                // cleanup for feature dev, can be deleted
                 if (!data.lyrics_parsed) {
                     data.lyrics_parsed = parseLyrics(data.lyrics);
+                }
+                if (!data.style) {
+                    data.style = defaultStyles;
                 }
 
                 setSong(data as Song);
@@ -91,7 +133,7 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
     }, [id, slug, userId, setError]);
 
     return (
-        <SongContext.Provider value={{ song, loading, createSong }}>
+        <SongContext.Provider value={{ song, loading, createSong, setColumns, setFontSize, setFontFamily, stepColumns }}>
             {children}
         </SongContext.Provider>
     );

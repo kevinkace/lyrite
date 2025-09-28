@@ -33,7 +33,11 @@ export const fontSizes = [
     60,
     72
 ];
+
+export const fontSizeDefault = 16;
+
 export const fontFamilies = [
+    "default",
     "Arial",
     "Helvetica",
     "Times New Roman",
@@ -48,7 +52,6 @@ export const fontFamilies = [
     "Impact"
 ];
 
-
 export const colors : RadixColor[] = [
     "red",
     "green",
@@ -57,3 +60,11 @@ export const colors : RadixColor[] = [
     "orange",
     "purple"
 ];
+
+export const columnDefault = 3;
+export const columnsOptions = [1, 2, 3, 4, 5, 6];
+export const defaultStyles = {
+    fontFamily: fontFamilies[0],
+    fontSize: fontSizeDefault,
+    columns: columnDefault
+};

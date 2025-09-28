@@ -13,7 +13,7 @@ import { colors, fontFamilies, fontSizes } from "@/data/consts";
 import css from "./EditSong.module.css";
 
 export default function EditSong() {
-    const { song, loading } = useSong();
+    const { song, loading, stepColumns } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
 
     const [showTools, setShowTools] = useState(false);
@@ -58,6 +58,7 @@ export default function EditSong() {
         <div className={css.editSong}>
             {showTools && <Flex align="center" className={css.tools} >
 
+                {/* ==== FONT SIZE ==== */}
                 <Flex data-tools="font-size" align="center">
                     <Button variant="outline" size="2" color="gray" onClick={() => { }}>
                         <MinusIcon />
@@ -75,6 +76,8 @@ export default function EditSong() {
                     </Button>
                 </Flex>
 
+
+                {/* ==== FONT FAMILY ==== */}
                 <Flex data-tool="font-family" align="center">
                     <Select.Root>
                         <Select.Trigger />
@@ -86,16 +89,19 @@ export default function EditSong() {
                     </Select.Root>
                 </Flex>
 
-                <Flex data-tools="font-size" align="center">
-                    <Button variant="outline" size="2" color="gray" onClick={() => { }}>
+                {/* ==== COLUMNS ==== */}
+                <Flex data-tools="columns" align="center">
+                    <Button variant="outline" size="2" color="gray" onClick={() => stepColumns(-1)}>
                         <MinusIcon />
                     </Button>
-                    cols: 3
-                    <Button variant="outline" size="2" color="gray" onClick={() => { }}>
+                    cols: {song.style?.columns}
+                    <Button variant="outline" size="2" color="gray" onClick={() => stepColumns(1)}>
                         <PlusIcon />
                     </Button>
                 </Flex>
 
+
+                {/* ==== COLORS ==== */}
                 <Flex data-tools="colors" align="center">
                     {colors.map(color => (
                         <Button
@@ -110,9 +116,15 @@ export default function EditSong() {
                 </Flex>
 
 
-
             </Flex>}
-            <div className={css.lyrics}>
+            <div
+                className={css.lyrics}
+                style={{
+                    columns: song.style.columns,
+                    fontSize : song.style.fontSize,
+                    fontFamily: song.style.fontFamily
+                }  as React.CSSProperties}
+            >
                 {song.lyrics_parsed.map(({id, text, style}, index) => (
                     <Card
                         key={id}

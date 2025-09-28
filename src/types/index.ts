@@ -58,7 +58,7 @@ export type Song = {
     artist: string;
     lyrics: string;
     lyrics_parsed: LyricParsed[];
-    lyrics_style: SheetStyle;
+    style: SheetStyle;
     is_public: boolean;
     user_id: string;
     created_at: string;
@@ -83,6 +83,10 @@ export type SongContextType = {
     song: Song | null;
     loading: boolean;
     createSong: ({ song }: { song: NewSong }) => Promise<Song>;
+    setColumns: (columns: number) => void;
+    stepColumns: (step: number) => void;
+    setFontSize: (fontSize: number) => void;
+    setFontFamily: (fontFamily: string) => void;
 };
 
 export type SongProviderProps = {
