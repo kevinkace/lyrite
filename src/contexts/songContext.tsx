@@ -16,7 +16,7 @@ function parseLyrics(raw: string) : LyricParsed[] {
         .map((section, i) => ({
             id: i,
             text: section.trim(),
-            style: 0
+            style: {}
         }));
 }
 
@@ -26,14 +26,12 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
     const { setError } = useError();
     const { user } = useAuth();
 
-    const handleSave = async ({ song }: { song: NewSong }) => {
+    const createSong = async ({ song }: { song: NewSong }) => {
         if (!user?.id) {
             throw new Error("No user provided");
         }
 
         const slug = song.title.toLowerCase().replace(/\s+/g, "-");
-
-        const parsedLyrics = parseLyrics(song.lyrics);
 
         const { data, error } = await supabase
             .from("songs")
@@ -41,7 +39,8 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
                 title: song.title,
                 artist: song.artist,
                 lyrics: song.lyrics,
-                lyrics_parsed: parsedLyrics,
+                lyrics_parsed: parseLyrics(song.lyrics),
+                style: {},
                 user_id: user.id,
                 slug,
                 is_public: false,
@@ -92,7 +91,7 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
     }, [id, slug, userId, setError]);
 
     return (
-        <SongContext.Provider value={{ song, loading, handleSave }}>
+        <SongContext.Provider value={{ song, loading, createSong }}>
             {children}
         </SongContext.Provider>
     );

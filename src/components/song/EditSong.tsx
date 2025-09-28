@@ -1,18 +1,22 @@
 "use client";
 
-import { useEffect } from "react";
-import { Button, Card, Flex } from "@radix-ui/themes";
-import { MixerHorizontalIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import { useEffect, useState } from "react";
+import { Button, Card, Flex, Select } from "@radix-ui/themes";
+import { MixerHorizontalIcon, ChevronDownIcon, PlusIcon, MinusIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 
 import { useSong } from "@/contexts/SongContext";
 import { useLayout } from "@/contexts/LayoutContext";
+
+import { colors, fontFamilies, fontSizes } from "@/data/consts";
 
 import css from "./EditSong.module.css";
 
 export default function EditSong() {
     const { song, loading } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
+
+    const [showTools, setShowTools] = useState(false);
 
     useEffect(() => {
         if (loading) {
@@ -33,7 +37,7 @@ export default function EditSong() {
         </>);
 
         setHeaderUserContent(<>
-            <Button variant="surface" size="2" radius="full">
+            <Button variant="surface" size="2" radius="full" onClick={() => setShowTools(!showTools)}>
                 <MixerHorizontalIcon />
                 tools
                 <ChevronDownIcon />
@@ -44,7 +48,7 @@ export default function EditSong() {
             setHeaderContent(null);
             setHeaderUserContent(null);
         };
-    }, [setHeaderContent, song, loading]);
+    }, [setHeaderContent, song, loading, showTools]);
 
     if (loading) return <p>Loading…</p>;
     if (!song) return <p>Song not found</p>;
@@ -52,13 +56,66 @@ export default function EditSong() {
 
     return (
         <div className={css.editSong}>
-            <Flex align="center" className={css.tools} >
-                font size, font face, columns, alignment
-            </Flex>
+            {showTools && <Flex align="center" className={css.tools} >
+
+                <Flex data-tools="font-size" align="center">
+                    <Button variant="outline" size="2" color="gray" onClick={() => { }}>
+                        <MinusIcon />
+                    </Button>
+                    <Select.Root>
+                        <Select.Trigger/>
+                        <Select.Content>
+                            {fontSizes.map(size => (
+                                <Select.Item key={size} value={size.toString()}>{size}px</Select.Item>
+                            ))}
+                        </Select.Content>
+                    </Select.Root>
+                    <Button variant="outline" size="2" color="gray" onClick={() => { }}>
+                        <PlusIcon />
+                    </Button>
+                </Flex>
+
+                <Flex data-tool="font-family" align="center">
+                    <Select.Root>
+                        <Select.Trigger />
+                        <Select.Content>
+                            {fontFamilies.map(family => (
+                                <Select.Item key={family} value={family}>{family}</Select.Item>
+                            ))}
+                        </Select.Content>
+                    </Select.Root>
+                </Flex>
+
+                <Flex data-tools="font-size" align="center">
+                    <Button variant="outline" size="2" color="gray" onClick={() => { }}>
+                        <MinusIcon />
+                    </Button>
+                    cols: 3
+                    <Button variant="outline" size="2" color="gray" onClick={() => { }}>
+                        <PlusIcon />
+                    </Button>
+                </Flex>
+
+                <Flex data-tools="colors" align="center">
+                    {colors.map(color => (
+                        <Button
+                            key={color}
+                            variant="soft"
+                            size="2"
+                            color={color}
+                        >
+                            {color}
+                        </Button>
+                    ))}
+                </Flex>
+
+
+
+            </Flex>}
             <div className={css.lyrics}>
                 {song.lyrics_parsed.map(({id, text, style}, index) => (
                     <Card
-                        key={index}
+                        key={id}
                         variant="surface"
                         className={clsx(css.lyricCard, css[`style-${style}`])}
                     >
