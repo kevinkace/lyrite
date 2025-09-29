@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button, Card } from "@radix-ui/themes";
 import { MixerHorizontalIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 
 import { useSong } from "@/contexts/SongContext";
@@ -56,7 +57,19 @@ export default function EditSong() {
 
     return (
         <div className={css.editSong}>
-            {showTools && <Toolbar />}
+            <AnimatePresence>
+                {showTools && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <Toolbar />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <div
                 className={css.lyrics}
                 style={{

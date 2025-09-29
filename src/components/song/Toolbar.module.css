@@ -1,3 +1,14 @@
+.toolbar {
+    background: var(--gray-4);
+
+    padding: var(--space-2);
+
+    /* round bottom radius */
+
+    border-bottom-left-radius: var(--radius-2);
+    border-bottom-right-radius: var(--radius-2);
+}
+
 .colorTools {
     --space-4: 1em;
     --segmented-control-indicator-background-color: #fffb;

@@ -14,7 +14,7 @@ export default function Toolbar() {
 
     if (!song) return null;
 
-    return (<Flex align="center" justify="center" gap="3" className={css.tools} >
+    return (<Flex align="center" justify="center" gap="3" className={css.toolbar} >
 
                 {/* ==== FONT SIZE ==== */}
                 <Flex data-tools="font-size"  align="center">
