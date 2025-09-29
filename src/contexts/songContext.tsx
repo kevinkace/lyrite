@@ -7,7 +7,8 @@ import { useError } from "./ErrorContext";
 import { useAuth } from "./AuthContext";
 
 import { NewSong, Song, SongContextType, SongProviderProps, LyricParsed } from "@/types";
-import { columnDefault, columnsOptions, defaultStyles, fontFamilies, fontSizeDefault } from "@/data/consts";
+import { columnDefault, columnsOptions, defaultStyles, fontFamilies } from "@/data/consts";
+import { getfontFamilyCSS } from "@/lib/fonts";
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
@@ -83,9 +84,11 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
         setSong(update);
     };
 
-    const setFontFamily = (fontFamily: string) => {
+    const setFontFamily = (fontFamilyName: string) => {
         if (!song) return;
-        const update = { ...song, style: { ...song.style, fontFamily } };
+
+        const update = { ...song, style: { ...song.style, fontFamily: getfontFamilyCSS(fontFamilyName) } };
+
         setSong(update);
     };
 

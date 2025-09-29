@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button, Card, Flex, SegmentedControl, Select } from "@radix-ui/themes";
-import { MixerHorizontalIcon, ChevronDownIcon, PlusIcon, MinusIcon } from "@radix-ui/react-icons";
+import { MixerHorizontalIcon, ChevronDownIcon, PlusIcon, MinusIcon, ColumnsIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 
 import { useSong } from "@/contexts/SongContext";
@@ -56,10 +56,10 @@ export default function EditSong() {
 
     return (
         <div className={css.editSong}>
-            {showTools && <Flex align="center" className={css.tools} >
+            {showTools && <Flex align="center" gap="3" className={css.tools} >
 
                 {/* ==== FONT SIZE ==== */}
-                <Flex data-tools="font-size" align="center">
+                <Flex data-tools="font-size"  align="center">
                     <Button variant="outline" size="2" color="gray" onClick={() => { }}>
                         <MinusIcon />
                     </Button>
@@ -82,19 +82,20 @@ export default function EditSong() {
                     <Select.Root defaultValue={song.style.fontFamily}>
                         <Select.Trigger />
                         <Select.Content>
-                            {fontFamilies.map(family => (
-                                <Select.Item  key={family} value={family}>{family}</Select.Item>
+                            {fontFamilies.map(({name}) => (
+                                <Select.Item  key={name} value={name}>{name}</Select.Item>
                             ))}
                         </Select.Content>
                     </Select.Root>
                 </Flex>
 
                 {/* ==== COLUMNS ==== */}
-                <Flex data-tools="columns" align="center">
+                <Flex data-tools="columns" align="center" gap="2">
                     <Button variant="outline" size="2" color="gray" onClick={() => stepColumns(-1)}>
                         <MinusIcon />
                     </Button>
-                    cols: {song.style?.columns}
+                    <ColumnsIcon />
+                    {song.style?.columns}
                     <Button variant="outline" size="2" color="gray" onClick={() => stepColumns(1)}>
                         <PlusIcon />
                     </Button>

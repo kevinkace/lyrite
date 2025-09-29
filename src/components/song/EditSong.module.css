@@ -61,7 +61,7 @@
 /* TOOLS */
 
 .colorTools {
-    /* --color-surface: red; */
+    --space-4: 1em;
 
         --segmented-control-indicator-background-color: #fffb;
     :global(.rt-SegmentedControlIndicator) {
