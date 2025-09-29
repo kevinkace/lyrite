@@ -12,6 +12,7 @@ import { useLayout } from "@/contexts/LayoutContext";
 import Toolbar from "@/components/song/Toolbar";
 
 import css from "./EditSong.module.css";
+import { getfontFamilyCSS } from "@/lib/fonts";
 
 export default function EditSong() {
     const { song, loading } = useSong();
@@ -75,7 +76,7 @@ export default function EditSong() {
                 style={{
                     columns: song.style.columns,
                     fontSize : song.style.fontSize,
-                    fontFamily: song.style.fontFamily
+                    "--default-font-family": getfontFamilyCSS(song.style.fontFamily)
                 }  as React.CSSProperties}
             >
                 {song.lyrics_parsed.map(({id, text, style}, index) => (
@@ -84,7 +85,7 @@ export default function EditSong() {
                         variant="surface"
                         className={clsx(css.lyricCard, css[`style-${style}`])}
                     >
-                        <pre className={css.lyric}>{text}</pre>
+                        {text}
                     </Card>
                 ))}
             </div>

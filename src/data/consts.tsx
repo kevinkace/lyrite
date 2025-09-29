@@ -64,7 +64,9 @@ export const colors: RadixColor[] = [
 ];
 
 export const columnDefault = 3;
+
 export const columnsOptions = [1, 2, 3, 4, 5, 6];
+
 export const defaultStyles = {
     fontFamily: fontFamilies[0].name,
     fontSize: fontSizeDefault,
