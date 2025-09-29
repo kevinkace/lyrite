@@ -58,13 +58,14 @@ export default function EditSong() {
 
     return (
         <div className={css.editSong}>
-            <AnimatePresence>
+            <AnimatePresence initial={false}>
                 {showTools && (
                     <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
+                        className={css.toolsWrapper}
                     >
                         <Toolbar />
                     </motion.div>
@@ -76,7 +77,8 @@ export default function EditSong() {
                 style={{
                     columns: song.style.columns,
                     fontSize : song.style.fontSize,
-                    "--default-font-family": getfontFamilyCSS(song.style.fontFamily)
+                    "--default-font-family": getfontFamilyCSS(song.style.fontFamily),
+                    transform: showTools ? "scale(0.95)" : "none"
                 }  as React.CSSProperties}
             >
                 {song.lyrics_parsed.map(({id, text, style}, index) => (

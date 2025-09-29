@@ -22,10 +22,21 @@
     --color-5: var(--cyan-7);
     --color-5-0: var(--cyan-12);
     --color-5-1: var(--cyan-8);
+
+    position: relative;
+}
+
+.toolsWrapper {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 }
 
 .lyrics {
     margin-top: 1em;
+    transform-origin: bottom center;
+    transition: transform 0.2s ease;
 }
 
 .lyricCard {
