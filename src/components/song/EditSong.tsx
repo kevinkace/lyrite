@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Card, Flex, Select } from "@radix-ui/themes";
+import { Button, Card, Flex, SegmentedControl, Select } from "@radix-ui/themes";
 import { MixerHorizontalIcon, ChevronDownIcon, PlusIcon, MinusIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 
@@ -79,11 +79,11 @@ export default function EditSong() {
 
                 {/* ==== FONT FAMILY ==== */}
                 <Flex data-tool="font-family" align="center">
-                    <Select.Root>
+                    <Select.Root defaultValue={song.style.fontFamily}>
                         <Select.Trigger />
                         <Select.Content>
                             {fontFamilies.map(family => (
-                                <Select.Item key={family} value={family}>{family}</Select.Item>
+                                <Select.Item  key={family} value={family}>{family}</Select.Item>
                             ))}
                         </Select.Content>
                     </Select.Root>
@@ -102,17 +102,23 @@ export default function EditSong() {
 
 
                 {/* ==== COLORS ==== */}
-                <Flex data-tools="colors" align="center">
-                    {colors.map(color => (
-                        <Button
+                <Flex data-tools="colors" align="center"
+                className={css.colorTools}>
+                    <SegmentedControl.Root
+                        defaultValue={colors[0]}
+                    >
+                    {colors.map((color, idx) => (
+                        <SegmentedControl.Item
                             key={color}
-                            variant="soft"
-                            size="2"
-                            color={color}
+                            value={color as string}
+                            className={css.colorButton}
+                            data-color={idx}
                         >
+
                             {color}
-                        </Button>
+                        </SegmentedControl.Item>
                     ))}
+                    </SegmentedControl.Root>
                 </Flex>
 
 

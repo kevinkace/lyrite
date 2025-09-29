@@ -1,10 +1,27 @@
 .editSong {
-    --color-0: var(--yellow-4);
-    --color-1: var(--red-4);
-    --color-2: var(--pink-4);
-    --color-3: var(--purple-4);
-    --color-4: var(--blue-4);
-    --color-5: var(--cyan-4);
+    --color-0: var(--yellow-7);
+    --color-0-0: var(--yellow-12);
+    --color-0-1: var(--yellow-8);
+
+    --color-1: var(--red-7);
+    --color-1-0: var(--red-12);
+    --color-1-1: var(--red-8);
+
+    --color-2: var(--pink-7);
+    --color-2-0: var(--pink-12);
+    --color-2-1: var(--pink-8);
+
+    --color-3: var(--purple-7);
+    --color-3-0: var(--purple-12);
+    --color-3-1: var(--purple-8);
+
+    --color-4: var(--blue-7);
+    --color-4-0: var(--blue-12);
+    --color-4-1: var(--blue-8);
+
+    --color-5: var(--cyan-7);
+    --color-5-0: var(--cyan-12);
+    --color-5-1: var(--cyan-8);
 }
 
 .lyrics {
@@ -39,4 +56,61 @@
 }
 .style-5 {
     background-color: var(--color-5);
+}
+
+/* TOOLS */
+
+.colorTools {
+    /* --color-surface: red; */
+
+        --segmented-control-indicator-background-color: #fffb;
+    :global(.rt-SegmentedControlIndicator) {
+
+        z-index: 1;
+        mix-blend-mode: overlay;
+        &:before {
+        }
+
+    }
+}
+
+.colorButton {
+    &[data-color] {
+        color: var(--color-fg);
+        background-color: var(--color-bg);
+    }
+    &[data-color="0"] {
+        --color-fg: var(--color-0-0);
+        --color-bg: var(--color-0);
+        --color-shadow: var(--color-0-1);
+    }
+    &[data-color="1"] {
+        --color-fg: var(--color-1-0);
+        --color-bg: var(--color-1);
+        --color-shadow: var(--color-1-1);
+    }
+    &[data-color="2"] {
+        --color-fg: var(--color-2-0);
+        --color-bg: var(--color-2);
+        --color-shadow: var(--color-2-1);
+    }
+    &[data-color="3"] {
+        --color-fg: var(--color-3-0);
+        --color-bg: var(--color-3);
+        --color-shadow: var(--color-3-1);
+    }
+    &[data-color="4"] {
+        --color-fg: var(--color-4-0);
+        --color-bg: var(--color-4);
+        --color-shadow: var(--color-4-1);
+    }
+    &[data-color="5"] {
+        --color-fg: var(--color-5-0);
+        --color-bg: var(--color-5);
+        --color-shadow: var(--color-5-1);
+    }
+
+    &[data-state="on"] {
+        box-shadow: inset 0 0 8px 1px var(--color-shadow);
+    }
 }
