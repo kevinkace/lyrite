@@ -7,7 +7,7 @@ import { useError } from "./ErrorContext";
 import { useAuth } from "./AuthContext";
 
 import { NewSong, Song, SongContextType, SongProviderProps, LyricParsed } from "@/types";
-import { columnDefault, columnsOptions, defaultStyles, fontFamilies } from "@/data/consts";
+import { columnDefault, columnsOptions, defaultStyles, fontFamilies, fontSizeDefault, fontSizes } from "@/data/consts";
 import { getfontFamilyCSS } from "@/lib/fonts";
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
@@ -84,6 +84,20 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
         setSong(update);
     };
 
+    const stepFontSize = (step: number) => {
+        if (!song) return;
+
+        const currFontSizeIdx = fontSizes.findIndex(size => size === song.style?.fontSize);
+        let newFontSizeIdx = currFontSizeIdx + step;
+
+        if (newFontSizeIdx < 0) newFontSizeIdx = 0;
+        if (newFontSizeIdx >= fontSizes.length) newFontSizeIdx = fontSizes.length - 1;
+
+        const fontSize = fontSizes[newFontSizeIdx];
+
+        setFontSize(fontSize);
+    };
+
     const setFontFamily = (fontFamilyName: string) => {
         if (!song) return;
 
@@ -136,7 +150,16 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
     }, [id, slug, userId, setError]);
 
     return (
-        <SongContext.Provider value={{ song, loading, createSong, setColumns, setFontSize, setFontFamily, stepColumns }}>
+        <SongContext.Provider value={{
+            song,
+            loading,
+            createSong,
+            setColumns,
+            setFontSize,
+            stepFontSize,
+            setFontFamily,
+            stepColumns
+        }}>
             {children}
         </SongContext.Provider>
     );

@@ -86,6 +86,7 @@ export type SongContextType = {
     setColumns: (columns: number) => void;
     stepColumns: (step: number) => void;
     setFontSize: (fontSize: number) => void;
+    stepFontSize: (step: number) => void;
     setFontFamily: (fontFamily: string) => void;
 };
 

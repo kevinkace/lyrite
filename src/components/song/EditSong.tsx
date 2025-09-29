@@ -1,19 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Card, Flex, SegmentedControl, Select } from "@radix-ui/themes";
-import { MixerHorizontalIcon, ChevronDownIcon, PlusIcon, MinusIcon, ColumnsIcon } from "@radix-ui/react-icons";
+import { Button, Card } from "@radix-ui/themes";
+import { MixerHorizontalIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 
 import { useSong } from "@/contexts/SongContext";
 import { useLayout } from "@/contexts/LayoutContext";
 
-import { colors, fontFamilies, fontSizes } from "@/data/consts";
+import Toolbar from "@/components/song/Toolbar";
 
 import css from "./EditSong.module.css";
 
 export default function EditSong() {
-    const { song, loading, stepColumns } = useSong();
+    const { song, loading } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
 
     const [showTools, setShowTools] = useState(false);
@@ -56,74 +56,7 @@ export default function EditSong() {
 
     return (
         <div className={css.editSong}>
-            {showTools && <Flex align="center" gap="3" className={css.tools} >
-
-                {/* ==== FONT SIZE ==== */}
-                <Flex data-tools="font-size"  align="center">
-                    <Button variant="outline" size="2" color="gray" onClick={() => { }}>
-                        <MinusIcon />
-                    </Button>
-                    <Select.Root>
-                        <Select.Trigger/>
-                        <Select.Content>
-                            {fontSizes.map(size => (
-                                <Select.Item key={size} value={size.toString()}>{size}px</Select.Item>
-                            ))}
-                        </Select.Content>
-                    </Select.Root>
-                    <Button variant="outline" size="2" color="gray" onClick={() => { }}>
-                        <PlusIcon />
-                    </Button>
-                </Flex>
-
-
-                {/* ==== FONT FAMILY ==== */}
-                <Flex data-tool="font-family" align="center">
-                    <Select.Root defaultValue={song.style.fontFamily}>
-                        <Select.Trigger />
-                        <Select.Content>
-                            {fontFamilies.map(({name}) => (
-                                <Select.Item  key={name} value={name}>{name}</Select.Item>
-                            ))}
-                        </Select.Content>
-                    </Select.Root>
-                </Flex>
-
-                {/* ==== COLUMNS ==== */}
-                <Flex data-tools="columns" align="center" gap="2">
-                    <Button variant="outline" size="2" color="gray" onClick={() => stepColumns(-1)}>
-                        <MinusIcon />
-                    </Button>
-                    <ColumnsIcon />
-                    {song.style?.columns}
-                    <Button variant="outline" size="2" color="gray" onClick={() => stepColumns(1)}>
-                        <PlusIcon />
-                    </Button>
-                </Flex>
-
-
-                {/* ==== COLORS ==== */}
-                <Flex data-tools="colors" align="center"
-                className={css.colorTools}>
-                    <SegmentedControl.Root
-                        defaultValue={colors[0]}
-                    >
-                    {colors.map((color, idx) => (
-                        <SegmentedControl.Item
-                            key={color}
-                            value={color as string}
-                            className={css.colorButton}
-                            data-color={idx}
-                        >
-
-                            {color}
-                        </SegmentedControl.Item>
-                    ))}
-                    </SegmentedControl.Root>
-                </Flex>
-
-
-            </Flex>}
+            {showTools && <Toolbar />}
             <div
                 className={css.lyrics}
                 style={{
