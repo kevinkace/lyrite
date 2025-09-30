@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { PlusIcon, MinusIcon, ColumnsIcon } from "@radix-ui/react-icons";
 import { Flex, Button, Select, SegmentedControl } from "@radix-ui/themes"
@@ -13,9 +13,11 @@ import { getfontFamilyCSS } from "@/lib/fonts";
 export default function Toolbar() {
     const { song, stepColumns, stepFontSize, setFontFamily, setFontSize } = useSong();
 
+    const [selectedColor, setSelectedColor] = useState<string>("");
+
     if (!song) return null;
 
-    return (<Flex align="center" justify="center" gap="3" className={css.toolbar} >
+    return (<Flex align="center" justify="center" gap="5" className={css.toolbar} >
 
         {/* ==== FONT SIZE ==== */}
         <Flex data-tools="font-size" align="center">
@@ -82,7 +84,20 @@ export default function Toolbar() {
         <Flex data-tools="colors" align="center"
             className={css.colorTools}>
             <SegmentedControl.Root
-                value={colors[0]}
+                value={selectedColor}
+                onValueChange={(value) => {
+                    setSelectedColor(value);
+                }}
+                onClick={(e) => {
+                    e.preventDefault();
+
+                    const target = e.target as HTMLElement;
+                    const color = target.closest("[data-colorname]")?.getAttribute("data-colorname");
+
+                    if (color === selectedColor) {
+                        setSelectedColor("");
+                    }
+                }}
             >
                 {colors.map((color, idx) => (
                     <SegmentedControl.Item
@@ -90,6 +105,7 @@ export default function Toolbar() {
                         value={color as string}
                         className={css.colorButton}
                         data-color={idx}
+                        data-colorname={color}
                     >
 
                         {color}
