@@ -6,7 +6,7 @@ import {
     Flex,
     IconButton,
 } from "@radix-ui/themes";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { Trash2 } from "lucide-react";
 
 type DeleteSongDialogProps = {
     songId: string;
@@ -23,7 +23,7 @@ export default function DeleteSongDialog({
         <Dialog.Root>
             <Dialog.Trigger>
                 <IconButton color="crimson">
-                    <TrashIcon/>
+                    <Trash2 />
                 </IconButton>
             </Dialog.Trigger>
             <Dialog.Content >

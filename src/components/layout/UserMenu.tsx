@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link  from "next/link";
 import { Button, Card, Flex, Separator } from "@radix-ui/themes";
 import { motion, AnimatePresence } from "framer-motion";
-import { FileIcon, PersonIcon, GearIcon } from "@radix-ui/react-icons";
+import { FilePen, Settings, User } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { userLinks } from "@/data/consts";
@@ -14,9 +14,9 @@ import { Avatar } from "@/components/user/Avatar";
 import css from "./UserMenu.module.css"
 
 const iconMap: Record<string, React.ReactNode> = {
-    profile: <PersonIcon />,
-    file: <FileIcon />,
-    settings: <GearIcon />
+    profile: <User />,
+    file: <FilePen />,
+    settings: <Settings />
 };
 
 export default function UserMenu() {

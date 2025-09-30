@@ -1,7 +1,8 @@
 "use client";
 
 import { Dialog, Flex, IconButton, Button } from "@radix-ui/themes";
-import { Cross2Icon } from "@radix-ui/react-icons";
+
+import { X } from "lucide-react";
 
 import { useError } from "@/contexts/ErrorContext";
 
@@ -23,7 +24,7 @@ export default function ErrorModal() {
                             color="gray"
                             onClick={() => setError(null)}
                         >
-                            <Cross2Icon />
+                            <X />
                         </IconButton>
                     </Flex>
                 </Dialog.Title>

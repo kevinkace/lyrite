@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { FilePlusIcon } from "@radix-ui/react-icons";
+import { FilePlus } from "lucide-react";
 import { Flex, Button } from "@radix-ui/themes";
 
 import { useAuth } from "@/contexts/AuthContext";
@@ -21,7 +21,7 @@ export const UserSection = () => {
         <Flex gap="3" align="center">
             <Button asChild variant="surface" size="2" radius="full" color="violet">
                 <Link href="/songs/new">
-                    <FilePlusIcon />
+                    <FilePlus/>
                     lyric sheet
                 </Link>
             </Button>

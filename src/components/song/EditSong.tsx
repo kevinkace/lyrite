@@ -2,17 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { Button, Card } from "@radix-ui/themes";
-import { MixerHorizontalIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 
 import { useSong } from "@/contexts/SongContext";
 import { useLayout } from "@/contexts/LayoutContext";
 
+import { getfontFamilyCSS } from "@/lib/fonts";
+
 import Toolbar from "@/components/song/Toolbar";
 
 import css from "./EditSong.module.css";
-import { getfontFamilyCSS } from "@/lib/fonts";
 
 export default function EditSong() {
     const { song, loading } = useSong();
@@ -40,9 +41,9 @@ export default function EditSong() {
 
         setHeaderUserContent(<>
             <Button variant="surface" size="2" radius="full" onClick={() => setShowTools(!showTools)}>
-                <MixerHorizontalIcon />
+                <SlidersHorizontal />
                 tools
-                <ChevronDownIcon />
+                <ChevronDown />
             </Button>
         </>);
 

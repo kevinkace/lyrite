@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
-import { PlusIcon, MinusIcon, ColumnsIcon } from "@radix-ui/react-icons";
+import { Columns3, Minus, Plus } from "lucide-react";
 import { Flex, Button, Select, SegmentedControl } from "@radix-ui/themes"
 
 import { useSong } from "@/contexts/SongContext";
 
+import { getfontFamilyCSS } from "@/lib/fonts";
 import { colors, fontFamilies, fontSizes } from "@/data/consts";
 
 import css from "./Toolbar.module.css";
-import { getfontFamilyCSS } from "@/lib/fonts";
 
 export default function Toolbar() {
     const { song, stepColumns, stepFontSize, setFontFamily, setFontSize } = useSong();
@@ -22,7 +22,7 @@ export default function Toolbar() {
         {/* ==== FONT SIZE ==== */}
         <Flex data-tools="font-size" align="center">
             <Button variant="surface" size="2" color="gray" onClick={() => stepFontSize(-1)}>
-                <MinusIcon />
+                <Minus />
             </Button>
             <Select.Root
                 value={song.style.fontSize?.toString()}
@@ -38,7 +38,7 @@ export default function Toolbar() {
                 </Select.Content>
             </Select.Root>
             <Button variant="surface" size="2" color="gray" onClick={() => stepFontSize(1)}>
-                <PlusIcon />
+                <Plus />
             </Button>
         </Flex>
 
@@ -70,12 +70,12 @@ export default function Toolbar() {
         {/* ==== COLUMNS ==== */}
         <Flex data-tools="columns" align="center" gap="2">
             <Button variant="outline" size="2" color="gray" onClick={() => stepColumns(-1)}>
-                <MinusIcon />
+                <Minus />
             </Button>
-            <ColumnsIcon />
+            <Columns3 />
             {song.style?.columns}
             <Button variant="outline" size="2" color="gray" onClick={() => stepColumns(1)}>
-                <PlusIcon />
+                <Plus />
             </Button>
         </Flex>
 

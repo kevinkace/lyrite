@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { Button, Flex } from "@radix-ui/themes";
+import { FilePlus } from "lucide-react";
 
 import { SongsProvider } from "@/contexts/SongsContext";
 
 import FeaturedSongs from "@/components/songs/FeaturedSongs";
 
 import css from "./page.module.css"
-import { FilePlusIcon } from "@radix-ui/react-icons";
 
 const featuredIds = [
     "f4f5302c-57a5-49ea-aeaa-70c9c84bd656",
@@ -30,7 +30,7 @@ export default function HomePage() {
                 <Flex gap="6" align="center" justify="center" className={css.ctaButtons}>
                     <Button asChild={true} size="4" variant="surface" color="violet">
                         <Link href="/songs/new">
-                            <FilePlusIcon width="1em" height="auto" />
+                            <FilePlus width="1em" height="auto" />
                             Create lyric sheet
                         </Link>
                     </Button>

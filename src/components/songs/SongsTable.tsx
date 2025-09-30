@@ -3,8 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-import { IconButton, Switch, Table, TextField } from "@radix-ui/themes";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { Switch, Table, TextField } from "@radix-ui/themes";
 
 import { useSongs } from "@/contexts/SongsContext";
 

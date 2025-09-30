@@ -8,6 +8,7 @@ import { LogoIcon } from "@/components/icons/LogoIcon.svg";
 import { Title } from "@/components/layout/Title";
 
 import css from "./Header.module.css";
+import ErrorButton from "../error/ErrorButton";
 
 export default function Header() {
     return (
@@ -21,6 +22,7 @@ export default function Header() {
                 </h1>
 
                 {/* <UserNav /> */}
+                <ErrorButton />
             </Flex>
 
             <Title />

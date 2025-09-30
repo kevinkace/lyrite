@@ -40,3 +40,8 @@ a {
     color-scheme: dark;
   }
 }
+
+svg {
+  width: auto;
+  height: 1em;
+}
