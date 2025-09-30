@@ -7,8 +7,7 @@ import { useError } from "./ErrorContext";
 import { useAuth } from "./AuthContext";
 
 import { NewSong, Song, SongContextType, SongProviderProps, LyricParsed } from "@/types";
-import { columnDefault, columnsOptions, defaultStyles, fontFamilies, fontSizeDefault, fontSizes } from "@/data/consts";
-import { getfontFamilyCSS, validateFontFamily } from "@/lib/fonts";
+import { defaultStyles } from "@/data/consts";
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
@@ -55,61 +54,47 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
         return data as Song;
     };
 
-    const setColumns = (columns: number) => {
+    const setStyle = (newStyle: Partial<Song["style"]>) => {
         if (!song) return;
 
-        const update = { ...song, style: { ...song.style, columns } };
+        const update = { ...song, style: { ...song.style, ...newStyle } };
         setSong(update);
     };
 
-    const stepColumns = (step: number) => {
+    const setSectionStyle = (sectionId: number, newStyle: Partial<LyricParsed["style"]>) => {
         if (!song) return;
 
-        const minColumns = columnsOptions[0];
-        const maxColumns = columnsOptions[columnsOptions.length - 1];
+        const updatedSections = song.lyrics_parsed.map(section => {
+            if (section.id === sectionId) {
+                return { ...section, style: { ...section.style, ...newStyle } };
+            }
+            return section;
+        });
 
-        let columns = song.style?.columns || columnDefault;
-
-        columns += step;
-
-        if (columns < minColumns) columns = minColumns;
-        if (columns > maxColumns) columns = maxColumns;
-
-        setColumns(columns);
+        setSong({ ...song, lyrics_parsed: updatedSections });
     };
 
-    const setFontSize = (fontSize: number) => {
-        if (!song) return;
-        const update = { ...song, style: { ...song.style, fontSize } };
-        setSong(update);
-    };
-
-    const stepFontSize = (step: number) => {
-        if (!song) return;
-
-        const currFontSizeIdx = fontSizes.findIndex(size => size === song.style?.fontSize);
-        let newFontSizeIdx = currFontSizeIdx + step;
-
-        if (newFontSizeIdx < 0) newFontSizeIdx = 0;
-        if (newFontSizeIdx >= fontSizes.length) newFontSizeIdx = fontSizes.length - 1;
-
-        const fontSize = fontSizes[newFontSizeIdx];
-
-        setFontSize(fontSize);
-    };
-
-    const setFontFamily = (fontFamilyName: string) => {
-        if (!song) return;
-
-        if (!validateFontFamily(fontFamilyName)) {
-            fontFamilyName = fontFamilies[0].name;
+    const saveSong = async () => {
+        if (!song) {
+            throw new Error("No song to save");
         }
+        const { error } = await supabase
+            .from("songs")
+            .update({
+                title: song.title,
+                artist: song.artist,
+                lyrics: song.lyrics,
+                lyrics_parsed: song.lyrics_parsed,
+                style: song.style,
+                is_public: song.is_public,
+            })
+            .eq("id", song.id);
 
-        const update = { ...song, style: { ...song.style, fontFamily: fontFamilyName } };
-
-        setSong(update);
+        if (error) {
+            setError(error.message);
+            throw error;
+        }
     };
-
 
     useEffect(() => {
         if (!id && (!slug || !userId)) {
@@ -158,11 +143,9 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
             song,
             loading,
             createSong,
-            setColumns,
-            setFontSize,
-            stepFontSize,
-            setFontFamily,
-            stepColumns
+            setStyle,
+            saveSong,
+            setSectionStyle
         }}>
             {children}
         </SongContext.Provider>

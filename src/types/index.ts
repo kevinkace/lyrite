@@ -33,7 +33,7 @@ export type ErrorContextType = {
 
 /* ---------- Lyrics & Styles ---------- */
 export type LyricSectionStyle = {
-    color?: string;
+    color?: number | null;
     fontSize?: number;
     bold?: boolean;
 };
@@ -83,11 +83,9 @@ export type SongContextType = {
     song: Song | null;
     loading: boolean;
     createSong: ({ song }: { song: NewSong }) => Promise<Song>;
-    setColumns: (columns: number) => void;
-    stepColumns: (step: number) => void;
-    setFontSize: (fontSize: number) => void;
-    stepFontSize: (step: number) => void;
-    setFontFamily: (fontFamily: string) => void;
+    setStyle: (newStyle: Partial<Song["style"]>) => void;
+    saveSong: () => Promise<void>;
+    setSectionStyle: (sectionId: number, newStyle: Partial<LyricParsed["style"]>) => void;
 };
 
 export type SongProviderProps = {
@@ -116,6 +114,19 @@ export type SongsProviderProps = {
     page?: number;
     search?: string;
     pageSize?: number;
+};
+
+/* ---------- Editing Context ---------- */
+export type EditingContextType = {
+    selectedColor: number | null;
+    setSelectedColor: (color: number | null) => void;
+
+    setColumns: (columns: number) => void;
+    stepColumns: (step: number) => void;
+    setFontSize: (fontSize: number) => void;
+    stepFontSize: (step: number) => void;
+    setFontFamily: (fontFamily: string) => void;
+    setSectionColor: (sectionId: number, color: number | null) => void;
 };
 
 /* ---------- Pagination ---------- */

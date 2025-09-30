@@ -8,6 +8,7 @@ import clsx from "clsx";
 
 import { useSong } from "@/contexts/SongContext";
 import { useLayout } from "@/contexts/LayoutContext";
+import { useEditing } from "@/contexts/EditingContext";
 
 import { getfontFamilyCSS } from "@/lib/fonts";
 
@@ -18,6 +19,7 @@ import css from "./EditSong.module.css";
 export default function EditSong() {
     const { song, loading } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
+    const { setSectionColor, selectedColor } = useEditing();
 
     const [showTools, setShowTools] = useState(false);
 
@@ -82,11 +84,16 @@ export default function EditSong() {
                     transform: showTools ? "scale(0.95)" : "none"
                 }  as React.CSSProperties}
             >
-                {song.lyrics_parsed.map(({id, text, style}, index) => (
+                {song.lyrics_parsed.map(({id, text, style}) => (
                     <Card
                         key={id}
                         variant="surface"
-                        className={clsx(css.lyricCard, css[`style-${style}`])}
+                        className={clsx(css.lyricCard, css[`style-${style.color}`])}
+                        onClick={() => {
+                            if (selectedColor !== null) {
+                                setSectionColor(id, style.color === selectedColor ? null : selectedColor);
+                            }
+                        }}
                     >
                         {text}
                     </Card>

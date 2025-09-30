@@ -4,6 +4,7 @@ import { Columns3, Minus, Plus } from "lucide-react";
 import { Flex, Button, Select, SegmentedControl } from "@radix-ui/themes"
 
 import { useSong } from "@/contexts/SongContext";
+import { useEditing } from "@/contexts/EditingContext";
 
 import { getfontFamilyCSS } from "@/lib/fonts";
 import { colors, fontFamilies, fontSizes } from "@/data/consts";
@@ -11,9 +12,8 @@ import { colors, fontFamilies, fontSizes } from "@/data/consts";
 import css from "./Toolbar.module.css";
 
 export default function Toolbar() {
-    const { song, stepColumns, stepFontSize, setFontFamily, setFontSize } = useSong();
-
-    const [selectedColor, setSelectedColor] = useState<string>("");
+    const { song } = useSong();
+     const { setSelectedColor, selectedColor, stepColumns, setFontSize, stepFontSize, setFontFamily } = useEditing();
 
     if (!song) return null;
 
@@ -84,30 +84,32 @@ export default function Toolbar() {
         <Flex data-tools="colors" align="center"
             className={css.colorTools}>
             <SegmentedControl.Root
-                value={selectedColor}
+                value={selectedColor?.toString() || ""}
                 onValueChange={(value) => {
-                    setSelectedColor(value);
+                    console.log(value, typeof value);
+                    setSelectedColor(parseInt(value, 10));
                 }}
                 onClick={(e) => {
                     e.preventDefault();
 
                     const target = e.target as HTMLElement;
-                    const color = target.closest("[data-colorname]")?.getAttribute("data-colorname");
+                    const color = target.closest("[data-color]")?.getAttribute("data-color");
 
-                    if (color === selectedColor) {
-                        setSelectedColor("");
+                    console.log({ color, selectedColor });
+
+                    if (color === selectedColor?.toString()) {
+                        setSelectedColor(null);
                     }
                 }}
             >
                 {colors.map((color, idx) => (
                     <SegmentedControl.Item
                         key={color}
-                        value={color as string}
+                        value={idx.toString()}
                         className={css.colorButton}
                         data-color={idx}
                         data-colorname={color}
                     >
-
                         {color}
                     </SegmentedControl.Item>
                 ))}
