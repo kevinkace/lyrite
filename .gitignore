@@ -1,3 +1,7 @@
 node_modules
 dist
 config.js
+.next
+.env
+.env.local
+next-env.d.ts
