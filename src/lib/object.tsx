@@ -1,4 +1,15 @@
+import { User } from "@supabase/supabase-js";
 
-export function getByPath(obj: object, path: string): any {
-    return path.split('.').reduce((o, p) => (o ? o[p] : undefined), obj);
+// ts is crazy
+export function getUserData(user : User, path: string) {
+    const keys = path.split('.');
+
+    let result: any = user; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+
+    for (const key of keys) {
+        result = result?.[key];
+    }
+
+    return result;
 }

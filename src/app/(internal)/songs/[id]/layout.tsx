@@ -1,10 +1,11 @@
 import { SongProvider } from "@/contexts/SongContext";
 
+export default async function SongPage({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
+    const { id } = await params;
 
-export default function SongPage({ children, params }: { children: React.ReactNode, params: { id: string } }) {
-  return (
-    <SongProvider id={params.id}>
-        {children}
-    </SongProvider>
-  );
+    return (
+        <SongProvider id={id}>
+            {children}
+        </SongProvider>
+    );
 }

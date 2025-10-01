@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Flex } from "@radix-ui/themes";
 
-import { UserNav } from "@/components/layout/UserNav";
+// import { UserNav } from "@/components/layout/UserNav";
 import { UserSection } from "@/components/layout/UserSection";
 import { LogoIcon } from "@/components/icons/LogoIcon.svg";
 import { Title } from "@/components/layout/Title";

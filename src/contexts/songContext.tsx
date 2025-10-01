@@ -107,7 +107,7 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
         const fetchSong = async () => {
             setLoading(true);
 
-            let query = supabase.from("songs").select("*").single();
+            let query = supabase.from("songs").select("*");
 
             if (id) {
                 query = query.eq("id", id);
@@ -115,7 +115,7 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
                 query = query.eq("user_id", userId).eq("slug", slug);
             }
 
-            const { data, error } = await query;
+            const { data, error } = await query.single();
 
             if (error) {
                 setError(error.message);

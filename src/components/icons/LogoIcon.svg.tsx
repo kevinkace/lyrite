@@ -2,7 +2,7 @@ import * as React from "react";
 
 import css from "./LogoIcon.module.css";
 
-export const LogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
+export const LogoIcon = () => (
     <svg
       version="1.2"
       xmlns="http://www.w3.org/2000/svg"

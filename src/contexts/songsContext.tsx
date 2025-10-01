@@ -16,7 +16,7 @@ export function SongsProvider({
     children,
     userId,
     ids,
-    page,
+    page = 0,
     search,
     pageSize = 20,
 }: SongsProviderProps) {
