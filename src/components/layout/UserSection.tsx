@@ -10,32 +10,46 @@ import { useLayout } from "@/contexts/LayoutContext";
 
 import UserMenu from "@/components/layout/UserMenu";
 
+const loggedOutLinks = [
+    { href: "/login", label: "Login", variant : "soft", color : "violet" },
+    { href: "/register", label: "Register", variant : "soft" }
+];
+
 export const UserSection = () => {
     const { user, loading } = useAuth();
     const { headerUserContent } = useLayout();
 
-    if (!user) return null;
-
     return (
         <>
-        <Flex gap="3" align="center">
-            <Button asChild variant="surface" size="2" radius="full" color="violet">
-                <Link href="/songs/new">
-                    <FilePlus/>
-                    lyric sheet
-                </Link>
-            </Button>
+            {user && (
+                <Flex gap="3" align="center">
+                    <Button asChild variant="surface" size="2" radius="full" color="violet">
+                        <Link href="/songs/new">
+                            <FilePlus/>
+                            lyric sheet
+                        </Link>
+                    </Button>
 
-            {headerUserContent}
+                    {headerUserContent}
 
-            <UserMenu />
-        </Flex>
+                    <UserMenu />
+                </Flex>
+            )}
 
-        {!user && !loading && (
-            <p>
-                <Link href="/login">Login</Link> | <Link href="/register">Register</Link>
-            </p>
-        )}
+            {!user && !loading && (
+                <Flex gap="2" align="center">
+                    {loggedOutLinks.map((link) => (
+                        <Button
+                            key={link.href}
+                            asChild
+                            variant={link.variant}
+                            color={link.color}
+                        >
+                            <Link href={link.href}>{link.label}</Link>
+                        </Button>
+                    ))}
+                </Flex>
+            )}
         </>
     );
 };
