@@ -12,8 +12,7 @@
     flex: 1;
 }
 
-.home,
-.login {
+.mesh {
     background:
         linear-gradient(135deg, #1a1a1ae8 25%, #121212f8 100%),
         transparent url(/layout/mesh-50.png) no-repeat 100% 100%/cover;

@@ -19,6 +19,7 @@ import { useLayout } from "@/contexts/LayoutContext";
 
 import css from "./layout.module.css";
 import { useEffect } from "react";
+import Layout from "@/components/layout/Layout";
 
 
 export default function ProfileLayout({ children }: { children: React.ReactNode; }) {
@@ -47,49 +48,51 @@ export default function ProfileLayout({ children }: { children: React.ReactNode;
     }
 
     return (
-        <Flex className={css.container} gap="6" align="stretch">
-            {/* Left rail */}
-            <Box className={css.rail}>
-                <Card size="3" className={css.profileCard}>
-                    <Flex direction="column" align="center" gap="3">
-                        <Avatar
-                            size="7"
-                            src={user?.user_metadata?.avatar_url}
-                            fallback={user?.email?.[0]?.toUpperCase() ?? "U"}
-                            radius="full"
-                        />
-                        <Heading size="4">
-                            {user?.user_metadata?.preferred_username ??
-                                user?.user_metadata?.full_name ??
-                                "User"}
-                        </Heading>
-                        <Text color="gray" size="2">
-                            {user?.email}
-                        </Text>
-                    </Flex>
-                </Card>
+        <Layout bg="mesh">
+            <Flex className={css.container} gap="6" align="stretch">
+                {/* Left rail */}
+                <Box className={css.rail}>
+                    <Card size="3" className={css.profileCard}>
+                        <Flex direction="column" align="center" gap="3">
+                            <Avatar
+                                size="7"
+                                src={user?.user_metadata?.avatar_url}
+                                fallback={user?.email?.[0]?.toUpperCase() ?? "U"}
+                                radius="full"
+                            />
+                            <Heading size="4">
+                                {user?.user_metadata?.preferred_username ??
+                                    user?.user_metadata?.full_name ??
+                                    "User"}
+                            </Heading>
+                            <Text color="gray" size="2">
+                                {user?.email}
+                            </Text>
+                        </Flex>
+                    </Card>
 
-                <nav className={css.nav}>
-                    {userLinks.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            className={link.href === currentPath ? css.navLinkActive : css.navLink}
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
-                </nav>
-            </Box>
+                    <nav className={css.nav}>
+                        {userLinks.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={link.href === currentPath ? css.navLinkActive : css.navLink}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                    </nav>
+                </Box>
 
-            {/* Full-height separator */}
-            <Separator orientation="vertical" className={css.separator} color="gray" size="4" />
+                {/* Full-height separator */}
+                <Separator orientation="vertical" className={css.separator} color="gray" size="4" />
 
-            {/* Main content */}
-            <Box className={css.content}>
-                <h2 className={css.pageTitle}>{pageTitle}</h2>
-                {children}
-            </Box>
-        </Flex>
+                {/* Main content */}
+                <Box className={css.content}>
+                    <h2 className={css.pageTitle}>{pageTitle}</h2>
+                    {children}
+                </Box>
+            </Flex>
+        </Layout>
     );
 }

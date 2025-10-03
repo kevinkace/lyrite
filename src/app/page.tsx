@@ -17,7 +17,7 @@ const featuredIds = [
 
 export default function HomePage() {
     return (
-        <Layout page="home">
+        <Layout bg={"mesh"}>
             <SongsProvider ids={featuredIds} pageSize={10}>
                 <div className={css.main}>
                     <h2 className={css.usp}>

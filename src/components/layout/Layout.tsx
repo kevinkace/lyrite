@@ -5,9 +5,12 @@ import Footer from "@/components/layout/Footer";
 
 import css from "./Layout.module.css";
 
-export default function Layout({ children, page }: { children: React.ReactNode, page?: string }) {
+export default function Layout({ children, className, bg }: { children: React.ReactNode, className?: string, bg?: "mesh" | "none" }) {
     return (
-        <div className={clsx(css.layout)} data-page={page}>
+        <div className={clsx(css.layout, className, {
+            [css.mesh]: bg === "mesh",
+            [css.none]: bg === "none"
+        })}>
             <Header />
             <main className={css.main}>
                 {children}

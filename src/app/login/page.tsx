@@ -7,6 +7,7 @@ import { Button } from "@radix-ui/themes";
 import { useAuth } from "@/contexts/AuthContext";
 
 import css from "./page.module.css"
+import Layout from "@/components/layout/Layout";
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false);
@@ -34,12 +35,14 @@ export default function LoginPage() {
     };
 
     return (
-        <div className={css.main}>
-            <h1>Login</h1>
+        <Layout bg={"mesh"}>
+            <div className={css.main}>
+                <h1>Login</h1>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+                {error && <p style={{ color: "red" }}>{error}</p>}
 
-            {loading ? <p>Loading...</p> : <Button color="gray" onClick={handleLogin}>Sign in with GitHub</Button>}
-        </div>
+                {loading ? <p>Loading...</p> : <Button color="gray" onClick={handleLogin}>Sign in with GitHub</Button>}
+            </div>
+        </Layout>
     );
 }
