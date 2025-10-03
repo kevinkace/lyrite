@@ -6,12 +6,14 @@ import { Button } from "@radix-ui/themes";
 
 import { useAuth } from "@/contexts/AuthContext";
 
-import css from "./login.module.css"
+import css from "./page.module.css"
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
     const { user, signInWithGithub } = useAuth();
+
     const router = useRouter();
 
     if (user) {

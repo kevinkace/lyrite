@@ -37,7 +37,7 @@ export default function HomePage() {
 
 
                     <Button asChild={true} size="4" variant="soft">
-                        <Link href="/register">Create a free account</Link>
+                        <Link href="/login">Create a free account</Link>
                     </Button>
                 </Flex>
 

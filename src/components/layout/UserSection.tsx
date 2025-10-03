@@ -12,7 +12,7 @@ import UserMenu from "@/components/layout/UserMenu";
 
 const loggedOutLinks = [
     { href: "/login", label: "Login", variant : "soft", color : "violet" },
-    { href: "/register", label: "Register", variant : "soft" }
+    // { href: "/register", label: "Register", variant : "soft" }
 ];
 
 export const UserSection = () => {
