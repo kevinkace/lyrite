@@ -4,24 +4,3 @@
     flex-direction: column;
     height: 100vh;
 }
-
-.layout {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    flex: 1;
-}
-
-.home,
-.login {
-    background:
-        linear-gradient(135deg, #1a1a1ae8 25%, #121212f8 100%),
-        transparent url(/layout/mesh-50.png) no-repeat 100% 100%/cover;
-}
-
-.main {
-    padding: 0 4%;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
