@@ -80,8 +80,7 @@ export default function EditSong() {
                 style={{
                     columns: song.style.columns,
                     fontSize : song.style.fontSize,
-                    "--default-font-family": getfontFamilyCSS(song.style.fontFamily),
-                    transform: showTools ? "scale(0.95)" : "none"
+                    "--default-font-family": getfontFamilyCSS(song.style.fontFamily)
                 }  as React.CSSProperties}
             >
                 {song.lyrics_parsed.map(({id, text, style}) => (
