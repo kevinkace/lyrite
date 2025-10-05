@@ -86,8 +86,18 @@ export default function EditSong() {
                 {song.lyrics_parsed.map(({id, text, style}) => (
                     <Card
                         key={id}
-                        variant="surface"
-                        className={clsx(css.lyricCard, css[`style-${style.color}`])}
+                        variant="ghost"
+                        className={
+                            clsx(
+                                css.lyricCard, css[`style-${style.color}`],
+                                {
+                                    [css.hoverFill] : typeof selectedColor === "number"
+                                },
+
+                            )}
+                        style={{
+                            "--hover-color": `var(--color-${selectedColor}-2)`,
+                        }}
                         onClick={() => {
                             if (selectedColor !== null) {
                                 setSectionColor(id, style.color === selectedColor ? null : selectedColor);

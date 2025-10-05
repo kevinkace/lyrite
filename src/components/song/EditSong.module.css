@@ -44,6 +44,15 @@
 .lyricCard {
     margin: 0 0 1em;
     white-space: pre-wrap;
+
+    &:hover {
+        background-color: var(--hover-color);
+    }
+}
+
+.hoverFill {
+    color: white;
+    cursor: url("/icons/paint.svg"), pointer;
 }
 
 
