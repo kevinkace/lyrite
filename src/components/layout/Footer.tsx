@@ -3,18 +3,34 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 import css from "./Footer.module.css";
 
+const links = [
+    {
+        href: "/terms-of-service",
+        label: "Terms of Service",
+    },
+    {
+        href: "/privacy",
+        label: "Privacy",
+    }
+];
+
 export default function Footer() {
     return (
         <footer className={css.footer}>
-            <Flex align="center" justify="center" gap="2">
-                <span>{new Date().getFullYear()}</span>
-                <span>
-                    <a href="https://github.com/kevinkace/lyrite">
-                        <GitHubLogoIcon />
-                    </a>
-                </span>
-                <span><a href="https://kevinkace.dev/">Kevin Cameron</a></span>
+            <Flex align="center" justify="center" gap="2" className={css.links}>
+                {links.map(({ href, label }) => (
+                    <a key={href} href={href}>{label}</a>
+                ))}
             </Flex>
+
+
+            <a
+                href="https://github.com/kevinkace/lyrite"
+                className={css.github}
+            >
+                <GitHubLogoIcon />
+                v1.0.0
+            </a>
         </footer>
     );
 }

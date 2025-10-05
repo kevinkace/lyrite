@@ -1,8 +1,30 @@
 .footer {
-    opacity: 0.8;
+    margin: 0 0 0.6em;
+    opacity: 0.6;
     font-size: 0.875rem;
 
     p {
         margin: 0;
     }
+}
+
+.links {
+    a {
+        color: var(--color-text);
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.github {
+    position: fixed;
+    bottom: 0.5rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 0.75rem;
 }
