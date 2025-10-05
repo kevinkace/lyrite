@@ -5,12 +5,12 @@ import css from "./Footer.module.css";
 
 const links = [
     {
-        href: "/terms-of-service",
+        href: "/legal/terms-of-service",
         label: "Terms of Service",
     },
     {
-        href: "/privacy",
-        label: "Privacy",
+        href: "/legal/privacy-policy",
+        label: "Privacy Policy",
     }
 ];
 

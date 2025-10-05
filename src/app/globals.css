@@ -30,6 +30,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h2 {
+  margin-top: 2rem;
+  font-size: 1.3rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;
