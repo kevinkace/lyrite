@@ -100,7 +100,7 @@ export default function EditSong() {
                             )}
                         style={{
                             "--hover-color": `var(--color-${selectedColor}-2)`,
-                        }}
+                        } as React.CSSProperties}
                         onClick={() => {
                             if (selectedColor !== null) {
                                 setSectionColor(id, style.color === selectedColor ? null : selectedColor);

@@ -9,6 +9,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useLayout } from "@/contexts/LayoutContext";
 
 import UserMenu from "@/components/layout/UserMenu";
+import { RadixColor, RadixVariant } from "@/types";
 
 const loggedOutLinks = [
     { href: "/login", label: "Login", variant : "soft", color : "violet" },
@@ -42,8 +43,8 @@ export const UserSection = () => {
                         <Button
                             key={link.href}
                             asChild
-                            variant={link.variant}
-                            color={link.color}
+                            variant={link.variant as RadixVariant}
+                            color={link.color as RadixColor}
                         >
                             <Link href={link.href}>{link.label}</Link>
                         </Button>

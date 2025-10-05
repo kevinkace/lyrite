@@ -138,3 +138,5 @@ export type PaginationProps = {
 
 /* ---------- Radix UI ---------- */
 export type RadixColor = ButtonProps["color"];
+
+export type RadixVariant = ButtonProps["variant"];
