@@ -19,7 +19,7 @@ import css from "./EditSong.module.css";
 export default function EditSong() {
     const { song, loading } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
-    const { setSectionColor, selectedColor } = useEditing();
+    const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
 
     const [showTools, setShowTools] = useState(false);
 
@@ -42,7 +42,10 @@ export default function EditSong() {
         </>);
 
         setHeaderUserContent(<>
-            <Button variant="surface" size="2" radius="full" onClick={() => setShowTools(!showTools)}>
+            <Button variant="surface" size="2" radius="full" onClick={() => {
+                setSelectedColor(null);
+                setShowTools(!showTools)
+            }}>
                 <SlidersHorizontal />
                 tools
                 <ChevronDown />
