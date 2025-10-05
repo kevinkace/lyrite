@@ -2,12 +2,41 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@radix-ui/themes";
+import Link  from "next/link";
+import { Button, Card, Flex, TextField } from "@radix-ui/themes";
 
 import { useAuth } from "@/contexts/AuthContext";
 
-import css from "./page.module.css"
 import Layout from "@/components/layout/Layout";
+
+import Hr from "@/components/hr/Hr";
+import { LogoIcon } from "@/components/icons/LogoIcon.svg";
+import { GoogleG } from "@/components/icons/providers/google-g.svg";
+import { FacebookF } from "@/components/icons/providers/facebook-f.svg";
+import { MicrosoftIcon } from "@/components/icons/providers/microsoft-icon.svg";
+import { GithubIcon } from "@/components/icons/providers/github-icon.svg";
+
+
+import css from "./page.module.css"
+
+const loginProviders = [
+    {
+        name: "GitHub",
+        icon: <GithubIcon />,
+    },
+    {
+        name: "Google",
+        icon: <GoogleG />,
+    },
+    {
+        name: "Facebook",
+        icon: <FacebookF />
+    },
+    {
+        name: "Microsoft",
+        icon: <MicrosoftIcon />
+    }
+];
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false);
@@ -21,12 +50,11 @@ export default function LoginPage() {
         router.replace("/");
     }
 
-    const handleLogin = async () => {
+    const handleLogin = async (providerName: string) => {
         setLoading(true);
         setError(null);
 
         const { error } = await signInWithGithub();
-
         if (error) {
             setError(error.message);
         }
@@ -35,14 +63,56 @@ export default function LoginPage() {
     };
 
     return (
-        <Layout bg={"mesh"}>
-            <div className={css.main}>
-                <h1>Login</h1>
+        <Layout header={false} bg={"mesh"} justifyContent="center">
+                <Flex direction="column" gap="6" align="center" justify="center">
 
-                {error && <p style={{ color: "red" }}>{error}</p>}
+                    <Link href="/" aria-label="Go to homepage">
+                        <LogoIcon className={css.logo} />
+                    </Link>
 
-                {loading ? <p>Loading...</p> : <Button color="gray" onClick={handleLogin}>Sign in with GitHub</Button>}
-            </div>
+                    <Card className={css.providerCard} size="4" >
+                        <Flex
+                            direction="column"
+                            gap="3"
+                            align="center"
+                        >
+
+                            {loginProviders.map((provider) => (
+                                <Button
+                                    key={provider.name}
+                                    onClick={() => handleLogin(provider.name)}
+                                    size="4"
+                                    color="gray"
+                                    className={css.providerButton}
+                                    variant="soft"
+                                >
+                                    {provider.icon}
+                                    Continue with {provider.name}
+                                </Button>
+                            ))}
+
+
+                            <Hr className={css.hr}>or</Hr>
+
+
+                            {/* radix theme email input */}
+                            <TextField.Root
+                                placeholder="enter your email address"
+                                size="3"
+                                className={css.emailInput}
+                            />
+                            <Button
+                                size="3"
+                                disabled={true}
+                                className={css.loginButton}
+                            >
+                                Continue with Email
+                            </Button>
+
+                        </Flex>
+
+                    </Card>
+                </Flex>
         </Layout>
     );
 }

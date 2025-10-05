@@ -1,0 +1,15 @@
+.hr {
+    width: 100%;
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    text-align: center;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid var(--gray-a7);
+    }
+
+}
