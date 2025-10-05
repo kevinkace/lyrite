@@ -1,7 +1,11 @@
 import Markdown from "@/components/markdown/Markdown";
 
-export default async function PrivacyPage({ params }: { params: { slug : Promise<{ id: string }> } }) {
-  const resolvedSlug = await params.slug;
+export default async function LegalPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { slug } = params;
 
-  return <Markdown data={`src/data/legal/${resolvedSlug.id}.md`} />;
+  return <Markdown data={`src/data/legal/${slug}.md`} />;
 }
