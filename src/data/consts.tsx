@@ -57,10 +57,10 @@ export const fontFamilies = [
 export const colors: RadixColor[] = [
     "yellow",
     "red",
-    "pink",
+    "green",
     "purple",
     "blue",
-    "cyan"
+    "orange"
 ];
 
 export const columnDefault = 3;

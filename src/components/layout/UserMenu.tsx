@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link  from "next/link";
 import { Button, Card, Flex, Separator } from "@radix-ui/themes";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,13 +24,30 @@ export default function UserMenu() {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    const ref = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            const target = event.target as HTMLElement;
+
+            if (!ref.current?.contains(target)) {
+                setIsOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     if (!user) {
         return null;
     }
 
 
     return (
-        <div className={css.userMenu}>
+        <div className={css.userMenu} ref={ref}>
 
             <div
                 className={css.avatarButton}

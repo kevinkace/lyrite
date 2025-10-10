@@ -83,7 +83,8 @@ export default function EditSong() {
                 style={{
                     columns: song.style.columns,
                     fontSize : song.style.fontSize,
-                    "--default-font-family": getfontFamilyCSS(song.style.fontFamily)
+                    "--default-font-family": getfontFamilyCSS(song.style.fontFamily),
+                    "--hover-color": `var(--color-${selectedColor}-selected)`
                 }  as React.CSSProperties}
             >
                 {song.lyrics_parsed.map(({id, text, style}) => (
@@ -98,9 +99,6 @@ export default function EditSong() {
                                 },
 
                             )}
-                        style={{
-                            "--hover-color": `var(--color-${selectedColor}-2)`,
-                        } as React.CSSProperties}
                         onClick={() => {
                             if (selectedColor !== null) {
                                 setSectionColor(id, style.color === selectedColor ? null : selectedColor);

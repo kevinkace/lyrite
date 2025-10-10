@@ -1,52 +1,74 @@
 @import "@radix-ui/themes/styles.css";
 
 :root {
-  box-sizing: border-box;
+    box-sizing: border-box;
+
+    --color-1-bg: #e05579; /* darker pink-red */
+    --color-2-bg: #7dc148; /* darker green */
+    --color-0-bg: #cea82c; /* darker yellow */
+    --color-5-bg: #d97249; /* darker orange */
+    --color-3-bg: #8979dc; /* darker violet */
+    --color-4-bg: #52afbb; /* darker cyan */
+
+    --color-1-selected: #ec8fa855; /* lighter pink-red */
+    --color-2-selected: #aee26c55; /* lighter green */
+    --color-0-selected: #eecf5a55; /* lighter gold */
+    --color-5-selected: #eba47a55; /* lighter orange */
+    --color-3-selected: #b2a4f355; /* lighter violet */
+    --color-4-selected: #8ed7df55; /* lighter cyan */
+
+
+    --color-1-text: #e05579; /* darker pink-red */
+    --color-2-text: #7dc148; /* darker green */
+    --color-0-text: #cea82c; /* darker yellow */
+    --color-5-text: #d97249; /* darker orange */
+    --color-3-text: #8979dc; /* darker violet */
+    --color-4-text: #52afbb; /* darker cyan */
 
 }
 
 .radix-themes {
-  --cursor-button: pointer;
+    --cursor-button: pointer;
 }
 
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+    box-sizing: inherit;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-  background-color: #1b1c1e;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #1b1c1e;
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h2 {
-  margin-top: 2rem;
-  font-size: 1.3rem;
+    margin-top: 2rem;
+    font-size: 1.3rem;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+      text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+    html {
+        color-scheme: dark;
+    }
 }
 
 svg {
-  width: auto;
-  height: 1em;
+    width: auto;
+    height: 1em;
 }

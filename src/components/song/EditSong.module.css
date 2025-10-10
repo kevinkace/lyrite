@@ -1,34 +1,4 @@
 .editSong {
-    --color-0: var(--yellow-9);
-    --color-0-0: var(--yellow-12);
-    --color-0-1: var(--yellow-8);
-    --color-0-2: var(--yellow-7);
-
-    --color-1: var(--red-9);
-    --color-1-0: var(--red-12);
-    --color-1-1: var(--red-8);
-    --color-1-2: var(--red-7);
-
-    --color-2: var(--pink-9);
-    --color-2-0: var(--pink-12);
-    --color-2-1: var(--pink-8);
-    --color-2-2: var(--pink-7);
-
-    --color-3: var(--purple-9);
-    --color-3-0: var(--purple-12);
-    --color-3-1: var(--purple-8);
-    --color-3-2: var(--purple-7);
-
-    --color-4: var(--blue-9);
-    --color-4-0: var(--blue-12);
-    --color-4-1: var(--blue-8);
-    --color-4-2: var(--blue-7);
-
-    --color-5: var(--cyan-9);
-    --color-5-0: var(--cyan-12);
-    --color-5-1: var(--cyan-8);
-    --color-5-2: var(--cyan-7);
-
     position: relative;
 }
 
@@ -43,35 +13,40 @@
 
 .lyricCard {
     margin: 0 0 1em;
+
+    font-family: inherit !important;
     white-space: pre-wrap;
 
+    background-color: transparent;
+
+    transition: background-color 0.2s ease;
+
     &:hover {
+        color: white;
         background-color: var(--hover-color);
     }
 }
 
 .hoverFill {
-    color: white;
     cursor: url("/icons/paint.svg"), pointer;
 }
 
 
-
 .style-0 {
-    color: var(--color-0);
+    color: var(--color-0-text);
 }
 .style-1 {
-    color: var(--color-1);
+    color: var(--color-1-text);
 }
 .style-2 {
-    color: var(--color-2);
+    color: var(--color-2-text);
 }
 .style-3 {
-    color: var(--color-3);
+    color: var(--color-3-text);
 }
 .style-4 {
-    color: var(--color-4);
+    color: var(--color-4-text);
 }
 .style-5 {
-    color: var(--color-5);
+    color: var(--color-5-text);
 }
