@@ -86,6 +86,7 @@ export type SongContextType = {
     setStyle: (newStyle: Partial<Song["style"]>) => void;
     saveSong: () => Promise<void>;
     setSectionStyle: (sectionId: number, newStyle: Partial<LyricParsed["style"]>) => void;
+    resetAllColors: () => void;
 };
 
 export type SongProviderProps = {

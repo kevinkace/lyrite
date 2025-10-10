@@ -12,7 +12,7 @@ import { colors, fontFamilies, fontSizes } from "@/data/consts";
 import css from "./Toolbar.module.css";
 
 export default function Toolbar() {
-    const { song } = useSong();
+    const { song, resetAllColors } = useSong();
      const { setSelectedColor, selectedColor, stepColumns, setFontSize, stepFontSize, setFontFamily } = useEditing();
 
     if (!song) return null;
@@ -97,6 +97,10 @@ export default function Toolbar() {
 
                     console.log({ color, selectedColor });
 
+                    if (color === "reset") {
+                        resetAllColors();
+                    }
+
                     if (color === selectedColor?.toString()) {
                         setSelectedColor(null);
                     }
@@ -113,6 +117,14 @@ export default function Toolbar() {
                         {color}
                     </SegmentedControl.Item>
                 ))}
+
+                    <SegmentedControl.Item
+                        value={"reset"}
+                        className={css.colorResetButton}
+                        data-color={"reset"}
+                    >
+                        reset
+                    </SegmentedControl.Item>
             </SegmentedControl.Root>
         </Flex>
 

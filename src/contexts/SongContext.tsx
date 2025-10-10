@@ -74,6 +74,16 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
         setSong({ ...song, lyrics_parsed: updatedSections });
     };
 
+    const resetAllColors = () => {
+        if (!song) return;
+
+        const updatedSections = song.lyrics_parsed.map(section => ({
+            ...section,
+            style: { ...section.style, color: null }
+        }));
+        setSong({ ...song, lyrics_parsed: updatedSections });
+    }
+
     const saveSong = async () => {
         if (!song) {
             throw new Error("No song to save");
@@ -145,7 +155,8 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
             createSong,
             setStyle,
             saveSong,
-            setSectionStyle
+            setSectionStyle,
+            resetAllColors
         }}>
             {children}
         </SongContext.Provider>
