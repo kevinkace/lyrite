@@ -114,13 +114,13 @@ export default function Toolbar() {
                         data-color={idx}
                         data-colorname={color}
                     >
-                        {color}
+                        {idx}
                     </SegmentedControl.Item>
                 ))}
 
                     <SegmentedControl.Item
                         value={"reset"}
-                        className={css.colorResetButton}
+                        className={css.colorButton}
                         data-color={"reset"}
                     >
                         reset

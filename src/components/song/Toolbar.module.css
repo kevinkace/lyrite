@@ -45,8 +45,7 @@
     &[data-color="5"] {
         background-color: var(--color-5-bg);
     }
-
-    /* &[data-state="on"] {
-        box-shadow: inset 0 0 8px 1px var(--color-shadow);
-    } */
+    &[data-color="reset"] {
+        background-color: var(--gray-3);
+    }
 }
