@@ -18,11 +18,18 @@
     display: flex;
     align-items: baseline;
     color: inherit;
+    opacity: 0.8;
+
+    transition: opacity 0.2s ease-in-out;
 
     svg {
         height: 2rem;
         width: auto;
         margin-right: 0.3rem;
+    }
+
+    &:hover {
+        opacity: 1;
     }
 }
 

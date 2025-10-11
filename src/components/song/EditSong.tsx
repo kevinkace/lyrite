@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Card } from "@radix-ui/themes";
-import { ChevronDown, SlidersHorizontal } from "lucide-react";
+import { Button, Card, IconButton } from "@radix-ui/themes";
+import { ChevronDown, SlidersHorizontal, Save } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 
@@ -17,7 +17,7 @@ import Toolbar from "@/components/song/Toolbar";
 import css from "./EditSong.module.css";
 
 export default function EditSong() {
-    const { song, loading } = useSong();
+    const { song, loading, saveSong } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
     const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
 
@@ -42,6 +42,11 @@ export default function EditSong() {
         </>);
 
         setHeaderUserContent(<>
+            <IconButton variant="ghost" size="2" radius="full" onClick={() => {
+                saveSong();
+            }}>
+                <Save />
+            </IconButton>
             <Button variant="surface" size="2" radius="full" onClick={() => {
                 setSelectedColor(null);
                 setShowTools(!showTools)
