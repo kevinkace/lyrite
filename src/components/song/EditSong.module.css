@@ -14,7 +14,6 @@
 .lyricCard {
     margin: 0 0 1em;
 
-    font-family: inherit !important;
     white-space: pre-wrap;
 
     background-color: transparent;
@@ -22,31 +21,36 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-        color: white;
         background-color: var(--hover-color);
     }
 }
 
 .hoverFill {
-    cursor: url("/icons/paint.svg"), pointer;
+    cursor: crosshair;
 }
 
 
 .style-0 {
     color: var(--color-0-text);
+    &:hover {}
 }
 .style-1 {
     color: var(--color-1-text);
+    &:hover {}
 }
 .style-2 {
     color: var(--color-2-text);
+    &:hover {}
 }
 .style-3 {
     color: var(--color-3-text);
+    &:hover {}
 }
 .style-4 {
     color: var(--color-4-text);
+    &:hover {}
 }
 .style-5 {
     color: var(--color-5-text);
+    &:hover {}
 }

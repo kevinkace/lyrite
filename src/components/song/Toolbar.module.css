@@ -9,6 +9,12 @@
     border-bottom-right-radius: var(--radius-2);
 }
 
+.fontFamilySelect {
+    button {
+        min-width: 14em;
+    }
+}
+
 .colorTools {
     --space-4: 1em;
     --segmented-control-indicator-background-color: #fffb;
@@ -25,6 +31,7 @@
 
 .colorButton {
     &[data-color] {
+        --font-weight-regular: bold;
         color: #fffd;
     }
     &[data-color="0"] {

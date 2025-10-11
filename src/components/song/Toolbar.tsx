@@ -44,7 +44,8 @@ export default function Toolbar() {
 
 
         {/* ==== FONT FAMILY ==== */}
-        <Flex data-tool="font-family" align="center">
+        <Flex data-tool="font-family" align="center"
+                            className={css.fontFamilySelect}>
             <Select.Root
                 value={song.style.fontFamily}
                 onValueChange={value => setFontFamily(value)}
@@ -69,12 +70,12 @@ export default function Toolbar() {
 
         {/* ==== COLUMNS ==== */}
         <Flex data-tools="columns" align="center" gap="2">
-            <Button variant="outline" size="2" color="gray" onClick={() => stepColumns(-1)}>
+            <Button variant="ghost" size="2" color="gray" onClick={() => stepColumns(-1)}>
                 <Minus />
             </Button>
             <Columns3 />
             {song.style?.columns}
-            <Button variant="outline" size="2" color="gray" onClick={() => stepColumns(1)}>
+            <Button variant="ghost" size="2" color="gray" onClick={() => stepColumns(1)}>
                 <Plus />
             </Button>
         </Flex>

@@ -10,12 +10,12 @@
     --color-3-bg: #8979dc; /* darker violet */
     --color-4-bg: #52afbb; /* darker cyan */
 
-    --color-1-selected: #ec8fa855; /* lighter pink-red */
-    --color-2-selected: #aee26c55; /* lighter green */
-    --color-0-selected: #eecf5a55; /* lighter gold */
-    --color-5-selected: #eba47a55; /* lighter orange */
-    --color-3-selected: #b2a4f355; /* lighter violet */
-    --color-4-selected: #8ed7df55; /* lighter cyan */
+    --color-1-selected: #ec8fa823; /* lighter pink-red */
+    --color-2-selected: #afe26c2c; /* lighter green */
+    --color-0-selected: #eece5a2c; /* lighter gold */
+    --color-5-selected: #eba37a2e; /* lighter orange */
+    --color-3-selected: #b3a4f32c; /* lighter violet */
+    --color-4-selected: #8ed7df2f; /* lighter cyan */
 
 
     --color-1-text: #e05579; /* darker pink-red */

@@ -93,7 +93,8 @@ export default function EditSong() {
                         variant="ghost"
                         className={
                             clsx(
-                                css.lyricCard, css[`style-${style.color}`],
+                                css.lyricCard,
+                                css[`style-${style.color}`],
                                 {
                                     [css.hoverFill] : typeof selectedColor === "number"
                                 },
