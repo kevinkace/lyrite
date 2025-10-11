@@ -8,6 +8,7 @@ import FeaturedSongs from "@/components/songs/FeaturedSongs";
 
 import css from "./page.module.css"
 import Layout from "@/components/layout/Layout";
+import { createServerClient } from "@/lib/supabaseServer";
 
 const featuredIds = [
     "f4f5302c-57a5-49ea-aeaa-70c9c84bd656",
@@ -15,10 +16,18 @@ const featuredIds = [
     "df7ebbdf-eb10-4a11-b87b-504a7f5c91a1"
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+    const supabase = createServerClient();
+
+    const { data : featuredSongs } = await supabase
+        .from("songs")
+        .select("*")
+        .in("id", featuredIds)
+        .limit(3);
+
     return (
         <Layout bg={"mesh"}>
-            <SongsProvider ids={featuredIds} pageSize={10}>
+            <SongsProvider initialSongs={featuredSongs || []}>
                 <div className={css.main}>
                     <h2 className={css.usp}>
                         <em className={css.tagOrganize}>Organize</em>,{" "}

@@ -115,6 +115,7 @@ export type SongsProviderProps = {
     page?: number;
     search?: string;
     pageSize?: number;
+    initialSongs?: Song[];
 };
 
 /* ---------- Editing Context ---------- */

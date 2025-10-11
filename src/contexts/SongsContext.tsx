@@ -9,6 +9,7 @@ import {
 import { supabase } from "@/lib/supabaseClient";
 
 import { Song, SongsContextType, SongsProviderProps } from "@/types";
+import { init } from "next/dist/compiled/webpack/webpack";
 
 const SongsContext = createContext<SongsContextType | undefined>(undefined);
 
@@ -19,13 +20,16 @@ export function SongsProvider({
     page = 0,
     search,
     pageSize = 20,
+    initialSongs = []
 }: SongsProviderProps) {
-    const [songs, setSongs] = useState<Song[]>([]);
+    const [songs, setSongs] = useState<Song[]>(initialSongs);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [hasMore, setHasMore] = useState(false);
 
     useEffect(() => {
+        if (initialSongs.length > 0) return;
+
         const fetchSongs = async () => {
             if (!userId && (!ids || ids.length === 0)) {
                 setSongs([]);
@@ -64,7 +68,7 @@ export function SongsProvider({
         };
 
         fetchSongs();
-    }, [userId, ids, page, search, pageSize]);
+    }, [userId, ids, page, search, pageSize, initialSongs.length]);
 
     const deleteSong = async (id: string) => {
         const { error } = await supabase.from("songs").delete().eq("id", id);
