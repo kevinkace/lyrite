@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useConsent } from "@/hooks/useConsent";
 import { Button, Flex, Text } from "@radix-ui/themes";
 import { AnimatePresence, motion } from "framer-motion";
+
 import styles from "./CookieBanner.module.css";
 
 export function CookieBanner() {
@@ -27,6 +29,7 @@ export function CookieBanner() {
                         <Text size="2">
                             We use cookies for analytics to improve your experience.
                         </Text>
+                        <Link href="/legal/privacy-policy">Privacy Policy</Link>
                         <Flex justify="end" gap="2">
                             <Button onClick={acceptCookies} variant="soft">Accept</Button>
                         </Flex>

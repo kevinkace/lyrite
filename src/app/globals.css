@@ -58,8 +58,8 @@ h2 {
 }
 
 a {
-    color: inherit;
-      text-decoration: none;
+    color: var(--accent-a11);
+    text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
