@@ -24,6 +24,8 @@ export type AuthContextType = {
     loading: boolean;
     signInWithGithub: () => Promise<{ error: AuthError | null }>;
     signOut: () => Promise<{ error: AuthError | null }>;
+    deleteAccount: () => Promise<{ error: AuthError | null }>;
+    downloadPii: () => Promise<void>;
 };
 
 export type ErrorContextType = {

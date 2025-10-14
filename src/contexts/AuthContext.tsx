@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/lib/supabase/client";
 
 import type { User, AuthError } from "@supabase/supabase-js";
 
@@ -49,13 +49,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { error };
     };
 
+    const deleteAccount = async (): Promise<{ error: AuthError | null }> => {
+        if (!user) return { error: new Error("No user logged in") as AuthError };
+
+        const { error } = await supabase.auth.admin.deleteUser(user.id);
+
+        return { error };
+    };
+
+    const downloadPii = async (): Promise<void> => {
+        if (!user) return;
+
+        const { data, error } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("id", user.id)
+            .single();
+        if (error) {
+            console.error("Error fetching user data:", error);
+            return;
+        }
+
+        return data;
+    };
 
     const signOut = async (): Promise<{ error: AuthError | null }> => {
         return supabase.auth.signOut();
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, signInWithGithub, signOut }}>
+        <AuthContext.Provider value={{
+            user,
+            loading,
+            signInWithGithub,
+            signOut,
+            deleteAccount,
+            downloadPii
+        }}>
             {children}
         </AuthContext.Provider>
     );

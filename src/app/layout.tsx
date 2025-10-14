@@ -2,15 +2,19 @@ import type { Metadata } from "next";
 import { Theme } from "@radix-ui/themes";
 
 import { ErrorProvider } from "@/contexts/ErrorContext";
+import { ModalProvider } from "@/contexts/ModalContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LayoutProvider } from "@/contexts/LayoutContext";
 
-import ErrorModal from "@/components/error/errorModal";
 import LoadingGate from "@/components/layout/LoadingGate";
 import Loading from "@/components/layout/LoadingBar";
+import ErrorModal from "@/components/error/ErrorModal";
+import ModalRoot from "@/components/modal/ModalRoot";
 
 import "./globals.css";
 import css from "./layout.module.css";
+import { AnalyticsLoader } from "@/components/analytics/AnalyticsLoader";
+import { CookieBanner } from "@/components/analytics/CookieBanner";
 
 export const metadata: Metadata = {
     title: "lyrite",
@@ -20,22 +24,27 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
+            <AnalyticsLoader />
             <body className={css.body}>
                 <Theme appearance="dark" accentColor="cyan" hasBackground={false}>
                     <ErrorProvider>
-                        <AuthProvider>
-                            <LoadingGate>
+                    <AuthProvider>
+                    <ModalProvider>
+                        <LoadingGate>
 
-                                <LayoutProvider>
-                                    <Loading />
-                                    {children}
-                                </LayoutProvider>
+                            <LayoutProvider>
+                                <Loading />
+                                {children}
+                            </LayoutProvider>
 
-                                <ErrorModal />
+                            <ErrorModal />
+                            <ModalRoot />
 
-                            </LoadingGate>
-                        </AuthProvider>
+                        </LoadingGate>
+                    </ModalProvider>
+                    </AuthProvider>
                     </ErrorProvider>
+                    <CookieBanner />
                 </Theme>
             </body>
         </html>

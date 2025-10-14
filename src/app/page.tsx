@@ -4,11 +4,12 @@ import { FilePlus } from "lucide-react";
 
 import { SongsProvider } from "@/contexts/SongsContext";
 
+import { createServerClient } from "@/lib/supabase/server";
+
+import Layout from "@/components/layout/Layout";
 import FeaturedSongs from "@/components/songs/FeaturedSongs";
 
 import css from "./page.module.css"
-import Layout from "@/components/layout/Layout";
-import { createServerClient } from "@/lib/supabaseServer";
 
 const featuredIds = [
     "f4f5302c-57a5-49ea-aeaa-70c9c84bd656",
