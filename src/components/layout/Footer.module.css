@@ -23,8 +23,11 @@
     position: fixed;
     bottom: 0.5rem;
     right: 1rem;
+
     display: flex;
     align-items: center;
     flex-direction: column;
+
+    color: white;
     font-size: 0.75rem;
 }

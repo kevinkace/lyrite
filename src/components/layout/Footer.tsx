@@ -17,7 +17,7 @@ const links = [
 export default function Footer() {
     return (
         <footer className={css.footer}>
-            <Flex align="center" justify="center" gap="2" className={css.links}>
+            <Flex align="center" justify="center" gap="3" className={css.links}>
                 {links.map(({ href, label }) => (
                     <a key={href} href={href}>{label}</a>
                 ))}
