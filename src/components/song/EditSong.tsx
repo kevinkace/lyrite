@@ -23,6 +23,8 @@ export default function EditSong() {
 
     const [showTools, setShowTools] = useState(false);
 
+    const [ showLoading, setShowLoading ] = useState(false);
+
     useEffect(() => {
         if (loading) {
             startLoading();
@@ -42,9 +44,19 @@ export default function EditSong() {
         </>);
 
         setHeaderUserContent(<>
-            <IconButton variant="ghost" size="2" radius="full" onClick={() => {
-                saveSong();
-            }}>
+            <IconButton
+                variant="ghost"
+                size="2"
+                radius="full"
+                className={clsx({ [css.loadingSave]: showLoading })}
+                disabled={showLoading}
+                onClick={() => {
+                    saveSong();
+
+                    setShowLoading(true);
+                    setTimeout(() => setShowLoading(false), 1000);
+                }}
+            >
                 <Save />
             </IconButton>
             <Button variant="surface" size="2" radius="full" onClick={() => {
@@ -61,7 +73,7 @@ export default function EditSong() {
             setHeaderContent(null);
             setHeaderUserContent(null);
         };
-    }, [setHeaderContent, song, loading, showTools]);
+    }, [setHeaderContent, song, loading, showTools, showLoading]);
 
     if (loading) return <p>Loading…</p>;
     if (!song) return <p>Song not found</p>;
