@@ -10,11 +10,10 @@ import LoadingGate from "@/components/layout/LoadingGate";
 import Loading from "@/components/layout/LoadingBar";
 import ErrorModal from "@/components/error/ErrorModal";
 import ModalRoot from "@/components/modal/ModalRoot";
+import CookieBanner from "@/components/analytics/CookieBanner";
 
 import "./globals.css";
 import css from "./layout.module.css";
-import { AnalyticsLoader } from "@/components/analytics/AnalyticsLoader";
-import { CookieBanner } from "@/components/analytics/CookieBanner";
 
 export const metadata: Metadata = {
     title: "lyrite",
@@ -24,7 +23,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <AnalyticsLoader />
             <body className={css.body}>
                 <Theme appearance="dark" accentColor="cyan" hasBackground={false}>
                     <ErrorProvider>
@@ -44,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </ModalProvider>
                     </AuthProvider>
                     </ErrorProvider>
+
                     <CookieBanner />
                 </Theme>
             </body>
