@@ -29,6 +29,13 @@
     cursor: crosshair;
 }
 
+.save {
+    svg {
+        height: 1.3em;
+        stroke-width: 1.5px;
+    }
+}
+
 .loadingSave {
     position: relative;
 

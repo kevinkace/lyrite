@@ -35,6 +35,7 @@ export default function SettingsPage() {
                 onClick={() => {
                     openModal({
                         type: "downloadPII",
+                        title : "Download PII",
                         props: {
                             onDownload: () => {
                                 console.log("Downloading PII...");
@@ -49,9 +50,13 @@ export default function SettingsPage() {
             <Button
                 onClick={() => {
                     openModal({
-                        type: "confirmDelete",
+                        type: "confirm",
+                        title: "Delete Account",
                         props: {
-                            onDelete: () => {
+                            description : "Delete ALL your songs and account info.",
+                            confirmRequirement : "delete account",
+                            confirmCta : "Delete my account",
+                            onConfirm: () => {
                                 handleDelete();
                             },
                         },

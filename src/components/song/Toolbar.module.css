@@ -3,8 +3,6 @@
 
     padding: var(--space-2);
 
-    /* round bottom radius */
-
     border-bottom-left-radius: var(--radius-2);
     border-bottom-right-radius: var(--radius-2);
 }
@@ -20,12 +18,13 @@
     --segmented-control-indicator-background-color: #fffb;
 
     :global(.rt-SegmentedControlIndicator) {
-
         z-index: 1;
         mix-blend-mode: overlay;
-        &:before {
-        }
 
+    }
+
+    :global(.rt-SegmentedControlRoot) {
+        grid-auto-columns: unset;
     }
 }
 
@@ -53,6 +52,7 @@
         background-color: var(--color-5-bg);
     }
     &[data-color="reset"] {
-        background-color: var(--gray-3);
+        background-color: var(--gray-2);
+        --font-weight-regular: normal;
     }
 }

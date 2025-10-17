@@ -10,10 +10,13 @@ import { getfontFamilyCSS } from "@/lib/fonts";
 import { colors, fontFamilies, fontSizes } from "@/data/consts";
 
 import css from "./Toolbar.module.css";
+import { useModal } from "@/contexts/ModalContext";
 
 export default function Toolbar() {
     const { song, resetAllColors } = useSong();
      const { setSelectedColor, selectedColor, stepColumns, setFontSize, stepFontSize, setFontFamily } = useEditing();
+
+     const { openModal } = useModal();
 
     if (!song) return null;
 
@@ -99,7 +102,19 @@ export default function Toolbar() {
                     console.log({ color, selectedColor });
 
                     if (color === "reset") {
-                        resetAllColors();
+
+                        openModal({
+                            type: "confirm",
+                            title : "Reset all colors?",
+                            props: {
+                                description : "This will remove all lyric colors.",
+                                onConfirm() {
+                                    resetAllColors();
+                                }
+                            }
+                        });
+
+                        return;
                     }
 
                     if (color === selectedColor?.toString()) {
@@ -124,7 +139,7 @@ export default function Toolbar() {
                         className={css.colorButton}
                         data-color={"reset"}
                     >
-                        reset
+                        reset all
                     </SegmentedControl.Item>
             </SegmentedControl.Root>
         </Flex>

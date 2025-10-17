@@ -1,10 +1,11 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
 
-type ModalType = "error" | "confirmDelete" | "downloadPII" | null;
+type ModalType = "error" | "confirm" | "downloadPII" | null;
 
 interface ModalState {
   type: ModalType;
+  title: string;
   props?: Record<string, any>;
 }
 

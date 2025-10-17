@@ -48,7 +48,7 @@ export default function EditSong() {
                 variant="ghost"
                 size="2"
                 radius="full"
-                className={clsx({ [css.loadingSave]: showLoading })}
+                className={clsx(css.save, { [css.loadingSave]: showLoading })}
                 disabled={showLoading}
                 onClick={() => {
                     saveSong();
