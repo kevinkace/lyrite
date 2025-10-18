@@ -84,6 +84,7 @@ export type SongsListProps = {
 export type SongContextType = {
     song: Song | null;
     loading: boolean;
+    setLoading: (loading: boolean) => void;
     createSong: ({ song }: { song: NewSong }) => Promise<Song>;
     setStyle: (newStyle: Partial<Song["style"]>) => void;
     saveSong: () => Promise<void>;
@@ -101,6 +102,7 @@ export type SongProviderProps = {
 export type SongsContextType = {
     songs: Song[];
     loading: boolean;
+    setLoading: (loading: boolean) => void;
     error: string | null;
     page?: number;
     search?: string;
@@ -138,6 +140,7 @@ export type PaginationProps = {
     currentPage: number;
     totalPages?: number;
     hasMore?: boolean;
+    setLoading?: (loading: boolean) => void;
 };
 
 /* ---------- Radix UI ---------- */

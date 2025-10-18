@@ -1,6 +1,5 @@
 "use client";
 
-import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { SongsProvider } from "@/contexts/SongsContext";
@@ -10,7 +9,8 @@ import SongsTable from "@/components/songs/SongsTable";
 
 const pageSize = 2;
 
-function ProfilePageInner() {
+
+export default function ProfilePage() {
   const { user } = useAuth();
   const searchParams = useSearchParams();
 
@@ -21,13 +21,5 @@ function ProfilePageInner() {
     <SongsProvider userId={user?.id} page={page} search={search} pageSize={pageSize}>
       <SongsTable />
     </SongsProvider>
-  );
-}
-
-export default function ProfilePage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ProfilePageInner />
-    </Suspense>
   );
 }

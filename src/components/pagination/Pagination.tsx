@@ -9,11 +9,14 @@ export default function Pagination({
     currentPage,
     totalPages,
     hasMore,
+    setLoading
 }: PaginationProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
     const goToPage = (page: number) => {
+        if (setLoading) setLoading(true);
+
         const params = new URLSearchParams(searchParams.toString());
         // unset page if going to first page
         if (page === 1) {
@@ -24,7 +27,6 @@ export default function Pagination({
 
         router.push(`?${params.toString()}`);
     };
-
 
     if (!currentPage) return null;
 

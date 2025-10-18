@@ -8,14 +8,14 @@ import { Switch, Table, TextField } from "@radix-ui/themes";
 import { useSongs } from "@/contexts/SongsContext";
 
 import Pagination from "@/components/pagination/Pagination";
+import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
 
 import css from "./SongsTable.module.css";
-import DeleteSongDialog from "../deleteSongDialog/DeleteSongDialog";
 
 const MAX_LYRIC_LEN = 200;
 
 export default function SongsTable() {
-    const { songs, loading, error, page, search, hasMore, deleteSong, updateSong } = useSongs();
+    const { songs, loading, setLoading, error, page, search, hasMore, deleteSong, updateSong } = useSongs();
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -89,6 +89,7 @@ export default function SongsTable() {
                 <Pagination
                     currentPage={page}
                     hasMore={hasMore}
+                    setLoading={setLoading}
                 />
             )}
         </div>

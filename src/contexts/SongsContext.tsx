@@ -9,7 +9,6 @@ import {
 import { supabase } from "@/lib/supabase/client";
 
 import { Song, SongsContextType, SongsProviderProps } from "@/types";
-import { init } from "next/dist/compiled/webpack/webpack";
 
 const SongsContext = createContext<SongsContextType | undefined>(undefined);
 
@@ -120,6 +119,7 @@ export function SongsProvider({
             value={{
                 songs,
                 loading,
+                setLoading,
                 error,
                 page,
                 search,
