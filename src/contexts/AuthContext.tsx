@@ -2,16 +2,11 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
+import { supabase } from "@/lib/supabase/client";
+
 import type { User, AuthError } from "@supabase/supabase-js";
 
-import { supabase } from "@/lib/supabaseClient";
-
-type AuthContextType = {
-  user: User | null;
-  loading: boolean;
-  signInWithGithub: () => Promise<{ error: AuthError | null }>;
-  signOut: () => Promise<{ error: AuthError | null }>;
-};
+import type { AuthContextType } from "@/types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -39,23 +34,58 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const signInWithGithub = async (): Promise<{ error: AuthError | null }> => {
         setLoading(true);
+
         const { error } = await supabase.auth.signInWithOAuth({
             provider: "github",
             options: {
-                redirectTo: window.location.href,
+                redirectTo: process.env.NODE_ENV === "development" ?
+                    "http://localhost:3000" :
+                    "https://lyritenextjs.netlify.app",
             },
         });
+
         setLoading(false);
+
         return { error };
     };
 
+    const deleteAccount = async (): Promise<{ error: AuthError | null }> => {
+        if (!user) return { error: new Error("No user logged in") as AuthError };
+
+        const { error } = await supabase.auth.admin.deleteUser(user.id);
+
+        return { error };
+    };
+
+    const downloadPii = async (): Promise<void> => {
+        if (!user) return;
+
+        const { data, error } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("id", user.id)
+            .single();
+        if (error) {
+            console.error("Error fetching user data:", error);
+            return;
+        }
+
+        return data;
+    };
 
     const signOut = async (): Promise<{ error: AuthError | null }> => {
         return supabase.auth.signOut();
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, signInWithGithub, signOut }}>
+        <AuthContext.Provider value={{
+            user,
+            loading,
+            signInWithGithub,
+            signOut,
+            deleteAccount,
+            downloadPii
+        }}>
             {children}
         </AuthContext.Provider>
     );

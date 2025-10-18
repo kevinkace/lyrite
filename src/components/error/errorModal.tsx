@@ -1,6 +1,8 @@
 "use client";
 
-import styles from "./errorModal.module.css";
+import { Dialog, Flex, IconButton, Button } from "@radix-ui/themes";
+
+import { X } from "lucide-react";
 
 import { useError } from "@/contexts/ErrorContext";
 
@@ -10,11 +12,31 @@ export default function ErrorModal() {
     if (!error) return null;
 
     return (
-        <div className={styles.backdrop} onClick={() => setError(null)}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <Dialog.Root open={!!error} onOpenChange={() => !open && setError(null)}>
+            <Dialog.Content>
+                <Dialog.Title>
+                    <Flex justify="between" align="center" mb="3">
+                        Error
+
+                        <IconButton
+                            variant="ghost"
+                            size="1"
+                            color="gray"
+                            onClick={() => setError(null)}
+                        >
+                            <X />
+                        </IconButton>
+                    </Flex>
+                </Dialog.Title>
+
                 <p>{error}</p>
-                <button onClick={() => setError(null)}>Close</button>
-            </div>
-        </div>
+
+                <Flex justify="end">
+                    <Button color="red" onClick={() => setError(null)}>
+                        Close
+                    </Button>
+                </Flex>
+            </Dialog.Content>
+        </Dialog.Root>
     );
 }

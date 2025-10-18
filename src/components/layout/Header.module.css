@@ -1,5 +1,45 @@
-.addSong {
-    composes: button from "../buttons/Button.module.css";
 
-    color: red;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.4em 4% 0.3em;
+
+    background: linear-gradient(90deg, #1a1a1aee 0%, #121212ff 100%);
+}
+
+.logo {
+    color: inherit;
+    margin: 0;
+}
+
+.logoLink {
+    display: flex;
+    align-items: baseline;
+    color: inherit;
+    opacity: 0.8;
+
+    transition: opacity 0.2s ease-in-out;
+
+    svg {
+        height: 2rem;
+        width: auto;
+        margin-right: 0.3rem;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+
+.userNavLink {
+    opacity: 0.7;
+
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+        opacity: 1;
+    }
 }

@@ -1,3 +1,8 @@
+import { ReactNode } from "react";
+import type { User as SupabaseUser, AuthError } from "@supabase/supabase-js";
+import type { ButtonProps } from "@radix-ui/themes";
+
+/* ---------- User ---------- */
 export type User = {
     id: string;
     email: string;
@@ -6,18 +11,139 @@ export type User = {
     updated_at?: string;
 };
 
+/* ---------- Context Types ---------- */
+export type UserContextType = {
+    user: SupabaseUser | null;
+    loading: boolean;
+    handleSignOut: () => Promise<{ error: AuthError | null }>;
+    signInWithGithub: () => Promise<{ error: AuthError | null }>;
+};
+
+export type AuthContextType = {
+    user: SupabaseUser | null;
+    loading: boolean;
+    signInWithGithub: () => Promise<{ error: AuthError | null }>;
+    signOut: () => Promise<{ error: AuthError | null }>;
+    deleteAccount: () => Promise<{ error: AuthError | null }>;
+    downloadPii: () => Promise<void>;
+};
+
+export type ErrorContextType = {
+    error: string | null;
+    setError: (msg: string | null) => void;
+};
+
+/* ---------- Lyrics & Styles ---------- */
+export type LyricSectionStyle = {
+    color?: number | null;
+    fontSize?: number;
+    bold?: boolean;
+};
+
+export type LyricParsed = {
+    id: number;
+    text: string;
+    style: LyricSectionStyle;
+};
+
+export type SheetStyle = {
+    fontFamily?: string;
+    fontSize?: number;
+    columns?: number;
+};
+
+/* ---------- Songs ---------- */
 export type Song = {
     id: string;
-    slug?: string;
+    slug: string;
     title: string;
-    artist: string | null;
-    lyrics: string | null;
+    artist: string;
+    lyrics: string;
+    lyrics_parsed: LyricParsed[];
+    style: SheetStyle;
     is_public: boolean;
-    allow_in_setlists: boolean;
-    parent_id?: string | null;   // forked from this song
-    user_id?: string;
-    created_at?: string;
-    updated_at?: string;
+    user_id: string;
+    created_at: string;
+    updated_at: string;
+};
+
+export type NewSong = {
+    title: string;
+    artist: string;
+    lyrics: string;
+    is_public: boolean;
 };
 
 export type Songs = Song[];
+
+export type SongsListProps = {
+    songs: Songs;
+};
+
+/* ---------- Song Context ---------- */
+export type SongContextType = {
+    song: Song | null;
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    createSong: ({ song }: { song: NewSong }) => Promise<Song>;
+    setStyle: (newStyle: Partial<Song["style"]>) => void;
+    saveSong: () => Promise<void>;
+    setSectionStyle: (sectionId: number, newStyle: Partial<LyricParsed["style"]>) => void;
+    resetAllColors: () => void;
+};
+
+export type SongProviderProps = {
+    children: ReactNode;
+    id?: string;
+    userId?: string;
+    slug?: string;
+};
+
+export type SongsContextType = {
+    songs: Song[];
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    error: string | null;
+    page?: number;
+    search?: string;
+    hasMore: boolean;
+    deleteSong: (id: string) => Promise<void>;
+    updateSongInState: (id: string, updates: Partial<Song>) => void;
+    updateSong: (id: string, updates: Partial<Song>) => Promise<void>;
+};
+
+export type SongsProviderProps = {
+    children: ReactNode;
+    userId?: string;
+    ids?: string[];
+    page?: number;
+    search?: string;
+    pageSize?: number;
+    initialSongs?: Song[];
+};
+
+/* ---------- Editing Context ---------- */
+export type EditingContextType = {
+    selectedColor: number | null;
+    setSelectedColor: (color: number | null) => void;
+
+    setColumns: (columns: number) => void;
+    stepColumns: (step: number) => void;
+    setFontSize: (fontSize: number) => void;
+    stepFontSize: (step: number) => void;
+    setFontFamily: (fontFamily: string) => void;
+    setSectionColor: (sectionId: number, color: number | null) => void;
+};
+
+/* ---------- Pagination ---------- */
+export type PaginationProps = {
+    currentPage: number;
+    totalPages?: number;
+    hasMore?: boolean;
+    setLoading?: (loading: boolean) => void;
+};
+
+/* ---------- Radix UI ---------- */
+export type RadixColor = ButtonProps["color"];
+
+export type RadixVariant = ButtonProps["variant"];

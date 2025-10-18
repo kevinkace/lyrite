@@ -54,9 +54,6 @@ With Lyrite you can easily have all lyrics on a single page with columns and fon
 - `/logout`
     - anon: redirect to `/`
     - user: force logout
-- `/register`
-    - anon: register form
-    - user: redirect to `/`
 - `/profile`
     - anon: redirect to `/`
     - user: user profile

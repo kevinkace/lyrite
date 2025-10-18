@@ -1,45 +1,50 @@
-"use client";
-
-import { ReactNode, useEffect, useState } from "react";
-
+import type { Metadata } from "next";
+import { Theme } from "@radix-ui/themes";
 
 import { ErrorProvider } from "@/contexts/ErrorContext";
-import { AuthProvider }  from "@/contexts/AuthContext";
+import { ModalProvider } from "@/contexts/ModalContext";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { LayoutProvider } from "@/contexts/LayoutContext";
 
-import ErrorModal from "@/components/error/errorModal";
-import Header     from "@/components/layout/Header";
-import Loading    from "@/components/Loading";
+import LoadingGate from "@/components/layout/LoadingGate";
+import Loading from "@/components/layout/LoadingBar";
+import ErrorModal from "@/components/error/ErrorModal";
+import ModalRoot from "@/components/modal/ModalRoot";
+import CookieBanner from "@/components/analytics/CookieBanner";
 
 import "./globals.css";
-import css from "./layout.module.css"
+import css from "./layout.module.css";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
-    const [ loading, setLoading ] = useState(true);
+export const metadata: Metadata = {
+    title: "lyrite",
+    description: "Create and share lyric sheets with ease.",
+};
 
-    useEffect(() => {
-        if (window.location.hash.includes("access_token")) {
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-
-        setLoading(false);
-    }, []);
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html>
+        <html lang="en">
             <body className={css.body}>
-                <ErrorProvider>
+                <Theme appearance="dark" accentColor="cyan" hasBackground={false}>
+                    <ErrorProvider>
                     <AuthProvider>
-                            {loading && <Loading />}
+                    <ModalProvider>
+                        <LoadingGate>
 
-                            <header className={css.header}>
-                                <Header />
-                            </header>
+                            <LayoutProvider>
+                                <Loading />
+                                {children}
+                            </LayoutProvider>
 
-                            <main className={css.main}>{children}</main>
+                            <ErrorModal />
+                            <ModalRoot />
 
-                        <ErrorModal />
+                        </LoadingGate>
+                    </ModalProvider>
                     </AuthProvider>
-                </ErrorProvider>
+                    </ErrorProvider>
+
+                    <CookieBanner />
+                </Theme>
             </body>
         </html>
     );

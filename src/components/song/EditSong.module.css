@@ -1,0 +1,89 @@
+.editSong {
+    position: relative;
+}
+
+.toolsWrapper {
+}
+
+.lyrics {
+    margin-top: 1em;
+    transform-origin: bottom center;
+    transition: transform 0.2s ease;
+}
+
+.lyricCard {
+    margin: 0 0 1em;
+
+    white-space: pre-wrap;
+
+    background-color: transparent;
+
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: var(--hover-color);
+    }
+}
+
+.hoverFill {
+    cursor: crosshair;
+}
+
+.save {
+    svg {
+        height: 1.3em;
+        stroke-width: 1.5px;
+    }
+}
+
+.loadingSave {
+    position: relative;
+
+    &:after {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 2px solid currentColor;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+
+.style-0 {
+    color: var(--color-0-text);
+    &:hover {}
+}
+.style-1 {
+    color: var(--color-1-text);
+    &:hover {}
+}
+.style-2 {
+    color: var(--color-2-text);
+    &:hover {}
+}
+.style-3 {
+    color: var(--color-3-text);
+    &:hover {}
+}
+.style-4 {
+    color: var(--color-4-text);
+    &:hover {}
+}
+.style-5 {
+    color: var(--color-5-text);
+    &:hover {}
+}

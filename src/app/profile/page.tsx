@@ -1,22 +1,16 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-
-import { SongsProvider } from "@/contexts/SongsContext"
-import { useAuth }       from "@/contexts/AuthContext";
-
-import SongsTable from "@/components/songs/SongsTable";
+import { ProfileData } from "@/components/profile/ProfileData";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function ProfilePage() {
     const { user } = useAuth();
-    const searchParams = useSearchParams();
 
-    const page = parseInt(searchParams.get("page") || "1", 10);
-    const search = searchParams.get("search") || "";
+    if (!user) return <p>Not logged in</p>;
 
     return (
-        <SongsProvider userId={user?.id} page={page} search={search}>
-            <SongsTable />
-        </SongsProvider>
+        <div>
+            <ProfileData/>
+        </div>
     );
 }

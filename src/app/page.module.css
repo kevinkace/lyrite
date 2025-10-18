@@ -3,4 +3,54 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-grow: 1;
+    gap: 3em;
+    margin: 0 auto 4em;
+
+    width: 100%;
+    max-width: 1400px;
+}
+
+.usp {
+    margin: 0;
+    text-align: center;
+    font-size: 2.4rem;
+    line-height: 1.8;
+}
+
+.tagOrganize {
+    font-family: monospace;
+    font-style: normal;
+    text-transform: uppercase;
+    outline: 0.2em solid #fff5;
+    outline-offset: 0.2em;
+    outline-style: dashed;
+    border-radius: 0.1em;
+}
+
+.tagColor {
+    background: linear-gradient(90deg, #ff7e5f, #b54ffeff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    margin-left: 0.2em;
+
+    /* otherwise text-clip gets cut off from "," kerning */
+    margin-right: -0.1em;
+    padding-right: 0.1em;
+
+    font-style: normal;
+}
+
+.tagStyle {
+    font-style: italic;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: normal;
+    letter-spacing: 0.08em;
+}
+
+.ctaButtons {
+    margin-bottom: 1em;
 }

@@ -1,17 +1,13 @@
-"use client";
-
-import { use } from "react";
-
 import { SongProvider } from "@/contexts/SongContext";
 
-export default function SongLayout({
+export default async function SongLayout({
     children,
     params,
 }: {
     children: React.ReactNode;
     params: Promise<{ userId?: string; slug?: string }>;
 }) {
-    const { userId, slug } = use(params);
+    const { userId, slug } = await params;
 
     return (
         <SongProvider userId={userId} slug={slug}>

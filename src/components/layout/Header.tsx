@@ -1,28 +1,34 @@
 import Link from "next/link";
 
-import { useAuth } from "@/contexts/AuthContext";
+import { Flex } from "@radix-ui/themes";
 
-import UserMenu from "./UserMenu";
+// import { UserNav } from "@/components/layout/UserNav";
+import { UserSection } from "@/components/layout/UserSection";
+import { LogoIcon } from "@/components/icons/LogoIcon.svg";
+import { Title } from "@/components/layout/Title";
+// import ErrorButton from "@/components/error/ErrorButton";
 
 import css from "./Header.module.css";
 
 export default function Header() {
-    const { user, loading } = useAuth();
-
     return (
-        <>
-            <h1><Link href="/">lyrite</Link></h1>
+        <header className={css.header}>
+            <Flex align="center" gap="6">
+                <h1 className={css.logo}>
+                    <Link href="/" data-gid="header-home-link" className={css.logoLink}>
+                        <LogoIcon />
+                        lyrite
+                    </Link>
+                </h1>
 
-            <Link className={css.addSong} href="/songs/new">Add Song</Link>
+                {/* <UserNav /> */}
+                {/* <ErrorButton /> */}
+            </Flex>
 
-            {user && (<UserMenu />)}
+            <Title />
 
-            {!user && !loading && (
-                <p>
-                    <Link href="/login">Login</Link> | <Link href="/register">Register</Link>
-                </p>
-            )}
+            <UserSection />
 
-        </>
+        </header>
     );
 }

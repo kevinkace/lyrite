@@ -1,0 +1,27 @@
+.main {
+    min-height: 100vh;
+}
+
+.logo {
+    height: 5em;
+}
+
+.providerCard {
+    width: 100%;
+    max-width: 400px;
+}
+
+.providerButton,
+.loginButton {
+    width: 100%;
+    gap: 1em;
+}
+
+.hr {
+    margin: 1em 0;
+    color: var(--gray-11);
+}
+
+.emailInput {
+    width: 100%;
+}

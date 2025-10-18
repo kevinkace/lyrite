@@ -1,0 +1,58 @@
+.toolbar {
+    background: var(--gray-4);
+
+    padding: var(--space-2);
+
+    border-bottom-left-radius: var(--radius-2);
+    border-bottom-right-radius: var(--radius-2);
+}
+
+.fontFamilySelect {
+    button {
+        min-width: 14em;
+    }
+}
+
+.colorTools {
+    --space-4: 1em;
+    --segmented-control-indicator-background-color: #fffb;
+
+    :global(.rt-SegmentedControlIndicator) {
+        z-index: 1;
+        mix-blend-mode: overlay;
+
+    }
+
+    :global(.rt-SegmentedControlRoot) {
+        grid-auto-columns: unset;
+    }
+}
+
+.colorButton {
+    &[data-color] {
+        --font-weight-regular: bold;
+        color: #fffd;
+    }
+    &[data-color="0"] {
+        background-color: var(--color-0-bg);
+    }
+    &[data-color="1"] {
+        background-color: var(--color-1-bg);
+    }
+    &[data-color="2"] {
+        background-color: var(--color-2-bg);
+    }
+    &[data-color="3"] {
+        background-color: var(--color-3-bg);
+    }
+    &[data-color="4"] {
+        background-color: var(--color-4-bg);
+    }
+    &[data-color="5"] {
+        background-color: var(--color-5-bg);
+    }
+    &[data-color="reset"] {
+        background-color: var(--gray-2);
+        --font-weight-regular: normal;
+    }
+}

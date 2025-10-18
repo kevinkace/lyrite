@@ -1,26 +1,23 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
+import { Switch, Table, TextField } from "@radix-ui/themes";
+
 import { useSongs } from "@/contexts/SongsContext";
-import { useRouter, useSearchParams } from "next/navigation";
+
+import Pagination from "@/components/pagination/Pagination";
+import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
 
 import css from "./SongsTable.module.css";
 
-const MAX_LEN = 100;
+const MAX_LYRIC_LEN = 200;
 
 export default function SongsTable() {
-    const { songs, loading, error, page, search, hasMore, deleteSong } = useSongs();
+    const { songs, loading, setLoading, error, page, search, hasMore, deleteSong, updateSong } = useSongs();
     const router = useRouter();
     const searchParams = useSearchParams();
-
-    const goToPage = (newPage: number) => {
-        const params = new URLSearchParams(searchParams.toString());
-
-        params.set("page", String(newPage));
-
-        router.push(`?${params.toString()}`);
-    };
 
     const setSearch = (value: string) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -33,7 +30,7 @@ export default function SongsTable() {
 
     return (
         <div className={css.wrapper}>
-            <input
+            <TextField.Root
                 type="text"
                 defaultValue={search}
                 placeholder="Search songs..."
@@ -44,39 +41,57 @@ export default function SongsTable() {
             {loading && <p>Loading...</p>}
             {error && <p className={css.error}>{error}</p>}
 
-            <table className={css.table}>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Artist</th>
-                        <th>Lyrics</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table.Root className={css.table}>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell>Artist</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell>Lyrics</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell>Public</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell>Actions</Table.ColumnHeaderCell>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
                     {songs.map((song) => (
-                        <tr key={song.id}>
-                            <td>
+                        <Table.Row key={song.id} data-key={song.id}>
+                            <Table.Cell>
                                 <Link href={`/songs/${song.id}`} className={css.songLink}>
                                     {song.title}
                                 </Link>
-                            </td>
-                            <td>{song.artist}</td>
-                            <td>{song.lyrics?.slice(0, MAX_LEN)}{song.lyrics?.length > MAX_LEN && "..."}</td>
-                            <td>
-                                <button className={css.deleteButton} onClick={() => deleteSong(song.id)}>delete</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+                            </Table.Cell>
 
-            {page && (<div className={css.pagination}>
-                {page > 1 && (
-                    <button onClick={() => goToPage(page - 1)}>Previous</button>
-                )}
-                {hasMore && <button onClick={() => goToPage(page + 1)}>Next</button>}
-            </div>)}
+                            <Table.Cell>{song.artist}</Table.Cell>
+
+                            <Table.Cell>{song.lyrics.slice(0, MAX_LYRIC_LEN)}{song.lyrics.length > MAX_LYRIC_LEN && "..."}</Table.Cell>
+
+                            <Table.Cell>
+                                <Switch
+                                    checked={song.is_public}
+                                    onCheckedChange={(checked) => {
+                                        updateSong(song.id, { is_public: checked })
+                                    }}
+                                />
+                            </Table.Cell>
+
+                            <Table.Cell>
+                                <DeleteSongDialog
+                                    songId={song.id}
+                                    title={song.title}
+                                    onDelete={deleteSong}
+                                />
+                            </Table.Cell>
+                        </Table.Row>
+                    ))}
+                </Table.Body>
+            </Table.Root>
+
+            {page && (
+                <Pagination
+                    currentPage={page}
+                    hasMore={hasMore}
+                    setLoading={setLoading}
+                />
+            )}
         </div>
     );
 }
