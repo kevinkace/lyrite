@@ -8,7 +8,7 @@ export const userLinks = [
     },
     {
         href: "/profile/songs",
-        label: "lyric sheets",
+        label: "my songs",
         icon: "file"
     },
     {

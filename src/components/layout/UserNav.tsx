@@ -13,7 +13,7 @@ export const UserNav = () => {
     return (
         <nav className={css.userNav}>
             <Link href="/profile/songs" className={css.userNavLink}>
-                my lyric sheets
+                my songs
             </Link>
         </nav>
     );

@@ -34,7 +34,7 @@ export default async function HomePage() {
                         <em className={css.tagOrganize}>Organize</em>,{" "}
                         <em className={css.tagColor}>color</em>, and{" "}
                         <em className={css.tagStyle}>style</em>{" "}
-                        your lyrics <br />
+                        your songs <br />
                         for a flawless performance
                     </h2>
 
@@ -43,7 +43,7 @@ export default async function HomePage() {
                         <Button asChild={true} size="4" variant="surface" color="violet">
                             <Link href="/songs/new">
                                 <FilePlus width="1em" height="auto" />
-                                Create lyric sheet
+                                Start a new song
                             </Link>
                         </Button>
 
