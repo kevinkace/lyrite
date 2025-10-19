@@ -27,7 +27,8 @@ export function AuthData() {
     if (!user) return <p>No user data</p>;
 
     return (
-        <Card variant="surface" className={css.card}>
+        <Card size="3" variant="surface" className={css.card}>
+            <h4>Auth data</h4>
             <DefList items={dataKeys.map(({path, label}) => {
                 const value = getUserData(user, path);
 

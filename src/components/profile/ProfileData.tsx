@@ -25,6 +25,7 @@ export function ProfileData() {
 
     return (
         <Card size="3" variant="surface" className={styles.card}>
+            <h4>Profile data</h4>
             <DefList items={profileKeys.map(({key, label}) => {
                 const value = profile[key];
 

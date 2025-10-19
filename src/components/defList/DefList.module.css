@@ -8,7 +8,7 @@
   grid-template-columns: 1fr 3fr;
   padding: 0.2em 0.5em;
 
-    &:nth-child(odd) {
+    &:nth-child(even) {
         background-color: #1114;
     }
 }
