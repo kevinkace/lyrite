@@ -2,23 +2,28 @@ import { ReactNode } from "react";
 import type { User as SupabaseUser, AuthError } from "@supabase/supabase-js";
 import type { ButtonProps } from "@radix-ui/themes";
 
-/* ---------- User ---------- */
-export type User = {
+export type Profile = {
     id: string;
-    email: string;
-    display_name?: string | null;
-    created_at?: string;
-    updated_at?: string;
-};
+    updated_at: string;
+    created_at: string;
+    username?: string;
+    full_name?: string;
+    avatar_url?: string;
+    website?: string;
+}
 
 /* ---------- Context Types ---------- */
 export type UserContextType = {
-    user: SupabaseUser | null;
+    id: string | null;
+    profile: Profile | null;
+
     loading: boolean;
+
 };
 
 export type AuthContextType = {
     user: SupabaseUser | null;
+    profile: Profile | null;
     loading: boolean;
     signInWithGithub: () => Promise<{ error: AuthError | null }>;
     signOut: () => Promise<{ error: AuthError | null }>;

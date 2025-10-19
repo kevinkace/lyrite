@@ -20,7 +20,7 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function UserMenu() {
-    const { user, signOut } = useAuth();
+    const { user, profile, signOut } = useAuth();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -53,7 +53,7 @@ export default function UserMenu() {
                 className={css.avatarButton}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <Avatar user={user} />
+                <Avatar profile={profile} size="2"/>
             </div>
 
             <AnimatePresence>
@@ -67,7 +67,7 @@ export default function UserMenu() {
                     >
                         <Card>
                             <Card className={css.userCard}>
-                                <Avatar user={user} />
+                                <Avatar profile={profile} size="2"/>
                                 <div className={css.cardText}>
                                     <p className={css.username}>{user.user_metadata.preferred_username}</p>
                                     <p className={css.email}>{user.email}</p>

@@ -1,7 +1,4 @@
 .avatar {
-    --size: 28px;
-    width: var(--image-size, --size);
-    height: var(--image-size, --size);
     border-radius: 50%;
     overflow: hidden;
     background-color: #333;

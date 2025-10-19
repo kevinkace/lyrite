@@ -6,19 +6,34 @@ import { supabase } from "@/lib/supabase/client";
 
 import type { User, AuthError } from "@supabase/supabase-js";
 
-import type { AuthContextType } from "@/types";
+import type { AuthContextType, Profile } from "@/types";
+import { fetchProfile } from "@/lib/supabase/profile";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
+    const [profile, setProfile] = useState<Profile | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // On mount, check for an existing session
         supabase.auth.getSession().then(({ data: { session } }) => {
             setUser(session?.user ?? null);
-            setLoading(false);
+
+            if (session?.user) {
+                fetchProfile(session.user.id).then(({data : profile, error}) => {
+                    if (error) {
+                        console.error("Error fetching profile:", error);
+                    } else {
+                        setProfile(profile);
+                    }
+
+                    setLoading(false);
+                });
+            } else {
+                setLoading(false);
+            }
         });
 
         // Listen for changes (login, logout, refresh)
@@ -80,6 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return (
         <AuthContext.Provider value={{
             user,
+            profile,
             loading,
             signInWithGithub,
             signOut,

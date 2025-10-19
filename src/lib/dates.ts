@@ -1,4 +1,8 @@
-export function formattedDate(value: string | number) {
+export function formattedDate(value: string | number | undefined) {
+    if (!value) {
+        return null;
+    }
+
     try {
         value = new Date(value).toLocaleString();
     } catch {

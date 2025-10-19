@@ -2,47 +2,42 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-import { supabase } from "@/lib/supabase/client";
-
-import type { User } from "@supabase/supabase-js";
-
-import type { UserContextType } from "@/types";
+import type { UserContextType, Profile } from "@/types";
+import { fetchProfile } from "@/lib/supabase/profile";
 
 const UserContext = createContext<UserContextType>({
-    user: null,
-    loading: true
+    id: null,
+    loading: true,
+    profile: null
 });
 
 export const UserProvider = ({ children, userId }: { children: ReactNode, userId: string }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [profile, setProfile] = useState<Profile | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchUser = async () => {
+        const fetchData = async () => {
             setLoading(true);
 
-            const { data, error } = await supabase
-                .from("profiles")
-                .select("*")
-                .eq("id", userId)
-                .single();
+            const { data, error } = await fetchProfile(userId);
 
             if (error) {
                 console.error("Error fetching user:", error);
             } else {
-                setUser(data);
+                setProfile(data);
             }
             setLoading(false);
         };
 
-        fetchUser();
+        fetchData();
     }, [userId]);
 
     return (
-        <UserContext.Provider value={{ user, loading }}>
+        <UserContext.Provider value={{ id : userId, profile, loading }}>
             {children}
         </UserContext.Provider>
     );
 };
 
 export const useUser = () => useContext(UserContext);
+

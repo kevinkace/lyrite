@@ -1,20 +1,23 @@
 "use client";
 
-import css from "./Avatar.module.css"
-import { User } from "@supabase/supabase-js";
+import { Avatar as Av} from "@radix-ui/themes";
 
-export function Avatar({ user } : { user: User }) {
+import { Profile } from "@/types";
+
+import css from "./Avatar.module.css"
+
+export function Avatar({ profile, size = "6" } : { profile: Profile | null, size?: string | number }) {
+    const src = profile?.avatar_url || "default-avatar.png";
+    const alt = `${profile?.username || "User"} avatar`;
+    const fallback = profile?.username ? profile.username[0].toUpperCase() : "U";
 
     return (
-        <div className={css.avatar}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-                src={user?.user_metadata?.avatar_url || "/default-avatar.png"}
-                alt={`${user?.user_metadata?.preferred_username || "User"} avatar`}
-                className={css.img}
-                width={40}
-                height={40}
-            />
-        </div>
+        <Av
+            size={size}
+            src={src}
+            alt={alt}
+            fallback={fallback}
+            radius="full"
+        />
     );
 }
