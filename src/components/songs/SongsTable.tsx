@@ -2,8 +2,11 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useDebounce } from "@uidotdev/usehooks";
 
-import { Switch, Table, TextField } from "@radix-ui/themes";
+import { IconButton, Switch, Table, TextField, Flex } from "@radix-ui/themes";
+import { LayoutGrid, ListFilter, Table2 } from "lucide-react";
 
 import { useSongs } from "@/contexts/SongsContext";
 
@@ -19,24 +22,44 @@ export default function SongsTable() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const setSearch = (value: string) => {
+    const [searchValue, setSearchValue] = useState(search || "");
+    const debouncedSearch = useDebounce(searchValue, 500);
+
+    useEffect(() => {
+        if (debouncedSearch === search) return; // skip if unchanged
+
         const params = new URLSearchParams(searchParams.toString());
-
-        params.set("search", value);
+        params.set("search", debouncedSearch);
         params.set("page", "1");
-
         router.push(`?${params.toString()}`);
-    };
+    }, [ debouncedSearch ]);
 
     return (
         <div className={css.wrapper}>
-            <TextField.Root
-                type="text"
-                defaultValue={search}
-                placeholder="Search songs..."
-                onBlur={(e) => setSearch(e.target.value)}
-                className={css.searchInput}
-            />
+            <Flex gap="2" align="center" justify="between">
+                <Flex gap="2" align="center">
+                    <TextField.Root
+                        type="text"
+                        value={searchValue}
+                        placeholder="Search songs..."
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        className={css.searchInput}
+                    />
+
+                    <IconButton variant="soft" color="gray">
+                        <ListFilter />
+                    </IconButton>
+                </Flex>
+
+                {/* <Flex gap="2" align="center">
+                    <IconButton variant="soft" color="gray">
+                        <Table2 />
+                    </IconButton>
+                    <IconButton variant="soft" color="gray">
+                        <LayoutGrid />
+                    </IconButton>
+                </Flex> */}
+            </Flex>
 
             {loading && <p>Loading...</p>}
             {error && <p className={css.error}>{error}</p>}
@@ -47,10 +70,11 @@ export default function SongsTable() {
                         <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell>Artist</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell>Lyrics</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell>Public</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell>Actions</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell align="center">Public</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell align="center">Actions</Table.ColumnHeaderCell>
                     </Table.Row>
                 </Table.Header>
+
                 <Table.Body>
                     {songs.map((song) => (
                         <Table.Row key={song.id} data-key={song.id}>
@@ -62,18 +86,21 @@ export default function SongsTable() {
 
                             <Table.Cell>{song.artist}</Table.Cell>
 
-                            <Table.Cell>{song.lyrics.slice(0, MAX_LYRIC_LEN)}{song.lyrics.length > MAX_LYRIC_LEN && "..."}</Table.Cell>
-
                             <Table.Cell>
+                                {song.lyrics.slice(0, MAX_LYRIC_LEN)}
+                                {song.lyrics.length > MAX_LYRIC_LEN && "..."}
+                            </Table.Cell>
+
+                            <Table.Cell align="center">
                                 <Switch
                                     checked={song.is_public}
                                     onCheckedChange={(checked) => {
-                                        updateSong(song.id, { is_public: checked })
+                                        updateSong(song.id, { is_public: checked });
                                     }}
                                 />
                             </Table.Cell>
 
-                            <Table.Cell>
+                            <Table.Cell align="center">
                                 <DeleteSongDialog
                                     songId={song.id}
                                     title={song.title}

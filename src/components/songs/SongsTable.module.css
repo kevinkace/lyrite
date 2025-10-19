@@ -2,15 +2,25 @@
 }
 
 .searchInput {
-  margin-bottom: 1rem;
   padding: 0.4rem;
   width: 100%;
-  max-width: 300px;
+  min-width: 300px;
+  max-width: 500px;
   font-size: 1rem;
 }
 
 .table {
   width: 100%;
+  margin-top: 1rem;
+
+  table {
+  }
+
+  thead {
+    border-top-left-radius: 10px  !important;
+    border-top-right-radius: 10px !important;
+    background-color: #0003;
+  }
 }
 
 .songLink {

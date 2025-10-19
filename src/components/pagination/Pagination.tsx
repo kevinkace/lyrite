@@ -31,7 +31,7 @@ export default function Pagination({
     if (!currentPage) return null;
 
     return (
-        <Flex justify="center" gap="2" mt="4">
+        <Flex justify="center" gap="2" mt="4" align="center">
             <Button
                 variant="soft"
                 disabled={currentPage === 1}
@@ -50,7 +50,8 @@ export default function Pagination({
                     >
                         {p}
                     </Button>
-                ))}
+                ))
+            }
 
             {!totalPages && (currentPage)}
 
