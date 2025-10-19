@@ -1,8 +1,10 @@
 "use client";
 
-import { useAuth } from "@/contexts/AuthContext";
 import { getUserData } from "@/lib/object";
 import { Card, Text } from "@radix-ui/themes";
+
+import { useAuth } from "@/contexts/AuthContext";
+import { formattedDate } from "@/lib/dates";
 
 import styles from "./ProfileData.module.css";
 
@@ -28,13 +30,8 @@ export function ProfileData() {
                 {dataKeys.map((key) => {
                     let value = getUserData(user, key.path);
 
-                    if (key.path.includes("_at") && value && (typeof value === "string" || typeof value === "number")) {
-                        // Format timestamps
-                        try {
-                            value = new Date(value).toLocaleString();
-                        } catch {
-                            value = "Invalid date";
-                        }
+                    if (key.path.includes("_at") && value) {
+                        value = formattedDate(value);
                     }
 
                     return (

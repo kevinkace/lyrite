@@ -1,20 +1,24 @@
 "use client";
 
-import { useParams, useSearchParams } from "next/navigation";
-import { SongsProvider } from "@/contexts/SongsContext";
-
 import SongsTable from "@/components/songs/SongsTable";
 
-export default function UserSongsPage() {
-  const { userId } = useParams();
-  const searchParams = useSearchParams();
+import { useUser } from "@/contexts/UserContext";
+import { formattedDate } from "@/lib/dates";
 
-  const page = parseInt(searchParams.get("page") || "1", 10);
-  const search = searchParams.get("search") || "";
+import css from "./page.module.css";
+
+export default function UserSongsPage() {
+
+  const { user } = useUser();
 
   return (
-    <SongsProvider userId={userId as string} page={page} search={search}>
+    <>
+      <h2 className={css.userName}>{user?.username || user?.full_name}</h2>
+      <div className={css.profileStats}>
+        <div>user since: {formattedDate(user?.created_at)}</div>
+        <div>last seen: {formattedDate(user?.updated_at)}</div>
+      </div>
       <SongsTable />
-    </SongsProvider>
+    </>
   );
 }

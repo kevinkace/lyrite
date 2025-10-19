@@ -1,0 +1,10 @@
+.userName {
+    margin-bottom: 0;
+}
+
+.profileStats {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+    font-size: 0.8em;
+}

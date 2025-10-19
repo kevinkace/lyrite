@@ -15,8 +15,6 @@ export type User = {
 export type UserContextType = {
     user: SupabaseUser | null;
     loading: boolean;
-    handleSignOut: () => Promise<{ error: AuthError | null }>;
-    signInWithGithub: () => Promise<{ error: AuthError | null }>;
 };
 
 export type AuthContextType = {

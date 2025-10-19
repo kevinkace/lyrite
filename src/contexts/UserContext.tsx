@@ -4,67 +4,42 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 
 import { supabase } from "@/lib/supabase/client";
 
-import type { User, AuthError } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
 
 import type { UserContextType } from "@/types";
 
 const UserContext = createContext<UserContextType>({
     user: null,
-    loading: true,
-    handleSignOut: async () => ({ error: null }),
-    signInWithGithub: async () => ({ error: null }),
+    loading: true
 });
 
-export const UserProvider = ({ children }: { children: ReactNode }) => {
+export const UserProvider = ({ children, userId }: { children: ReactNode, userId: string }) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
-    // signout
-    const handleSignOut = async (): Promise<{ error: AuthError | null }> => {
-        return supabase.auth.signOut();
-    };
-
-    const signInWithGithub = async (): Promise<{ error: AuthError | null }> => {
-        setLoading(true);
-
-        const { error } = await supabase.auth.signInWithOAuth({
-            provider: "github",
-            options: {
-                redirectTo: window.location.origin // redirect back to app
-            }
-        });
-
-        setLoading(false);
-
-        return { error };
-    };
-
     useEffect(() => {
-        // Check current session
-        const getSession = async () => {
-            const {
-                data: { session },
-            } = await supabase.auth.getSession();
+        const fetchUser = async () => {
+            setLoading(true);
 
-            setUser(session?.user ?? null);
+            const { data, error } = await supabase
+                .from("profiles")
+                .select("*")
+                .eq("id", userId)
+                .single();
+
+            if (error) {
+                console.error("Error fetching user:", error);
+            } else {
+                setUser(data);
+            }
             setLoading(false);
         };
 
-        getSession();
-
-        // Listen for auth changes
-        const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-            setUser(session?.user ?? null);
-            setLoading(false);
-        });
-
-        return () => {
-            listener.subscription.unsubscribe();
-        };
-    }, []);
+        fetchUser();
+    }, [userId]);
 
     return (
-        <UserContext.Provider value={{ user, loading, handleSignOut, signInWithGithub }}>
+        <UserContext.Provider value={{ user, loading }}>
             {children}
         </UserContext.Provider>
     );
