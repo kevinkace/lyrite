@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button, Flex } from "@radix-ui/themes";
 
 import { useModal } from "@/contexts/ModalContext";
+import { AuthData } from "@/components/profile/AuthData";
 
 export default function SettingsPage() {
     const { openModal } = useModal();
@@ -31,6 +32,9 @@ export default function SettingsPage() {
 
     return (
         <Flex direction="column" gap="4" align="start">
+
+            <AuthData />
+
             <Button
                 onClick={() => {
                     openModal({

@@ -1,58 +1,35 @@
 "use client";
 
-import { getUserData } from "@/lib/object";
-import { Card, Text } from "@radix-ui/themes";
+import { Card } from "@radix-ui/themes";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { formattedDate } from "@/lib/dates";
+
+import { DefList } from "@/components/defList/DefList";
 
 import styles from "./ProfileData.module.css";
 
-const dataKeys = [
-    { path: "id", label: "ID" },
-    { path: "email", label: "Email" },
-    { path: "email_confirmed_at", label: "Email Confirmed At" },
-    { path: "app_metadata.provider", label: "Provider" },
-    { path: "user_metadata.avatar_url", label: "Avatar URL" },
-    { path: "user_metadata.preferred_username", label: "Preferred Username" },
-    { path: "created_at", label: "Created At" },
-    { path: "updated_at", label: "Updated At" },
+const profileKeys = [
+    { key: "id", label: "ID" },
+    { key : "updated_at", label: "Updated At" },
+    { key: "created_at", label: "Created At" },
+    { key : "username", label: "Username" },
+    { key: "full_name", label: "Full Name" },
+    { key: "avatar_url", label: "Avatar URL" },
+    { key : "website", label: "Website" },
 ];
 
 export function ProfileData() {
-    const { user } = useAuth();
+    const { profile } = useAuth();
 
-    if (!user) return <p>No user data</p>;
+    if (!profile) return <p>No user data</p>;
 
     return (
         <Card size="3" variant="surface" className={styles.card}>
-            <dl className={styles.dl}>
-                {dataKeys.map((key) => {
-                    let value = getUserData(user, key.path);
+            <DefList items={profileKeys.map(({key, label}) => {
+                const value = profile[key];
 
-                    if (key.path.includes("_at") && value) {
-                        value = formattedDate(value);
-                    }
-
-                    return (
-                        <div key={key.path} className={styles.row}>
-                            <dt className={styles.label}>
-                                <Text size="2" color="gray">
-                                    {key.label}
-                                </Text>
-                            </dt>
-
-                            <dd className={styles.value}>
-                                {(
-                                    <Text size="2" weight="medium">
-                                        {String(value ?? "—")}
-                                    </Text>
-                                )}
-                            </dd>
-                        </div>
-                    );
-                })}
-            </dl>
+                return { key, label, value };
+            })} />
         </Card>
     );
 }

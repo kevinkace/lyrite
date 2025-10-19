@@ -1,0 +1,29 @@
+.dl {
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  padding: 0.2em 0.5em;
+
+    &:nth-child(odd) {
+        background-color: #1114;
+    }
+}
+
+.label {
+  margin: 0;
+}
+
+.value {
+  margin: 0;
+  width: 100%;
+  text-align: left;
+
+  &.id {
+    font-family: monospace;
+    text-transform: uppercase;
+  }
+}
