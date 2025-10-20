@@ -1,3 +1,15 @@
 .lyrics {
     width: 100%;
+    height: 26em;
+    overflow: auto;
+}
+
+.card {
+    min-width: 800px;
+    max-width: 800px;
+}
+
+.button {
+    margin-top: 1em;
+    width: 200px;
 }

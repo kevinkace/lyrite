@@ -1,5 +1,7 @@
 import { SongProvider } from "@/contexts/SongContext";
 
+import Layout from "@/components/layout/Layout";
+
 export default async function SongLayout({
     children,
     params,
@@ -10,8 +12,10 @@ export default async function SongLayout({
     const { userId, slug } = await params;
 
     return (
-        <SongProvider userId={userId} slug={slug}>
-            {children}
-        </SongProvider>
+        <Layout bg="mesh">
+            <SongProvider userId={userId} slug={slug}>
+                {children}
+            </SongProvider>
+        </Layout>
     );
 }
