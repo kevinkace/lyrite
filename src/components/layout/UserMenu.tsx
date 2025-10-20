@@ -66,14 +66,15 @@ export default function UserMenu() {
                         transition={{ duration: 0.2 }}
                     >
                         <Card>
-                            <Card className={css.userCard}>
-                                <Avatar profile={profile} size="2"/>
+                            <Flex gap="3" className={css.userCard}>
+                                <Avatar profile={profile} size="3"/>
                                 <div className={css.cardText}>
                                     <p className={css.username}>{user.user_metadata.preferred_username}</p>
-                                    <p className={css.email}>{user.email}</p>
+                                    <p className={css.email}>{user.user_metadata.full_name}</p>
                                 </div>
-                            </Card>
+                            </Flex>
 
+                            <Separator orientation="horizontal" size="4"/>
 
                             <Flex gap="4" direction="column">
                                 <nav className={css.links}>

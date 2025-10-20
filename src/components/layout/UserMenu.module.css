@@ -1,5 +1,4 @@
 .userMenu {
-    --image-size: 2em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,18 +16,16 @@
 
 .dropdown {
     position: absolute;
-    top: calc(var(--image-size) + 0.5em);
+
+    /* match --avatar-size */
+    top: calc(var(--space-6) + 0.5em);
     right: 0;
     width: 250px;
     z-index: 1;
 }
 
 .userCard {
-    display: grid !important;
-    grid-template-columns: var(--image-size) auto;
-    gap: 0.8em;
-    align-items: center;
-    overflow: hidden;
+    margin-bottom: 0.8em;
 }
 
 
