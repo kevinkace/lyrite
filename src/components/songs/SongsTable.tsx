@@ -14,10 +14,11 @@ import Pagination from "@/components/pagination/Pagination";
 import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
 
 import css from "./SongsTable.module.css";
+import { formattedDay } from "@/lib/dates";
 
 const MAX_LYRIC_LEN = 200;
 
-export default function SongsTable() {
+export default function SongsTable({ editControls = false }: { editControls?: boolean }) {
     const { songs, loading, setLoading, error, page, search, hasMore, deleteSong, updateSong } = useSongs();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -29,8 +30,10 @@ export default function SongsTable() {
         if (debouncedSearch === search) return; // skip if unchanged
 
         const params = new URLSearchParams(searchParams.toString());
+
         params.set("search", debouncedSearch);
         params.set("page", "1");
+
         router.push(`?${params.toString()}`);
     }, [ debouncedSearch ]);
 
@@ -70,8 +73,16 @@ export default function SongsTable() {
                         <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell>Artist</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell>Lyrics</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell align="center">Public</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell align="center">Actions</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell align="center">Created</Table.ColumnHeaderCell>
+
+                        {editControls && (
+                            <>
+                                <Table.ColumnHeaderCell align="center">Updated</Table.ColumnHeaderCell>
+                                <Table.ColumnHeaderCell align="center">Public</Table.ColumnHeaderCell>
+                                <Table.ColumnHeaderCell align="center">Actions</Table.ColumnHeaderCell>
+                            </>
+                        )}
+
                     </Table.Row>
                 </Table.Header>
 
@@ -91,22 +102,29 @@ export default function SongsTable() {
                                 {song.lyrics.length > MAX_LYRIC_LEN && "..."}
                             </Table.Cell>
 
-                            <Table.Cell align="center">
-                                <Switch
-                                    checked={song.is_public}
-                                    onCheckedChange={(checked) => {
-                                        updateSong(song.id, { is_public: checked });
-                                    }}
-                                />
-                            </Table.Cell>
+                            <Table.Cell>{formattedDay(song.created_at)}</Table.Cell>
 
-                            <Table.Cell align="center">
-                                <DeleteSongDialog
-                                    songId={song.id}
-                                    title={song.title}
-                                    onDelete={deleteSong}
-                                />
-                            </Table.Cell>
+                            {editControls && (
+                                <>
+                                    <Table.Cell align="center">{formattedDay(song.updated_at)}</Table.Cell>
+                                    <Table.Cell align="center">
+                                        <Switch
+                                            checked={song.is_public}
+                                            onCheckedChange={(checked) => {
+                                                updateSong(song.id, { is_public: checked });
+                                            }}
+                                        />
+                                    </Table.Cell>
+
+                                    <Table.Cell align="center">
+                                        <DeleteSongDialog
+                                            songId={song.id}
+                                            title={song.title}
+                                            onDelete={deleteSong}
+                                        />
+                                    </Table.Cell>
+                                </>
+                            )}
                         </Table.Row>
                     ))}
                 </Table.Body>

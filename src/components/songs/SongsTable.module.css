@@ -28,6 +28,10 @@
   font-weight: bold;
 }
 
+.publicSwitch {
+  line-height: 1;
+}
+
 .error {
   margin-bottom: 1rem;
 }

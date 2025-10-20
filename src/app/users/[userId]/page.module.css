@@ -1,9 +1,11 @@
+.profileCard {
+    margin: 1.5rem 0;
+}
+
 .userName {
     margin: 0;
 }
 
 .profileStats {
-    display: flex;
-    flex-direction: column;
     font-size: 0.8em;
 }

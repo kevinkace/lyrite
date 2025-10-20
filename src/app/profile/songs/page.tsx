@@ -19,7 +19,7 @@ export default function ProfilePage() {
 
   return (
     <SongsProvider userId={user?.id} page={page} search={search} pageSize={pageSize}>
-      <SongsTable />
+      <SongsTable editControls={true} />
     </SongsProvider>
   );
 }
