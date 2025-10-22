@@ -19,12 +19,10 @@ export default async function UserSongsPage({ children, params, searchParams }: 
     const search = Array.isArray(sp?.search) ? sp?.search[0] : sp?.search || "";
 
     return (
-        <Layout>
-            <UserProvider userId={userId}>
-                <SongsProvider userId={userId} page={page} search={search}>
-                    {children}
-                </SongsProvider>
-            </UserProvider>
-        </Layout>
+        <UserProvider userId={userId}>
+            <SongsProvider userId={userId} page={page} search={search}>
+                {children}
+            </SongsProvider>
+        </UserProvider>
     );
 }
