@@ -18,8 +18,26 @@ export type UserContextType = {
     profile: Profile | null;
 
     loading: boolean;
-
 };
+
+export type UsersContextType = {
+    users: Profile[];
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    error: string | null;
+    page?: number;
+    search?: string;
+    hasMore: boolean;
+    deleteUser: (id: string) => Promise<void>;
+};
+
+export type UsersProviderProps = {
+    children: ReactNode;
+    page?: number;
+    search?: string;
+    pageSize?: number;
+    initialUsers?: Profile[];
+}
 
 export type AuthContextType = {
     user: SupabaseUser | null;
@@ -77,10 +95,8 @@ export type NewSong = {
     is_public: boolean;
 };
 
-export type Songs = Song[];
-
 export type SongsListProps = {
-    songs: Songs;
+    songs: Song[];
 };
 
 /* ---------- Song Context ---------- */
