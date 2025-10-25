@@ -1,142 +1,73 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { useDebounce } from "@uidotdev/usehooks";
-
-import { IconButton, Switch, Table, TextField, Flex } from "@radix-ui/themes";
-import { LayoutGrid, ListFilter, Table2 } from "lucide-react";
-
 import { useSongs } from "@/contexts/SongsContext";
 
-import Pagination from "@/components/pagination/Pagination";
 import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
 
 import css from "./SongsTable.module.css";
 import { formattedDay } from "@/lib/dates";
+import Table from "../table/Table";
 
 const MAX_LYRIC_LEN = 200;
 
 export default function SongsTable({ editControls = false }: { editControls?: boolean }) {
     const { songs, loading, setLoading, error, page, search, hasMore, deleteSong, updateSong } = useSongs();
-    const router = useRouter();
-    const searchParams = useSearchParams();
 
-    const [searchValue, setSearchValue] = useState(search || "");
-    const debouncedSearch = useDebounce(searchValue, 500);
-
-    useEffect(() => {
-        if (debouncedSearch === search) return; // skip if unchanged
-
-        const params = new URLSearchParams(searchParams.toString());
-
-        params.set("search", debouncedSearch);
-        params.set("page", "1");
-
-        router.push(`?${params.toString()}`);
-    }, [ debouncedSearch ]);
 
     return (
-        <div className={css.wrapper}>
-            <Flex gap="2" align="center" justify="between">
-                <Flex gap="2" align="center">
-                    <TextField.Root
-                        type="text"
-                        value={searchValue}
-                        placeholder="Search songs..."
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        className={css.searchInput}
-                    />
-
-                    <IconButton variant="soft" color="gray">
-                        <ListFilter />
-                    </IconButton>
-                </Flex>
-
-                {/* <Flex gap="2" align="center">
-                    <IconButton variant="soft" color="gray">
-                        <Table2 />
-                    </IconButton>
-                    <IconButton variant="soft" color="gray">
-                        <LayoutGrid />
-                    </IconButton>
-                </Flex> */}
-            </Flex>
-
-            {loading && <p>Loading...</p>}
-            {error && <p className={css.error}>{error}</p>}
-
-            <Table.Root className={css.table}>
-                <Table.Header>
-                    <Table.Row>
-                        <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell>Artist</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell>Lyrics</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell align="center">Created</Table.ColumnHeaderCell>
-
-                        {editControls && (
-                            <>
-                                <Table.ColumnHeaderCell align="center">Updated</Table.ColumnHeaderCell>
-                                <Table.ColumnHeaderCell align="center">Public</Table.ColumnHeaderCell>
-                                <Table.ColumnHeaderCell align="center">Actions</Table.ColumnHeaderCell>
-                            </>
-                        )}
-
-                    </Table.Row>
-                </Table.Header>
-
-                <Table.Body>
-                    {songs.map((song) => (
-                        <Table.Row key={song.id} data-key={song.id}>
-                            <Table.Cell>
-                                <Link href={`/songs/${song.id}`} className={css.songLink}>
-                                    {song.title}
-                                </Link>
-                            </Table.Cell>
-
-                            <Table.Cell>{song.artist}</Table.Cell>
-
-                            <Table.Cell>
-                                {song.lyrics.slice(0, MAX_LYRIC_LEN)}
-                                {song.lyrics.length > MAX_LYRIC_LEN && "..."}
-                            </Table.Cell>
-
-                            <Table.Cell>{formattedDay(song.created_at)}</Table.Cell>
-
-                            {editControls && (
-                                <>
-                                    <Table.Cell align="center">{formattedDay(song.updated_at)}</Table.Cell>
-                                    <Table.Cell align="center">
-                                        <Switch
-                                            checked={song.is_public}
-                                            onCheckedChange={(checked) => {
-                                                updateSong(song.id, { is_public: checked });
-                                            }}
-                                        />
-                                    </Table.Cell>
-
-                                    <Table.Cell align="center">
-                                        <DeleteSongDialog
-                                            songId={song.id}
-                                            title={song.title}
-                                            onDelete={deleteSong}
-                                        />
-                                    </Table.Cell>
-                                </>
-                            )}
-                        </Table.Row>
-                    ))}
-                </Table.Body>
-            </Table.Root>
-
-            {page && (
-                <Pagination
-                    currentPage={page}
-                    hasMore={hasMore}
-                    setLoading={setLoading}
-                />
-            )}
-        </div>
+        <Table
+            search={search || ""}
+            hasMore={hasMore}
+            setLoading={setLoading}
+            loading={loading}
+            error={error}
+            items={songs}
+            page={page}
+            editControls={editControls}
+            headers={[
+                {
+                    label : "Title",
+                    key   : "title",
+                    href : (song) => `/songs/${song.id}`,
+                },
+                {
+                    label : "Artist",
+                    key   : "artist",
+                },
+                {
+                    label : "Lyrics",
+                    key   : "lyrics",
+                },
+                {
+                    label : "Created",
+                    key   : "created_at",
+                    type  : "date",
+                    align : "center",
+                },
+                {
+                    label : "Updated",
+                    key   : "updated_at",
+                    type  : "date",
+                    align : "center",
+                },
+                {
+                    label : "Public",
+                    key   : "is_public",
+                    align : "center",
+                    type  : "check",
+                    update : (item, header) => (checked) => {
+                        updateSong(item.id, { [header.key]: checked });
+                    }
+                },
+                {
+                    label : "Actions",
+                    key   : "actions",
+                    align : "center",
+                    actions : {
+                        delete : (item, parentKey) => <DeleteSongDialog key={parentKey + "delete"} songId={item.id} title={item.title || "title"} onDelete={deleteSong}/>
+                    }
+                }
+            ]}
+        />
     );
 }

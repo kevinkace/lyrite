@@ -166,3 +166,15 @@ export type PaginationProps = {
 export type RadixColor = ButtonProps["color"];
 
 export type RadixVariant = ButtonProps["variant"];
+
+export type TableHeader = {
+    label: string;
+    key: string;
+    align?: "left" | "center" | "right";
+    href?: (item: Song | Profile) => string;
+    type?: "date" | "check";
+    update?: (item: Song | Profile, header: TableHeader) => (value: any) => void;
+    actions?: {
+        [actionName: string]: (item: Song | Profile, key: string) => ReactNode;
+    };
+};

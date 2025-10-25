@@ -17,6 +17,10 @@ export default function ProfilePage() {
   const page = parseInt(searchParams.get("page") || "1", 10);
   const search = searchParams.get("search") || "";
 
+  if (!user) {
+    return "laoding";
+  }
+
   return (
     <SongsProvider userId={user?.id} page={page} search={search} pageSize={pageSize}>
       <SongsTable editControls={true} />
