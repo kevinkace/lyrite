@@ -52,7 +52,7 @@
         background-color: var(--color-5-bg);
     }
     &[data-color="reset"] {
-        background-color: var(--gray-2);
+        /* background-color: var(--gray-2); */
         --font-weight-regular: normal;
     }
 }

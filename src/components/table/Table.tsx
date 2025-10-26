@@ -72,7 +72,10 @@ export default function Table({ headers, search, hasMore, deleteItem, updateItem
             {loading && <p>Loading...</p>}
             {error && <p className={css.error}>{error}</p>}
 
+
             <TableUI.Root className={css.table}>
+
+
                 <TableUI.Header>
                     <TableUI.Row>
                         {headers.map((header) => (
@@ -85,27 +88,30 @@ export default function Table({ headers, search, hasMore, deleteItem, updateItem
                     </TableUI.Row>
                 </TableUI.Header>
 
+
                 <TableUI.Body>
                     {items.map((item) => (
                         <TableUI.Row key={item.id} data-key={item.id}>
 
                             {headers.map((header) => (
-                                    <TableUI.Cell key={header.key + item.id}>
-                                        <TableCell item={item} header={header} />
-                                    </TableUI.Cell>
+                                <TableUI.Cell key={header.key + item.id}>
+                                    <TableCell item={item} header={header} />
+                                </TableUI.Cell>
                             ))}
 
                         </TableUI.Row>
                     ))}
                 </TableUI.Body>
+
+
             </TableUI.Root>
 
 
-            <Pagination
+            {page && <Pagination
                 currentPage={page}
                 hasMore={hasMore}
                 setLoading={setLoading}
-            />
+            />}
         </div>
     );
 }

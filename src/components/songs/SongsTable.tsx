@@ -4,11 +4,7 @@ import { useSongs } from "@/contexts/SongsContext";
 
 import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
 
-import css from "./SongsTable.module.css";
-import { formattedDay } from "@/lib/dates";
 import Table from "../table/Table";
-
-const MAX_LYRIC_LEN = 200;
 
 export default function SongsTable({ editControls = false }: { editControls?: boolean }) {
     const { songs, loading, setLoading, error, page, search, hasMore, deleteSong, updateSong } = useSongs();

@@ -1,4 +1,6 @@
 import Layout from "@/components/layout/Layout"
+import SongsTable from "@/components/songs/SongsTable";
+import { SongsProvider } from "@/contexts/SongsContext";
 
 export default function SongsPage() {
     return (
@@ -6,7 +8,9 @@ export default function SongsPage() {
             <div>
                 <h1>Songs</h1>
 
-                songs list here
+                <SongsProvider>
+                    <SongsTable />
+                </SongsProvider>
             </div>
         </Layout>
     );

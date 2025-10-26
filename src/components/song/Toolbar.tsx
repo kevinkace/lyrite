@@ -1,26 +1,32 @@
 import React from "react";
 
-import { Columns3, Minus, Plus } from "lucide-react";
+import { TextCursor, Columns3, Minus, Plus } from "lucide-react";
 import { Flex, Button, Select, SegmentedControl } from "@radix-ui/themes"
 
 import { useSong } from "@/contexts/SongContext";
 import { useEditing } from "@/contexts/EditingContext";
+import { useModal } from "@/contexts/ModalContext";
 
 import { getfontFamilyCSS } from "@/lib/fonts";
 import { colors, fontFamilies, fontSizes } from "@/data/consts";
 
 import css from "./Toolbar.module.css";
-import { useModal } from "@/contexts/ModalContext";
 
 export default function Toolbar() {
     const { song, resetAllColors } = useSong();
-     const { setSelectedColor, selectedColor, stepColumns, setFontSize, stepFontSize, setFontFamily } = useEditing();
-
-     const { openModal } = useModal();
+    const { setSelectedColor, selectedColor, stepColumns, setFontSize, stepFontSize, setFontFamily } = useEditing();
+    const { openModal } = useModal();
 
     if (!song) return null;
 
     return (<Flex align="center" justify="center" gap="5" className={css.toolbar} >
+
+        {/* <Button
+            variant="surface"
+            color="gray"
+        >
+            <TextCursor />
+        </Button> */}
 
         {/* ==== FONT SIZE ==== */}
         <Flex data-tools="font-size" align="center">
@@ -85,7 +91,10 @@ export default function Toolbar() {
 
 
         {/* ==== COLORS ==== */}
-        <Flex data-tools="colors" align="center"
+        <Flex
+            data-tools="colors"
+            align="center"
+            gap="2"
             className={css.colorTools}>
             <SegmentedControl.Root
                 value={selectedColor?.toString() || ""}
@@ -133,15 +142,18 @@ export default function Toolbar() {
                         {idx}
                     </SegmentedControl.Item>
                 ))}
-
-                    <SegmentedControl.Item
-                        value={"reset"}
-                        className={css.colorButton}
-                        data-color={"reset"}
-                    >
-                        reset all
-                    </SegmentedControl.Item>
             </SegmentedControl.Root>
+
+
+            <Button
+                className={css.colorButton}
+                data-color={"reset"}
+                variant="surface"
+                color="gray"
+            >
+                reset all
+            </Button>
+
         </Flex>
 
 

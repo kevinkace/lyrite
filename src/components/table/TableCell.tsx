@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 import { Switch } from "@radix-ui/themes";
@@ -5,12 +7,14 @@ import { Switch } from "@radix-ui/themes";
 import { Song, Profile, TableHeader } from "@/types";
 import { formattedDay } from "@/lib/dates";
 
+const MAX_LYRIC_LEN = 200;
+
 export default function TableCell({ item, header }: { item: Song | Profile; header: TableHeader }) {
     let content = (item as any)[header.key];
     const key = header.key + item.id;
 
-    if (header.key === "lyrics") {
-        content = content.slice(0, 100);
+    if (header.key === "lyrics" && content.length > MAX_LYRIC_LEN) {
+        content = content.slice(0, MAX_LYRIC_LEN) + "..."
     }
 
     if (header.type === "date") {

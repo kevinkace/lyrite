@@ -79,6 +79,8 @@ export default function EditSong() {
     if (!song) return <p>Song not found</p>;
 
 
+    const contentEditable = selectedColor === null;
+
     return (
         <div className={css.editSong}>
             <AnimatePresence initial={false}>
@@ -100,7 +102,7 @@ export default function EditSong() {
                 style={{
                     columns: song.style.columns,
                     fontSize : song.style.fontSize,
-                    "--default-font-family": getfontFamilyCSS(song.style.fontFamily),
+                    "--default-font-family": getfontFamilyCSS(song.style.fontFamily || ""),
                     "--hover-color": `var(--color-${selectedColor}-selected)`
                 }  as React.CSSProperties}
             >
@@ -113,7 +115,8 @@ export default function EditSong() {
                                 css.lyricCard,
                                 css[`style-${style.color}`],
                                 {
-                                    [css.hoverFill] : typeof selectedColor === "number"
+                                    [css.hoverFill] : typeof selectedColor === "number",
+                                    [css.contentEditable] : contentEditable
                                 },
 
                             )}
@@ -123,7 +126,25 @@ export default function EditSong() {
                             }
                         }}
                     >
-                        {text}
+                        <div
+                            contentEditable={contentEditable}
+                            suppressContentEditableWarning
+                            onFocus={() => {
+                                // esc to deselect
+                                window.addEventListener("keydown", e => {
+                                    if (e.key === "Escape") {
+                                        (document.activeElement as HTMLElement).blur();
+                                    }
+                                }, { once: true });
+                            }}
+                            onInput={(e) => {
+                                const newText = e.currentTarget.textContent ?? "";
+
+                                song.lyrics_parsed.find(section => section.id === id)!.text = newText;
+                            }}
+                        >
+                            {text}
+                        </div>
                     </Card>
                 ))}
             </div>
