@@ -11,6 +11,9 @@ import { defaultStyles } from "@/data/consts";
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
+/**
+ * Parse raw lyrics string into structured format
+ */
 function parseLyrics(raw: string) : LyricParsed[] {
     return raw
         .split(/\n{2,}/)
@@ -19,6 +22,15 @@ function parseLyrics(raw: string) : LyricParsed[] {
             text: section.trim(),
             style: {}
         }));
+}
+
+/**
+ * Unparse lyrics from structured format back to raw string
+ */
+function unparseLyrics(parsed: LyricParsed[]) : string {
+    return parsed
+        .map(section => section.text)
+        .join("\n\n");
 }
 
 export function SongProvider({ children, id, userId, slug }: SongProviderProps) {
@@ -88,12 +100,13 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
         if (!song) {
             throw new Error("No song to save");
         }
+
         const { error } = await supabase
             .from("songs")
             .update({
                 title: song.title,
                 artist: song.artist,
-                lyrics: song.lyrics,
+                lyrics: unparseLyrics(song.lyrics_parsed),
                 lyrics_parsed: song.lyrics_parsed,
                 style: song.style,
                 is_public: song.is_public,

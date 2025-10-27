@@ -15,6 +15,7 @@ import { getfontFamilyCSS } from "@/lib/fonts";
 import Toolbar from "@/components/song/Toolbar";
 
 import css from "./EditSong.module.css";
+import { LyricParsed } from "@/types";
 
 export default function EditSong() {
     const { song, loading, saveSong } = useSong();
@@ -59,6 +60,14 @@ export default function EditSong() {
             >
                 <Save />
             </IconButton>
+
+            {/* unsaved changes indicator */}
+            {(
+                <div className={css.unsavedChangesIndicator}>
+                    * unsaved tes
+                </div>
+            )}
+
             <Button variant="surface" size="2" radius="full" onClick={() => {
                 setSelectedColor(null);
                 setShowTools(!showTools)
@@ -137,10 +146,28 @@ export default function EditSong() {
                                     }
                                 }, { once: true });
                             }}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    e.preventDefault();
+
+                                    const selection = window.getSelection();
+
+                                    if (!selection?.rangeCount) return;
+
+                                    const range = selection.getRangeAt(0);
+
+                                    range.deleteContents();
+                                    range.insertNode(document.createTextNode("\n"));
+                                    range.collapse(false);
+                                }
+                            }}
                             onInput={(e) => {
                                 const newText = e.currentTarget.textContent ?? "";
+                                const updated = song.lyrics_parsed.map(section =>
+                                    section.id === id ? { ...section, text: newText } : section
+                                );
 
-                                song.lyrics_parsed.find(section => section.id === id)!.text = newText;
+                                song.lyrics_parsed = updated;
                             }}
                         >
                             {text}

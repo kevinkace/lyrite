@@ -151,7 +151,7 @@ export default function Toolbar() {
                 variant="surface"
                 color="gray"
             >
-                reset all
+                reset
             </Button>
 
         </Flex>
