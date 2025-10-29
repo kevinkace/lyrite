@@ -18,6 +18,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
+    "lodash": "^4.17.21",
     "lucide": "^0.544.0",
     "lucide-react": "^0.544.0",
     "motion": "^12.23.12",

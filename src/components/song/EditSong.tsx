@@ -18,7 +18,7 @@ import css from "./EditSong.module.css";
 import { LyricParsed } from "@/types";
 
 export default function EditSong() {
-    const { song, loading, saveSong } = useSong();
+    const { song, loading, saveSong, updateSection, mergeSections, splitSection } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
     const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
 
@@ -160,14 +160,24 @@ export default function EditSong() {
                                     range.insertNode(document.createTextNode("\n"));
                                     range.collapse(false);
                                 }
+
+                                // merge sections if backspace at start
+                                if (e.key === "Backspace") {
+                                    const selection = window.getSelection();
+
+                                    if (!selection?.rangeCount) return;
+
+                                    const range = selection.getRangeAt(0);
+
+                                    if (range.startOffset === 0 && range.endOffset === 0) {
+                                        e.preventDefault();
+
+                                        mergeSections(id);
+                                    }
+                                }
                             }}
                             onInput={(e) => {
-                                const newText = e.currentTarget.textContent ?? "";
-                                const updated = song.lyrics_parsed.map(section =>
-                                    section.id === id ? { ...section, text: newText } : section
-                                );
-
-                                song.lyrics_parsed = updated;
+                                updateSection(id, { text: e.currentTarget.textContent ?? "" });
                             }}
                         >
                             {text}

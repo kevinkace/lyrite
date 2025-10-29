@@ -102,13 +102,20 @@ export type SongsListProps = {
 /* ---------- Song Context ---------- */
 export type SongContextType = {
     song: Song | null;
+
     loading: boolean;
     setLoading: (loading: boolean) => void;
+
     createSong: ({ song }: { song: NewSong }) => Promise<Song>;
+    mergeSections: (id: number) => void;
+    splitSection: (id: number, splitIndex: number) => void;
+    updateSection: (sectionId: number, newData: Partial<LyricParsed>) => void;
+
     setStyle: (newStyle: Partial<Song["style"]>) => void;
-    saveSong: () => Promise<void>;
     setSectionStyle: (sectionId: number, newStyle: Partial<LyricParsed["style"]>) => void;
     resetAllColors: () => void;
+
+    saveSong: () => Promise<void>;
 };
 
 export type SongProviderProps = {

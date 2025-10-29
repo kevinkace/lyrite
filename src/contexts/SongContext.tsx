@@ -1,6 +1,8 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import merge from "lodash/merge";
+
 import { supabase } from "@/lib/supabase/client";
 
 import { useError } from "./ErrorContext";
@@ -14,7 +16,7 @@ const SongContext = createContext<SongContextType | undefined>(undefined);
 /**
  * Parse raw lyrics string into structured format
  */
-function parseLyrics(raw: string) : LyricParsed[] {
+function parseLyrics(raw: string): LyricParsed[] {
     return raw
         .split(/\n{2,}/)
         .map((section, i) => ({
@@ -27,7 +29,7 @@ function parseLyrics(raw: string) : LyricParsed[] {
 /**
  * Unparse lyrics from structured format back to raw string
  */
-function unparseLyrics(parsed: LyricParsed[]) : string {
+function unparseLyrics(parsed: LyricParsed[]): string {
     return parsed
         .map(section => section.text)
         .join("\n\n");
@@ -65,6 +67,81 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
 
         return data as Song;
     };
+
+    const updateSection = (sectionId: number, newData: Partial<LyricParsed>) => {
+        if (!song) return;
+
+        const updatedSections = song.lyrics_parsed.map(section => {
+            if (section.id === sectionId) {
+                return merge(section, newData);
+            }
+            return section;
+        });
+
+        setSong({ ...song, lyrics_parsed: updatedSections });
+    };
+
+    const mergeSections = (id: number) => {
+        if (!song) return;
+
+        const currentIndex = song.lyrics_parsed.findIndex(section => section.id === id);
+
+        if (currentIndex === -1) return;
+
+        const currentSection = song.lyrics_parsed[currentIndex];
+        const previousSection = song.lyrics_parsed[currentIndex - 1];
+
+        if (!previousSection) return;
+
+        const updatedText = previousSection.text + "\n" + currentSection.text;
+
+        const updatedSections = song.lyrics_parsed.reduce<LyricParsed[]>((acc, section, i, sections) => {
+            if (currentIndex === i) return acc; // skip
+
+            if (i === currentIndex - 1) {
+                acc.push({
+                    ...previousSection,
+                    text: updatedText
+                });
+            } else if (i < currentIndex - 1) {
+                acc.push(section);
+            } else if (sections[i + 1]) {
+                acc.push(sections[i + 1]);
+            }
+
+
+            return acc;
+        }, []);
+
+
+        setSong({ ...song, lyrics_parsed: updatedSections });
+    };
+
+    const splitSection = (id: number, splitIndex: number) => {
+        if (!song) return;
+
+        const sectionIndex = song.lyrics_parsed.findIndex(section => section.id === id);
+
+        if (sectionIndex === -1) return;
+        const section = song.lyrics_parsed[sectionIndex];
+
+        const firstPart = section.text.slice(0, splitIndex).trim();
+        const secondPart = section.text.slice(splitIndex).trim();
+        const newSection: LyricParsed = {
+            id: Date.now(), // simple unique id
+            text: secondPart,
+            style: { ...section.style }
+        };
+
+        const updatedSections = [
+            ...song.lyrics_parsed.slice(0, sectionIndex),
+            { ...section, text: firstPart },
+            newSection,
+            ...song.lyrics_parsed.slice(sectionIndex + 1)
+        ];
+
+        setSong({ ...song, lyrics_parsed: updatedSections });
+    }
 
     const setStyle = (newStyle: Partial<Song["style"]>) => {
         if (!song) return;
@@ -164,12 +241,20 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
     return (
         <SongContext.Provider value={{
             song,
+
             loading,
+            setLoading,
+
             createSong,
+            mergeSections,
+            splitSection,
+            updateSection,
+
             setStyle,
-            saveSong,
             setSectionStyle,
-            resetAllColors
+            resetAllColors,
+
+            saveSong
         }}>
             {children}
         </SongContext.Provider>
