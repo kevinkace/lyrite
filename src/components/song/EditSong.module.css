@@ -25,28 +25,6 @@
     }
 }
 
-.contentEditable {
-
-    &:hover {
-        background-color: var(--hover-color, #fff2);
-
-        div {
-            background-color: #0005;
-            animation: pulseBorder 800ms infinite;
-            animation-timing-function: steps(1);
-        }
-    }
-}
-
-@keyframes pulseBorder {
-    0% {
-        outline: 2px solid var(--hover-color, #fff3);
-    }
-    50% {
-        outline: 2px solid transparent;
-    }
-}
-
 .hoverFill {
     cursor: crosshair;
 }

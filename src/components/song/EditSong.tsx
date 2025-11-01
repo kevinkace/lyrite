@@ -134,69 +134,7 @@ export default function EditSong() {
                             }
                         }}
                     >
-                        <div
-                            contentEditable={contentEditable}
-                            suppressContentEditableWarning
-                            onFocus={() => {
-                                // esc to deselect
-                                window.addEventListener("keydown", e => {
-                                    if (e.key === "Escape") {
-                                        (document.activeElement as HTMLElement).blur();
-                                    }
-                                }, { once: true });
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    e.preventDefault();
-
-                                    const selection = window.getSelection();
-
-                                    if (!selection?.rangeCount) return;
-
-                                    const range = selection.getRangeAt(0);
-
-                                    range.deleteContents();
-                                    range.insertNode(document.createTextNode("\n"));
-                                    range.collapse(false);
-                                }
-
-
-
-                                if (e.currentTarget.textContent.includes(doubleLineBreak)) {
-                                    e.preventDefault();
-
-                                    splitSection(id, e.currentTarget.textContent);
-                                }
-
-                                // merge sections if backspace at start
-                                if (e.key === "Backspace") {
-                                    const selection = window.getSelection();
-
-                                    if (!selection?.rangeCount) return;
-
-                                    const range = selection.getRangeAt(0);
-
-                                    if (range.startOffset === 0 && range.endOffset === 0) {
-                                        e.preventDefault();
-
-                                        mergeSections(id);
-                                    }
-                                }
-                            }}
-                            onInput={(e) => {
-                                console.log("input event");
-                                // const newText = e.currentTarget.textContent ?? "";
-
-                                // const updated = song.lyrics_parsed.map(section =>
-                                //     section.id === id ? { ...section, text: newText } : section
-                                // );
-
-                                // song.lyrics_parsed = updated;
-                            }}
-                            onBlur={(e) => {
-                                updateSection(id, { text: e.currentTarget.textContent ?? "" });
-                            }}
-                        >
+                        <div>
                             {text}
                         </div>
                     </Card>
