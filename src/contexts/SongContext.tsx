@@ -9,7 +9,7 @@ import { useError } from "./ErrorContext";
 import { useAuth } from "./AuthContext";
 
 import { NewSong, Song, SongContextType, SongProviderProps, LyricParsed } from "@/types";
-import { defaultStyles } from "@/data/consts";
+import { defaultStyles, doubleLineBreak } from "@/data/consts";
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
@@ -117,16 +117,19 @@ export function SongProvider({ children, id, userId, slug }: SongProviderProps) 
         setSong({ ...song, lyrics_parsed: updatedSections });
     };
 
-    const splitSection = (id: number, splitIndex: number) => {
+    const splitSection = (id: number, sectionText: string) => {
+        console.log("split section");
         if (!song) return;
 
         const sectionIndex = song.lyrics_parsed.findIndex(section => section.id === id);
 
         if (sectionIndex === -1) return;
-        const section = song.lyrics_parsed[sectionIndex];
 
-        const firstPart = section.text.slice(0, splitIndex).trim();
-        const secondPart = section.text.slice(splitIndex).trim();
+        const section    = song.lyrics_parsed[sectionIndex];
+        const splitIndex = sectionText.indexOf(doubleLineBreak);
+        const firstPart  = sectionText.slice(0, splitIndex).trim();
+        const secondPart = sectionText.slice(splitIndex).trim();
+
         const newSection: LyricParsed = {
             id: Date.now(), // simple unique id
             text: secondPart,

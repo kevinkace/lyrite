@@ -6,24 +6,23 @@ import { ChevronDown, SlidersHorizontal, Save } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 
-import { useSong } from "@/contexts/SongContext";
-import { useLayout } from "@/contexts/LayoutContext";
+import { useSong }    from "@/contexts/SongContext";
+import { useLayout }  from "@/contexts/LayoutContext";
 import { useEditing } from "@/contexts/EditingContext";
 
+import { doubleLineBreak } from "@/data/consts";
 import { getfontFamilyCSS } from "@/lib/fonts";
 
 import Toolbar from "@/components/song/Toolbar";
 
 import css from "./EditSong.module.css";
-import { LyricParsed } from "@/types";
 
 export default function EditSong() {
     const { song, loading, saveSong, updateSection, mergeSections, splitSection } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
     const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
 
-    const [showTools, setShowTools] = useState(false);
-
+    const [ showTools, setShowTools ]     = useState(false);
     const [ showLoading, setShowLoading ] = useState(false);
 
     useEffect(() => {
@@ -161,6 +160,14 @@ export default function EditSong() {
                                     range.collapse(false);
                                 }
 
+
+
+                                if (e.currentTarget.textContent.includes(doubleLineBreak)) {
+                                    e.preventDefault();
+
+                                    splitSection(id, e.currentTarget.textContent);
+                                }
+
                                 // merge sections if backspace at start
                                 if (e.key === "Backspace") {
                                     const selection = window.getSelection();
@@ -177,6 +184,16 @@ export default function EditSong() {
                                 }
                             }}
                             onInput={(e) => {
+                                console.log("input event");
+                                // const newText = e.currentTarget.textContent ?? "";
+
+                                // const updated = song.lyrics_parsed.map(section =>
+                                //     section.id === id ? { ...section, text: newText } : section
+                                // );
+
+                                // song.lyrics_parsed = updated;
+                            }}
+                            onBlur={(e) => {
                                 updateSection(id, { text: e.currentTarget.textContent ?? "" });
                             }}
                         >
