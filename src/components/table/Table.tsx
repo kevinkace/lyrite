@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebounce } from "@uidotdev/usehooks";
-
-import Link from "next/link";
+import { clsx } from "clsx";
 
 import { Flex, TextField, IconButton, Table as TableUI } from "@radix-ui/themes";
-import { LayoutGrid, ListFilter, Table2 } from "lucide-react";
+import { ListFilter } from "lucide-react";
 
 import css from "./Table.module.css";
 import Pagination from "../pagination/Pagination";
@@ -69,12 +68,10 @@ export default function Table({ headers, search, hasMore, deleteItem, updateItem
                 </Flex> */}
             </Flex>
 
-            {loading && <p>Loading...</p>}
             {error && <p className={css.error}>{error}</p>}
 
 
             <TableUI.Root className={css.table}>
-
 
                 <TableUI.Header>
                     <TableUI.Row>
@@ -89,7 +86,9 @@ export default function Table({ headers, search, hasMore, deleteItem, updateItem
                 </TableUI.Header>
 
 
-                <TableUI.Body>
+                <TableUI.Body className={clsx(css.tableBody, {
+                    [css.tableLoading]: loading
+                })}>
                     {items.map((item) => (
                         <TableUI.Row key={item.id} data-key={item.id}>
 

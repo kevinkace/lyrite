@@ -1,2 +1,20 @@
-.wrapper {
+.tableBody {
+    transition: background 600ms ease-in-out;
+}
+
+.tableLoading {
+    animation: pulse 800ms ease-in-out infinite;
+    background: rgba(200, 200, 200, 0.1);
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8;
+    }
+    60% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0.8;
+    }
 }
