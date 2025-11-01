@@ -72,3 +72,5 @@ export const defaultStyles = {
     fontSize: fontSizeDefault,
     columns: columnDefault
 };
+
+export const doubleLineBreak = "\n\n";
