@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
 
-type ModalType = "error" | "confirm" | "downloadPII" | null;
+type ModalType = "error" | "confirm" | "downloadPII" | "editor" |null;
 
 interface ModalState {
   type: ModalType;

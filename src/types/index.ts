@@ -107,8 +107,6 @@ export type SongContextType = {
     setLoading: (loading: boolean) => void;
 
     createSong: ({ song }: { song: NewSong }) => Promise<Song>;
-    mergeSections: (id: number) => void;
-    splitSection: (id: number, splitIndex: number) => void;
     updateSection: (sectionId: number, newData: Partial<LyricParsed>) => void;
 
     setStyle: (newStyle: Partial<Song["style"]>) => void;
@@ -159,6 +157,8 @@ export type EditingContextType = {
     stepFontSize: (step: number) => void;
     setFontFamily: (fontFamily: string) => void;
     setSectionColor: (sectionId: number, color: number | null) => void;
+    setShowEditor: (show: boolean) => void;
+    showEditor: boolean;
 };
 
 /* ---------- Pagination ---------- */

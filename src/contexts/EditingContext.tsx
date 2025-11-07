@@ -12,6 +12,7 @@ const EditingContext = createContext<EditingContextType | undefined>(undefined);
 
 export function EditingProvider({ children } : { children: React.ReactNode }) {
     const [selectedColor, setSelectedColor] = useState(null as number | null);
+    const [ showEditor, setShowEditor ] = useState(false);
     const { song, setStyle, setSectionStyle } = useSong();
 
 
@@ -82,7 +83,9 @@ export function EditingProvider({ children } : { children: React.ReactNode }) {
             setFontSize,
             stepFontSize,
             setFontFamily,
-            setSectionColor
+            setSectionColor,
+            setShowEditor,
+            showEditor
         }}>
             {children}
         </EditingContext.Provider>

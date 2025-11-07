@@ -21,12 +21,15 @@ export default function Toolbar() {
 
     return (<Flex align="center" justify="center" gap="5" className={css.toolbar} >
 
-        {/* <Button
+        <Button
             variant="surface"
             color="gray"
+            onClick={() => {
+                openModal({ type: "editor" });
+            }}
         >
             <TextCursor />
-        </Button> */}
+        </Button>
 
         {/* ==== FONT SIZE ==== */}
         <Flex data-tools="font-size" align="center">

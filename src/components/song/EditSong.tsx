@@ -10,7 +10,6 @@ import { useSong }    from "@/contexts/SongContext";
 import { useLayout }  from "@/contexts/LayoutContext";
 import { useEditing } from "@/contexts/EditingContext";
 
-import { doubleLineBreak } from "@/data/consts";
 import { getfontFamilyCSS } from "@/lib/fonts";
 
 import Toolbar from "@/components/song/Toolbar";
@@ -18,9 +17,9 @@ import Toolbar from "@/components/song/Toolbar";
 import css from "./EditSong.module.css";
 
 export default function EditSong() {
-    const { song, loading, saveSong, updateSection, mergeSections, splitSection } = useSong();
+    const { song, loading, saveSong, updateSection } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
-    const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
+    const { setSectionColor, selectedColor, setSelectedColor, showEditor } = useEditing();
 
     const [ showTools, setShowTools ]     = useState(false);
     const [ showLoading, setShowLoading ] = useState(false);
@@ -87,8 +86,6 @@ export default function EditSong() {
     if (!song) return <p>Song not found</p>;
 
 
-    const contentEditable = selectedColor === null;
-
     return (
         <div className={css.editSong}>
             <AnimatePresence initial={false}>
@@ -123,8 +120,7 @@ export default function EditSong() {
                                 css.lyricCard,
                                 css[`style-${style.color}`],
                                 {
-                                    [css.hoverFill] : typeof selectedColor === "number",
-                                    [css.contentEditable] : contentEditable
+                                    [css.hoverFill] : typeof selectedColor === "number"
                                 },
 
                             )}
