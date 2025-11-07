@@ -2,5 +2,4 @@
     /* full height flex with header */
     display: flex;
     flex-direction: column;
-    height: 100vh;
 }
