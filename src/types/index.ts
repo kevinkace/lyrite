@@ -88,12 +88,9 @@ export type Song = {
     updated_at: string;
 };
 
-export type NewSong = {
-    title: string;
-    artist: string;
-    lyrics: string;
-    is_public: boolean;
-};
+export type NewSong = Pick<Song, "title" | "artist" | "lyrics" | "is_public">;
+
+export type LoadSongProps = Pick<Song, "id" | "user_id" | "slug">;
 
 export type SongsListProps = {
     songs: Song[];
@@ -108,6 +105,8 @@ export type SongContextType = {
 
     createSong: ({ song }: { song: NewSong }) => Promise<Song>;
     updateSection: (sectionId: number, newData: Partial<LyricParsed>) => void;
+    loadSong: ({ id, user_id, slug }: LoadSongProps) => Promise<Song>;
+    updateSong: (updatedSong: NewSong) => Promise<Song>;
 
     setStyle: (newStyle: Partial<Song["style"]>) => void;
     setSectionStyle: (sectionId: number, newStyle: Partial<LyricParsed["style"]>) => void;

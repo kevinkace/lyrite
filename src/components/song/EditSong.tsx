@@ -62,7 +62,7 @@ export default function EditSong() {
             {/* unsaved changes indicator */}
             {(
                 <div className={css.unsavedChangesIndicator}>
-                    * unsaved tes
+                    * unsaved
                 </div>
             )}
 

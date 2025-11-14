@@ -2,11 +2,16 @@
 
 import { createContext, useContext, useState } from "react";
 import merge from "lodash/merge";
+
 import { supabase } from "@/lib/supabase/client";
+
 import { useError } from "./ErrorContext";
 import { useAuth } from "./AuthContext";
+
 import { defaultStyles } from "@/data/consts";
-import { NewSong, Song, SongContextType, SongProviderProps, LyricParsed } from "@/types";
+
+import { NewSong, Song, SongContextType, SongProviderProps, LyricParsed, LoadSongProps } from "@/types";
+
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
@@ -18,24 +23,18 @@ function parseLyrics(raw: string): LyricParsed[] {
     }));
 }
 
-function unparseLyrics(parsed: LyricParsed[]): string {
-    return parsed.map(section => section.text).join("\n\n");
-}
-
 export function SongProvider({ children }: SongProviderProps) {
     const [song, setSong] = useState<Song | null>(null);
     const [loading, setLoading] = useState(false);
+
     const { setError } = useError();
+
     const { user } = useAuth();
 
-    /**
-     * Load a song by id OR (userId + slug)
-     */
-    const loadSong = async (opts: { id?: string; userId?: string; slug?: string }) => {
-        const { id, userId, slug } = opts;
-
+    const loadSong = async ({ id, user_id : userId, slug }: LoadSongProps) => {
         if (!id && (!slug || !userId)) {
-            console.warn("Missing identifiers for loadSong", opts);
+            console.warn("Missing identifiers for loadSong", { id, userId, slug });
+
             return;
         }
 
@@ -59,6 +58,8 @@ export function SongProvider({ children }: SongProviderProps) {
             if (!data.style) data.style = defaultStyles;
 
             setSong(data as Song);
+
+            return data as Song;
         } catch (err: any) {
             setError(err.message);
             setSong(null);
@@ -70,16 +71,12 @@ export function SongProvider({ children }: SongProviderProps) {
     const createSong = async ({ song }: { song: NewSong }) => {
         if (!user?.id) throw new Error("No user provided");
 
-        const slug = song.title.toLowerCase().replace(/\s+/g, "-");
-
         const { data, error } = await supabase
             .from("songs")
             .insert({
                 ...song,
                 lyrics_parsed: parseLyrics(song.lyrics),
-                style: defaultStyles,
-                user_id: user.id,
-                slug,
+                style: defaultStyles
             })
             .select()
             .single();
@@ -89,6 +86,42 @@ export function SongProvider({ children }: SongProviderProps) {
         setSong(data as Song);
 
         return data as Song;
+    };
+
+    const updateSong = async (updatedSong: NewSong) => {
+        if (!song) {
+            throw new Error("No song to update");
+        }
+
+        const { data, error } = await supabase
+            .from("songs")
+            .update({
+                ...updatedSong,
+                lyrics_parsed: parseLyrics(updatedSong.lyrics)
+            })
+            .eq("id", song.id)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        setSong(data as Song);
+
+        return data as Song;
+    }
+
+    const saveSong = async () => {
+        if (!song) throw new Error("No song to save");
+
+        const { error } = await supabase
+            .from("songs")
+            .update(song)
+            .eq("id", song.id);
+
+        if (error) {
+            setError(error.message);
+            throw error;
+        }
     };
 
     const updateSection = (sectionId: number, newData: Partial<LyricParsed>) => {
@@ -116,27 +149,6 @@ export function SongProvider({ children }: SongProviderProps) {
         setSong({ ...song, lyrics_parsed: updated });
     };
 
-    const saveSong = async () => {
-        if (!song) throw new Error("No song to save");
-
-        const { error } = await supabase
-            .from("songs")
-            .update({
-                title: song.title,
-                artist: song.artist,
-                lyrics: unparseLyrics(song.lyrics_parsed),
-                lyrics_parsed: song.lyrics_parsed,
-                style: song.style,
-                is_public: song.is_public,
-            })
-            .eq("id", song.id);
-
-        if (error) {
-            setError(error.message);
-            throw error;
-        }
-    };
-
     return (
         <SongContext.Provider
             value={{
@@ -145,11 +157,13 @@ export function SongProvider({ children }: SongProviderProps) {
                 setLoading,
                 loadSong,
                 createSong,
+                saveSong,
+                updateSong,
+
                 updateSection,
                 setStyle,
                 setSectionStyle,
-                resetAllColors,
-                saveSong,
+                resetAllColors
             }}
         >
             {children}

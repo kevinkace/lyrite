@@ -25,7 +25,10 @@ export default function Toolbar() {
             variant="surface"
             color="gray"
             onClick={() => {
-                openModal({ type: "editor" });
+                openModal({
+                    title: "Edit Lyrics",
+                    type: "editor"
+                });
             }}
         >
             <TextCursor />

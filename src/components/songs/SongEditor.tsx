@@ -10,11 +10,11 @@ import { getErrorMessage } from "@/lib/getErrorMessage";
 
 import css from "./SongEdit.module.css";
 
-export default function Editor() {
+export default function Editor({ onSave }: { onSave: () => void }) {
     const router = useRouter();
 
     const { setError } = useError();
-    const { createSong, song, saveSong } = useSong();
+    const { createSong, song, updateSong } = useSong();
 
     const [ title, setTitle ] = useState(song?.title || "");
     const [ artist, setArtist ] = useState(song?.artist || "");
@@ -22,10 +22,10 @@ export default function Editor() {
     const [ isPublic, setIsPublic ] = useState(song?.is_public || false);
 
     useEffect(() => {
-        setTitle("");
-        setArtist("");
-        setLyrics("");
-        setIsPublic(false);
+        setTitle(song?.title || "");
+        setArtist(song?.artist || "");
+        setLyrics(song?.lyrics || "");
+        setIsPublic(song?.is_public || false);
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +33,16 @@ export default function Editor() {
 
         try {
             if (song) {
-                saveSong();
+                await updateSong({
+                    title,
+                    artist,
+                    lyrics,
+                    is_public: isPublic
+                });
+
+                onSave();
+
+                return;
             }
 
             const newSong = await createSong({

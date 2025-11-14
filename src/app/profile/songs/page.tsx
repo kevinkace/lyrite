@@ -7,7 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 import SongsTable from "@/components/songs/SongsTable";
 
-const pageSize = 2;
+const pageSize = 10;
 
 
 export default function ProfilePage() {

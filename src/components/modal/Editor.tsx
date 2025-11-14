@@ -12,7 +12,7 @@ export default function Editor({
     return (
         <Flex direction="column" gap="3">
 
-            <SongEditor />
+            <SongEditor onSave={closeModal} />
 
             <Flex justify="end" gap="2">
                 <Button variant="soft" onClick={closeModal}>
