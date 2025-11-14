@@ -109,21 +109,19 @@ export default function EditSong() {
                     fontSize : song.style.fontSize,
                     "--default-font-family": getfontFamilyCSS(song.style.fontFamily || ""),
                     "--hover-color": `var(--color-${selectedColor}-selected)`
-                }  as React.CSSProperties}
+                } as React.CSSProperties}
             >
                 {song.lyrics_parsed.map(({id, text, style}) => (
                     <Card
                         key={id}
                         variant="ghost"
-                        className={
-                            clsx(
-                                css.lyricCard,
-                                css[`style-${style.color}`],
-                                {
-                                    [css.hoverFill] : typeof selectedColor === "number"
-                                },
-
-                            )}
+                        className={clsx(
+                            css.lyricCard,
+                            css[`style-${style.color}`],
+                            {
+                                [css.hoverFill] : typeof selectedColor === "number"
+                            }
+                        )}
                         onClick={() => {
                             if (selectedColor !== null) {
                                 setSectionColor(id, style.color === selectedColor ? null : selectedColor);
