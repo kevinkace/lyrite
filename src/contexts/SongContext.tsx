@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import merge from "lodash/merge";
 
 import { supabase } from "@/lib/supabase/client";
@@ -10,7 +10,7 @@ import { useAuth } from "./AuthContext";
 
 import { defaultStyles } from "@/data/consts";
 
-import { NewSong, Song, SongContextType, SongProviderProps, LyricParsed, LoadSongProps } from "@/types";
+import { NewSong, Song, SongContextType, LyricParsed, LoadSongProps } from "@/types";
 
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
@@ -23,7 +23,7 @@ function parseLyrics(raw: string): LyricParsed[] {
     }));
 }
 
-export function SongProvider({ children }: SongProviderProps) {
+export function SongProvider({ children }: { children: ReactNode; }) {
     const [song, setSong] = useState<Song | null>(null);
     const [loading, setLoading] = useState(false);
 

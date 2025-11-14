@@ -115,13 +115,6 @@ export type SongContextType = {
     saveSong: () => Promise<void>;
 };
 
-export type SongProviderProps = {
-    children: ReactNode;
-    id?: string;
-    userId?: string;
-    slug?: string;
-};
-
 export type SongsContextType = {
     songs: Song[];
     loading: boolean;
