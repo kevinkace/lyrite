@@ -16,6 +16,7 @@ export default function Editor({ onSave }: { onSave: () => void }) {
     const { setError } = useError();
     const { createSong, song, updateSong } = useSong();
 
+    const [ saving, setSaving ] = useState(false);
     const [ title, setTitle ] = useState(song?.title || "");
     const [ artist, setArtist ] = useState(song?.artist || "");
     const [ lyrics, setLyrics ] = useState(song?.lyrics || "");
@@ -31,6 +32,10 @@ export default function Editor({ onSave }: { onSave: () => void }) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        setSaving(true);
+
+        onSave();
+
         try {
             if (song) {
                 await updateSong({
@@ -39,8 +44,6 @@ export default function Editor({ onSave }: { onSave: () => void }) {
                     lyrics,
                     is_public: isPublic
                 });
-
-                onSave();
 
                 return;
             }
@@ -61,8 +64,11 @@ export default function Editor({ onSave }: { onSave: () => void }) {
     };
 
     return <Flex direction="column" gap="4" align="stretch" asChild >
-        <form onSubmit={handleSubmit}>
+        <form
+            onSubmit={handleSubmit}
+        >
             <TextField.Root
+                disabled={saving}
                 name="title"
                 placeholder="Title"
                 value={title}
@@ -72,6 +78,7 @@ export default function Editor({ onSave }: { onSave: () => void }) {
             />
 
             <TextField.Root
+                disabled={saving}
                 name="artist"
                 placeholder="Artist"
                 value={artist}
@@ -81,6 +88,7 @@ export default function Editor({ onSave }: { onSave: () => void }) {
             />
 
             <TextArea
+                disabled={saving}
                 name="lyrics"
                 className={css.lyrics}
                 placeholder="Lyrics"
@@ -105,7 +113,13 @@ export default function Editor({ onSave }: { onSave: () => void }) {
             </Text>
 
             <Flex justify="center">
-                <Button size="4" variant="soft" className={css.button}>Save</Button>
+                <Button
+                    size="4"
+                    variant="soft"
+                    className={css.button}
+                >
+                    Save
+                </Button>
             </Flex>
         </form>
     </Flex>;
