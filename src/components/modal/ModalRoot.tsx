@@ -44,7 +44,7 @@ export default function ModalRoot() {
                             )}
 
                             {type === "downloadPII" && (
-                                <DownloadPII {...props} closeModal={closeModal} />
+                                <DownloadPII onDownload={props?.onDownload} {...props} closeModal={closeModal} />
                             )}
 
                             {type === "editor" && (
