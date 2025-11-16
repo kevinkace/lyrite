@@ -25,6 +25,7 @@ function parseLyrics(raw: string): LyricParsed[] {
 
 export function SongProvider({ children }: { children: ReactNode; }) {
     const [song, setSong] = useState<Song | null>(null);
+    const [dirty, setDirty] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const { setError } = useError();
@@ -65,6 +66,7 @@ export function SongProvider({ children }: { children: ReactNode; }) {
             setSong(null);
         } finally {
             setLoading(false);
+            setDirty(false);
         }
     };
 
@@ -84,6 +86,7 @@ export function SongProvider({ children }: { children: ReactNode; }) {
         if (error) throw error;
 
         setSong(data as Song);
+        setDirty(false);
 
         return data as Song;
     };
@@ -106,6 +109,7 @@ export function SongProvider({ children }: { children: ReactNode; }) {
         if (error) throw error;
 
         setSong(data as Song);
+        setDirty(false);
 
         return data as Song;
     }
@@ -118,35 +122,50 @@ export function SongProvider({ children }: { children: ReactNode; }) {
             .update(song)
             .eq("id", song.id);
 
+        setDirty(false);
+
         if (error) {
             setError(error.message);
+            setDirty(false);
+
             throw error;
         }
     };
 
     const updateSection = (sectionId: number, newData: Partial<LyricParsed>) => {
         if (!song) return;
+
         const updated = song.lyrics_parsed.map(s => (s.id === sectionId ? merge(s, newData) : s));
+
         setSong({ ...song, lyrics_parsed: updated });
+        setDirty(true);
     };
 
     const setStyle = (newStyle: Partial<Song["style"]>) => {
         if (!song) return;
+
         setSong({ ...song, style: { ...song.style, ...newStyle } });
+        setDirty(true);
     };
 
     const setSectionStyle = (sectionId: number, newStyle: Partial<LyricParsed["style"]>) => {
         if (!song) return;
+
         const updated = song.lyrics_parsed.map(s =>
             s.id === sectionId ? { ...s, style: { ...s.style, ...newStyle } } : s
         );
+
         setSong({ ...song, lyrics_parsed: updated });
+        setDirty(true);
     };
 
     const resetAllColors = () => {
         if (!song) return;
+
         const updated = song.lyrics_parsed.map(s => ({ ...s, style: { ...s.style, color: null } }));
+
         setSong({ ...song, lyrics_parsed: updated });
+        setDirty(true);
     };
 
     return (
@@ -154,6 +173,7 @@ export function SongProvider({ children }: { children: ReactNode; }) {
             value={{
                 song,
                 loading,
+                dirty,
                 setLoading,
                 loadSong,
                 createSong,

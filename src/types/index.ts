@@ -102,10 +102,11 @@ export type SongContextType = {
 
     loading: boolean;
     setLoading: (loading: boolean) => void;
+    dirty: boolean;
 
     createSong: ({ song }: { song: NewSong }) => Promise<Song>;
     updateSection: (sectionId: number, newData: Partial<LyricParsed>) => void;
-    loadSong: ({ id, user_id, slug }: LoadSongProps) => Promise<Song>;
+    loadSong: ({ id, user_id, slug }: LoadSongProps) => Promise<Song | undefined>;
     updateSong: (updatedSong: NewSong) => Promise<Song>;
 
     setStyle: (newStyle: Partial<Song["style"]>) => void;

@@ -30,10 +30,23 @@
 }
 
 .save {
+    position: relative;
+
     svg {
         height: 1.3em;
         stroke-width: 1.5px;
     }
+}
+
+.saveClean {
+    filter: saturate(0);
+}
+
+.unsavedChangesIndicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.8em;
 }
 
 .loadingSave {

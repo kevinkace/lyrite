@@ -17,9 +17,9 @@ import Toolbar from "@/components/song/Toolbar";
 import css from "./EditSong.module.css";
 
 export default function EditSong() {
-    const { song, loading, saveSong, updateSection } = useSong();
+    const { song, loading, saveSong, dirty } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
-    const { setSectionColor, selectedColor, setSelectedColor, showEditor } = useEditing();
+    const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
 
     const [ showTools, setShowTools ]     = useState(false);
     const [ showLoading, setShowLoading ] = useState(false);
@@ -47,9 +47,17 @@ export default function EditSong() {
                 variant="ghost"
                 size="2"
                 radius="full"
-                className={clsx(css.save, { [css.loadingSave]: showLoading })}
+                className={clsx(
+                    css.save,
+                    {
+                        [css.loadingSave]: showLoading,
+                        [css.saveClean]: !dirty
+                    }
+                )}
                 disabled={showLoading}
                 onClick={() => {
+                    if (!dirty) return;
+
                     saveSong();
 
                     setShowLoading(true);
@@ -57,14 +65,22 @@ export default function EditSong() {
                 }}
             >
                 <Save />
+
+                {dirty && !showLoading ?
+                    (<motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                    >
+                        <div className={css.unsavedChangesIndicator}>
+                            *
+                        </div>
+                    </motion.div>) :
+                null}
             </IconButton>
 
             {/* unsaved changes indicator */}
-            {(
-                <div className={css.unsavedChangesIndicator}>
-                    * unsaved
-                </div>
-            )}
 
             <Button variant="surface" size="2" radius="full" onClick={() => {
                 setSelectedColor(null);
