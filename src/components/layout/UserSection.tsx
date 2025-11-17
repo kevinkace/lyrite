@@ -5,10 +5,11 @@ import Link from "next/link";
 import { FilePlus } from "lucide-react";
 import { Flex, Button } from "@radix-ui/themes";
 
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth }   from "@/contexts/AuthContext";
 import { useLayout } from "@/contexts/LayoutContext";
 
 import UserMenu from "@/components/layout/UserMenu";
+
 import { RadixColor, RadixVariant } from "@/types";
 
 const loggedOutLinks = [
