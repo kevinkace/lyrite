@@ -6,10 +6,12 @@ import { clsx } from "clsx";
 import { Flex, TextField, IconButton, Table as TableUI } from "@radix-ui/themes";
 import { ListFilter } from "lucide-react";
 
-import css from "./Table.module.css";
-import Pagination from "../pagination/Pagination";
+import Pagination from "@/components/pagination/Pagination";
+import TableCell  from "./TableCell";
+
 import { Profile, Song, TableHeader } from "@/types";
-import TableCell from "./TableCell";
+
+import css from "./Table.module.css";
 
 export default function Table({ headers, search, hasMore, deleteItem, updateItem, setLoading, loading, error, items, page } :{
     headers: TableHeader[];

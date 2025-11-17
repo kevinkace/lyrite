@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext } from "react";
+
 import { useSupabaseCollection } from "@/hooks/useSupabaseCollection";
 
 import type { Profile, UsersContextType, UsersProviderProps } from "@/types";

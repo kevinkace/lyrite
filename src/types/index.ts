@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
-import type { User as SupabaseUser, AuthError } from "@supabase/supabase-js";
 import type { ButtonProps } from "@radix-ui/themes";
+
+import type { User as SupabaseUser, AuthError } from "@supabase/supabase-js";
 
 export type Profile = {
     id: string;

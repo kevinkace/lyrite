@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FilePen, Settings, User } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
+
 import { userLinks } from "@/data/consts";
 
 import { Avatar } from "@/components/user/Avatar";

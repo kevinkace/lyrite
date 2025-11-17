@@ -6,7 +6,7 @@ import { SongsProvider } from "@/contexts/SongsContext";
 
 import { createServerClient } from "@/lib/supabase/server";
 
-import Layout from "@/components/layout/Layout";
+import Layout        from "@/components/layout/Layout";
 import FeaturedSongs from "@/components/songs/FeaturedSongs";
 
 import css from "./page.module.css"

@@ -2,8 +2,9 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-import type { UserContextType, Profile } from "@/types";
 import { fetchProfile } from "@/lib/supabase/profile";
+
+import type { UserContextType, Profile } from "@/types";
 
 const UserContext = createContext<UserContextType>({
     id: null,

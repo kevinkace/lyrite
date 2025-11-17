@@ -5,6 +5,7 @@ import { ErrorProvider }  from "@/contexts/ErrorContext";
 import { ModalProvider }  from "@/contexts/ModalContext";
 import { AuthProvider }   from "@/contexts/AuthContext";
 import { LayoutProvider } from "@/contexts/LayoutContext";
+import { SongProvider }   from "@/contexts/SongContext";
 
 import LoadingGate  from "@/components/layout/LoadingGate";
 import Loading      from "@/components/layout/LoadingBar";
@@ -14,7 +15,6 @@ import CookieBanner from "@/components/analytics/CookieBanner";
 
 import "./globals.css";
 import css from "./layout.module.css";
-import { SongProvider } from "@/contexts/SongContext";
 
 export const metadata: Metadata = {
     title: "lyrite",
