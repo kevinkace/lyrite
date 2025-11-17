@@ -23,7 +23,7 @@ export const UserSection = () => {
     return (
         <>
             {user && (
-                <Flex gap="3" align="center">
+                <Flex gap="4" align="center">
                     {!headerUserContent && <Button asChild variant="surface" size="2" radius="full" color="violet">
                         <Link href="/songs/new">
                             <FilePlus/>

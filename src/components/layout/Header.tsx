@@ -13,7 +13,7 @@ import css from "./Header.module.css";
 export default function Header() {
     return (
         <header className={css.header}>
-            <Flex align="center" gap="6">
+            <Flex align="center" gap="6" className={css.left}>
                 <h1 className={css.logo}>
                     <Link href="/" data-gid="header-home-link" className={css.logoLink}>
                         <LogoIcon />
@@ -25,9 +25,13 @@ export default function Header() {
                 {/* <ErrorButton /> */}
             </Flex>
 
-            <Title />
+            <div className={css.center}>
+                <Title />
+            </div>
 
-            <UserSection />
+            <div className={css.right}>
+                <UserSection />
+            </div>
 
         </header>
     );

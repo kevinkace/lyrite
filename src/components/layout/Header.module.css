@@ -1,12 +1,28 @@
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
 
     padding: 0.4em 4% 0.3em;
 
     background: linear-gradient(90deg, #1a1a1aee 0%, #121212ff 100%);
+}
+
+.left,
+.center,
+.right {
+    display: flex;
+    align-items: center;
+}
+
+.left {
+    justify-self: start;
+}
+.center {
+    justify-self: center;
+}
+.right {
+    justify-self: end;
 }
 
 .logo {
