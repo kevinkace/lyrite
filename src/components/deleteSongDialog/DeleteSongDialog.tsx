@@ -8,6 +8,8 @@ import {
 } from "@radix-ui/themes";
 import { Trash2 } from "lucide-react";
 
+import css from "./DeleteSongDialog.module.css";
+
 type DeleteSongDialogProps = {
     songId: string;
     title: string;
@@ -29,7 +31,13 @@ export default function DeleteSongDialog({
             <Dialog.Content >
                 <Dialog.Title>Delete song?</Dialog.Title>
                 <Dialog.Description>
-                    Are you sure you want to delete <strong>{title}</strong>? This action cannot be undone.
+                    Are you sure you want to delete your song? This action cannot be undone.
+
+                    <div className={css.songTitlePrompt}>
+                        Delete: {" "}
+                        <strong className={css.songTitle}>{title}</strong>
+                        ?
+                    </div>
                 </Dialog.Description>
 
                 <Flex gap="3" mt="4" justify="end" >

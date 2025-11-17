@@ -20,7 +20,7 @@ export default function ModalRoot() {
         <AnimatePresence>
             {type && (
                 <Dialog.Root open onOpenChange={(open) => !open && closeModal()}>
-                    <Dialog.Content maxWidth="450px" asChild>
+                    <Dialog.Content maxWidth="1200px" asChild>
                         <motion.div
                             initial={{ opacity : 0, y : 20 }}
                             animate={{ opacity : 1, y : 0 }}
