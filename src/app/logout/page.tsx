@@ -1,14 +1,13 @@
 "use client";
 
-import { supabase } from "@/lib/supabase/client";
 import { Button } from "@radix-ui/themes";
 
-export default function logoutPage() {
-    const signOut = async () => {
-        await supabase.auth.signOut();
-    }
+import { useAuth } from "@/contexts/AuthContext";
+
+export default function LogoutPage() {
+    const { signOut } = useAuth();
 
     return (
-        <Button color="crimson" onClick={signOut}>Sign out</Button>
+        <Button color="crimson" onClick={() => signOut()}>Sign out</Button>
     )
 }
