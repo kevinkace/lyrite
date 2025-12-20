@@ -4,7 +4,7 @@ import { FilePlus } from "lucide-react";
 
 import { SongsProvider } from "@/contexts/SongsContext";
 
-import { createServerClient } from "@/lib/supabase/server";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 import Layout        from "@/components/layout/Layout";
 import FeaturedSongs from "@/components/songs/FeaturedSongs";
@@ -18,7 +18,7 @@ const featuredIds = [
 ];
 
 export default async function HomePage() {
-    const supabase = createServerClient();
+    const supabase = await createServerSupabaseClient();
 
     const { data : featuredSongs } = await supabase
         .from("songs")
