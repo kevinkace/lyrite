@@ -67,7 +67,7 @@ export default function LoginPage() {
 
     return (
         <Layout header={false} bg="mesh" justifyContent="center">
-            <Flex direction="column" gap="6" align="center" justify="center">
+            <Flex direction="column" gap="6" align="center" justify="center" className={css.container}>
                 <Link href="/" aria-label="Go to homepage">
                     <LogoIcon className={css.logo} />
                 </Link>

@@ -1,5 +1,7 @@
-.main {
-    min-height: 100vh;
+.container {
+    /* visual balance with logo *
+    /* need a little more than just logo height due to the gap */
+    margin-bottom: 6em;
 }
 
 .logo {
