@@ -8,7 +8,7 @@ import { useModal } from "@/contexts/ModalContext";
 
 import Confirm from "./Confirm";
 import DownloadPII from "./DownloadPII";
-import Editor from "./Editor";
+import SongEditor from "./Editor";
 
 import css from "./ModalRoot.module.css";
 
@@ -48,7 +48,7 @@ export default function ModalRoot() {
                             )}
 
                             {type === "editor" && (
-                                <Editor {...props} closeModal={closeModal} />
+                                <SongEditor {...props} closeModal={closeModal} />
                             )}
                         </motion.div>
                     </Dialog.Content>

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Flex, Card } from "@radix-ui/themes";
 
 import { useAuth }  from "@/contexts/AuthContext";
-import Editor from "@/components/songs/SongEditor";
+import SongEditor from "@/components/songs/SongEditor";
 
 import css from "./page.module.css";
 
@@ -26,7 +26,7 @@ export default function NewSongPage() {
                 <h1>New Song</h1>
 
                 <Card size="4" className={css.card}>
-                    <Editor />
+                    <SongEditor />
                 </Card>
             </Flex>
         </>
