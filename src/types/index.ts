@@ -134,6 +134,36 @@ export type SongsContextType = {
     updateSong: (id: string, updates: Partial<Song>) => Promise<void>;
 };
 
+/* ---------- Supabase Collection Types ---------- */
+
+// Base collection interface with common properties
+type BaseSupabaseCollection = {
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    error: string | null;
+    hasMore: boolean;
+    pages: number;
+    total: number;
+    page?: number;
+    search?: string;
+};
+
+// Generic collection type that can work with any item type
+export type SupabaseCollection<T extends { id: string } = Song | Profile> = BaseSupabaseCollection & {
+    items?: T[];
+};
+
+// Users-specific collection type
+export type UsersCollection = BaseSupabaseCollection &
+    Pick<UsersContextType, 'users' | 'deleteUser'>;
+
+// Songs-specific collection type
+export type SongsCollection = BaseSupabaseCollection &
+    Pick<SongsContextType, 'songs' | 'deleteSong' | 'updateSong' | 'updateSongInState'>;
+
+// Union type for all collection types
+export type AnySupabaseCollection = UsersCollection | SongsCollection | SupabaseCollection;
+
 export type SongsProviderProps = {
     children: ReactNode;
     userId?: string;
