@@ -28,7 +28,7 @@ export const UserSection = () => {
                     {!headerUserContent && <Button asChild variant="surface" size="2" radius="full" color="violet">
                         <Link href="/songs/new">
                             <FilePlus/>
-                            new song
+                            New song
                         </Link>
                     </Button>}
 
