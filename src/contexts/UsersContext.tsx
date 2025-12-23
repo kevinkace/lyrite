@@ -15,6 +15,7 @@ export function UsersProvider(props: UsersProviderProps) {
         setLoading,
         error,
         hasMore,
+        pages,
         total,
         deleteItem: deleteUser,
     } = useSupabaseCollection<Profile>({
@@ -36,6 +37,7 @@ export function UsersProvider(props: UsersProviderProps) {
                 search: props.search,
                 error,
                 hasMore,
+                pages,
                 total,
                 deleteUser,
             }}
