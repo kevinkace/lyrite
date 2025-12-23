@@ -9,42 +9,44 @@ import type { Profile, UsersContextType, UsersProviderProps } from "@/types";
 const UsersContext = createContext<UsersContextType | undefined>(undefined);
 
 export function UsersProvider(props: UsersProviderProps) {
-  const {
-    items: users,
-    loading,
-    setLoading,
-    error,
-    hasMore,
-    deleteItem : deleteUser,
-  } = useSupabaseCollection<Profile>({
-    table: "profiles",
-    page: props.page,
-    pageSize: props.pageSize,
-    search: props.search,
-    searchColumn: "name", // e.g. search by name instead of title
-    initialData: props.initialUsers,
-  });
-
-  return (
-    <UsersContext.Provider
-      value={{
-        users,
+    const {
+        items: users,
         loading,
         setLoading,
-        page: props.page,
-        search: props.search,
         error,
         hasMore,
-        deleteUser,
-      }}
-    >
-      {props.children}
-    </UsersContext.Provider>
-  );
+        total,
+        deleteItem: deleteUser,
+    } = useSupabaseCollection<Profile>({
+        table: "profiles",
+        page: props.page,
+        pageSize: props.pageSize,
+        search: props.search,
+        searchColumn: "name", // e.g. search by name instead of title
+        initialData: props.initialUsers,
+    });
+
+    return (
+        <UsersContext.Provider
+            value={{
+                users,
+                loading,
+                setLoading,
+                page: props.page,
+                search: props.search,
+                error,
+                hasMore,
+                total,
+                deleteUser,
+            }}
+        >
+            {props.children}
+        </UsersContext.Provider>
+    );
 }
 
 export function useUsers() {
-  const ctx = useContext(UsersContext);
-  if (!ctx) throw new Error("useUsers must be used within UsersProvider");
-  return ctx;
+    const ctx = useContext(UsersContext);
+    if (!ctx) throw new Error("useUsers must be used within UsersProvider");
+    return ctx;
 }

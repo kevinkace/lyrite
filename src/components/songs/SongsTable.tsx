@@ -1,5 +1,6 @@
 "use client";
 
+import { Flex, Text } from "@radix-ui/themes";
 import { useSongs } from "@/contexts/SongsContext";
 
 import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
@@ -7,11 +8,17 @@ import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
 import Table from "../table/Table";
 
 export default function SongsTable({ editControls = false }: { editControls?: boolean }) {
-    const { songs, loading, setLoading, error, page, search, hasMore, deleteSong, updateSong } = useSongs();
-
+    const { songs, loading, setLoading, error, page, search, hasMore, total, deleteSong, updateSong } = useSongs();
 
     return (
-        <Table
+        <>
+            <Flex justify="between" align="center" mb="4">
+                <Text size="3" color="gray">
+                    {total} song{total !== 1 ? 's' : ''} total
+                </Text>
+            </Flex>
+
+            <Table
             search={search || ""}
             hasMore={hasMore}
             setLoading={setLoading}
@@ -65,5 +72,6 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
                 }
             ]}
         />
+        </>
     );
 }
