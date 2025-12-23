@@ -191,7 +191,7 @@ export type EditingContextType = {
 
 /* ---------- Pagination ---------- */
 export type PaginationProps = {
-    currentPage: number;
+    currentPage?: number;
     totalPages?: number;
     hasMore?: boolean;
     setLoading?: (loading: boolean) => void;
@@ -207,7 +207,7 @@ export type TableHeader = {
     key: string;
     align?: "left" | "center" | "right";
     href?: (item: Song | Profile) => string;
-    type?: "date" | "check";
+    type?: "date" | "check" | "id";
     update?: (item: Song | Profile, header: TableHeader) => (value: any) => void;
     actions?: {
         [actionName: string]: (item: Song | Profile, key: string) => ReactNode;

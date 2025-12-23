@@ -19,9 +19,10 @@ type TableProps = {
     search?: string;
     page?: number;
     editControls?: boolean;
+    debug?: boolean;
 };
 
-export default function Table({ headers, collection, search = "", page }: TableProps) {
+export default function Table({ headers, collection, search = "", page, debug = false }: TableProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -86,6 +87,7 @@ export default function Table({ headers, collection, search = "", page }: TableP
                                 {header.label}
                             </TableUI.ColumnHeaderCell>
                         ))}
+                        { debug && <TableUI.ColumnHeaderCell align="left">DEBUG</TableUI.ColumnHeaderCell> }
                     </TableUI.Row>
                 </TableUI.Header>
 
@@ -102,6 +104,12 @@ export default function Table({ headers, collection, search = "", page }: TableP
                                 </TableUI.Cell>
                             ))}
 
+                            { debug && <TableUI.Cell align="left">
+                                <pre style={{ fontSize: "10px", maxHeight: "200px", overflow: "auto" }}>
+                                    {JSON.stringify(item, null, 2)}
+                                </pre>
+                            </TableUI.Cell> }
+
                         </TableUI.Row>
                     ))}
                 </TableUI.Body>
@@ -110,11 +118,11 @@ export default function Table({ headers, collection, search = "", page }: TableP
             </TableUI.Root>
 
 
-            {page && <Pagination
+            <Pagination
                 currentPage={page}
                 hasMore={collection.hasMore}
                 setLoading={collection.setLoading}
-            />}
+            />
         </div>
     );
 }

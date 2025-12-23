@@ -13,14 +13,21 @@ export default function UsersTable({ editControls = false }: { editControls?: bo
             collection={usersCollection}
             search={usersCollection.search || ""}
             page={usersCollection.page}
+            // debug={true}
             headers={[
                 {
                     label : "ID",
                     key   : "id",
+                    type  : "id"
                 },
                 {
                     label : "Joined",
                     key   : "created_at",
+                    type  : "date"
+                },
+                {
+                    label : "Name",
+                    key   : "full_name",
                 }
             ]}
         />
