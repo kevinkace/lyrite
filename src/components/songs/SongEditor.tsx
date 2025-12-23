@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { pick } from "lodash";
 
 import { Flex, Button, TextField, TextArea, Text, Switch } from "@radix-ui/themes";
 
@@ -10,24 +11,35 @@ import { getErrorMessage } from "@/lib/getErrorMessage";
 
 import css from "./SongEdit.module.css";
 
-export default function SongEditor({ onSave }: { onSave?: () => void }) {
+const fallback = {
+    title: "",
+    artist: "",
+    lyrics: "",
+    is_public: false
+};
+
+export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean; onSave?: () => void }) {
     const router = useRouter();
 
     const { setError } = useError();
-    const { createSong, song, updateSong } = useSong();
+    const { song, createSong, updateSong } = useSong();
 
     const [ saving, setSaving ] = useState(false);
-    const [ title, setTitle ] = useState(song?.title || "");
-    const [ artist, setArtist ] = useState(song?.artist || "");
-    const [ lyrics, setLyrics ] = useState(song?.lyrics || "");
-    const [ isPublic, setIsPublic ] = useState(song?.is_public || false);
+
+    const getFormData = (songData: typeof song) => ({
+        ...(!isNew && pick(songData, ['title', 'artist', 'lyrics', 'is_public'])),
+        ...fallback
+    });
+
+    const [ formData, setFormData ] = useState(() => getFormData(song));
 
     useEffect(() => {
-        setTitle(song?.title || "");
-        setArtist(song?.artist || "");
-        setLyrics(song?.lyrics || "");
-        setIsPublic(song?.is_public || false);
-    }, []);
+        if (isNew) {
+            return;
+        }
+
+        setFormData(getFormData(song));
+    }, [song]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -38,23 +50,13 @@ export default function SongEditor({ onSave }: { onSave?: () => void }) {
 
         try {
             if (song) {
-                await updateSong({
-                    title,
-                    artist,
-                    lyrics,
-                    is_public: isPublic
-                });
+                await updateSong(formData);
 
                 return;
             }
 
             const newSong = await createSong({
-                song: {
-                    title,
-                    artist,
-                    lyrics,
-                    is_public: isPublic
-                }
+                song: formData
             });
 
             router.push(`/songs/${newSong.id}`);
@@ -71,20 +73,20 @@ export default function SongEditor({ onSave }: { onSave?: () => void }) {
                 disabled={saving}
                 name="title"
                 placeholder="Title"
-                value={title}
+                value={formData.title}
                 required
                 size="3"
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
             />
 
             <TextField.Root
                 disabled={saving}
                 name="artist"
                 placeholder="Artist"
-                value={artist}
+                value={formData.artist}
                 required
                 size="3"
-                onChange={(e) => setArtist(e.target.value)}
+                onChange={(e) => setFormData(prev => ({ ...prev, artist: e.target.value }))}
             />
 
             <TextArea
@@ -92,17 +94,17 @@ export default function SongEditor({ onSave }: { onSave?: () => void }) {
                 name="lyrics"
                 className={css.lyrics}
                 placeholder="Lyrics"
-                value={lyrics}
+                value={formData.lyrics}
                 required
-                onChange={(e) => setLyrics(e.target.value)}
+                onChange={(e) => setFormData(prev => ({ ...prev, lyrics: e.target.value }))}
             />
 
             <Text as="label">
                 <Flex gap="2">
                     <Switch
                         name="isPublic"
-                        checked={isPublic}
-                        onCheckedChange={(checked) => setIsPublic(checked)}
+                        checked={formData.is_public}
+                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_public: checked }))}
                     />
                     public?
                 </Flex>
@@ -117,8 +119,10 @@ export default function SongEditor({ onSave }: { onSave?: () => void }) {
                     size="4"
                     variant="soft"
                     className={css.button}
+                    disabled={saving}
+                    type="submit"
                 >
-                    Save
+                    {saving ? "Saving..." : "Save Song"}
                 </Button>
             </Flex>
         </form>

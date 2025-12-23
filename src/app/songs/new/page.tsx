@@ -26,7 +26,7 @@ export default function NewSongPage() {
                 <h1>New Song</h1>
 
                 <Card size="4" className={css.card}>
-                    <SongEditor />
+                    <SongEditor isNew={true}/>
                 </Card>
             </Flex>
         </>
