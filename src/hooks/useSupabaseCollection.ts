@@ -10,6 +10,7 @@ type UseSupabaseCollectionOptions<T> = {
     ids?: string[];
     page?: number;
     pageSize?: number;
+    pages?: number;
     search?: string;
     initialData?: T[];
     searchColumn?: string;
@@ -29,6 +30,7 @@ export function useSupabaseCollection<T>({
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ]     = useState<string | null>(null);
     const [ hasMore, setHasMore ] = useState(false);
+    const [ pages, setPages ]     = useState<number>(1);
     const [ total, setTotal ]     = useState<number>(0);
 
     useEffect(() => {
@@ -43,27 +45,27 @@ export function useSupabaseCollection<T>({
             setLoading(true);
             setError(null);
 
-            let query = supabase.from(table).select("*");
+            let dataQuery = supabase.from(table).select("*");
             let countQuery = supabase.from(table).select("*", { count: "exact", head: true });
 
             if (ids && ids.length > 0) {
-                query = query.in("id", ids);
+                dataQuery = dataQuery.in("id", ids);
                 countQuery = countQuery.in("id", ids);
             } else if (userId) {
-                query = query
+                dataQuery = dataQuery
                     .eq("user_id", userId)
                     .range((page - 1) * pageSize, page * pageSize - 1);
 
                 countQuery = countQuery.eq("user_id", userId);
 
                 if (search && searchColumn) {
-                    query = query.ilike(searchColumn, `%${search}%`);
+                    dataQuery = dataQuery.ilike(searchColumn, `%${search}%`);
                     countQuery = countQuery.ilike(searchColumn, `%${search}%`);
                 }
             }
 
             const [{ data, error }, { count, error: countError }] = await Promise.all([
-                query,
+                dataQuery,
                 countQuery
             ]);
 
@@ -75,6 +77,7 @@ export function useSupabaseCollection<T>({
                 setItems(data || []);
                 setTotal(count || 0);
                 setHasMore(!ids && (data?.length ?? 0) === pageSize);
+                setPages(ids ? 1 : Math.ceil((count || 0) / pageSize));
             }
 
             setLoading(false);
@@ -129,6 +132,7 @@ export function useSupabaseCollection<T>({
         error,
         setError,
         hasMore,
+        pages,
         total,
         deleteItem,
         updateItem,

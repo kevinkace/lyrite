@@ -29,6 +29,7 @@ export type UsersContextType = {
     page?: number;
     search?: string;
     hasMore: boolean;
+    pages: number;
     total: number;
     deleteUser: (id: string) => Promise<void>;
 };
@@ -126,6 +127,7 @@ export type SongsContextType = {
     page?: number;
     search?: string;
     hasMore: boolean;
+    pages: number;
     total: number;
     deleteSong: (id: string) => Promise<void>;
     updateSongInState: (id: string, updates: Partial<Song>) => void;
