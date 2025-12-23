@@ -10,7 +10,7 @@ import { getErrorMessage } from "@/lib/getErrorMessage";
 
 import css from "./SongEdit.module.css";
 
-export default function SongEditor({ onSave }: { onSave: () => void }) {
+export default function SongEditor({ onSave }: { onSave?: () => void }) {
     const router = useRouter();
 
     const { setError } = useError();
@@ -34,7 +34,7 @@ export default function SongEditor({ onSave }: { onSave: () => void }) {
 
         setSaving(true);
 
-        onSave();
+        onSave?.();
 
         try {
             if (song) {
