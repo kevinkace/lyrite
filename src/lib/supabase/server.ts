@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { env } from "../env";
 
-export const createServerSupabaseClient = async () => {
+export async function createServerSupabaseClient() {
     const cookieStore = await cookies();
 
     return createClient(
@@ -11,20 +11,20 @@ export const createServerSupabaseClient = async () => {
         {
             auth: {
                 storage: {
-                    getItem: (key: string) => {
-                        const cookie = cookieStore.get(key);
-                        return Promise.resolve(cookie?.value || null);
-                    },
-                    setItem: (key: string, value: string) => {
+                    getItem: async (key) => // force promise
+                        (cookieStore.get(key)?.value ?? null),
+
+                    setItem: (key, value) => {
                         cookieStore.set(key, value, {
                             httpOnly: true,
-                            secure: process.env.NODE_ENV === 'production',
-                            sameSite: 'lax',
-                            maxAge: 60 * 60 * 24 * 7, // 1 week
+                            secure: process.env.NODE_ENV === "production",
+                            sameSite: "lax",
+                            maxAge: 60 * 60 * 24 * 7,
                         });
                         return Promise.resolve();
                     },
-                    removeItem: (key: string) => {
+
+                    removeItem: (key) => {
                         cookieStore.delete(key);
                         return Promise.resolve();
                     },
@@ -32,4 +32,4 @@ export const createServerSupabaseClient = async () => {
             },
         }
     );
-};
+}
