@@ -25,37 +25,28 @@
     }
 }
 
-.contentEditable {
-
-    &:hover {
-        background-color: var(--hover-color, #fff2);
-
-        div {
-            background-color: #0005;
-            animation: pulseBorder 800ms infinite;
-            animation-timing-function: steps(1);
-        }
-    }
-}
-
-@keyframes pulseBorder {
-    0% {
-        outline: 2px solid var(--hover-color, #fff3);
-    }
-    50% {
-        outline: 2px solid transparent;
-    }
-}
-
 .hoverFill {
     cursor: crosshair;
 }
 
 .save {
+    position: relative;
+
     svg {
         height: 1.3em;
         stroke-width: 1.5px;
     }
+}
+
+.saveClean {
+    filter: saturate(0);
+}
+
+.unsavedChangesIndicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.8em;
 }
 
 .loadingSave {

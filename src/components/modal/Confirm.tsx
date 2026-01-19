@@ -13,7 +13,7 @@ export default function ConfirmDelete({
 
     confirmRequirement
 }: {
-    onConfirm: () => void;
+    onConfirm?: () => void;
     closeModal: () => void;
 
     description? : string;

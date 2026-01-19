@@ -1,9 +1,9 @@
 import { Text } from "@radix-ui/themes";
+import { clsx } from "clsx";
 
 import { formattedDate } from "@/lib/dates";
 
 import  css from "./DefList.module.css";
-import { clsx } from "clsx";
 
 export function DefList({ items }: { items: Array<{ key : string, label: string; value: string | null }> }) {
     return (

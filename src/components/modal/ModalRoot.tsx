@@ -8,6 +8,7 @@ import { useModal } from "@/contexts/ModalContext";
 
 import Confirm from "./Confirm";
 import DownloadPII from "./DownloadPII";
+import SongEditor from "./Editor";
 
 import css from "./ModalRoot.module.css";
 
@@ -19,7 +20,7 @@ export default function ModalRoot() {
         <AnimatePresence>
             {type && (
                 <Dialog.Root open onOpenChange={(open) => !open && closeModal()}>
-                    <Dialog.Content maxWidth="450px" asChild>
+                    <Dialog.Content maxWidth="1200px" asChild>
                         <motion.div
                             initial={{ opacity : 0, y : 20 }}
                             animate={{ opacity : 1, y : 0 }}
@@ -43,7 +44,11 @@ export default function ModalRoot() {
                             )}
 
                             {type === "downloadPII" && (
-                                <DownloadPII {...props} closeModal={closeModal} />
+                                <DownloadPII onDownload={props?.onDownload} {...props} closeModal={closeModal} />
+                            )}
+
+                            {type === "editor" && (
+                                <SongEditor {...props} closeModal={closeModal} />
                             )}
                         </motion.div>
                     </Dialog.Content>

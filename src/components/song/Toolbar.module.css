@@ -5,6 +5,26 @@
 
     border-bottom-left-radius: var(--radius-2);
     border-bottom-right-radius: var(--radius-2);
+
+    :global(.rt-SegmentedControlIndicator) {
+        animation: pulse 700ms infinite;
+
+        mix-blend-mode: color-burn !important;
+
+        &:before {
+            background-color: #999 !important;
+        }
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 .fontFamilySelect {
@@ -20,7 +40,6 @@
     :global(.rt-SegmentedControlIndicator) {
         z-index: 1;
         mix-blend-mode: overlay;
-
     }
 
     :global(.rt-SegmentedControlRoot) {

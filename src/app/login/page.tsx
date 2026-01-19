@@ -9,6 +9,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 import Layout from "@/components/layout/Layout";
 import Hr from "@/components/hr/Hr";
+
 import { LogoIcon } from "@/components/icons/LogoIcon.svg";
 import { GoogleG } from "@/components/icons/providers/google-g.svg";
 import { FacebookF } from "@/components/icons/providers/facebook-f.svg";
@@ -66,13 +67,14 @@ export default function LoginPage() {
 
     return (
         <Layout header={false} bg="mesh" justifyContent="center">
-            <Flex direction="column" gap="6" align="center" justify="center">
+            <Flex direction="column" gap="6" align="center" justify="center" className={css.container}>
                 <Link href="/" aria-label="Go to homepage">
                     <LogoIcon className={css.logo} />
                 </Link>
 
                 <Card className={css.providerCard} size="4">
                     <Flex direction="column" gap="3" align="center">
+                        Sign in with
                         {loginProviders.map((provider) => (
                             <Button
                                 key={provider.name}
@@ -83,7 +85,7 @@ export default function LoginPage() {
                                 variant="soft"
                             >
                                 {provider.icon}
-                                Continue with {provider.name}
+                                {provider.name}
                             </Button>
                         ))}
 

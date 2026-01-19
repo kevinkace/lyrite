@@ -18,3 +18,8 @@
         opacity: 0.8;
     }
 }
+
+.cellId {
+    font-family: monospace;
+    text-transform: uppercase;
+}

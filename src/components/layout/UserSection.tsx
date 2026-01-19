@@ -5,10 +5,11 @@ import Link from "next/link";
 import { FilePlus } from "lucide-react";
 import { Flex, Button } from "@radix-ui/themes";
 
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth }   from "@/contexts/AuthContext";
 import { useLayout } from "@/contexts/LayoutContext";
 
 import UserMenu from "@/components/layout/UserMenu";
+
 import { RadixColor, RadixVariant } from "@/types";
 
 const loggedOutLinks = [
@@ -23,11 +24,11 @@ export const UserSection = () => {
     return (
         <>
             {user && (
-                <Flex gap="3" align="center">
+                <Flex gap="4" align="center">
                     {!headerUserContent && <Button asChild variant="surface" size="2" radius="full" color="violet">
                         <Link href="/songs/new">
                             <FilePlus/>
-                            new song
+                            New song
                         </Link>
                     </Button>}
 

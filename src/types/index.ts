@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
-import type { User as SupabaseUser, AuthError } from "@supabase/supabase-js";
 import type { ButtonProps } from "@radix-ui/themes";
+
+import type { User as SupabaseUser, AuthError } from "@supabase/supabase-js";
 
 export type Profile = {
     id: string;
@@ -28,6 +29,8 @@ export type UsersContextType = {
     page?: number;
     search?: string;
     hasMore: boolean;
+    pages: number;
+    total: number;
     deleteUser: (id: string) => Promise<void>;
 };
 
@@ -88,12 +91,9 @@ export type Song = {
     updated_at: string;
 };
 
-export type NewSong = {
-    title: string;
-    artist: string;
-    lyrics: string;
-    is_public: boolean;
-};
+export type NewSong = Pick<Song, "title" | "artist" | "lyrics" | "is_public">;
+
+export type LoadSongProps = Pick<Song, "id" | "user_id" | "slug">;
 
 export type SongsListProps = {
     songs: Song[];
@@ -105,24 +105,18 @@ export type SongContextType = {
 
     loading: boolean;
     setLoading: (loading: boolean) => void;
+    dirty: boolean;
 
     createSong: ({ song }: { song: NewSong }) => Promise<Song>;
-    mergeSections: (id: number) => void;
-    splitSection: (id: number, splitIndex: number) => void;
     updateSection: (sectionId: number, newData: Partial<LyricParsed>) => void;
+    loadSong: ({ id, user_id, slug }: LoadSongProps) => Promise<Song | undefined>;
+    updateSong: (updatedSong: NewSong) => Promise<Song>;
 
     setStyle: (newStyle: Partial<Song["style"]>) => void;
     setSectionStyle: (sectionId: number, newStyle: Partial<LyricParsed["style"]>) => void;
     resetAllColors: () => void;
 
     saveSong: () => Promise<void>;
-};
-
-export type SongProviderProps = {
-    children: ReactNode;
-    id?: string;
-    userId?: string;
-    slug?: string;
 };
 
 export type SongsContextType = {
@@ -133,10 +127,42 @@ export type SongsContextType = {
     page?: number;
     search?: string;
     hasMore: boolean;
+    pages: number;
+    total: number;
     deleteSong: (id: string) => Promise<void>;
     updateSongInState: (id: string, updates: Partial<Song>) => void;
     updateSong: (id: string, updates: Partial<Song>) => Promise<void>;
 };
+
+/* ---------- Supabase Collection Types ---------- */
+
+// Base collection interface with common properties
+type BaseSupabaseCollection = {
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    error: string | null;
+    hasMore: boolean;
+    pages: number;
+    total: number;
+    page?: number;
+    search?: string;
+};
+
+// Generic collection type that can work with any item type
+export type SupabaseCollection<T extends { id: string } = Song | Profile> = BaseSupabaseCollection & {
+    items?: T[];
+};
+
+// Users-specific collection type
+export type UsersCollection = BaseSupabaseCollection &
+    Pick<UsersContextType, 'users' | 'deleteUser'>;
+
+// Songs-specific collection type
+export type SongsCollection = BaseSupabaseCollection &
+    Pick<SongsContextType, 'songs' | 'deleteSong' | 'updateSong' | 'updateSongInState'>;
+
+// Union type for all collection types
+export type AnySupabaseCollection = UsersCollection | SongsCollection | SupabaseCollection;
 
 export type SongsProviderProps = {
     children: ReactNode;
@@ -159,11 +185,13 @@ export type EditingContextType = {
     stepFontSize: (step: number) => void;
     setFontFamily: (fontFamily: string) => void;
     setSectionColor: (sectionId: number, color: number | null) => void;
+    setShowEditor: (show: boolean) => void;
+    showEditor: boolean;
 };
 
 /* ---------- Pagination ---------- */
 export type PaginationProps = {
-    currentPage: number;
+    currentPage?: number;
     totalPages?: number;
     hasMore?: boolean;
     setLoading?: (loading: boolean) => void;
@@ -179,7 +207,7 @@ export type TableHeader = {
     key: string;
     align?: "left" | "center" | "right";
     href?: (item: Song | Profile) => string;
-    type?: "date" | "check";
+    type?: "date" | "check" | "id";
     update?: (item: Song | Profile, header: TableHeader) => (value: any) => void;
     actions?: {
         [actionName: string]: (item: Song | Profile, key: string) => ReactNode;

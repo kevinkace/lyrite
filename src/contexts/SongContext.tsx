@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import merge from "lodash/merge";
 
 import { supabase } from "@/lib/supabase/client";
@@ -8,257 +8,184 @@ import { supabase } from "@/lib/supabase/client";
 import { useError } from "./ErrorContext";
 import { useAuth } from "./AuthContext";
 
-import { NewSong, Song, SongContextType, SongProviderProps, LyricParsed } from "@/types";
-import { defaultStyles, doubleLineBreak } from "@/data/consts";
+import { defaultStyles } from "@/data/consts";
+
+import { NewSong, Song, SongContextType, LyricParsed, LoadSongProps } from "@/types";
+
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
-/**
- * Parse raw lyrics string into structured format
- */
 function parseLyrics(raw: string): LyricParsed[] {
-    return raw
-        .split(/\n{2,}/)
-        .map((section, i) => ({
-            id: i,
-            text: section.trim(),
-            style: {}
-        }));
+    return raw.split(/\n{2,}/).map((section, i) => ({
+        id: i,
+        text: section.trim(),
+        style: {},
+    }));
 }
 
-/**
- * Unparse lyrics from structured format back to raw string
- */
-function unparseLyrics(parsed: LyricParsed[]): string {
-    return parsed
-        .map(section => section.text)
-        .join("\n\n");
-}
-
-export function SongProvider({ children, id, userId, slug }: SongProviderProps) {
+export function SongProvider({ children }: { children: ReactNode; }) {
     const [song, setSong] = useState<Song | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [dirty, setDirty] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const { setError } = useError();
+
     const { user } = useAuth();
 
-    const createSong = async ({ song }: { song: NewSong }) => {
-        if (!user?.id) {
-            throw new Error("No user provided");
+    const loadSong = async ({ id, user_id : userId, slug }: LoadSongProps) => {
+        if (!id && (!slug || !userId)) {
+            console.warn("Missing identifiers for loadSong", { id, userId, slug });
+
+            return;
         }
 
-        const slug = song.title.toLowerCase().replace(/\s+/g, "-");
+        setLoading(true);
+
+        try {
+            let query = supabase.from("songs").select("*");
+
+            if (id) {
+                query = query.eq("id", id);
+            } else {
+                query = query.eq("user_id", userId).eq("slug", slug);
+            }
+
+            const { data, error } = await query.single();
+
+            if (error) throw error;
+
+            // Fallbacks for dev data
+            if (!data.lyrics_parsed) data.lyrics_parsed = parseLyrics(data.lyrics);
+            if (!data.style) data.style = defaultStyles;
+
+            setSong(data as Song);
+
+            return data as Song;
+        } catch (err: any) {
+            setError(err.message);
+            setSong(null);
+        } finally {
+            setLoading(false);
+            setDirty(false);
+        }
+    };
+
+    const createSong = async ({ song }: { song: NewSong }) => {
+        if (!user?.id) throw new Error("No user provided");
 
         const { data, error } = await supabase
             .from("songs")
             .insert({
-                title: song.title,
-                artist: song.artist,
-                lyrics: song.lyrics,
+                ...song,
                 lyrics_parsed: parseLyrics(song.lyrics),
-                style: defaultStyles,
-                user_id: user.id,
-                slug,
-                is_public: false,
+                style: defaultStyles
             })
             .select()
             .single();
 
         if (error) throw error;
 
+        setSong(data as Song);
+        setDirty(false);
+
         return data as Song;
+    };
+
+    const updateSong = async (updatedSong: NewSong) => {
+        if (!song) {
+            throw new Error("No song to update");
+        }
+
+        const { data, error } = await supabase
+            .from("songs")
+            .update({
+                ...updatedSong,
+                lyrics_parsed: parseLyrics(updatedSong.lyrics)
+            })
+            .eq("id", song.id)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        setSong(data as Song);
+        setDirty(false);
+
+        return data as Song;
+    }
+
+    const saveSong = async () => {
+        if (!song) throw new Error("No song to save");
+
+        const { error } = await supabase
+            .from("songs")
+            .update(song)
+            .eq("id", song.id);
+
+        setDirty(false);
+
+        if (error) {
+            setError(error.message);
+            setDirty(false);
+
+            throw error;
+        }
     };
 
     const updateSection = (sectionId: number, newData: Partial<LyricParsed>) => {
         if (!song) return;
 
-        const updatedSections = song.lyrics_parsed.map(section => {
-            if (section.id === sectionId) {
-                return merge(section, newData);
-            }
-            return section;
-        });
+        const updated = song.lyrics_parsed.map(s => (s.id === sectionId ? merge(s, newData) : s));
 
-        setSong({ ...song, lyrics_parsed: updatedSections });
+        setSong({ ...song, lyrics_parsed: updated });
+        setDirty(true);
     };
-
-    const mergeSections = (id: number) => {
-        if (!song) return;
-
-        const currentIndex = song.lyrics_parsed.findIndex(section => section.id === id);
-
-        if (currentIndex === -1) return;
-
-        const currentSection = song.lyrics_parsed[currentIndex];
-        const previousSection = song.lyrics_parsed[currentIndex - 1];
-
-        if (!previousSection) return;
-
-        const updatedText = previousSection.text + "\n" + currentSection.text;
-
-        const updatedSections = song.lyrics_parsed.reduce<LyricParsed[]>((acc, section, i, sections) => {
-            if (currentIndex === i) return acc; // skip
-
-            if (i === currentIndex - 1) {
-                acc.push({
-                    ...previousSection,
-                    text: updatedText
-                });
-            } else if (i < currentIndex - 1) {
-                acc.push(section);
-            } else if (sections[i + 1]) {
-                acc.push(sections[i + 1]);
-            }
-
-
-            return acc;
-        }, []);
-
-
-        setSong({ ...song, lyrics_parsed: updatedSections });
-    };
-
-    const splitSection = (id: number, sectionText: string) => {
-        console.log("split section");
-        if (!song) return;
-
-        const sectionIndex = song.lyrics_parsed.findIndex(section => section.id === id);
-
-        if (sectionIndex === -1) return;
-
-        const section    = song.lyrics_parsed[sectionIndex];
-        const splitIndex = sectionText.indexOf(doubleLineBreak);
-        const firstPart  = sectionText.slice(0, splitIndex).trim();
-        const secondPart = sectionText.slice(splitIndex).trim();
-
-        const newSection: LyricParsed = {
-            id: Date.now(), // simple unique id
-            text: secondPart,
-            style: { ...section.style }
-        };
-
-        const updatedSections = [
-            ...song.lyrics_parsed.slice(0, sectionIndex),
-            { ...section, text: firstPart },
-            newSection,
-            ...song.lyrics_parsed.slice(sectionIndex + 1)
-        ];
-
-        setSong({ ...song, lyrics_parsed: updatedSections });
-    }
 
     const setStyle = (newStyle: Partial<Song["style"]>) => {
         if (!song) return;
 
-        const update = { ...song, style: { ...song.style, ...newStyle } };
-        setSong(update);
+        setSong({ ...song, style: { ...song.style, ...newStyle } });
+        setDirty(true);
     };
 
     const setSectionStyle = (sectionId: number, newStyle: Partial<LyricParsed["style"]>) => {
         if (!song) return;
 
-        const updatedSections = song.lyrics_parsed.map(section => {
-            if (section.id === sectionId) {
-                return { ...section, style: { ...section.style, ...newStyle } };
-            }
-            return section;
-        });
+        const updated = song.lyrics_parsed.map(s =>
+            s.id === sectionId ? { ...s, style: { ...s.style, ...newStyle } } : s
+        );
 
-        setSong({ ...song, lyrics_parsed: updatedSections });
+        setSong({ ...song, lyrics_parsed: updated });
+        setDirty(true);
     };
 
     const resetAllColors = () => {
         if (!song) return;
 
-        const updatedSections = song.lyrics_parsed.map(section => ({
-            ...section,
-            style: { ...section.style, color: null }
-        }));
-        setSong({ ...song, lyrics_parsed: updatedSections });
-    }
+        const updated = song.lyrics_parsed.map(s => ({ ...s, style: { ...s.style, color: null } }));
 
-    const saveSong = async () => {
-        if (!song) {
-            throw new Error("No song to save");
-        }
-
-        const { error } = await supabase
-            .from("songs")
-            .update({
-                title: song.title,
-                artist: song.artist,
-                lyrics: unparseLyrics(song.lyrics_parsed),
-                lyrics_parsed: song.lyrics_parsed,
-                style: song.style,
-                is_public: song.is_public,
-            })
-            .eq("id", song.id);
-
-        if (error) {
-            setError(error.message);
-            throw error;
-        }
+        setSong({ ...song, lyrics_parsed: updated });
+        setDirty(true);
     };
 
-    useEffect(() => {
-        if (!id && (!slug || !userId)) {
-            console.log("missing identifiers", { id, slug, userId });
-            return;
-        }
-
-        console.log("Fetching song", { id, slug, userId });
-
-        const fetchSong = async () => {
-            setLoading(true);
-
-            let query = supabase.from("songs").select("*");
-
-            if (id) {
-                query = query.eq("id", id);
-            } else if (userId && slug) {
-                query = query.eq("user_id", userId).eq("slug", slug);
-            }
-
-            const { data, error } = await query.single();
-
-            if (error) {
-                setError(error.message);
-                setSong(null);
-            } else {
-
-                // cleanup for feature dev, can be deleted
-                if (!data.lyrics_parsed) {
-                    data.lyrics_parsed = parseLyrics(data.lyrics);
-                }
-                if (!data.style) {
-                    data.style = defaultStyles;
-                }
-
-                setSong(data as Song);
-            }
-            setLoading(false);
-        };
-
-        fetchSong();
-    }, [id, slug, userId, setError]);
-
     return (
-        <SongContext.Provider value={{
-            song,
+        <SongContext.Provider
+            value={{
+                song,
+                loading,
+                dirty,
+                setLoading,
+                loadSong,
+                createSong,
+                saveSong,
+                updateSong,
 
-            loading,
-            setLoading,
-
-            createSong,
-            mergeSections,
-            splitSection,
-            updateSection,
-
-            setStyle,
-            setSectionStyle,
-            resetAllColors,
-
-            saveSong
-        }}>
+                updateSection,
+                setStyle,
+                setSectionStyle,
+                resetAllColors
+            }}
+        >
             {children}
         </SongContext.Provider>
     );

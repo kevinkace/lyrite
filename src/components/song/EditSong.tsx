@@ -10,7 +10,6 @@ import { useSong }    from "@/contexts/SongContext";
 import { useLayout }  from "@/contexts/LayoutContext";
 import { useEditing } from "@/contexts/EditingContext";
 
-import { doubleLineBreak } from "@/data/consts";
 import { getfontFamilyCSS } from "@/lib/fonts";
 
 import Toolbar from "@/components/song/Toolbar";
@@ -18,7 +17,7 @@ import Toolbar from "@/components/song/Toolbar";
 import css from "./EditSong.module.css";
 
 export default function EditSong() {
-    const { song, loading, saveSong, updateSection, mergeSections, splitSection } = useSong();
+    const { song, loading, saveSong, dirty } = useSong();
     const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
     const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
 
@@ -48,9 +47,17 @@ export default function EditSong() {
                 variant="ghost"
                 size="2"
                 radius="full"
-                className={clsx(css.save, { [css.loadingSave]: showLoading })}
+                className={clsx(
+                    css.save,
+                    {
+                        [css.loadingSave]: showLoading,
+                        [css.saveClean]: !dirty
+                    }
+                )}
                 disabled={showLoading}
                 onClick={() => {
+                    if (!dirty) return;
+
                     saveSong();
 
                     setShowLoading(true);
@@ -58,14 +65,22 @@ export default function EditSong() {
                 }}
             >
                 <Save />
+
+                {dirty && !showLoading ?
+                    (<motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                    >
+                        <div className={css.unsavedChangesIndicator}>
+                            *
+                        </div>
+                    </motion.div>) :
+                null}
             </IconButton>
 
             {/* unsaved changes indicator */}
-            {(
-                <div className={css.unsavedChangesIndicator}>
-                    * unsaved tes
-                </div>
-            )}
 
             <Button variant="surface" size="2" radius="full" onClick={() => {
                 setSelectedColor(null);
@@ -86,8 +101,6 @@ export default function EditSong() {
     if (loading) return <p>Loading…</p>;
     if (!song) return <p>Song not found</p>;
 
-
-    const contentEditable = selectedColor === null;
 
     return (
         <div className={css.editSong}>
@@ -112,91 +125,26 @@ export default function EditSong() {
                     fontSize : song.style.fontSize,
                     "--default-font-family": getfontFamilyCSS(song.style.fontFamily || ""),
                     "--hover-color": `var(--color-${selectedColor}-selected)`
-                }  as React.CSSProperties}
+                } as React.CSSProperties}
             >
                 {song.lyrics_parsed.map(({id, text, style}) => (
                     <Card
                         key={id}
                         variant="ghost"
-                        className={
-                            clsx(
-                                css.lyricCard,
-                                css[`style-${style.color}`],
-                                {
-                                    [css.hoverFill] : typeof selectedColor === "number",
-                                    [css.contentEditable] : contentEditable
-                                },
-
-                            )}
+                        className={clsx(
+                            css.lyricCard,
+                            css[`style-${style.color}`],
+                            {
+                                [css.hoverFill] : typeof selectedColor === "number"
+                            }
+                        )}
                         onClick={() => {
                             if (selectedColor !== null) {
                                 setSectionColor(id, style.color === selectedColor ? null : selectedColor);
                             }
                         }}
                     >
-                        <div
-                            contentEditable={contentEditable}
-                            suppressContentEditableWarning
-                            onFocus={() => {
-                                // esc to deselect
-                                window.addEventListener("keydown", e => {
-                                    if (e.key === "Escape") {
-                                        (document.activeElement as HTMLElement).blur();
-                                    }
-                                }, { once: true });
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    e.preventDefault();
-
-                                    const selection = window.getSelection();
-
-                                    if (!selection?.rangeCount) return;
-
-                                    const range = selection.getRangeAt(0);
-
-                                    range.deleteContents();
-                                    range.insertNode(document.createTextNode("\n"));
-                                    range.collapse(false);
-                                }
-
-
-
-                                if (e.currentTarget.textContent.includes(doubleLineBreak)) {
-                                    e.preventDefault();
-
-                                    splitSection(id, e.currentTarget.textContent);
-                                }
-
-                                // merge sections if backspace at start
-                                if (e.key === "Backspace") {
-                                    const selection = window.getSelection();
-
-                                    if (!selection?.rangeCount) return;
-
-                                    const range = selection.getRangeAt(0);
-
-                                    if (range.startOffset === 0 && range.endOffset === 0) {
-                                        e.preventDefault();
-
-                                        mergeSections(id);
-                                    }
-                                }
-                            }}
-                            onInput={(e) => {
-                                console.log("input event");
-                                // const newText = e.currentTarget.textContent ?? "";
-
-                                // const updated = song.lyrics_parsed.map(section =>
-                                //     section.id === id ? { ...section, text: newText } : section
-                                // );
-
-                                // song.lyrics_parsed = updated;
-                            }}
-                            onBlur={(e) => {
-                                updateSection(id, { text: e.currentTarget.textContent ?? "" });
-                            }}
-                        >
+                        <div>
                             {text}
                         </div>
                     </Card>

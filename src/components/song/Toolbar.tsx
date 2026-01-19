@@ -3,11 +3,12 @@ import React from "react";
 import { TextCursor, Columns3, Minus, Plus } from "lucide-react";
 import { Flex, Button, Select, SegmentedControl } from "@radix-ui/themes"
 
-import { useSong } from "@/contexts/SongContext";
+import { useSong }    from "@/contexts/SongContext";
 import { useEditing } from "@/contexts/EditingContext";
-import { useModal } from "@/contexts/ModalContext";
+import { useModal }   from "@/contexts/ModalContext";
 
 import { getfontFamilyCSS } from "@/lib/fonts";
+
 import { colors, fontFamilies, fontSizes } from "@/data/consts";
 
 import css from "./Toolbar.module.css";
@@ -21,12 +22,18 @@ export default function Toolbar() {
 
     return (<Flex align="center" justify="center" gap="5" className={css.toolbar} >
 
-        {/* <Button
+        <Button
             variant="surface"
             color="gray"
+            onClick={() => {
+                openModal({
+                    title: "Edit Lyrics",
+                    type: "editor"
+                });
+            }}
         >
             <TextCursor />
-        </Button> */}
+        </Button>
 
         {/* ==== FONT SIZE ==== */}
         <Flex data-tools="font-size" align="center">

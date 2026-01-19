@@ -6,26 +6,30 @@ import Table from "../table/Table";
 
 
 export default function UsersTable({ editControls = false }: { editControls?: boolean }) {
-    const { users, loading, search, error, page, hasMore, setLoading } = useUsers();
-
+    const usersCollection = useUsers();
 
     return (
         <Table
-            search={search || ""}
-            hasMore={hasMore}
-            setLoading={setLoading}
-            loading={loading}
-            error={error}
-            items={users}
-            page={page}
+            collection={usersCollection}
+            search={usersCollection.search || ""}
+            page={usersCollection.page}
+            // debug={true}
             headers={[
+
+                {
+                    label : "Name",
+                    key   : "full_name",
+                    href : (user) => `/users/${user.id}`
+                },
                 {
                     label : "ID",
                     key   : "id",
+                    type  : "id"
                 },
                 {
                     label : "Joined",
                     key   : "created_at",
+                    type  : "date"
                 }
             ]}
         />

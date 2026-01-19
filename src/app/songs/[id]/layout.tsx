@@ -1,15 +1,21 @@
-import { SongProvider } from "@/contexts/SongContext";
+"use client";
+
+import { use, useEffect } from "react";
 
 import Layout from "@/components/layout/Layout";
+import { useSong } from "@/contexts/SongContext";
 
-export default async function SongPage({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
-    const { id } = await params;
+export default function SongPage({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
+    const { song, loadSong } = useSong();
+    const {id} = use(params);
+
+    useEffect(() => {
+        loadSong({ id: id });
+    }, [id]);
 
     return (
         <Layout>
-            <SongProvider id={id}>
-                {children}
-            </SongProvider>
+            {children}
         </Layout>
     );
 }

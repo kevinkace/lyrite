@@ -6,29 +6,33 @@ import { clsx } from "clsx";
 import { Flex, TextField, IconButton, Table as TableUI } from "@radix-ui/themes";
 import { ListFilter } from "lucide-react";
 
+import Pagination from "@/components/pagination/Pagination";
+import TableCell  from "./TableCell";
+
+import { TableHeader, AnySupabaseCollection } from "@/types";
+
 import css from "./Table.module.css";
-import Pagination from "../pagination/Pagination";
-import { Profile, Song, TableHeader } from "@/types";
-import TableCell from "./TableCell";
 
-export default function Table({ headers, search, hasMore, deleteItem, updateItem, setLoading, loading, error, items, page } :{
+type TableProps = {
     headers: TableHeader[];
-    search: string;
-    hasMore: boolean;
-    deleteItem?: (id: string) => Promise<void>;
-    updateItem?: (id: string, data: any) => Promise<void>;
-    setLoading: (loading: boolean) => void;
-    loading: boolean;
-    error: string | null;
-    items: (Song | Profile)[];
+    collection: AnySupabaseCollection;
+    search?: string;
     page?: number;
+    debug?: boolean;
+};
 
-}) {
+export default function Table({ headers, collection, search = "", page, debug = false }: TableProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
     const [searchValue, setSearchValue] = useState(search || "");
     const debouncedSearch = useDebounce(searchValue, 500);
+
+    // Determine the items array based on what's available in the collection
+    const items = ('items' in collection && collection.items) ||
+                  ('users' in collection && collection.users) ||
+                  ('songs' in collection && collection.songs) ||
+                  [];
 
     useEffect(() => {
         if (debouncedSearch === search) return; // skip if unchanged
@@ -39,7 +43,7 @@ export default function Table({ headers, search, hasMore, deleteItem, updateItem
         params.set("page", "1");
 
         router.push(`?${params.toString()}`);
-    }, [ debouncedSearch ]);
+    }, [ debouncedSearch, search, router, searchParams ]);
 
     return (
         <div className={css.wrapper}>
@@ -48,7 +52,7 @@ export default function Table({ headers, search, hasMore, deleteItem, updateItem
                     <TextField.Root
                         type="text"
                         value={searchValue}
-                        placeholder="Search songs..."
+                        placeholder="Search..."
                         onChange={(e) => setSearchValue(e.target.value)}
                         className={css.searchInput}
                     />
@@ -68,7 +72,7 @@ export default function Table({ headers, search, hasMore, deleteItem, updateItem
                 </Flex> */}
             </Flex>
 
-            {error && <p className={css.error}>{error}</p>}
+            {collection.error && <p className={css.error}>{collection.error}</p>}
 
 
             <TableUI.Root className={css.table}>
@@ -82,12 +86,13 @@ export default function Table({ headers, search, hasMore, deleteItem, updateItem
                                 {header.label}
                             </TableUI.ColumnHeaderCell>
                         ))}
+                        { debug && <TableUI.ColumnHeaderCell align="left">DEBUG</TableUI.ColumnHeaderCell> }
                     </TableUI.Row>
                 </TableUI.Header>
 
 
                 <TableUI.Body className={clsx(css.tableBody, {
-                    [css.tableLoading]: loading
+                    [css.tableLoading]: collection.loading
                 })}>
                     {items.map((item) => (
                         <TableUI.Row key={item.id} data-key={item.id}>
@@ -98,6 +103,12 @@ export default function Table({ headers, search, hasMore, deleteItem, updateItem
                                 </TableUI.Cell>
                             ))}
 
+                            { debug && <TableUI.Cell align="left">
+                                <pre style={{ fontSize: "10px", maxHeight: "200px", overflow: "auto" }}>
+                                    {JSON.stringify(item, null, 2)}
+                                </pre>
+                            </TableUI.Cell> }
+
                         </TableUI.Row>
                     ))}
                 </TableUI.Body>
@@ -106,11 +117,11 @@ export default function Table({ headers, search, hasMore, deleteItem, updateItem
             </TableUI.Root>
 
 
-            {page && <Pagination
+            <Pagination
                 currentPage={page}
-                hasMore={hasMore}
-                setLoading={setLoading}
-            />}
+                hasMore={collection.hasMore}
+                setLoading={collection.setLoading}
+            />
         </div>
     );
 }

@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import Link  from "next/link";
 import { Button, Card, Flex, Separator } from "@radix-ui/themes";
 import { motion, AnimatePresence } from "framer-motion";
-import { FilePen, Settings, User } from "lucide-react";
+import { FilePen, Settings, User, FilePlus } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
+
 import { userLinks } from "@/data/consts";
 
 import { Avatar } from "@/components/user/Avatar";
@@ -89,6 +90,16 @@ export default function UserMenu() {
                                             </Link>
                                         )}
                                 </nav>
+
+                                <Separator orientation="horizontal" size="4"/>
+
+
+                                <Button asChild={true} variant="surface" color="violet">
+                                    <Link href="/songs/new">
+                                        <FilePlus width="1em" height="auto" />
+                                        New song
+                                    </Link>
+                                </Button>
 
                                 <Separator orientation="horizontal" size="4"/>
 

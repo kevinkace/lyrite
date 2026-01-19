@@ -1,0 +1,10 @@
+.lyrics {
+    width: 100%;
+    height: 26em;
+    overflow: auto;
+}
+
+.button {
+    margin-top: 1em;
+    width: 200px;
+}
