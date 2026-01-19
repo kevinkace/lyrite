@@ -18,7 +18,6 @@ type TableProps = {
     collection: AnySupabaseCollection;
     search?: string;
     page?: number;
-    editControls?: boolean;
     debug?: boolean;
 };
 
