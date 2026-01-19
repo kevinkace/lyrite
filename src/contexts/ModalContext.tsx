@@ -4,9 +4,9 @@ import { createContext, useContext, useState, ReactNode } from "react";
 type ModalType = "error" | "confirm" | "downloadPII" | "editor" |null;
 
 interface ModalState {
-  type: ModalType;
-  title: string;
-  props?: Record<string, any>;
+  type?: ModalType;
+  title?: string;
+  props?: Record<string, unknown>;
 }
 
 interface ModalContextValue {
