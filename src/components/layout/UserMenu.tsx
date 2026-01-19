@@ -25,13 +25,13 @@ export default function UserMenu() {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             const target = event.target as HTMLElement;
 
-            if (!ref.current?.contains(target)) {
+            if (ref.current && !ref.current.contains(target)) {
                 setIsOpen(false);
             }
         }
@@ -45,7 +45,6 @@ export default function UserMenu() {
     if (!user) {
         return null;
     }
-
 
     return (
         <div className={css.userMenu} ref={ref}>

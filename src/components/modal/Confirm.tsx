@@ -53,7 +53,10 @@ export default function ConfirmDelete({
                     {cancelCta}
                 </Button>
                 <Button color={confirmRequirement ? "red" : "violet"} disabled={!isValid} onClick={() => {
-                    onConfirm();
+                    if (onConfirm) {
+                        onConfirm();
+                    }
+
                     closeModal();
                 }}>
                     {confirmCta}
