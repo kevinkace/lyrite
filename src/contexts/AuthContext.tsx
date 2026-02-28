@@ -6,6 +6,7 @@ import type { User, AuthError } from "@supabase/supabase-js";
 
 import { supabase }     from "@/lib/supabase/client";
 import { fetchProfile } from "@/lib/supabase/profile";
+import { useError }     from "@/contexts/ErrorContext";
 
 import type { AuthContextType, Profile } from "@/types";
 
@@ -15,8 +16,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [profile, setProfile] = useState<Profile | null>(null);
     const [loading, setLoading] = useState(true);
+    const { setError } = useError();
 
     useEffect(() => {
+        // Check for OAuth errors in URL parameters
+        const checkOAuthErrors = () => {
+            if (typeof window === 'undefined') {
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(window.location.hash.substring(1));
+
+            const error = urlParams.get('error') || hashParams.get('error');
+            const errorDescription = urlParams.get('error_description') || hashParams.get('error_description');
+
+            if (error) {
+                let errorMessage = `OAuth Error: ${error}`;
+                if (errorDescription) {
+                    const decodedDescription = decodeURIComponent(errorDescription.replace(/\+/g, ' '));
+                    errorMessage += `\n\nDetails: ${decodedDescription}`;
+                }
+
+                setError(errorMessage);
+
+                // Clean up the URL by removing error parameters
+                const cleanUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, cleanUrl);
+            }
+        };
+
+        checkOAuthErrors();
+
         // On mount, check for an existing session
         supabase.auth.getSession().then(({ data: { session } }) => {
             setUser(session?.user ?? null);
