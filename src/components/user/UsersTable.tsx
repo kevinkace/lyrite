@@ -16,6 +16,11 @@ export default function UsersTable({ editControls = false }: { editControls?: bo
             // debug={true}
             headers={[
                 {
+                    label : "Name",
+                    key   : "full_name",
+                    href : (user) => `/users/${user.id}`
+                },
+                {
                     label : "ID",
                     key   : "id",
                     type  : "id"
@@ -24,10 +29,6 @@ export default function UsersTable({ editControls = false }: { editControls?: bo
                     label : "Joined",
                     key   : "created_at",
                     type  : "date"
-                },
-                {
-                    label : "Name",
-                    key   : "full_name",
                 }
             ]}
         />
