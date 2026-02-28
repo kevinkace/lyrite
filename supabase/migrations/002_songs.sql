@@ -43,7 +43,7 @@ DROP POLICY IF EXISTS "users can delete their own rows" ON public.songs;
 CREATE POLICY "public read access"
 ON public.songs
 FOR SELECT
-USING (true);
+USING (is_public = true OR auth.uid() = user_id);
 
 -- Insert own row (authenticated only)
 CREATE POLICY "users can insert their own rows"

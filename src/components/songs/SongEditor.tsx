@@ -27,8 +27,8 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
     const [ saving, setSaving ] = useState(false);
 
     const getFormData = (songData: typeof song) => ({
-        ...(!isNew && pick(songData, ['title', 'artist', 'lyrics', 'is_public'])),
-        ...fallback
+        ...fallback,
+        ...(!isNew && pick(songData, ['title', 'artist', 'lyrics', 'is_public']))
     });
 
     const [ formData, setFormData ] = useState(() => getFormData(song));

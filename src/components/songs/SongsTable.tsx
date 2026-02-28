@@ -7,7 +7,7 @@ import { useSongs } from "@/contexts/SongsContext";
 import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
 import Table            from "@/components/table/Table";
 
-import type { Song } from "@/types";
+import type { Song, TableHeader } from "@/types";
 
 export default function SongsTable({ editControls = false }: { editControls?: boolean }) {
     const songsCollection = useSongs();
@@ -24,7 +24,6 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
                 collection={songsCollection}
                 search={songsCollection.search || ""}
                 page={songsCollection.page}
-                editControls={editControls}
                 headers={[
                     {
                         label : "Title",
@@ -51,23 +50,28 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
                         type  : "date",
                         align : "center",
                     },
-                    {
-                        label : "Public",
-                        key   : "is_public",
-                        align : "center",
-                        type  : "check",
-                        update : (item, header) => (checked) => {
-                            songsCollection.updateSong(item.id, { [header.key]: checked });
-                        }
-                    },
-                    {
-                        label : "Actions",
-                        key   : "actions",
-                        align : "center",
-                        actions : {
-                            delete : (item, parentKey) => <DeleteSongDialog key={parentKey + "delete"} songId={item.id} title={(item as Song).title || "title"} onDelete={songsCollection.deleteSong}/>
-                        }
-                    }
+                    ...(editControls ?
+                        [
+                            {
+                                label : "Public",
+                                key   : "is_public",
+                                align : "center",
+                                type  : "check",
+                                update : (item, header) => (checked) => {
+                                    songsCollection.updateSong(item.id, { [header.key]: checked });
+                                }
+                            },
+                            {
+                                label : "Actions",
+                                key   : "actions",
+                                align : "center",
+                                actions : {
+                                    delete : (item, parentKey) => <DeleteSongDialog key={parentKey + "delete"} songId={item.id} title={(item as Song).title || "title"} onDelete={songsCollection.deleteSong}/>
+                                }
+                            }
+                        ] as TableHeader[] :
+                        []
+                    )
                 ]}
             />
         </>

@@ -15,6 +15,12 @@ export default function UsersTable({ editControls = false }: { editControls?: bo
             page={usersCollection.page}
             // debug={true}
             headers={[
+
+                {
+                    label : "Name",
+                    key   : "full_name",
+                    href : (user) => `/users/${user.id}`
+                },
                 {
                     label : "Name",
                     key   : "full_name",
