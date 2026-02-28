@@ -47,11 +47,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return () => subscription.unsubscribe();
     }, []);
 
-    const signInWithGithub = async (): Promise<{ error: AuthError | null }> => {
+    const signInWithProvider = async (provider: 'github' | 'google' | 'facebook' | 'azure'): Promise<{ error: AuthError | null }> => {
         setLoading(true);
 
         const { error } = await supabase.auth.signInWithOAuth({
-            provider: "github",
+            provider,
             options: {
                 redirectTo: process.env.NODE_ENV === "development" ?
                     "http://localhost:3000" :
@@ -97,7 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             user,
             profile,
             loading,
-            signInWithGithub,
+            signInWithProvider,
             signOut,
             deleteAccount,
             downloadPii

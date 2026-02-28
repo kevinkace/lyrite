@@ -21,10 +21,10 @@ import css from "./page.module.css";
 const emailReg = /^[\w.!#$%&'*+/=?^`{|}~-]+@[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?(?:\.[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?)*$/i;
 
 const loginProviders = [
-    { name: "GitHub", icon: <GithubIcon /> },
-    { name: "Google", icon: <GoogleG /> },
-    { name: "Facebook", icon: <FacebookF /> },
-    { name: "Microsoft", icon: <MicrosoftIcon /> },
+    { name: "GitHub", icon: <GithubIcon />, provider: "github" as const },
+    { name: "Google", icon: <GoogleG />, provider: "google" as const },
+    { name: "Facebook", icon: <FacebookF />, provider: "facebook" as const },
+    { name: "Microsoft", icon: <MicrosoftIcon />, provider: "azure" as const },
 ];
 
 export default function LoginPage() {
@@ -33,18 +33,18 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const { user, signInWithGithub } = useAuth();
+    const { user, signInWithProvider } = useAuth();
     const router = useRouter();
 
     if (user) {
         router.replace("/");
     }
 
-    const handleLogin = async (providerName: string) => {
+    const handleLogin = async (provider: 'github' | 'google' | 'facebook' | 'azure') => {
         setLoading(true);
         setError(null);
 
-        const { error } = await signInWithGithub();
+        const { error } = await signInWithProvider(provider);
         if (error) setError(error.message);
 
         setLoading(false);
@@ -78,11 +78,12 @@ export default function LoginPage() {
                         {loginProviders.map((provider) => (
                             <Button
                                 key={provider.name}
-                                onClick={() => handleLogin(provider.name)}
+                                onClick={() => handleLogin(provider.provider)}
                                 size="4"
                                 color="gray"
                                 className={css.providerButton}
                                 variant="soft"
+                                disabled={loading}
                             >
                                 {provider.icon}
                                 {provider.name}
