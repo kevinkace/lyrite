@@ -108,7 +108,7 @@ export default function LoginPage() {
                     <LogoIcon className={css.logo} />
                 </Link>
 
-                <Card className={css.checkEmail} size="4">
+                <Card className={emailSent ? css.checkEmail : css.providerCard} size="4">
                     <Flex direction="column" gap="3" align="center">
                         {emailSent ? (
                             <>
