@@ -59,7 +59,6 @@ h2 {
 
 a {
     color: var(--accent-a11);
-    text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
