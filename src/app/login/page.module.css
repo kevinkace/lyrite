@@ -12,6 +12,10 @@
     width: 100%;
     max-width: 400px;
 }
+.checkEmail {
+    width: 100%;
+    max-width: 600px;
+}
 
 .providerButton,
 .loginButton {

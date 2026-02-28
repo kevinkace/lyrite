@@ -6,6 +6,7 @@ import type { User, AuthError } from "@supabase/supabase-js";
 
 import { supabase }     from "@/lib/supabase/client";
 import { fetchProfile } from "@/lib/supabase/profile";
+import { useError }     from "@/contexts/ErrorContext";
 
 import type { AuthContextType, Profile } from "@/types";
 
@@ -15,8 +16,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [profile, setProfile] = useState<Profile | null>(null);
     const [loading, setLoading] = useState(true);
+    const { setError } = useError();
 
     useEffect(() => {
+        // Check for OAuth errors in URL parameters
+        const checkOAuthErrors = () => {
+            if (typeof window === 'undefined') {
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(window.location.hash.substring(1));
+
+            const error = urlParams.get('error') || hashParams.get('error');
+            const errorDescription = urlParams.get('error_description') || hashParams.get('error_description');
+
+            if (error) {
+                let errorMessage = `OAuth Error: ${error}`;
+                if (errorDescription) {
+                    const decodedDescription = decodeURIComponent(errorDescription.replace(/\+/g, ' '));
+                    errorMessage += `\n\nDetails: ${decodedDescription}`;
+                }
+
+                setError(errorMessage);
+
+                // Clean up the URL by removing error parameters
+                const cleanUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, cleanUrl);
+            }
+        };
+
+        checkOAuthErrors();
+
         // On mount, check for an existing session
         supabase.auth.getSession().then(({ data: { session } }) => {
             setUser(session?.user ?? null);
@@ -47,11 +78,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return () => subscription.unsubscribe();
     }, []);
 
-    const signInWithGithub = async (): Promise<{ error: AuthError | null }> => {
+    const signInWithProvider = async (provider: 'github' | 'google' | 'facebook' | 'azure'): Promise<{ error: AuthError | null }> => {
         setLoading(true);
 
         const { error } = await supabase.auth.signInWithOAuth({
-            provider: "github",
+            provider,
             options: {
                 redirectTo: process.env.NODE_ENV === "development" ?
                     "http://localhost:3000" :
@@ -62,6 +93,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setLoading(false);
 
         return { error };
+    };
+
+    const signInWithEmail = async (email: string): Promise<{ error: AuthError | null; data?: any }> => {
+        setLoading(true);
+
+        const { data, error } = await supabase.auth.signInWithOtp({
+            email,
+            options: {
+                emailRedirectTo: process.env.NODE_ENV === "development" ?
+                    "http://localhost:3000" :
+                    "https://lyritenextjs.netlify.app",
+            },
+        });
+
+        setLoading(false);
+
+        return { error, data };
     };
 
     const deleteAccount = async (): Promise<{ error: AuthError | null }> => {
@@ -97,7 +145,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             user,
             profile,
             loading,
-            signInWithGithub,
+            signInWithProvider,
+            signInWithEmail,
             signOut,
             deleteAccount,
             downloadPii

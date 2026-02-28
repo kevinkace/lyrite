@@ -1,9 +1,15 @@
 import { Flex } from "@radix-ui/themes";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
+import { version } from "../../../package.json";
+
 import css from "./Footer.module.css";
 
 const links = [
+    {
+        href: "/release-notes",
+        label: "Release Notes",
+    },
     {
         href: "/legal/terms-of-service",
         label: "Terms of Service",
@@ -25,11 +31,11 @@ export default function Footer() {
 
 
             <a
-                href="https://github.com/kevinkace/lyrite"
+                href="https://github.com/kevinkace/lyrite/tree/nextjs-supabase"
                 className={css.github}
             >
                 <GitHubLogoIcon />
-                v1.0.0
+                v{version}
             </a>
         </footer>
     );

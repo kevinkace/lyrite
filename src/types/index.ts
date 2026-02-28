@@ -46,7 +46,8 @@ export type AuthContextType = {
     user: SupabaseUser | null;
     profile: Profile | null;
     loading: boolean;
-    signInWithGithub: () => Promise<{ error: AuthError | null }>;
+    signInWithProvider: (provider: 'github' | 'google' | 'facebook' | 'azure') => Promise<{ error: AuthError | null }>;
+    signInWithEmail: (email: string) => Promise<{ error: AuthError | null; data?: any }>;
     signOut: () => Promise<{ error: AuthError | null }>;
     deleteAccount: () => Promise<{ error: AuthError | null }>;
     downloadPii: () => Promise<void>;
