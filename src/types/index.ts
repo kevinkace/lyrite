@@ -94,7 +94,7 @@ export type Song = {
 
 export type NewSong = Pick<Song, "title" | "artist" | "lyrics" | "is_public">;
 
-export type LoadSongProps = Pick<Song, "id" | "user_id" | "slug">;
+export type LoadSongProps = Partial<Pick<Song, "id" | "user_id" | "slug">>;
 
 export type SongsListProps = {
     songs: Song[];

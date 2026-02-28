@@ -37,14 +37,14 @@ export default function ModalRoot() {
                                 </IconButton>
                             </Flex>
 
-                            {type === "error" && <p>{props?.message}</p>}
+                            {type === "error" && <p>{props?.message as React.ReactNode}</p>}
 
                             {type === "confirm" && (
                                 <Confirm {...props} closeModal={closeModal} />
                             )}
 
                             {type === "downloadPII" && (
-                                <DownloadPII onDownload={props?.onDownload} {...props} closeModal={closeModal} />
+                                <DownloadPII onDownload={props?.onDownload as () => void} {...props} closeModal={closeModal} />
                             )}
 
                             {type === "editor" && (

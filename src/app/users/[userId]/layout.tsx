@@ -1,11 +1,10 @@
 import { SongsProvider } from "@/contexts/SongsContext";
 import { UserProvider } from "@/contexts/UserContext";
-import Layout from "@/components/layout/Layout";
 
 type Props = {
     children: React.ReactNode;
     params: Promise<{ userId: string }>;
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function UserSongsPage({ children, params, searchParams }: Props) {
