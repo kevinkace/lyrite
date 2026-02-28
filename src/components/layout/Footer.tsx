@@ -1,6 +1,8 @@
 import { Flex } from "@radix-ui/themes";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
+import { version } from "../../../package.json";
+
 import css from "./Footer.module.css";
 
 const links = [
@@ -29,7 +31,7 @@ export default function Footer() {
                 className={css.github}
             >
                 <GitHubLogoIcon />
-                v1.0.0
+                v{version}
             </a>
         </footer>
     );
