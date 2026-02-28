@@ -95,6 +95,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { error };
     };
 
+    const signInWithEmail = async (email: string): Promise<{ error: AuthError | null; data?: any }> => {
+        setLoading(true);
+
+        const { data, error } = await supabase.auth.signInWithOtp({
+            email,
+            options: {
+                emailRedirectTo: process.env.NODE_ENV === "development" ?
+                    "http://localhost:3000" :
+                    "https://lyritenextjs.netlify.app",
+            },
+        });
+
+        setLoading(false);
+
+        return { error, data };
+    };
+
     const deleteAccount = async (): Promise<{ error: AuthError | null }> => {
         if (!user) return { error: new Error("No user logged in") as AuthError };
 
@@ -129,6 +146,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             profile,
             loading,
             signInWithProvider,
+            signInWithEmail,
             signOut,
             deleteAccount,
             downloadPii

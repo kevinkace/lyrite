@@ -47,6 +47,7 @@ export type AuthContextType = {
     profile: Profile | null;
     loading: boolean;
     signInWithProvider: (provider: 'github' | 'google' | 'facebook' | 'azure') => Promise<{ error: AuthError | null }>;
+    signInWithEmail: (email: string) => Promise<{ error: AuthError | null; data?: any }>;
     signOut: () => Promise<{ error: AuthError | null }>;
     deleteAccount: () => Promise<{ error: AuthError | null }>;
     downloadPii: () => Promise<void>;
