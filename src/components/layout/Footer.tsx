@@ -7,6 +7,10 @@ import css from "./Footer.module.css";
 
 const links = [
     {
+        href: "/release-notes",
+        label: "Release Notes",
+    },
+    {
         href: "/legal/terms-of-service",
         label: "Terms of Service",
     },
@@ -27,7 +31,7 @@ export default function Footer() {
 
 
             <a
-                href="https://github.com/kevinkace/lyrite"
+                href="https://github.com/kevinkace/lyrite/tree/nextjs-supabase"
                 className={css.github}
             >
                 <GitHubLogoIcon />
