@@ -26,6 +26,10 @@ export const releases: Release[] = [
             {
                 type: "feature",
                 description: "Passwordless email authentication with magic links"
+            },
+            {
+                type: "feature",
+                description: "This release notes page"
             }
         ]
     },
