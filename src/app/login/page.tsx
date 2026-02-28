@@ -44,8 +44,11 @@ export default function LoginPage() {
         setLoading(true);
         setError(null);
 
-        const { error } = await signInWithProvider(provider);
-        if (error) setError(error.message);
+        const { error : signinError } = await signInWithProvider(provider);
+
+        if (signinError) {
+            setError(signinError.message);
+        }
 
         setLoading(false);
     };
