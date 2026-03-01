@@ -30,7 +30,7 @@ export default async function HomePage() {
         <Layout bg={"mesh"}>
             <SongsProvider initialSongs={featuredSongs || []}>
                 <div className={css.main}>
-                    <h2 className={css.usp}>
+                    <h2 className={css.usp} data-testid="home-usp">
                         <em className={css.tagOrganize}>Organize</em>,{" "}
                         <em className={css.tagColor}>color</em>, and{" "}
                         <em className={css.tagStyle}>style</em>{" "}
@@ -41,7 +41,7 @@ export default async function HomePage() {
 
                     <Flex gap="6" align="center" justify="center" className={css.ctaButtons}>
                         <Button asChild={true} size="4" variant="surface" color="violet">
-                            <Link href="/songs/new">
+                            <Link href="/songs/new" data-testid="home-new-song-cta">
                                 <FilePlus width="1em" height="auto" />
                                 Start a new song
                             </Link>
@@ -49,7 +49,7 @@ export default async function HomePage() {
 
 
                         <Button asChild={true} size="4" variant="soft">
-                            <Link href="/login">Create a free account</Link>
+                            <Link href="/login" data-testid="home-create-account-cta">Create a free account</Link>
                         </Button>
                     </Flex>
 

@@ -10,14 +10,15 @@ import css from "./FeaturedSongs.module.css";
 export default function FeaturedSongs() {
     const { songs } = useSongs();
 
-    return <Flex gap="6" justify="center" align="center" className={css.cards}>
-        {songs.map((song) => (
+    return <Flex gap="6" justify="center" align="center" className={css.cards} data-testid="home-featured-songs">
+        {songs.map((song, idx) => (
             <Card key={song.id} size="3" asChild>
                 <Link
                     href={`/songs/${song.id}`}
                     key={song.id}
                     className={css.card}
                     aria-label={`View details for ${song.title} by ${song.artist}`}
+                    data-testid={`featured-song-${idx}`}
                 >
                     <h3 className={css.title}>{song.title}</h3>
                     <p className={css.artist}>{song.artist}</p>
