@@ -30,6 +30,7 @@ export default function FeaturedSongs() {
                     key={song.id}
                     className={css.card}
                     aria-label={`View details for ${song.title} by ${song.artist}`}
+                    data-testid={`featured-song-${idx}`}
                 >
                     <h3 className={css.title}>{song.title}</h3>
                     <p className={css.artist}>{song.artist}</p>
