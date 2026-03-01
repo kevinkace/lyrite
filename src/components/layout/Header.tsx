@@ -16,7 +16,11 @@ export default function Header() {
         <header className={css.header}>
             <Flex align="center" gap="6" className={css.left}>
                 <h1 className={css.logo}>
-                    <Link href="/" data-gid="header-home-link" className={css.logoLink}>
+                    <Link
+                        href="/"
+                        data-testid="header-logo-link"
+                        className={css.logoLink}
+                    >
                         <LogoIcon />
                         lyrite
                     </Link>

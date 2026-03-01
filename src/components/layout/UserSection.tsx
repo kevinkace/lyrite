@@ -46,6 +46,7 @@ export const UserSection = () => {
                             asChild
                             variant={link.variant as RadixVariant}
                             color={link.color as RadixColor}
+                            data-testid={`header-${link.label.toLowerCase()}-button`}
                         >
                             <Link href={link.href}>{link.label}</Link>
                         </Button>
