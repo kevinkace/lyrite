@@ -37,6 +37,7 @@ export default function CookieBanner() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
+            data-testid="cookie-banner"
           >
             <Flex direction="column" gap="2">
               <Text size="2">
@@ -44,7 +45,11 @@ export default function CookieBanner() {
               </Text>
               <Link href="/legal/privacy-policy">Privacy Policy</Link>
               <Flex justify="end" gap="2">
-                <Button onClick={acceptCookies} variant="soft">
+                <Button
+                  onClick={acceptCookies}
+                  variant="soft"
+                  data-testid="cookie-banner-accept"
+                >
                   Accept
                 </Button>
               </Flex>
