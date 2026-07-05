@@ -103,7 +103,7 @@ export default function EditSong() {
 
 
     return (
-        <div className={css.editSong}>
+        <div className={css.editSong} data-testid="edit-song">
             <AnimatePresence initial={false}>
                 {showTools && (
                     <motion.div

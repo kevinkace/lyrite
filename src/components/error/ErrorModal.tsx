@@ -13,7 +13,7 @@ export default function ErrorModal() {
 
     return (
         <Dialog.Root open={!!error} onOpenChange={() => !open && setError(null)}>
-            <Dialog.Content>
+            <Dialog.Content data-testid="error-modal">
                 <Dialog.Title>
                     <Flex justify="between" align="center" mb="3">
                         Error

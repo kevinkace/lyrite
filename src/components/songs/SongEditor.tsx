@@ -68,6 +68,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
     return <Flex direction="column" gap="4" align="stretch" asChild >
         <form
             onSubmit={handleSubmit}
+            data-testid="song-editor"
         >
             <TextField.Root
                 disabled={saving}
@@ -121,6 +122,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
                     className={css.button}
                     disabled={saving}
                     type="submit"
+                    data-testid="save-song-button"
                 >
                     {saving ? "Saving..." : "Save Song"}
                 </Button>
