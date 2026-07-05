@@ -24,10 +24,10 @@ async function checkCookies(context : import('@playwright/test').BrowserContext)
 test.describe('Cookie Notification Banner', () => {
     test.beforeEach(async ({ context, page }) => {
         await context.clearCookies();
-        await page.goto('/');
     });
 
     test('should display cookie banner when no consent cookie exists', async ({ page }) => {
+        await page.goto('/');
         await expect(page.getByTestId('cookie-banner')).toBeVisible();
 
         const acceptButton = page.getByTestId('cookie-banner-accept');
@@ -42,12 +42,15 @@ test.describe('Cookie Notification Banner', () => {
             path: '/'
         }]);
 
-        await page.waitForTimeout(500);
+        await page.goto('/');
+
+        await page.waitForTimeout(1000);
 
         await expect(page.getByTestId('cookie-banner')).not.toBeVisible();
     });
 
     test('should hide banner and set cookie when Accept button is clicked', async ({ page, context }) => {
+        await page.goto('/');
         await accept(page);
 
         await expect(page.getByTestId('cookie-banner')).not.toBeVisible();
@@ -56,6 +59,7 @@ test.describe('Cookie Notification Banner', () => {
     });
 
     test('should persist consent across page reloads', async ({ page, context }) => {
+        await page.goto('/');
         await accept(page);
 
         await page.reload();
