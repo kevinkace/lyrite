@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 import css from "./Header.module.css";
 
+// maybe used in the header beside logo
 export const UserNav = () => {
     const { user } = useAuth();
 
