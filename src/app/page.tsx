@@ -8,6 +8,7 @@ import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 import Layout        from "@/components/layout/Layout";
 import FeaturedSongs from "@/components/songs/FeaturedSongs";
+import LoginOr       from "@/components/buttons/LoginOr";
 
 import css from "./page.module.css"
 
@@ -48,9 +49,7 @@ export default async function HomePage() {
                         </Button>
 
 
-                        <Button asChild={true} size="4" variant="soft">
-                            <Link href="/login">Create a free account</Link>
-                        </Button>
+                        <LoginOr />
                     </Flex>
 
                     <FeaturedSongs />
