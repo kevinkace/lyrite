@@ -7,7 +7,7 @@ import css from "./Footer.module.css";
 
 const links = [
     {
-        href: "/release-notes",
+        href: "/docs/release-notes",
         label: "Release Notes",
     },
     {
