@@ -1,0 +1,44 @@
+.section {
+    background: #082C36;
+    padding: 0.4em 0;
+    position: relative;
+
+    a {
+        display: flex;
+        gap: 0.6em;
+        align-items: baseline;
+
+        text-decoration: none;
+
+        filter: brightness(0.7) saturate(0.7);
+        transition: filter 200ms, text-shadow 200ms;
+
+        &:hover {
+            filter: brightness(1) saturate(1);
+            text-shadow: 0 0 6px hsl(0, 0%, 75%);
+        }
+    }
+
+    u {
+        font-size: 0.85em;
+        opacity: 0.8;
+    }
+
+}
+
+.wrapper {
+    overflow: hidden;
+}
+
+.close {
+    font-size: 1.4rem;
+    line-height: 0.9;
+
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.close:hover {
+}
