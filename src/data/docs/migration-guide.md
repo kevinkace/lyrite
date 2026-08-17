@@ -12,7 +12,7 @@ Unfortunately, there isn't currently an automatic migration from v1 to v2, so yo
 
 ## 1 - Export your v1 songs
 
-[download your v1 song data](/save-v1-data)
+{{LOCAL_STORAGE_EXPORT}}
 
 ## 2 - Import your songs into v1.lyrite.com
 

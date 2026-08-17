@@ -35,8 +35,6 @@ export default function AnnounceHeader() {
             {open && (
                 <motion.div
                     layout
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0, transition: { duration: 0.22 } }}
                     className={css.wrapper}
                 >
@@ -50,7 +48,7 @@ export default function AnnounceHeader() {
                         <Link href="/docs/announce-v2">
                             <strong>NEW!</strong>
                             {" "}
-                            Announcing Lyrite version 2!
+                            Announcing lyrite version 2!
                             {" "}
                             <u>read more</u>
                         </Link>

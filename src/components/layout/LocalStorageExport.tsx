@@ -3,7 +3,11 @@
 import { useEffect, useState } from "react";
 import { Button } from "@radix-ui/themes";
 
-export default function LocalStorageExport() {
+export default function LocalStorageExport({
+    label = "Download your v1 song data",
+}: {
+    label?: string;
+}) {
     const [localData, setLocalData] = useState<string | boolean>(false);
 
     useEffect(() => {
@@ -48,9 +52,9 @@ export default function LocalStorageExport() {
         URL.revokeObjectURL(url);
     };
 
-    return localData && (
+    return localData ? (
         <Button onClick={downloadLocalStorage} variant="soft" color="gray">
-            Backup
+            {label}
         </Button>
-    );
+    ) : null;
 }
