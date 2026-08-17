@@ -6,11 +6,15 @@ import css    from "./index.mcss";
 import header from "../header";
 import modal  from "../modal";
 
+import v2Banner from "./v2Banner";
+
 import ghLogo from "../icons/github.svg?raw";
 
 export default {
     view({ attrs, children }) {
         return m("div",
+            m(v2Banner),
+
             attrs.header ? m(header) : null,
 
             children,
