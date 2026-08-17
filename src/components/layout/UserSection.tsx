@@ -9,7 +9,6 @@ import { useAuth }   from "@/contexts/AuthContext";
 import { useLayout } from "@/contexts/LayoutContext";
 
 import UserMenu from "@/components/layout/UserMenu";
-import LocalStorageExport from "@/components/layout/LocalStorageExport";
 
 import { RadixColor, RadixVariant } from "@/types";
 
@@ -26,8 +25,6 @@ export const UserSection = () => {
         <>
             {user && (
                 <Flex gap="4" align="center">
-                    <LocalStorageExport />
-
                     {!headerUserContent && <Button asChild variant="surface" size="2" radius="full" color="violet">
                         <Link href="/songs/new">
                             <FilePlus/>
@@ -43,8 +40,6 @@ export const UserSection = () => {
 
             {!user && !loading && (
                 <Flex gap="2" align="center">
-                    <LocalStorageExport />
-
                     {loggedOutLinks.map((link) => (
                         <Button
                             key={link.href}
