@@ -6,3 +6,4 @@
 
 [context.v2]
   command = "npm run build"
+  publish = ".next"
