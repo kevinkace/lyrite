@@ -1,0 +1,22 @@
+@value * as colors from "../../palette.mcss";
+
+.wrapper {
+    margin: 1em 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    color: #fff;
+    --color: colors.cta;
+    composes: button from "../../index.mcss";
+}
+
+.error {
+    margin: 1em 0 0;
+    padding: 0.4em 1em;
+    background: hsl(0deg 80% 50% / 23%);
+    border-radius: 0.2em;
+}

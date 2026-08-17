@@ -4,4 +4,6 @@ config.js
 .next
 .env
 .env.local
+.env.*
 next-env.d.ts
+tsconfig.tsbuildinfo

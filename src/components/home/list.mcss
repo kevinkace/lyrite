@@ -8,6 +8,8 @@
     text-align: left;
 
     h3 {
+        display: flex;
+        justify-content: space-between;
         margin-bottom: 0.2em;
         padding-bottom: 0.3em;
         border-bottom: solid 1px #fff5;
@@ -65,5 +67,17 @@
             font-weight: normal;
             text-transform: uppercase;
         }
+    }
+}
+
+.delete {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 0.8em;
+    opacity: 0.8;
+
+    &:hover {
+        opacity: 1;
     }
 }

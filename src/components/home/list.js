@@ -7,7 +7,21 @@ import css from "./list.mcss";
 export default {
     view(vnode) {
         return m("div", { class : css.list },
-            m("h3", vnode.attrs.header),
+            m("h3",
+                vnode.attrs.header,
+
+                vnode.attrs.clear ?
+                    m("button", {
+                            class : css.delete,
+                            onclick() {
+                                Object.keys(vnode.attrs.songs).forEach(slug => state.action("DELETE SONG BY SLUG", slug));
+                                m.redraw();
+                            }
+                        },
+                        "delete all"
+                    ) :
+                    null
+            ),
 
             Object.keys(vnode.attrs.songs).map((slug) =>
                 m("div",
