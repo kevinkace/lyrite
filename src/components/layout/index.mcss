@@ -42,3 +42,35 @@
     z-index: -1;
     pointer-events: none;
 }
+
+.v2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+
+    padding: 0.5em 0;
+
+    background: #0003;
+
+    a:hover,
+    span:hover {
+        text-shadow: 0 0 3px #fff8 !important;
+    }
+}
+
+.v2NoLink {
+    text-decoration: none;
+    font-weight: bold;
+
+    display: flex;
+    gap: 0.8em;
+
+    text-shadow: 0 0 3px #fff8;
+
+    span {
+        text-decoration: underline;
+        font-weight: normal;
+        text-shadow: none;
+    }
+}
