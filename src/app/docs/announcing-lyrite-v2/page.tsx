@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function MigrationPage() {
     return <Layout bg="mesh">
         <Article>
-            <Markdown data={`src/data/docs/announce-v2.md`} />
+            <Markdown data={`src/data/docs/announcing-lyrite-v2.md`} />
         </Article>
     </Layout>;
 }
