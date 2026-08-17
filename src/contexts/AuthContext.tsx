@@ -10,6 +10,8 @@ import { useError }     from "@/contexts/ErrorContext";
 
 import type { AuthContextType, Profile } from "@/types";
 
+const { NEXT_PUBLIC_LOGIN_REDIRECT } = process.env;
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -84,9 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { error } = await supabase.auth.signInWithOAuth({
             provider,
             options: {
-                redirectTo: process.env.NODE_ENV === "development" ?
-                    "http://localhost:3000" :
-                    "https://lyritenextjs.netlify.app",
+                redirectTo: NEXT_PUBLIC_LOGIN_REDIRECT
             },
         });
 
