@@ -31,7 +31,10 @@ export default {
                 m.trust(logo),
 
                 m("div", { class : css.logoType },
-                    m("h1", { class : css.title }, state.appName),
+                    m("h1", { class : css.title },
+                        state.appName,
+                        m("span", { class : css.v1 }, " v1")
+                    ),
                     m("h2", { class : css.subTitle }, state.tagline)
                 )
             ),
