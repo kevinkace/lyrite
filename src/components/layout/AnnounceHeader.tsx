@@ -19,10 +19,9 @@ export default function AnnounceHeader() {
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
 
-
-
-
-            if (saved === "1") setOpen(false);
+            if (saved === "1") {
+                setOpen(false);
+            }
         } catch (e) {
             // ignore (SSR safety)
         }
