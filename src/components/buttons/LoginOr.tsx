@@ -6,7 +6,7 @@ import { FilePen } from "lucide-react";
 
 import { useAuth }   from "@/contexts/AuthContext";
 
-export default function LoginOr({ children }: { children: React.ReactNode }) {
+export default function LoginOr() {
     const { user, loading } = useAuth();
 
     if (loading) {
