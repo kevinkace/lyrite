@@ -8,7 +8,7 @@ export default function LocalStorageExport({
 }: {
     label?: string;
 }) {
-    const [localData, setLocalData] = useState<string | boolean>(false);
+    const [localData, setLocalData] = useState<string | null>(null);
 
     useEffect(() => {
         try {
@@ -25,7 +25,7 @@ export default function LocalStorageExport({
 
             setLocalData(songs);
         } catch (e) {
-            setLocalData(false);
+            setLocalData(null);
         }
     }, []);
 
