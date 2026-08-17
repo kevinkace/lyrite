@@ -35,7 +35,7 @@ export default async function HomePage() {
                         <em className={css.tagOrganize}>Organize</em>,{" "}
                         <em className={css.tagColor}>color</em>, and{" "}
                         <em className={css.tagStyle}>style</em>{" "}
-                        your songs <br />
+                        your song lyrics <br />
                         for a flawless performance
                     </h2>
 

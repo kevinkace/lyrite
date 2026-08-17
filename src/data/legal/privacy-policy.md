@@ -34,7 +34,7 @@ We do **not** sell your data.
 ## 4. Data Retention
 
 We retain your account data for as long as your account remains active.  
-You can request deletion at any time by contacting us at [pii@lyrite.com](mailto:pii@lyrite.com).
+You can request deletion at any time via account settings.
 
 ## 5. Security
 
