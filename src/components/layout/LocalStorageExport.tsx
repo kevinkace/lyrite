@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { Button } from "@radix-ui/themes";
 
+interface V1Song {
+  default: boolean;
+}
+
 export default function LocalStorageExport({
     label = "Download your v1 song data",
 }: {
@@ -31,12 +35,13 @@ export default function LocalStorageExport({
 
     const downloadLocalStorage = () => {
 
-        const data = Object.entries(JSON.parse(localData as string))
-            .filter(([key, value]) => !value.default)
+        const parsed = JSON.parse(localData as string) as V1Song;
+        const data = Object.entries(parsed)
+            .filter(([key, value]: [string, V1Song]) => !value.default)
             .reduce((acc, [key, value]) => {
                 acc[key] = value;
                 return acc;
-            }, {} as Record<string, any>);
+            }, {} as Record<string, V1Song>);
 
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
         const url = URL.createObjectURL(blob);
