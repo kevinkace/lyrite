@@ -1,8 +1,8 @@
-# Lyrite - a tool to format lyrics
+# lyrite - a tool to format lyrics
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8fc9f924-59cb-42ae-8a9e-3a16db1bccd6/deploy-status)](https://app.netlify.com/sites/effervescent-valkyrie-30f7c5/deploys)
 
-## What is Lyrite?
+## What is lyrite?
 
 A simple web-app to style song lyrics so they are easier to read when jamming. :guitar: :microphone:
 
@@ -22,7 +22,7 @@ A simple web-app to style song lyrics so they are easier to read when jamming. :
 
 The need for this app came from a real-world scenario; jamming with friends and needing an easy to read lyric sheet. Most sites display lyrics in a single column often taking up more than a full page.
 
-With Lyrite you can easily have all lyrics on a single page with columns and font size adjustment. You can also color sections of lyrics making them easier to track visually.
+With lyrite you can easily have all lyrics on a single page with columns and font size adjustment. You can also color sections of lyrics making them easier to track visually.
 
 ## Pages
 
