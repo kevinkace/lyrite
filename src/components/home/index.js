@@ -7,6 +7,7 @@ import css from "./index.mcss";
 
 import logo from "../icons/lyrite-logo2.svg?raw";
 import list from "./list";
+import importSongs from "./importSongs";
 
 export default {
     oninit : (vnode) => {
@@ -74,6 +75,9 @@ export default {
                     ) :
                     null
             ),
+
+            // import from json
+            m(importSongs),
 
             // loaded songs list
             Object.keys(vnode.state.customSongs).length ?
