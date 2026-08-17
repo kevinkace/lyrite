@@ -2,6 +2,7 @@ import clsx from "clsx";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import AnnounceHeader from "@/components/layout/AnnounceHeader";
 
 import css from "./Layout.module.css";
 
@@ -31,6 +32,7 @@ export default function Layout({
                 )
             }
         >
+            <AnnounceHeader />
             {header && <Header />}
             <main
                 className={
