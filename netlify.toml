@@ -1,0 +1,8 @@
+[build]
+  publish = "dist"
+
+[context.v1]
+  publish = "dist"
+
+[context.v2]
+  command = "npm run build"
