@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button, Flex } from "@radix-ui/themes";
@@ -8,13 +9,19 @@ import { Button, Flex } from "@radix-ui/themes";
 import css from "./AnnounceHeader.module.css"
 
 const STORAGE_KEY = "announce-v2-closed";
+const PAGE_PATH = "/docs/announcing-lyrite-v2";
 
 export default function AnnounceHeader() {
-    const [open, setOpen] = useState(true);
+    const pathname = usePathname();
+    const [open, setOpen] = useState(pathname !== PAGE_PATH);
 
     useEffect(() => {
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
+
+
+
+
             if (saved === "1") setOpen(false);
         } catch (e) {
             // ignore (SSR safety)
@@ -45,7 +52,7 @@ export default function AnnounceHeader() {
                         justify="center"
                         gap="6"
                     >
-                        <Link href="/docs/announce-v2">
+                        <Link href={PAGE_PATH}>
                             <strong>NEW!</strong>
                             {" "}
                             Announcing lyrite version 2!
