@@ -81,7 +81,7 @@ export default {
 
             // loaded songs list
             Object.keys(vnode.state.customSongs).length ?
-                m(list, { songs : vnode.state.customSongs, header : "your songs" }) :
+                m(list, { songs : vnode.state.customSongs, header : "your songs", clear : true }) :
                 null,
 
             // loaded songs list
