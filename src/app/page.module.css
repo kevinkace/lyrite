@@ -16,6 +16,11 @@
     text-align: center;
     font-size: 2.4rem;
     line-height: 1.8;
+
+    @media (max-width: 768px) {
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
 }
 
 .tagOrganize {
@@ -26,6 +31,10 @@
     outline-offset: 0.2em;
     outline-style: dashed;
     border-radius: 0.1em;
+
+    @media (max-width: 768px) {
+        outline-offset: 0.1em;
+    }
 }
 
 .tagColor {

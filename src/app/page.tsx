@@ -40,7 +40,19 @@ export default async function HomePage() {
                     </h2>
 
 
-                    <Flex gap="6" align="center" justify="center" className={css.ctaButtons}>
+                    <Flex
+                        direction={{
+                            initial : "column",
+                            md : "row"
+                        }}
+                        gap={{
+                            initial : "2",
+                            md : "4"
+                        }}
+                        align="center"
+                        justify="center"
+                        className={css.ctaButtons}
+                    >
                         <Button asChild={true} size="4" variant="surface" color="violet">
                             <Link href="/songs/new">
                                 <FilePlus width="1em" height="auto" />

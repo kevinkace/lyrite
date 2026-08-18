@@ -1,6 +1,9 @@
-import Link from "next/link";
+"use client";
 
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { Flex } from "@radix-ui/themes";
+import { clsx } from "clsx";
 
 import { UserSection } from "@/components/layout/UserSection";
 import { LogoIcon }    from "@/components/icons/LogoIcon.svg";
@@ -12,13 +15,19 @@ import { Title }       from "@/components/layout/Title";
 import css from "./Header.module.css";
 
 export default function Header() {
+
+
+    const pathname = usePathname();
+
     return (
         <header className={css.header}>
             <Flex align="center" gap="6" className={css.left}>
                 <h1 className={css.logo}>
                     <Link href="/" data-gid="header-home-link" className={css.logoLink}>
                         <LogoIcon />
-                        lyrite
+                        <span className={clsx({
+                            [css.hideable] : pathname !== "/"
+                        })}>lyrite</span>
                     </Link>
                 </h1>
 

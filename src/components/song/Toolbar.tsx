@@ -106,7 +106,6 @@ export default function Toolbar() {
             <SegmentedControl.Root
                 value={selectedColor?.toString() || ""}
                 onValueChange={(value) => {
-                    console.log(value, typeof value);
                     setSelectedColor(parseInt(value, 10));
                 }}
                 onClick={(e) => {
@@ -114,8 +113,6 @@ export default function Toolbar() {
 
                     const target = e.target as HTMLElement;
                     const color = target.closest("[data-color]")?.getAttribute("data-color");
-
-                    console.log({ color, selectedColor });
 
                     if (color === "reset") {
 

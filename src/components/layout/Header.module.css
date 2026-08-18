@@ -49,6 +49,12 @@
     }
 }
 
+.hideable {
+    @media (width <= 768px) {
+        display: none;
+    }
+}
+
 
 .userNavLink {
     opacity: 0.7;
