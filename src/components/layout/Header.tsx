@@ -26,8 +26,8 @@ export default function Header() {
                     <Link href="/" data-gid="header-home-link" className={css.logoLink}>
                         <LogoIcon />
                         <span className={clsx({
-                            [css.hideable] : pathname !== "/"
-                        })}>lyrite</span>
+                            [css.hideable] : /^\/songs/.test(pathname)
+                        })}>Lyrite</span>
                     </Link>
                 </h1>
 
