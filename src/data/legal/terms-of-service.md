@@ -50,4 +50,4 @@ you agree to the revised terms.
 ## 8. Contact
 
 If you have any questions about these Terms of Service, please contact us at  
-[you@example.com](mailto:you@example.com).
+[admin@lyrite.com](mailto:admin@lyrite.com).
