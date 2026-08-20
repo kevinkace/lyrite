@@ -54,7 +54,7 @@ export default function AnnounceHeader() {
                         <Link href={PAGE_PATH}>
                             <strong>NEW!</strong>
                             {" "}
-                            Announcing lyrite version 2!
+                            Announcing Lyrite version 2!
                             {" "}
                             <u>read more</u>
                         </Link>
