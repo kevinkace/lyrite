@@ -13,6 +13,22 @@ export type Release = {
 };
 
 export const releases: Release[] = [
+   {
+        version: "2.0.0",
+        date: "2026-08-20",
+        title: "Preview Release Live",
+        changes: [
+
+            {
+                type: "feature",
+                description: "V1 migration guide"
+            },
+            {
+                type: "feature",
+                description: "Announcement news post"
+            }
+        ]
+    },
     {
         version: "0.2.0",
         date: "2026-02-28",
