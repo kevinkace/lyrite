@@ -1,5 +1,5 @@
 ---
-title: Announcing lyrite v2!
+title: Announcing Lyrite v2!
 date: 2026-08-16
 ---
 
