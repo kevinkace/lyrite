@@ -13,12 +13,26 @@ export type Release = {
 };
 
 export const releases: Release[] = [
-   {
+    {
+        version: "2.0.1",
+        date : "2026-08-24",
+        title: "Login and profile bug fixes",
+        changes: [
+            {
+                type : "fix",
+                description: "Fix Microsoft Azure login"
+            },
+            {
+                type: "improvement",
+                description: "Update fallback icon to headshot silhouette instead of \"U\""
+            }
+        ]
+    },
+    {
         version: "2.0.0",
         date: "2026-08-20",
         title: "Preview Release Live",
         changes: [
-
             {
                 type: "feature",
                 description: "V1 migration guide"
