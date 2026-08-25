@@ -86,7 +86,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { error } = await supabase.auth.signInWithOAuth({
             provider,
             options: {
-                redirectTo: NEXT_PUBLIC_LOGIN_REDIRECT
+                redirectTo: NEXT_PUBLIC_LOGIN_REDIRECT,
+                scopes: "email"
             },
         });
 
