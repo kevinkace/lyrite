@@ -7,8 +7,8 @@ import { releases, type ChangeType } from "@/data/releases";
 import css from "./page.module.css";
 
 export const metadata: Metadata = {
-    title: "Release Notes - lyrite",
-    description: "Stay up to date with the latest features and improvements in lyrite.",
+    title: "Release Notes - Lyrite",
+    description: "Stay up to date with the latest features and improvements in Lyrite.",
 };
 
 const getChangeColor = (type: ChangeType) => {

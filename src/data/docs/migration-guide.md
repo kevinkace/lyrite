@@ -22,7 +22,7 @@ Unfortunately, there isn't currently an automatic migration from v1 to v2, so yo
 
 Your v1 songs should now be available at v1.lyrite.com. You can use v1 as long as you like, I don't plan on shutting it down.
 
-## 3 - Copy your songs to lyrite version 2
+## 3 - Copy your songs to Lyrite version 2
 
 1. [create an account](/login) on Lyrite version 2
 2. [create a new song](/songs/new)

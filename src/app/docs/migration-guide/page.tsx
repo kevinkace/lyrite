@@ -6,8 +6,8 @@ import Markdown from "@/components/markdown/Markdown";
 import LocalStorageExport from "@/components/layout/LocalStorageExport";
 
 export const metadata: Metadata = {
-    title: "Migration Guide - lyrite v1",
-    description: "How to recover your lyrite v1 data, and migrate to v2",
+    title: "Migration Guide - Lyrite v1",
+    description: "How to recover your Lyrite v1 data, and migrate to v2",
 };
 
 export default function MigrationPage() {

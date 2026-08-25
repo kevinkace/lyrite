@@ -14,6 +14,17 @@ export type Release = {
 
 export const releases: Release[] = [
     {
+        version: "2.0.2",
+        date : "2026-08-24",
+        title: "Typos and readme",
+        changes: [
+            {
+                type : "fix",
+                description: "Change all instances of \"lyrite\" to \"Lyrite\""
+            }
+        ]
+    },
+    {
         version: "2.0.1",
         date : "2026-08-24",
         title: "Login and profile bug fixes",

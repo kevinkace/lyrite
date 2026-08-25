@@ -17,7 +17,7 @@ import "./globals.css";
 import css from "./layout.module.css";
 
 export const metadata: Metadata = {
-    title: "lyrite",
+    title: "Lyrite",
     description: "Create and share lyric sheets with ease.",
 };
 
