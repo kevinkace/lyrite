@@ -114,7 +114,7 @@ export default function LoginPage() {
                             <>
                                 <h3>Check your email</h3>
                                 <p style={{ textAlign: 'center', margin: 0 }}>
-                                    We've sent you a magic link at <strong>{email}</strong>.<br/>
+                                    We&apos;ve sent you a magic link at <strong>{email}</strong>.<br/>
                                     Click the link in your email to sign in.
                                 </p>
                                 <Button
