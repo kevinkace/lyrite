@@ -22,8 +22,9 @@ export default function FeaturedSongs() {
             justify="center"
             align="center"
             className={css.cards}
+            data-testid="home-featured-songs"
         >
-        {songs.map((song) => (
+        {songs.map((song, idx) => (
             <Card key={song.id} size="3" asChild>
                 <Link
                     href={`/songs/${song.id}`}
