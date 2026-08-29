@@ -1,4 +1,3 @@
-// useSupabaseCollection.ts
 "use client";
 
 import { useEffect, useState } from "react";
@@ -37,11 +36,6 @@ export function useSupabaseCollection<T>({
         if (initialData.length > 0) return;
 
         const fetchData = async () => {
-            // if (!userId && (!ids || ids.length === 0)) {
-            //   setItems([]);
-            //   return;
-            // }
-
             setLoading(true);
             setError(null);
 
@@ -68,8 +62,6 @@ export function useSupabaseCollection<T>({
                 dataQuery,
                 countQuery
             ]);
-
-            console.log(data, error, count, countError);
 
             if (error || countError) {
                 setError(error?.message || countError?.message || "An error occurred");
