@@ -26,20 +26,17 @@ test.describe('Songs List Page', () => {
     // Mock some song data
     await page.route('**/rest/v1/songs*', async route => {
       await route.fulfill({
-        json: {
-          data: [
-            {
-              id: '1',
-              title: 'Test Song 1',
-              artist: 'Test Artist 1',
-              lyrics: 'Test lyrics 1',
-              created_at: '2024-01-01T00:00:00Z',
-              updated_at: '2024-01-01T00:00:00Z',
-              is_public: true
-            }
-          ],
-          count: 1
-        }
+        json: [
+          {
+            id: '1',
+            title: 'Test Song 1',
+            artist: 'Test Artist 1',
+            lyrics: 'Test lyrics 1',
+            created_at: '2024-01-01T00:00:00Z',
+            updated_at: '2024-01-01T00:00:00Z',
+            is_public: true
+          }
+        ]
       });
     });
 
@@ -54,20 +51,17 @@ test.describe('Songs List Page', () => {
     // Mock song data with proper links
     await page.route('**/rest/v1/songs*', async route => {
       await route.fulfill({
-        json: {
-          data: [
-            {
-              id: 'test-song-id',
-              title: 'Clickable Song',
-              artist: 'Test Artist',
-              lyrics: 'Test lyrics',
-              created_at: '2024-01-01T00:00:00Z',
-              updated_at: '2024-01-01T00:00:00Z',
-              is_public: true
-            }
-          ],
-          count: 1
-        }
+        json: [
+          {
+            id: 'test-song-id',
+            title: 'Clickable Song',
+            artist: 'Test Artist',
+            lyrics: 'Test lyrics',
+            created_at: '2024-01-01T00:00:00Z',
+            updated_at: '2024-01-01T00:00:00Z',
+            is_public: true
+          }
+        ]
       });
     });
 

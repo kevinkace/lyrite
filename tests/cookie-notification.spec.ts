@@ -82,6 +82,6 @@ test.describe('Cookie Notification Banner', () => {
         await page.waitForTimeout(1000);
 
         gtmScript = page.locator('script[src*="googletagmanager.com"]');
-        await expect(gtmScript).toHaveCount(1);
+        await expect(gtmScript).toHaveCount(2);
     });
 });

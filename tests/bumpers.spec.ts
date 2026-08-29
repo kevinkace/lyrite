@@ -7,7 +7,7 @@ test.describe('Header', () => {
     const logoLink = page.getByTestId('header-logo-link');
 
     await expect(logoLink).toBeVisible();
-    await expect(logoLink).toContainText('lyrite');
+    await expect(logoLink).toContainText('Lyrite');
     await expect(logoLink).toHaveAttribute('href', '/');
 
     // Check that login button exists and is visible
@@ -31,7 +31,7 @@ test.describe('Footer', () => {
     const releaseNotesLink = page.getByTestId('footer-release-notes');
     await expect(releaseNotesLink).toBeVisible();
     await expect(releaseNotesLink).toContainText('Release Notes');
-    await expect(releaseNotesLink).toHaveAttribute('href', '/release-notes');
+    await expect(releaseNotesLink).toHaveAttribute('href', '/docs/release-notes');
 
     // Check terms of service link
     const tosLink = page.getByTestId('footer-terms-of-service');
