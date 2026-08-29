@@ -61,7 +61,7 @@ export default async function HomePage() {
                         </Button>
 
 
-                        <LoginOr />
+                        <LoginOr data-testid="home-create-account-cta" />
                     </Flex>
 
                     <FeaturedSongs />
