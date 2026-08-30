@@ -103,7 +103,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
             <Text as="label">
                 <Flex gap="2">
                     <Switch
-                        name="isPublic"
+                        // name="isPublic"
                         checked={formData.is_public}
                         onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_public: checked }))}
                     />
