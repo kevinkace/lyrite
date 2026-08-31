@@ -21,6 +21,10 @@ export const releases: Release[] = [
             {
                 type: "improvement",
                 description: "Added tests"
+            },
+            {
+                type: "fix",
+                description: "Fix footer Github link"
             }
         ]
     },
