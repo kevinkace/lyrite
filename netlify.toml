@@ -8,5 +8,9 @@
   command = "npm run build"
   publish = ".next"
 
+[context."feat/test"]
+  command = "npm run build"
+  publish = ".next"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
