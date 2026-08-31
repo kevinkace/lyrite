@@ -39,6 +39,8 @@
     transition: opacity 0.2s ease-in-out;
 
     svg {
+        top: 0.05em;
+        position: relative;
         height: 2rem;
         width: auto;
         margin-right: 0.3rem;
@@ -49,7 +51,7 @@
     }
 }
 
-.hideable {
+.hidable {
     @media (width <= 768px) {
         display: none;
     }

@@ -31,7 +31,7 @@ export default function Header() {
                     >
                         <LogoIcon />
                         <span className={clsx({
-                            [css.hideable] : /^\/songs/.test(pathname)
+                            [css.hidable] : /^\/songs/.test(pathname)
                         })}>Lyrite</span>
                     </Link>
                 </h1>
