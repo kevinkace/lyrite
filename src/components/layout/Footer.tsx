@@ -1,7 +1,8 @@
-import { Flex } from "@radix-ui/themes";
+import { Flex }           from "@radix-ui/themes";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 import { version } from "../../../package.json";
+
 import { sanitizeTestId } from "@/lib/utils";
 
 import css from "./Footer.module.css";
