@@ -26,6 +26,7 @@ export default function Header() {
                     <Link
                         href="/"
                         data-testid="header-logo-link"
+                        data-gid="header-home-link"
                         className={css.logoLink}
                     >
                         <LogoIcon />
