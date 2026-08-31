@@ -1,12 +1,15 @@
 {
   "name": "lyrite-njs",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug"
   },
   "dependencies": {
     "@next/third-parties": "^16.1.0",
@@ -29,6 +32,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.58.2",
     "@types/lodash": "^4.17.24",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 import Markdown from "@/components/markdown/Markdown";
-import Layout from "@/components/layout/Layout";
-import Article from "@/components/layout/Article";
+import Layout   from "@/components/layout/Layout";
+import Article  from "@/components/layout/Article";
 
 export const metadata: Metadata = {
     title: "Migration guide for Lyrite v1",

@@ -1,12 +1,13 @@
 "use client";
 
-import Link from "next/link";
-
-import { FilePlus } from "lucide-react";
+import Link             from "next/link";
+import { FilePlus }     from "lucide-react";
 import { Flex, Button } from "@radix-ui/themes";
 
 import { useAuth }   from "@/contexts/AuthContext";
 import { useLayout } from "@/contexts/LayoutContext";
+
+import { sanitizeTestId } from "@/lib/utils";
 
 import UserMenu from "@/components/layout/UserMenu";
 
@@ -46,6 +47,7 @@ export const UserSection = () => {
                             asChild
                             variant={link.variant as RadixVariant}
                             color={link.color as RadixColor}
+                            data-testid={`header-${sanitizeTestId(link.label)}-button`}
                         >
                             <Link href={link.href}>{link.label}</Link>
                         </Button>

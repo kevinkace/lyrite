@@ -39,7 +39,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
         }
 
         setFormData(getFormData(song));
-    }, [song]);
+    }, [ song ]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -68,6 +68,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
     return <Flex direction="column" gap="4" align="stretch" asChild >
         <form
             onSubmit={handleSubmit}
+            data-testid="song-editor"
         >
             <TextField.Root
                 disabled={saving}
@@ -102,7 +103,8 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
             <Text as="label">
                 <Flex gap="2">
                     <Switch
-                        name="isPublic"
+                        // `name` not supported
+                        // name="isPublic"
                         checked={formData.is_public}
                         onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_public: checked }))}
                     />
@@ -121,6 +123,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
                     className={css.button}
                     disabled={saving}
                     type="submit"
+                    data-testid="save-song-button"
                 >
                     {saving ? "Saving..." : "Save Song"}
                 </Button>
