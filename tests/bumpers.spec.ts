@@ -49,6 +49,6 @@ test.describe('Footer', () => {
     const versionLink = page.getByTestId('footer-version');
     await expect(versionLink).toBeVisible();
     await expect(versionLink).toContainText(/^v\d+\.\d+\.\d+/); // Matches version pattern like v1.2.3
-    await expect(versionLink).toHaveAttribute('href', 'https://github.com/kevinkace/lyrite/tree/nextjs-supabase');
+    await expect(versionLink).toHaveAttribute('href', 'https://github.com/kevinkace/lyrite/tree/v2');
   });
 });

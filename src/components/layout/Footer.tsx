@@ -39,7 +39,7 @@ export default function Footer() {
 
 
             <a
-                href="https://github.com/kevinkace/lyrite/tree/nextjs-supabase"
+                href="https://github.com/kevinkace/lyrite/tree/v2"
                 className={css.github}
                 data-testid="footer-version"
             >
