@@ -1,12 +1,12 @@
 "use client";
 
-import { Button }    from "@radix-ui/themes";
-import Link          from "next/link";
-import { FilePen } from "lucide-react";
+import { Button, type ButtonProps } from "@radix-ui/themes";
+import Link                         from "next/link";
+import { FilePen }                  from "lucide-react";
 
 import { useAuth }   from "@/contexts/AuthContext";
 
-export default function LoginOr(props) {
+export default function LoginOr(props: ButtonProps) {
     const { user, loading } = useAuth();
 
     if (loading) {
