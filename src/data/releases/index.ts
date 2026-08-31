@@ -14,6 +14,17 @@ export type Release = {
 
 export const releases: Release[] = [
     {
+        version: "2.1.0",
+        date: "2026-08-30",
+        title: "Tests",
+        changes: [
+            {
+                type: "improvement",
+                description: "Added tests"
+            }
+        ]
+    },
+    {
         version: "2.0.2",
         date : "2026-08-24",
         title: "Typos and readme",
