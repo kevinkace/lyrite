@@ -6,11 +6,12 @@ import { Flex } from "@radix-ui/themes";
 import { clsx } from "clsx";
 
 import { UserSection } from "@/components/layout/UserSection";
-import { LogoIcon }    from "@/components/icons/LogoIcon.svg";
 import { Title }       from "@/components/layout/Title";
+import { MainNav }     from "@/components/layout/MainNav";
+// import { UserNav } from "@/components/layout/UserNav";
 
 // import ErrorButton from "@/components/error/ErrorButton";
-// import { UserNav } from "@/components/layout/UserNav";
+import { LogoIcon }    from "@/components/icons/LogoIcon.svg";
 
 import css from "./Header.module.css";
 
@@ -36,6 +37,7 @@ export default function Header() {
                     </Link>
                 </h1>
 
+                <MainNav />
                 {/* <UserNav /> */}
                 {/* <ErrorButton /> */}
             </Flex>
