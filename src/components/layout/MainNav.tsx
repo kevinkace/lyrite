@@ -5,6 +5,21 @@ import { Flex } from "@radix-ui/themes";
 
 import css from "./Header.module.css";
 
+const links = [
+    {
+        href: "/features",
+        label: "Features"
+    },
+    {
+        href: "/pricing",
+        label: "Pricing"
+    },
+    {
+        href: "/docs/migration-guide",
+        label: "Migration Guide"
+    }
+];
+
 export const MainNav = () => {
     const pathname = usePathname();
 
@@ -15,12 +30,11 @@ export const MainNav = () => {
     return (
         <Flex asChild gap="5" className={css.mainNav}>
         <nav className={css.mainNav}>
-            <Link href="/features" className={css.userNavLink}>
-                Features
-            </Link>
-            <Link href="/pricing" className={css.userNavLink}>
-                Pricing
-            </Link>
+            {links.map((link) => (
+                <Link href={link.href} key={link.href} className={css.userNavLink}>
+                    {link.label}
+                </Link>
+            ))}
             </nav>
         </Flex>
 
