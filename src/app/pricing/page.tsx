@@ -32,7 +32,7 @@ const pricing = [
     {
         level : "Premium",
         price : "10",
-        priceTime : "per month",
+        priceTime : "monthly",
         feats : [
             "Unlimited songs!",
             "Unlimited Characters per song!",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 export default function PricingPage() {
     return <Layout bg="mesh">
         <Article>
-            <h1>Lyrite pricing</h1>
+            <h1>Always free!</h1>
             <p>Lyrite is a simple tool to format and organize your lyrics, and to help you sing better, faster, and more confidently.</p>
             <p>Lyrite will ALWAYS be free to use, but you can support the site and get additional features by signing up to a paid plan.</p>
 
@@ -61,10 +61,10 @@ export default function PricingPage() {
                             <h3>{level}</h3>
                             <p className={css.price}>
                                 <strong>
-                                    <span>$</span>
+                                    <span className={css.currency}>$</span>
                                     {price}
                                 </strong>
-                                <div>{priceTime}</div>
+                                <span className={css.priceTime}>{priceTime}</span>
                             </p>
 
                             <hr/>
