@@ -47,19 +47,26 @@
 
 .price {
     text-align: center;
+    line-height: 1.2;
+    margin: 1em 0 1.9em;
+
+    p {
+        margin: 0;
+    }
 
     strong {
         font-size: 3em;
     }
 
-    span {
+    .currency {
         position: relative;
         top: -0.1em;
         font-size: 0.4em;
         vertical-align: super;
     }
 
-    div {
+    .priceTime {
+        display: block;
         text-transform: uppercase;
         font-size: 0.8em;
     }
@@ -68,7 +75,10 @@
 .tag {
     text-align: center;
     text-transform: uppercase;
-    opacity: 0.8;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    opacity: 0.6;
     margin-top: 2em;
     font-size: 0.8em;
 }
