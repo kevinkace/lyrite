@@ -1,0 +1,74 @@
+.pricingCards {
+    margin-top: 3em;
+
+    h3 {
+        margin: 0;
+        font-size: 1.3em;
+        text-align: center;
+    }
+}
+
+.card-Free {
+    --theme: var(--color-1-bg);
+    --theme2: var(--color-1-selected);
+}
+.card-Pro {
+    --theme: var(--color-3-bg);
+    --theme2: var(--color-3-selected);
+}
+.card-Premium {
+    --theme: var(--color-4-bg);
+    --theme2: var(--color-4-selected);
+}
+
+.card {
+    padding: 1.3em 1.2em 0.4em;
+    border-top: solid 4px var(--theme);
+
+    background: linear-gradient(45deg, var(--theme2), transparent);
+
+    hr {
+        opacity: 0.4;
+    }
+
+    ul {
+        font-size: 0.8em;
+        list-style: none;
+        margin: 1.6em 0;
+        padding: 0;
+
+        li {
+            text-align: center;
+        margin: 0.4em 0;
+        padding: 0;
+        }
+    }
+}
+
+.price {
+    text-align: center;
+
+    strong {
+        font-size: 3em;
+    }
+
+    span {
+        position: relative;
+        top: -0.1em;
+        font-size: 0.4em;
+        vertical-align: super;
+    }
+
+    div {
+        text-transform: uppercase;
+        font-size: 0.8em;
+    }
+}
+
+.tag {
+    text-align: center;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-top: 2em;
+    font-size: 0.8em;
+}
