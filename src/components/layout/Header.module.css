@@ -5,6 +5,10 @@
     padding: 0.4em 4% 0.3em;
 
     background: linear-gradient(90deg, #1a1a1aee 0%, #121212ff 100%);
+
+    @media screen and (width <= 768px) {
+        grid-template-columns: max-content auto max-content;
+    }
 }
 
 .left,
@@ -19,6 +23,10 @@
 }
 .center {
     justify-self: center;
+
+    @media screen and (width <= 768px) {
+        justify-self: flex-start;
+    }
 }
 .right {
     justify-self: end;
