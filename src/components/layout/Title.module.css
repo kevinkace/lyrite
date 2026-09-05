@@ -1,6 +1,10 @@
 .title {
     line-height: 1.2;
 
+    @media screen and (width <= 768px) {
+        padding-left: 0.8em;
+    }
+
     h1 {
         margin: 0;
         font-size: 1.2rem;
