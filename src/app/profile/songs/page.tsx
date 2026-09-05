@@ -6,7 +6,7 @@ import { SongsProvider } from "@/contexts/SongsContext";
 import { useAuth }       from "@/contexts/AuthContext";
 import SongsTable from "@/components/songs/SongsTable";
 
-const pageSize = 10;
+const pageSize = 12;
 
 function ProfileSongsContent() {
     const { user } = useAuth();
