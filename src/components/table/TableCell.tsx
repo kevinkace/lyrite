@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Switch } from "@radix-ui/themes";
+import { Switch, Flex } from "@radix-ui/themes";
 
 import { formattedDay } from "@/lib/dates";
 
@@ -11,7 +11,7 @@ import { Song, Profile, TableHeader } from "@/types";
 
 const MAX_LYRIC_LEN = 200;
 
-export default function TableCell({ item, header }: { item: Song | Profile; header: TableHeader }) {
+export default function TableCell({ item, header, label }: { item: Song | Profile; header: TableHeader; label : boolean }) {
     let content = (item as any)[header.key];
 
     const key = header.key + item.id;
@@ -31,13 +31,24 @@ export default function TableCell({ item, header }: { item: Song | Profile; head
     }
 
     if (header.type === "check" && typeof header.update === "function") {
-        return (
-            <Switch
-                key={key}
-                checked={content}
-                onCheckedChange={header.update(item, header)}
-            />
-        );
+
+        if (label) {
+            return (<Flex asChild align="center" gap="3">
+                <label>
+                    <Switch
+                        key={key}
+                        checked={content}
+                        onCheckedChange={header.update(item, header)}
+                    />
+                    <span className={css.switchLabel}>{header.label}</span>
+                </label>
+            </Flex>);
+        }
+        return (<Switch
+            key={key}
+            checked={content}
+            onCheckedChange={header.update(item, header)}
+        />);
     }
 
     if (header.actions) {
