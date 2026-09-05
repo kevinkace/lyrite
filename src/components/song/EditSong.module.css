@@ -5,6 +5,12 @@
 .toolsWrapper {
 }
 
+.toolsLabel {
+    @media screen and (width <= 768px) {
+        display: none;
+    }
+}
+
 .lyrics {
     margin-top: 1em;
     transform-origin: bottom center;
