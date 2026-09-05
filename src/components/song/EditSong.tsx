@@ -87,7 +87,9 @@ export default function EditSong() {
                 setShowTools(!showTools)
             }}>
                 <SlidersHorizontal />
-                tools
+
+                <span className={css.toolsLabel}>tools</span>
+
                 <ChevronDown />
             </Button>
         </>);
