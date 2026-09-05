@@ -51,6 +51,10 @@ export default function Table({ headers, collection, search = "", page, debug = 
                   [];
 
     useEffect(() => {
+        if (window.innerWidth < 768) {
+            setDisplayType("grid");
+        }
+
         if (debouncedSearch === search) return; // skip if unchanged
 
         const params = new URLSearchParams(searchParams.toString());
@@ -111,7 +115,7 @@ export default function Table({ headers, collection, search = "", page, debug = 
                         return (
                             <Card className={css.card} key={item.id}>
 
-                                <Link asChild href={headers[0].href(item)}className={css.cardHeader}>
+                                <Link href={headers[0].href(item)}className={css.cardHeader}>
                                     <h4 className={css.cardTitle}>{item.title}</h4>
                                     <h5 className={css.cardArtist}>{item.artist}</h5>
                                 </Link>
