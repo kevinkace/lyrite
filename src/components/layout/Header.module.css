@@ -71,6 +71,10 @@
 .mainNav {
     margin: 0.3em 0 0 0.5em;
 
+    @media screen and (width <= 768px) {
+        display: none;
+    }
+
     a {
         text-decoration: none;
         color: white;
