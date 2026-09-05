@@ -33,11 +33,11 @@ export default function DeleteSongDialog({
                 <Dialog.Description>
                     Are you sure you want to delete your song? This action cannot be undone.
 
-                    <div className={css.songTitlePrompt}>
+                    <span className={css.songTitlePrompt}>
                         Delete: {" "}
                         <strong className={css.songTitle}>{title}</strong>
                         ?
-                    </div>
+                    </span>
                 </Dialog.Description>
 
                 <Flex gap="3" mt="4" justify="end" >
