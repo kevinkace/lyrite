@@ -77,10 +77,13 @@
   position: relative;
 }
 .pageTitle {
-  margin-top: 0;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1;
 }
 
 .mobileNavHeader {
+  margin-bottom: 1em;
     position: relative;
     z-index: 2;
 }

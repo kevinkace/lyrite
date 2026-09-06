@@ -96,7 +96,7 @@ export default function ProfileLayout({ children }: { children: React.ReactNode;
 
                 {/* Main content */}
                 <Box className={css.content}>
-                    <Flex gap="3" className={css.mobileNavHeader}>
+                    <Flex gap="3" className={css.mobileNavHeader} align="center">
                         <IconButton
                             variant="soft"
                             onClick={() => {setShowMobileNav(!showMobileNav)}}
