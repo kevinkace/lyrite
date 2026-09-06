@@ -5,6 +5,8 @@
   display: flex;
   gap: 1.5rem;
 
+  position: relative;
+
   width: 100%;
   margin: 0 auto;
 
@@ -39,7 +41,7 @@
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
 
-  font-size: 0.875rem;
+  font-size: 0.875em;
   font-weight: 500;
   color: inherit;
   text-decoration: none;
@@ -72,7 +74,41 @@
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
+  position: relative;
 }
 .pageTitle {
   margin-top: 0;
+}
+
+.mobileNavHeader {
+    position: relative;
+    z-index: 2;
+}
+
+.mobileNavButton {
+  display: none;
+
+  @media screen and (width <= 768px) {
+    display: block;
+  }
+}
+
+.mobileNav {
+  position: absolute;
+  z-index: 1;
+  margin-top: -1.8rem;
+
+  inset: 0;
+  left: -4%;
+  right: -4%;
+
+  background: #000;
+  display: flex;
+  flex-direction: column;
+
+  padding: 5em 4% 2em;
+
+  a {
+    font-size: 1.1em;
+  }
 }

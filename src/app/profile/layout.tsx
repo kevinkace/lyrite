@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import {
@@ -10,16 +11,20 @@ import {
     Heading,
     Text,
     Separator,
+    IconButton
 } from "@radix-ui/themes";
+import { PanelRightOpen } from "lucide-react";
 
-import { useAuth } from "@/contexts/AuthContext";
-import { userLinks } from "@/data/consts";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { useLayout } from "@/contexts/LayoutContext";
+import { useAuth }   from "@/contexts/AuthContext";
+
+import { userLinks } from "@/data/consts";
+
+import Layout from "@/components/layout/Layout";
 
 import css from "./layout.module.css";
-import { useEffect } from "react";
-import Layout from "@/components/layout/Layout";
 
 
 export default function ProfileLayout({ children }: { children: React.ReactNode; }) {
@@ -27,6 +32,8 @@ export default function ProfileLayout({ children }: { children: React.ReactNode;
     const { startLoading, stopLoading } = useLayout();
     const router = useRouter();
     const currentPath = usePathname();
+
+    const [ showMobileNav, setShowMobileNav ] = useState("false");
 
     const pageTitle = userLinks.find(link => link.href === currentPath)?.label || "Profile";
 
@@ -89,7 +96,43 @@ export default function ProfileLayout({ children }: { children: React.ReactNode;
 
                 {/* Main content */}
                 <Box className={css.content}>
-                    <h2 className={css.pageTitle}>{pageTitle}</h2>
+                    <Flex gap="3" className={css.mobileNavHeader}>
+                        <IconButton
+                            variant="soft"
+                            onClick={() => {setShowMobileNav(!showMobileNav)}}
+                            className={css.mobileNavButton}
+                        >
+                            <PanelRightOpen />
+                        </IconButton>
+
+                        <h2 className={css.pageTitle}>{pageTitle}</h2>
+                    </Flex>
+
+                    <AnimatePresence>
+
+                        {showMobileNav && <motion.nav
+                            initial={{ opacity: 0, x: -80 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -80 }}
+                            transition={{ duration: 0.25 }}
+                            className={css.mobileNav}
+                        >
+                            {userLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className={link.href === currentPath ? css.navLinkActive : css.navLink}
+                                    onClick={() => {
+                                        setShowMobileNav(false);
+                                    }}
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                        </motion.nav>}
+
+                    </AnimatePresence>
+
                     {children}
                 </Box>
             </Flex>
