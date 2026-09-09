@@ -31,24 +31,22 @@ export default function TableCell({ item, header, label }: { item: Song | Profil
     }
 
     if (header.type === "check" && typeof header.update === "function") {
-
-        if (label) {
-            return (<Flex asChild align="center" gap="3">
-                <label>
-                    <Switch
-                        key={key}
-                        checked={content}
-                        onCheckedChange={header.update(item, header)}
-                    />
-                    <span className={css.switchLabel}>{header.label}</span>
-                </label>
-            </Flex>);
-        }
-        return (<Switch
+        const SwitchEl = () => (<Switch
             key={key}
             checked={content}
             onCheckedChange={header.update(item, header)}
         />);
+
+        if (label) {
+            return (<Flex asChild align="center" gap="3">
+                <label>
+                    <SwitchEl />
+                    <span className={css.switchLabel}>{header.label}</span>
+                </label>
+            </Flex>);
+        }
+
+        return <SwitchEl />;
     }
 
     if (header.actions) {
