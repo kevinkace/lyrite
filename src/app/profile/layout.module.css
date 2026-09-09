@@ -89,10 +89,9 @@
 }
 
 .mobileNavButton {
-  display: none;
 
-  @media screen and (width <= 768px) {
-    display: block;
+  @media screen and (width > 768px) {
+    display: none;
   }
 }
 
@@ -105,11 +104,15 @@
   left: -4%;
   right: -4%;
 
-  background: #000;
+  background: #000e;
   display: flex;
   flex-direction: column;
 
   padding: 5em 4% 2em;
+
+  @media screen and (width > 768px) {
+    display: none;
+}
 
   a {
     font-size: 1.1em;
