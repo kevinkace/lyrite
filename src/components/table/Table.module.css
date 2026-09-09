@@ -23,3 +23,61 @@
     font-family: monospace;
     text-transform: uppercase;
 }
+
+.displayTypeToggle {
+    svg {
+        height: 1.4em;
+    }
+}
+
+:global(.rt-SegmentedControlItemLabel) {
+    padding: var(--space-1) var(--space-2);
+}
+
+.card {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 0;
+
+    background: #2224;
+}
+
+.cardHeader {
+    padding: var(--space-3);
+    background: #0003;
+    text-decoration: none;
+    color: inherit;
+
+    > * {
+        transition: transform 200ms;
+    }
+
+    &:hover {
+        background: #0006;
+        > * {
+            transform: translateX(0.3em);
+        }
+    }
+}
+
+.cardTitle {
+    margin: 0;
+}
+
+.cardArtist {
+    margin: 0;
+}
+
+
+.cardContent {
+    padding: var(--space-3);
+}
+
+.cardFooter {
+    padding: var(--space-3);
+    background: #0004;
+}
+
+.switchLabel {
+    font-size: 0.9em;
+}

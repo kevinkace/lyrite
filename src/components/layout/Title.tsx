@@ -13,7 +13,11 @@ export const Title = () => {
         return null;
     }
 
-    return (<Flex align="center" direction="column" className={css.title}>
+    return (<Flex
+        align={{ initial: 'start', md: 'center' }}
+        direction="column"
+        className={css.title}
+    >
         {headerContent}
     </Flex>)
 };

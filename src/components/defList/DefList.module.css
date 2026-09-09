@@ -11,6 +11,11 @@
     &:nth-child(even) {
         background-color: #1114;
     }
+
+    @media screen and (width <= 768px) {
+      display: block;
+      margin: 0.4em 0;
+    }
 }
 
 .label {
@@ -21,6 +26,23 @@
   margin: 0;
   width: 100%;
   text-align: left;
+
+    @media screen and (width <= 768px) {
+      padding-left: 1em;
+
+      width: 100%;
+      overflow-x: auto;
+      display: flex;
+      gap: 16px;
+    }
+
+    span {
+      @media screen and (width <= 768px) {
+        flex: 0 0 auto; /* CRITICAL: Prevents items from shrinking to fit the screen */
+        width: 300px;
+        white-space: nowrap;
+      }
+    }
 
   &.id {
     font-family: monospace;

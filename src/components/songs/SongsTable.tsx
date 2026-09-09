@@ -1,7 +1,6 @@
 "use client";
 
 import { Suspense } from "react";
-import { Flex, Text } from "@radix-ui/themes";
 
 import { useSongs } from "@/contexts/SongsContext";
 
@@ -15,12 +14,6 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
 
     return (
         <>
-            <Flex justify="between" align="center" mb="4">
-                <Text size="3" color="gray">
-                    {songsCollection.total} song{songsCollection.total !== 1 ? 's' : ''} total
-                </Text>
-            </Flex>
-
             <Suspense fallback={<div>Loading songs...</div>}>
                 <Table
                     collection={songsCollection}
