@@ -102,9 +102,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { data, error } = await supabase.auth.signInWithOtp({
             email,
             options: {
-                emailRedirectTo: process.env.NODE_ENV === "development" ?
-                    "http://localhost:3000" :
-                    "https://lyritenextjs.netlify.app",
+                emailRedirectTo: process.env.NEXT_PUBLIC_LOGIN_REDIRECT,
             },
         });
 
