@@ -4,6 +4,7 @@ import { FilePlus } from "lucide-react";
 
 import { SongsProvider } from "@/contexts/SongsContext";
 
+import { env } from "@/lib/env";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 import Layout        from "@/components/layout/Layout";
@@ -12,10 +13,7 @@ import LoginOr       from "@/components/buttons/LoginOr";
 
 import css from "./page.module.css"
 
-
-const { NEXT_PUBLIC_FEATURED_SONGS } = process.env;
-
-const featuredIds = NEXT_PUBLIC_FEATURED_SONGS.split(",");
+const featuredIds = env.NEXT_PUBLIC_FEATURED_SONGS;
 
 export default async function HomePage() {
     const supabase = await createServerSupabaseClient();
