@@ -47,6 +47,15 @@ test.describe('New Song Creation', () => {
         await expect(page.getByPlaceholder('Lyrics')).toHaveAttribute('required');
     });
 
+    test('should enforce title, artist and lyrics length limits in the form', async ({ page }) => {
+        await mockAuth(page);
+        await page.goto('/songs/new');
+
+        await expect(page.getByPlaceholder('Title')).toHaveAttribute('maxlength', '100');
+        await expect(page.getByPlaceholder('Artist')).toHaveAttribute('maxlength', '100');
+        await expect(page.getByPlaceholder('Lyrics')).toHaveAttribute('maxlength', '2000');
+    });
+
     test('should successfully submit form with valid data', async ({ page }) => {
         await mockAuth(page);
         await page.goto('/songs/new');

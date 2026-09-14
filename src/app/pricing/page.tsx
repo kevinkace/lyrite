@@ -13,8 +13,8 @@ const pricing = [
         price : "0",
         priceTime : "always",
         feats : [
-            "5 Songs",
-            "1000 Characters per song",
+            "10 Songs",
+            "2000 Characters per song",
             "All formatting options"
         ]
     },
@@ -23,8 +23,8 @@ const pricing = [
         price : "5",
         priceTime : "lifetime",
         feats : [
-            "50 songs",
-            "5000 Characters per song",
+            "100 songs",
+            "5000 Characters per song*",
             "All formatting options"
         ],
         tag : "Coming Soon!"

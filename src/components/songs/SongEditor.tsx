@@ -77,6 +77,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
                 value={formData.title}
                 required
                 size="3"
+                maxLength={100}
                 onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
             />
 
@@ -87,6 +88,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
                 value={formData.artist}
                 required
                 size="3"
+                maxLength={100}
                 onChange={(e) => setFormData(prev => ({ ...prev, artist: e.target.value }))}
             />
 
@@ -97,6 +99,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
                 placeholder="Lyrics"
                 value={formData.lyrics}
                 required
+                maxLength={2000}
                 onChange={(e) => setFormData(prev => ({ ...prev, lyrics: e.target.value }))}
             />
 
