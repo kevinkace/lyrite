@@ -12,6 +12,7 @@ import {
 } from "@radix-ui/themes";
 
 import { ListFilter, Table2, LayoutGrid } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 import Pagination from "@/components/pagination/Pagination";
 import TableCell  from "./TableCell";
@@ -109,27 +110,38 @@ export default function Table({ headers, collection, search = "", page, debug = 
             {displayType === "grid" && (
                 <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="4">
                     {items.map((item) => {
+                        if (!("title" in item)) {
+                            return null;
+                        }
+
                         const publicHeader = headers.find(({ key }) => key === "is_public");
                         const actionsHeader = headers.find(({ key }) => key === "actions");
 
                         return (
                             <Card className={css.card} key={item.id}>
 
-                                <Link href={headers[0].href(item)}className={css.cardHeader}>
+                                <Link href={headers[0].href!(item)} className={css.cardHeader}>
                                     <h4 className={css.cardTitle}>{item.title}</h4>
                                     <h5 className={css.cardArtist}>{item.artist}</h5>
                                 </Link>
 
                                 <div className={css.cardContent}>
-                                    <TableCell item={item} header={{ key : "lyrics" }}/>
+                                    <TableCell
+                                        item={item}
+                                        header={{ key: "lyrics", label: "Lyrics" }}
+                                    />
                                 </div>
 
                                 <Flex className={css.cardFooter} align="center" justify="between">
-                                    <Flex gap="3" align="center">
-                                        <TableCell item={item} header={publicHeader} label={true}/>
-                                    </Flex>
+                                    {publicHeader && (
+                                        <Flex gap="3" align="center">
+                                            <TableCell item={item} header={publicHeader} label={true}/>
+                                        </Flex>
+                                    )}
 
-                                    <TableCell item={item} header={actionsHeader} />
+                                    {actionsHeader && (
+                                        <TableCell item={item} header={actionsHeader} />
+                                    )}
                                 </Flex>
                             </Card>
                         );
@@ -163,7 +175,7 @@ export default function Table({ headers, collection, search = "", page, debug = 
 
                                 {headers.map((header) => (
                                     <TableUI.Cell key={header.key + item.id}>
-                                        <TableCell item={item} header={header} />
+                                        <TableCell item={item} header={header} label={false} />
                                     </TableUI.Cell>
                                 ))}
 
