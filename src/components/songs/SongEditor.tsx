@@ -97,6 +97,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
                 placeholder="Lyrics"
                 value={formData.lyrics}
                 required
+                maxlength={2000}
                 onChange={(e) => setFormData(prev => ({ ...prev, lyrics: e.target.value }))}
             />
 
