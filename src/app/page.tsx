@@ -12,11 +12,10 @@ import LoginOr       from "@/components/buttons/LoginOr";
 
 import css from "./page.module.css"
 
-const featuredIds = [
-    "f4f5302c-57a5-49ea-aeaa-70c9c84bd656",
-    "13f08d51-9295-431c-8e35-3ddc6459fa2f",
-    "df7ebbdf-eb10-4a11-b87b-504a7f5c91a1"
-];
+
+const { NEXT_PUBLIC_FEATURED_SONGS } = process.env;
+
+const featuredIds = NEXT_PUBLIC_FEATURED_SONGS.split(",");
 
 export default async function HomePage() {
     const supabase = await createServerSupabaseClient();

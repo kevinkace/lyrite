@@ -18,4 +18,5 @@ Gitbash
 - `npx supabase link --project-ref lxmanhiksmhndffciunk`
 - `npx supabase db pull`
 
-- grab github creds from supabase admin and add to config.toml
+- grab github creds from supabase admin and add to `config.toml`
+- open http://localhost:54323 for web data ui
