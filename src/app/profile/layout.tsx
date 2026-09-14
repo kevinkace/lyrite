@@ -33,7 +33,7 @@ export default function ProfileLayout({ children }: { children: React.ReactNode;
     const router = useRouter();
     const currentPath = usePathname();
 
-    const [ showMobileNav, setShowMobileNav ] = useState("false");
+    const [ showMobileNav, setShowMobileNav ] = useState(false);
 
     const pageTitle = userLinks.find(link => link.href === currentPath)?.label || "Profile";
 

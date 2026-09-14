@@ -10,8 +10,15 @@ import css from "./Table.module.css"
 import { Song, Profile, TableHeader } from "@/types";
 
 const MAX_LYRIC_LEN = 200;
-
-export default function TableCell({ item, header, label }: { item: Song | Profile; header: TableHeader; label : boolean }) {
+export default function TableCell({
+    item,
+    header,
+    label = false
+}: {
+    item: Song | Profile;
+    header: TableHeader;
+    label?: boolean;
+}) {
     let content = (item as any)[header.key];
 
     const key = header.key + item.id;
@@ -30,11 +37,11 @@ export default function TableCell({ item, header, label }: { item: Song | Profil
         </Link>;
     }
 
-    if (header.type === "check" && typeof header.update === "function") {
+    if (header.type === "check" && header.update) {
         const SwitchEl = () => (<Switch
             key={key}
             checked={content}
-            onCheckedChange={header.update(item, header)}
+            onCheckedChange={header.update?.(item, header)}
         />);
 
         if (label) {
