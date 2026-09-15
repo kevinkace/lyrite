@@ -23,8 +23,8 @@ export type Profile = {
     full_name?: string;
     avatar_url?: string;
     website?: string;
-    tier_name?: UserTierName;
-    tier?: Tier | null;
+    tier_name: UserTierName;
+    tier: Tier | null;
 }
 
 /* ---------- Context Types ---------- */
