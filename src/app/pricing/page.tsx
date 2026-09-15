@@ -34,8 +34,8 @@ const pricing = [
         price : "10",
         priceTime : "monthly",
         feats : [
-            "Unlimited songs!",
-            "Unlimited Characters per song!",
+            "1000 songs!",
+            "9999 Characters per song!",
             "All formatting options"
         ],
         tag : "Coming Soon!"
