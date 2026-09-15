@@ -33,7 +33,7 @@ ON CONFLICT (id) DO UPDATE SET
   updated_at = EXCLUDED.updated_at;
 
 -- The auth user creation trigger creates a profile row. This explicit update then
--- maps that profile to the premium tier from the same tiers enum seed data.
+-- maps that profile to the premium tier name from the same tiers enum seed data.
 UPDATE public.profiles
 SET
   full_name = 'Kevin Cameron',
@@ -42,11 +42,7 @@ SET
   username = NULL,
   created_at = '2025-08-30 14:40:37+00'::timestamptz,
   updated_at = '2025-10-11 18:01:03+00'::timestamptz,
-  tier_id = (
-    SELECT id
-    FROM public.tiers
-    WHERE name = 'premium'
-  )
+  tier_name = 'premium'
 WHERE id = 'ace29b57-c6e4-4d32-abc5-b97a2c96fbb5';
 
 -- The song row trigger derives user_id from auth.uid(), which is unavailable
