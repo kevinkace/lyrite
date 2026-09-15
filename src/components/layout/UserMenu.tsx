@@ -11,6 +11,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { userLinks } from "@/data/consts";
 
 import { Avatar } from "@/components/user/Avatar";
+import { TierBadge } from "@/components/layout/TierBadge";
 
 import css from "./UserMenu.module.css"
 
@@ -71,6 +72,8 @@ export default function UserMenu() {
                                 <div className={css.cardText}>
                                     <p className={css.username}>{user.user_metadata.preferred_username}</p>
                                     <p className={css.email}>{user.user_metadata.full_name}</p>
+
+                                    <TierBadge tier={profile.tier_name} />
                                 </div>
                             </Flex>
 
