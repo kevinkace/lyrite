@@ -6,9 +6,10 @@ import { Flex } from "@radix-ui/themes";
 import { clsx } from "clsx";
 
 import { UserSection } from "@/components/layout/UserSection";
-import { Title }       from "@/components/layout/Title";
 import { MainNav }     from "@/components/layout/MainNav";
 // import { UserNav } from "@/components/layout/UserNav";
+
+import { useLayout } from "@/contexts/LayoutContext";
 
 // import ErrorButton from "@/components/error/ErrorButton";
 import { LogoIcon }    from "@/components/icons/LogoIcon.svg";
@@ -16,8 +17,7 @@ import { LogoIcon }    from "@/components/icons/LogoIcon.svg";
 import css from "./Header.module.css";
 
 export default function Header() {
-
-
+    const { headerContent } = useLayout();
     const pathname = usePathname();
 
     return (
@@ -42,9 +42,17 @@ export default function Header() {
                 {/* <ErrorButton /> */}
             </Flex>
 
-            <div className={css.center}>
-                <Title />
-            </div>
+            {headerContent && (
+                <div className={css.center}>
+                    <Flex
+                        align={{ initial: 'start', md: 'center' }}
+                        direction="column"
+                        className={css.title}
+                    >
+                        {headerContent}
+                    </Flex>
+                </div>
+            )}
 
             <div className={css.right}>
                 <UserSection />

@@ -1,6 +1,7 @@
 .header {
     display: grid;
-    grid-template-columns: 1fr max-content 1fr;
+    grid-template-columns: 1fr min-content 1fr;
+    grid-template-areas: "left center right";
 
     padding: 0.4em 4% 0.3em;
 
@@ -20,9 +21,11 @@
 
 .left {
     justify-self: start;
+    grid-area: left;
 }
 .center {
     justify-self: center;
+    grid-area: center;
 
     @media screen and (width <= 768px) {
         justify-self: flex-start;
@@ -30,6 +33,7 @@
 }
 .right {
     justify-self: end;
+    grid-area: right;
 }
 
 .logo {
@@ -86,5 +90,29 @@
     a {
         text-decoration: none;
         color: white;
+        line-height: 1;
     }
 }
+
+.title {
+    line-height: 1.2;
+    white-space: nowrap;
+
+    @media screen and (width <= 768px) {
+        padding-left: 0.8em;
+        font-size: 0.8em;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 1.2em;
+        font-weight: normal;
+    }
+    h2 {
+        margin: 0;
+        font-size: 0.9em;
+        font-weight: normal;
+        opacity: 0.7;
+    }
+}
+
