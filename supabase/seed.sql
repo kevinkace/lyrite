@@ -54,9 +54,10 @@ WHERE id = 'ace29b57-c6e4-4d32-abc5-b97a2c96fbb5';
 -- file and pass user_id explicitly in the INSERT rows.
 ALTER TABLE public.songs DISABLE TRIGGER on_song_insert;
 
-INSERT INTO public.songs (title, artist, is_public, user_id, created_at, updated_at, slug, lyrics)
+INSERT INTO public.songs (id, title, artist, is_public, user_id, created_at, updated_at, slug, lyrics)
 VALUES
 (
+  'e88ed752-4d37-4cf8-9862-d77c4c23668a',
   'Fall In',
   'Not Alive',
   true,
@@ -101,6 +102,7 @@ dive down you can't fight it
 but the bottom$$
 ),
 (
+  '1a3cde9f-97a9-4866-80e4-d94f8651a1ce',
   'Am I',
   'Not Alive',
   true,
@@ -142,6 +144,7 @@ Who's a machine
 Whose machine is this?$$
 ),
 (
+  '0e68ea92-2635-45bf-8ff6-dd739f5246b5',
   'Adherence',
   'Not Alive',
   true,
