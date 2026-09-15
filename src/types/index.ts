@@ -3,6 +3,18 @@ import type { ButtonProps } from "@radix-ui/themes";
 
 import type { User as SupabaseUser, AuthError } from "@supabase/supabase-js";
 
+export type UserTierName = 'free' | 'pro' | 'premium';
+export type BillingPeriod = 'lifetime' | 'monthly';
+
+export type Tier = {
+    id: string;
+    name: UserTierName;
+    price_cents: number;
+    billing_period: BillingPeriod;
+    created_at: string;
+    updated_at: string;
+}
+
 export type Profile = {
     id: string;
     updated_at: string;
@@ -11,6 +23,8 @@ export type Profile = {
     full_name?: string;
     avatar_url?: string;
     website?: string;
+    tier_name?: UserTierName;
+    tier?: Tier | null;
 }
 
 /* ---------- Context Types ---------- */
