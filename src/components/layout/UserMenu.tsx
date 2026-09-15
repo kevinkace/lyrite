@@ -43,7 +43,7 @@ export default function UserMenu() {
         };
     }, []);
 
-    if (!user) {
+    if (!user || !profile) {
         return null;
     }
 

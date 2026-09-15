@@ -1,21 +1,27 @@
 import React from "react";
 import { Badge } from "@radix-ui/themes";
-import { Crown, CircleCheck } from "lucide-react";
+import { Crown, CircleCheck, type LucideIcon } from "lucide-react";
+
+import { UserTierName } from "@/types";
 
 import css from "./TierBadge.module.css";
 
-const colors = {
-    "free" : "indigo",
-    "pro" : "cyan",
-    "premium" : "orange"
-}
-
-const icons = {
-    "pro" : CircleCheck,
-    "premium" : Crown
+const colors: Record<UserTierName, "indigo" | "cyan" | "orange"> = {
+    free: "indigo",
+    pro: "cyan",
+    premium: "orange",
 };
 
-export function TierBadge({tier}) {
+const icons: Partial<Record<UserTierName, LucideIcon>> = {
+    pro: CircleCheck,
+    premium: Crown,
+};
+
+type TierBadgeProps = {
+    tier: UserTierName;
+};
+
+export function TierBadge({ tier }: TierBadgeProps) {
     const Icon = icons[tier];
     const color = colors[tier];
 
@@ -25,7 +31,7 @@ export function TierBadge({tier}) {
             radius="full"
             color={color}
         >
-            {Icon && <Icon/>}
+            {Icon && <Icon />}
             {tier}
         </Badge>
     );
