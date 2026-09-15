@@ -45,7 +45,7 @@ export default function Header() {
             {headerContent && (
                 <div className={css.center}>
                     <Flex
-                        align={{ initial: 'start', md: 'center' }}
+                        align={{ initial: 'start', sm: 'center' }}
                         direction="column"
                         className={css.title}
                     >
