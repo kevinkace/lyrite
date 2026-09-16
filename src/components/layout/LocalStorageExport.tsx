@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@radix-ui/themes";
+import { Button, Spinner, Flex } from "@radix-ui/themes";
+import { Ghost } from "lucide-react";
+
+import css from "./LocalStorageExport.module.css";
 
 interface V1Song {
   default: boolean;
@@ -13,8 +16,11 @@ export default function LocalStorageExport({
     label?: string;
 }) {
     const [localData, setLocalData] = useState<string | null>(null);
+    const [showFirst, setShowFirst] = useState(true);
+
 
     useEffect(() => {
+
         try {
             if (typeof window === "undefined" || !window.localStorage) {
                 return;
@@ -24,7 +30,9 @@ export default function LocalStorageExport({
             const hasData = songs !== null && songs !== undefined && songs !== "";
 
             if (!hasData) {
-                return;
+                const timer = setTimeout(() => setShowFirst(false), 1500);
+
+                return () => clearTimeout(timer);
             }
 
             setLocalData(songs);
@@ -57,9 +65,23 @@ export default function LocalStorageExport({
         URL.revokeObjectURL(url);
     };
 
-    return localData ? (
-        <Button onClick={downloadLocalStorage} variant="soft" color="gray">
+    if (localData) {
+        return <Button
+            onClick={downloadLocalStorage}
+            variant="soft"
+            color="gray"
+        >
             {label}
-        </Button>
-    ) : null;
+        </Button>;
+    }
+
+    return showFirst ?
+        <Flex gap="3" align="center" className={css.searching}>
+            <Spinner size="3" />
+            <p>Looking for local data...</p>
+        </Flex> :
+        <Flex gap="2" align="center" className={css.nonFound}>
+            <Ghost/>
+            <p>No local data was found. See more info: <a href="/docs/support">Support</a>.</p>
+        </Flex>;
 }

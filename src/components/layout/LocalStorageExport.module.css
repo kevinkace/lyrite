@@ -1,0 +1,28 @@
+.searching {
+    font-style: italic;
+
+    p {
+        margin: 0;
+    }
+}
+
+.nonFound {
+    svg {
+        height: 1.3em;
+
+        animation: pulse 1.5s infinite;
+    }
+
+    p {
+        margin: 0;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
