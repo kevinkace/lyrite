@@ -35,6 +35,10 @@ export const releases: Release[] = [
             {
                 type: "developer",
                 title: "Local Supabase stack"
+            },
+            {
+                type: "developer",
+                title: "De-dupe Markdown pages"
             }
         ]
     },
