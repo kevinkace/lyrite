@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { createElement, Fragment, type ReactNode } from "react";
+import { createElement, Fragment, type ComponentType, type ReactNode } from "react";
 import { remark } from "remark";
 import html from "remark-html";
 
@@ -10,7 +10,7 @@ export type MarkdownMetadata = Record<string, string | number | boolean | null |
 
 export type MarkdownData = { content: string; metadata: MarkdownMetadata; };
 
-export type MarkdownReplacements = Record<string, ReactNode | ((props?: Record<string, unknown>) => ReactNode)>;
+export type MarkdownReplacements = Record<string, ReactNode | ComponentType>;
 
 type Segment = { type: "markdown"; value: string } | { type: "component"; value: ReactNode; key: string };
 
@@ -67,7 +67,7 @@ export default async function Markdown({
 
         segments.push({
             type: "component",
-            value: typeof replacement === "function" ? createElement(replacement as (props?: Record<string, unknown>) => ReactNode) : replacement,
+            value: typeof replacement === "function" ? createElement(replacement) : replacement,
             key: `${dataPath}-${matchIndex}-${matchText}`,
         });
 

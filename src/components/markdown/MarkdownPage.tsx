@@ -4,16 +4,17 @@ import { env } from "@/lib/env";
 
 import Article from "@/components/layout/Article";
 
-import Markdown, { getMarkdownData } from "./Markdown";
+import Markdown, { getMarkdownData, type MarkdownReplacements } from "./Markdown";
 
 type ArticleSection = "docs" | "legal";
 
 type MarkdownPageConfig = {
     section: ArticleSection;
     titlePrefix: string;
+    replacements?: MarkdownReplacements;
 };
 
-export function createMarkdownPage({ section, titlePrefix }: MarkdownPageConfig) {
+export function createMarkdownPage({ section, titlePrefix, replacements }: MarkdownPageConfig) {
     async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
         const { slug } = await params;
         const { metadata } = getMarkdownData(`src/data/${section}/${slug}.md`);
@@ -43,7 +44,7 @@ export function createMarkdownPage({ section, titlePrefix }: MarkdownPageConfig)
 
         return (
             <Article>
-                <Markdown data={`src/data/${section}/${slug}.md`} />
+                <Markdown data={`src/data/${section}/${slug}.md`} replacements={replacements} />
             </Article>
         );
     }
