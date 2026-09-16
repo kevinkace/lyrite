@@ -30,6 +30,10 @@ export const releases: Release[] = [
             },
             {
                 type: "improvement",
+                title: "Docs now have metatags"
+            },
+            {
+                type: "improvement",
                 title: "Profile page mobile style"
             },
             {
