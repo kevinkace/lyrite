@@ -17,6 +17,7 @@ const getChangeColor = (type: ChangeType) => {
         case "improvement": return "blue";
         case "fix": return "orange";
         case "breaking": return "red";
+        case "developer": return "iris";
         default: return "gray";
     }
 };
@@ -27,6 +28,7 @@ const getChangeLabel = (type: ChangeType) => {
         case "improvement": return "Improved";
         case "fix": return "Fixed";
         case "breaking": return "Breaking";
+        case "developer": return "Developer";
         default: return type;
     }
 };
@@ -41,25 +43,28 @@ export default function ReleaseNotesPage() {
                         <Card key={release.version} size="3" className={css.releaseCard}>
                             <Flex direction="column" gap="4">
                                 <Flex align="center" justify="between" wrap="wrap" gap="3">
-                                    <Heading size="6">
+                                    <h2 className={css.release}>
                                         v{release.version} - {release.title}
-                                    </Heading>
-                                    <Text size="2" color="gray">
+                                    </h2>
+                                    <time dateTime={release.date} className={css.date}>
                                         {new Date(release.date).toLocaleDateString("en-US", {
                                             year: "numeric",
                                             month: "long",
                                             day: "numeric"
                                         })}
-                                    </Text>
+                                    </time>
                                 </Flex>
 
                                 <Flex direction="column" gap="3">
                                     {release.changes.map((change, index) => (
-                                        <Flex key={index} align="center" gap="3" className={css.changeItem}>
+                                        <Flex key={index} align="center" gap="4" className={css.changeItem}>
                                             <Badge color={getChangeColor(change.type)} size="2">
                                                 {getChangeLabel(change.type)}
                                             </Badge>
-                                            <Text size="3">{change.description}</Text>
+                                            <div>
+                                            <h3 className={css.changeTitle}>{change.title}</h3>
+                                            {change.description && <p className={css.changeDescription}>{change.description}</p>}
+                                            </div>
                                         </Flex>
                                     ))}
                                 </Flex>
@@ -68,12 +73,12 @@ export default function ReleaseNotesPage() {
                     ))}
                 </Flex>
 
-                <Text size="2" color="gray" align="center" mt="8">
+                <p>
                     Want to suggest a feature or report an issue? Visit our{" "}
                     <a href="https://github.com/kevinkace/lyrite" target="_blank" rel="noopener noreferrer">
                         GitHub repository
                     </a>
-                </Text>
+                </p>
             </div>
     );
 }
