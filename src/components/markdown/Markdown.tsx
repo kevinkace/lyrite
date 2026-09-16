@@ -5,105 +5,90 @@ import { createElement, Fragment, type ReactNode } from "react";
 import { remark } from "remark";
 import html from "remark-html";
 
-// Escape a token so it can be safely used in a global regex when matching inline replacements.
-const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export type MarkdownMetadata = Record<string, string | number | boolean | null | undefined>;
 
-export type MarkdownData = {
-  content: string;
-  metadata: MarkdownMetadata;
-};
+export type MarkdownData = { content: string; metadata: MarkdownMetadata; };
 
-export function getMarkdownData(dataPath: string): MarkdownData {
-  const filePath = path.join(process.cwd(), dataPath);
-  const fileContents = fs.readFileSync(filePath, "utf8");
-  const { content, data } = matter(fileContents);
-
-  return {
-    content,
-    metadata: data as MarkdownMetadata,
-  };
-}
-
-// A replacement map lets markdown content swap a literal text token for a React node or component.
 export type MarkdownReplacements = Record<string, ReactNode | ((props?: Record<string, unknown>) => ReactNode)>;
 
+type Segment = { type: "markdown"; value: string } | { type: "component"; value: ReactNode; key: string };
+
+
+// Escapes regex special chars so a token is matched literally.
+const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+
+async function renderMarkdownToHtml(markdown: string): Promise<string | null> {
+    const rendered = (await remark().use(html).process(markdown)).toString();
+
+    return rendered.trim() ? rendered : null;
+}
+
+export function getMarkdownData(dataPath: string): MarkdownData {
+    const fileContents = fs.readFileSync(path.join(process.cwd(), dataPath), "utf8");
+    const { content, data } = matter(fileContents);
+
+    return { content, metadata: data as MarkdownMetadata };
+}
+
 export default async function Markdown({
-  data: dataPath,
-  replacements = {},
+    data: dataPath,
+    replacements = {},
 }: {
-  data: string;
-  replacements?: MarkdownReplacements;
+    data: string;
+    replacements?: MarkdownReplacements;
 }) {
-  const { content } = getMarkdownData(dataPath);
+    const { content } = getMarkdownData(dataPath);
 
-  // Sort longer keys first so shorter tokens do not accidentally steal matches from larger ones.
-  const replacementEntries = Object.entries(replacements).sort((a, b) => b[0].length - a[0].length);
+    // longest keys first, avoids partial-token matches
+    const entries = Object.entries(replacements).sort((a, b) => b[0].length - a[0].length);
 
-  if (replacementEntries.length === 0) {
-    const processed = await remark().use(html).process(content);
-    const contentHtml = processed.toString();
+    if (entries.length === 0) {
+        const contentHtml = await renderMarkdownToHtml(content);
 
-    return contentHtml.trim() ? (
-      <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
-    ) : null;
-  }
-
-  // Split the markdown into alternating text and component segments so inline replacements
-  // can render as real React nodes while the surrounding markdown still gets processed normally.
-  const pattern = new RegExp(replacementEntries.map(([key]) => escapeRegex(key)).join("|"), "g");
-  const matches = Array.from(content.matchAll(pattern));
-  const segments: Array<{ type: "markdown"; value: string } | { type: "component"; value: ReactNode; key: string }> = [];
-
-  let lastIndex = 0;
-
-  // Each replacement token is converted into a component segment while preserving the surrounding
-  // markdown text before and after it, so the final output stays in order.
-  for (const match of matches) {
-    const matchText = match[0];
-    const matchIndex = match.index ?? 0;
-
-    if (matchIndex > lastIndex) {
-      segments.push({
-        type: "markdown",
-        value: content.slice(lastIndex, matchIndex),
-      });
+        return contentHtml ? <div dangerouslySetInnerHTML={{ __html: contentHtml }} /> : null;
     }
 
-    const replacementComponent = replacements[matchText];
-    segments.push({
-      type: "component",
-      value: typeof replacementComponent === "function"
-        ? createElement(replacementComponent as (props?: Record<string, unknown>) => ReactNode)
-        : replacementComponent,
-      key: `${dataPath}-${matchIndex}-${matchText}`,
-    });
+    // Split content on replacement tokens to render as React nodes
+    const pattern = new RegExp(entries.map(([key]) => escapeRegex(key)).join("|"), "g");
+    const segments: Segment[] = [];
+    let lastIndex = 0;
 
-    lastIndex = matchIndex + matchText.length;
-  }
+    for (const match of content.matchAll(pattern)) {
+        const [matchText] = match;
+        const matchIndex = match.index ?? 0;
 
-  if (lastIndex < content.length) {
-    segments.push({
-      type: "markdown",
-      value: content.slice(lastIndex),
-    });
-  }
+        if (matchIndex > lastIndex) {
+            segments.push({ type: "markdown", value: content.slice(lastIndex, matchIndex) });
+        }
 
-  const renderedParts = await Promise.all(
-    segments.map(async (segment, index) => {
-      if (segment.type === "component") {
-        return <Fragment key={segment.key}>{segment.value}</Fragment>;
-      }
+        const replacement = replacements[matchText];
 
-      const processed = await remark().use(html).process(segment.value);
-      const contentHtml = processed.toString();
+        segments.push({
+            type: "component",
+            value: typeof replacement === "function" ? createElement(replacement as (props?: Record<string, unknown>) => ReactNode) : replacement,
+            key: `${dataPath}-${matchIndex}-${matchText}`,
+        });
 
-      return contentHtml.trim() ? (
-        <div key={`${dataPath}-${index}`} dangerouslySetInnerHTML={{ __html: contentHtml }} />
-      ) : null;
-    }),
-  );
+        lastIndex = matchIndex + matchText.length;
+    }
 
-  return <div>{renderedParts}</div>;
+    if (lastIndex < content.length) {
+        segments.push({ type: "markdown", value: content.slice(lastIndex) });
+    }
+
+    const renderedParts = await Promise.all(segments.map(async (segment, index) => {
+        if (segment.type === "component") {
+            return <Fragment key={segment.key}>{segment.value}</Fragment>;
+        }
+
+        const contentHtml = await renderMarkdownToHtml(segment.value);
+
+        return contentHtml ?
+            <div key={`${dataPath}-${index}`} dangerouslySetInnerHTML={{ __html: contentHtml }} /> :
+            null;
+    }));
+
+    return <div>{renderedParts}</div>;
 }
