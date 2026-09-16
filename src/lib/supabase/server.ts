@@ -26,6 +26,7 @@ export async function createServerSupabaseClient() {
 
                     removeItem: (key) => {
                         cookieStore.delete(key);
+
                         return Promise.resolve();
                     },
                 },
