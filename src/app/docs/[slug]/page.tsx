@@ -5,18 +5,18 @@ import Article from "@/components/layout/Article";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const { metadata } = getMarkdownData(`src/data/legal/${slug}.md`);
+  const { metadata } = getMarkdownData(`src/data/docs/${slug}.md`);
 
   return {
-    title: typeof metadata.title === "string" ? metadata.title : `Legal - ${slug}`,
+    title: typeof metadata.title === "string" ? metadata.title : `Docs - ${slug}`,
     description: typeof metadata.description === "string" ? metadata.description : undefined,
   };
 }
 
-export default async function PrivacyPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function DocsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
   return <Article>
-    <Markdown data={`src/data/legal/${slug}.md`} />
-    </Article>;
+    <Markdown data={`src/data/docs/${slug}.md`} />
+  </Article>;
 }

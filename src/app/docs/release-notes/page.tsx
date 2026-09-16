@@ -33,7 +33,6 @@ const getChangeLabel = (type: ChangeType) => {
 
 export default function ReleaseNotesPage() {
     return (
-        <Layout>
             <div className={css.container}>
                 <Heading size="8" mb="6">Release Notes</Heading>
 
@@ -76,6 +75,5 @@ export default function ReleaseNotesPage() {
                     </a>
                 </Text>
             </div>
-        </Layout>
     );
 }

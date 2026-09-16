@@ -8,6 +8,24 @@ import html from "remark-html";
 // Escape a token so it can be safely used in a global regex when matching inline replacements.
 const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+export type MarkdownMetadata = Record<string, string | number | boolean | null | undefined>;
+
+export type MarkdownData = {
+  content: string;
+  metadata: MarkdownMetadata;
+};
+
+export function getMarkdownData(dataPath: string): MarkdownData {
+  const filePath = path.join(process.cwd(), dataPath);
+  const fileContents = fs.readFileSync(filePath, "utf8");
+  const { content, data } = matter(fileContents);
+
+  return {
+    content,
+    metadata: data as MarkdownMetadata,
+  };
+}
+
 // A replacement map lets markdown content swap a literal text token for a React node or component.
 export type MarkdownReplacements = Record<string, ReactNode | ((props?: Record<string, unknown>) => ReactNode)>;
 
@@ -18,10 +36,7 @@ export default async function Markdown({
   data: string;
   replacements?: MarkdownReplacements;
 }) {
-  const filePath = path.join(process.cwd(), dataPath);
-  const fileContents = fs.readFileSync(filePath, "utf8");
-
-  const { content } = matter(fileContents);
+  const { content } = getMarkdownData(dataPath);
 
   // Sort longer keys first so shorter tokens do not accidentally steal matches from larger ones.
   const replacementEntries = Object.entries(replacements).sort((a, b) => b[0].length - a[0].length);
