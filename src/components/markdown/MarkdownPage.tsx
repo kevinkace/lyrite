@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { env } from "@/lib/env";
+
 import Article from "@/components/layout/Article";
 
 import Markdown, { getMarkdownData } from "./Markdown";
@@ -15,10 +17,24 @@ export function createMarkdownPage({ section, titlePrefix }: MarkdownPageConfig)
     async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
         const { slug } = await params;
         const { metadata } = getMarkdownData(`src/data/${section}/${slug}.md`);
+        const title = typeof metadata.title === "string" ? metadata.title : `${titlePrefix} - ${slug}`;
+        const description = typeof metadata.description === "string" ? metadata.description : undefined;
 
         return {
-            title: typeof metadata.title === "string" ? metadata.title : `${titlePrefix} - ${slug}`,
-            description: typeof metadata.description === "string" ? metadata.description : undefined,
+            title,
+            description,
+            openGraph: {
+                title,
+                description,
+                type: "website",
+                siteName: "Lyrite",
+                url: `${env.NEXT_PUBLIC_LOGIN_REDIRECT}/${section}/${slug}`,
+            },
+            twitter: {
+                // card: "summary_large_image",
+                title,
+                description,
+            },
         };
     }
 
