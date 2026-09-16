@@ -1,5 +1,6 @@
 ---
 title: Privacy Policy
+description: Learn how Lyrite collects, uses, stores, and protects your personal data in our privacy policy.
 date: 2025-10-04
 ---
 

@@ -1,10 +1,9 @@
-import Markdown from "@/components/markdown/Markdown";
-import Article from "@/components/layout/Article";
+import { createMarkdownPage } from "@/components/markdown/MarkdownPage";
 
-export default async function PrivacyPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+const { generateMetadata, default: PrivacyPage } = createMarkdownPage({
+  section: "legal",
+  titlePrefix: "Legal",
+});
 
-  return <Article>
-    <Markdown data={`src/data/legal/${slug}.md`} />
-    </Article>;
-}
+export { generateMetadata };
+export default PrivacyPage;

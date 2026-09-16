@@ -1,8 +1,9 @@
-export type ChangeType = "feature" | "improvement" | "fix" | "breaking";
+export type ChangeType = "feature" | "improvement" | "fix" | "breaking" | "developer";
 
 export type Change = {
     type: ChangeType;
-    description: string;
+    title: string;
+    description?: string;
 };
 
 export type Release = {
@@ -14,17 +15,49 @@ export type Release = {
 
 export const releases: Release[] = [
     {
+        version: "2.2.0",
+        date: "2026-09-16",
+        title: "User tiers and Support",
+        changes: [
+            {
+                type: "feature",
+                title: "Added user tiers!",
+                description: "See pricing page for details on tiers. Not yet available for purchase, but tier restrictions are in place."
+            },
+            {
+                type: "improvement",
+                title: "Added Support page"
+            },
+            {
+                type: "improvement",
+                title: "Docs now have metatags"
+            },
+            {
+                type: "improvement",
+                title: "Profile page mobile style"
+            },
+            {
+                type: "developer",
+                title: "Local Supabase stack"
+            },
+            {
+                type: "developer",
+                title: "De-dupe Markdown pages"
+            }
+        ]
+    },
+    {
         version: "2.1.0",
         date: "2026-08-30",
         title: "Tests",
         changes: [
             {
-                type: "improvement",
-                description: "Added tests"
+                type: "developer",
+                title: "Added tests"
             },
             {
                 type: "fix",
-                description: "Fix footer Github link"
+                title: "Fix footer Github link"
             }
         ]
     },
@@ -35,7 +68,7 @@ export const releases: Release[] = [
         changes: [
             {
                 type : "fix",
-                description: "Change all instances of \"lyrite\" to \"Lyrite\""
+                title: "Change all instances of \"lyrite\" to \"Lyrite\""
             }
         ]
     },
@@ -46,11 +79,11 @@ export const releases: Release[] = [
         changes: [
             {
                 type : "fix",
-                description: "Fix Microsoft Azure login"
+                title: "Fix Microsoft Azure login"
             },
             {
                 type: "improvement",
-                description: "Update fallback icon to headshot silhouette instead of \"U\""
+                title: "Update fallback icon to headshot silhouette instead of \"U\""
             }
         ]
     },
@@ -61,11 +94,11 @@ export const releases: Release[] = [
         changes: [
             {
                 type: "feature",
-                description: "V1 migration guide"
+                title: "V1 migration guide"
             },
             {
                 type: "feature",
-                description: "Announcement news post"
+                title: "Announcement news post"
             }
         ]
     },
@@ -74,18 +107,18 @@ export const releases: Release[] = [
         date: "2026-02-28",
         title: "Preview Release",
         changes: [
-
             {
                 type: "feature",
-                description: "Multi-provider OAuth authentication (GitHub, Google, Facebook, Microsoft)"
+                title: "Multi-provider OAuth authentication",
+                description: "GitHub, Google, Facebook, Microsoft"
             },
             {
                 type: "feature",
-                description: "Passwordless email authentication with magic links"
+                title: "Passwordless email authentication with magic links"
             },
             {
                 type: "feature",
-                description: "This release notes page"
+                title: "This release notes page"
             }
         ]
     },
@@ -96,23 +129,23 @@ export const releases: Release[] = [
         changes: [
             {
                 type: "feature",
-                description: "Song creation and management system"
+                title: "Song creation and management system"
             },
             {
                 type: "feature",
-                description: "User profiles and settings"
+                title: "User profiles and settings"
             },
             {
                 type: "feature",
-                description: "Responsive design with dark theme"
+                title: "Responsive design with dark theme"
             },
             {
                 type: "improvement",
-                description: "Comprehensive error handling and user feedback"
+                title: "Comprehensive error handling and user feedback"
             },
             {
                 type: "improvement",
-                description: "Dynamic version display in footer from package.json"
+                title: "Dynamic version display in footer from package.json"
             }
         ]
     }

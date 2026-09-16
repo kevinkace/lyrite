@@ -17,6 +17,10 @@ const links = [
     {
         href: "/docs/migration-guide",
         label: "Migration Guide"
+    },
+    {
+        href: "/docs/support",
+        label: "Support"
     }
 ];
 

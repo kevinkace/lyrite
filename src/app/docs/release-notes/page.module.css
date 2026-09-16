@@ -28,3 +28,21 @@
         gap: 0.75rem;
     }
 }
+
+.release {
+    margin: 0;
+}
+
+.date {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.changeTitle {
+    margin: 0;
+    font-weight: normal;
+}
+
+.changeDescription {
+    font-size: 0.9em;
+}

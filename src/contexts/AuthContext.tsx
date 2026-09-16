@@ -4,13 +4,12 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 
 import type { User, AuthError } from "@supabase/supabase-js";
 
+import { env }          from "@/lib/env";
 import { supabase }     from "@/lib/supabase/client";
 import { fetchProfile } from "@/lib/supabase/profile";
 import { useError }     from "@/contexts/ErrorContext";
 
 import type { AuthContextType, Profile } from "@/types";
-
-const { NEXT_PUBLIC_LOGIN_REDIRECT } = process.env;
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -86,7 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { error } = await supabase.auth.signInWithOAuth({
             provider,
             options: {
-                redirectTo: NEXT_PUBLIC_LOGIN_REDIRECT,
+                redirectTo: env.NEXT_PUBLIC_LOGIN_REDIRECT,
                 scopes: "email"
             },
         });
@@ -102,7 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { data, error } = await supabase.auth.signInWithOtp({
             email,
             options: {
-                emailRedirectTo: process.env.NEXT_PUBLIC_LOGIN_REDIRECT,
+                emailRedirectTo: env.NEXT_PUBLIC_LOGIN_REDIRECT,
             },
         });
 
