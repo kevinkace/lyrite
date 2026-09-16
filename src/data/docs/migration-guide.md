@@ -1,6 +1,6 @@
 ---
-
 title: How to migrate your Lyrite v1 data
+description: Follow the step-by-step guide to export songs from Lyrite v1 and bring them into the new Lyrite v2 app.
 date: 2026-08-16
 ---
 

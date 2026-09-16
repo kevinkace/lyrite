@@ -1,5 +1,6 @@
 ---
 title: Announcing Lyrite v2!
+description: Learn about the Lyrite v2 redesign, new features, and what changed from the original v1 experience.
 date: 2026-08-16
 ---
 

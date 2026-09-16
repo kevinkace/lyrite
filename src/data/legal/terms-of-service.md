@@ -1,5 +1,6 @@
 ---
 title: Terms of Service
+description: Review the Lyrite terms of service covering account use, content, liability, and your responsibilities.
 date: 2025-10-04
 ---
 
