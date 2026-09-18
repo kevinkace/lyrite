@@ -11,7 +11,7 @@ import {
     SegmentedControl
 } from "@radix-ui/themes";
 
-import { ListFilter, Table2, LayoutGrid } from "lucide-react";
+import { Table2, LayoutGrid, Search } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import Pagination from "@/components/pagination/Pagination";
@@ -70,16 +70,19 @@ export default function Table({ headers, collection, search = "", page, debug = 
         <Flex gap="4" direction="column">
             <Flex gap="2" align="center" justify="between">
                 <Flex gap="2" align="center">
-                    <TextField.Root
-                        type="text"
-                        value={searchValue}
-                        placeholder="Search..."
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        className={css.searchInput}
-                    />
+                    <div className={css.searchWrapper}>
+                        <TextField.Root
+                            type="text"
+                            name="search"
+                            value={searchValue}
+                            placeholder="Search..."
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            size="6"
+                        />
+                    </div>
 
                     <IconButton variant="soft" color="gray">
-                        <ListFilter />
+                        <Search />
                     </IconButton>
                 </Flex>
 
