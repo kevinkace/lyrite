@@ -50,7 +50,7 @@ export default async function HomePage() {
                         justify="center"
                         className={css.ctaButtons}
                     >
-                        <Button asChild={true} size="4" variant="surface" color="violet">
+                        <Button asChild size="4" variant="surface" color="violet">
                             <Link href="/songs/new" data-testid="home-new-song-cta">
                                 <FilePlus width="1em" height="auto" />
                                 Start a new song
