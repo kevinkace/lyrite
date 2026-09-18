@@ -1,0 +1,17 @@
+.saveIcon {
+    height: 2em;
+}
+
+.circle {
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    animation: drawCircle 200ms ease-out forwards;
+}
+
+
+@keyframes drawCircle {
+    to {
+        /* 283 * 0.25 = 70.75 remaining offset reveals 75% of the circle */
+        stroke-dashoffset: 185;
+    }
+}
