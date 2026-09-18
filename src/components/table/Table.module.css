@@ -1,3 +1,8 @@
+.searchWrapper {
+    width: 15em;
+    max-width: 100%;
+}
+
 .tableBody {
     transition: background 600ms ease-in-out;
 }
