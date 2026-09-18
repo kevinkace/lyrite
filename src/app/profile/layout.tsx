@@ -48,9 +48,13 @@ export default function ProfileLayout({ children }: { children: React.ReactNode;
         };
     }, [loading]);
 
-    if (!user && !loading) {
-        router.replace("/login");
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace("/login");
+        }
+    }, [loading, user, router]);
 
+    if (!user && !loading) {
         return null;
     }
 

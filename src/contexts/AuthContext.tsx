@@ -50,29 +50,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         checkOAuthErrors();
 
         // On mount, check for an existing session
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setUser(session?.user ?? null);
+        const restoreSession = async () => {
+            try {
+                const { data: { session }, error } = await supabase.auth.getSession();
 
-            if (session?.user) {
-                fetchProfile(session.user.id).then(({data : profile, error}) => {
-                    if (error) {
-                        console.error("Error fetching profile:", error);
+                if (error) {
+                    setUser(null);
+                    setProfile(null);
+                    setLoading(false);
+                    return;
+                }
+
+                setUser(session?.user ?? null);
+
+                if (session?.user) {
+                    const { data: profile, error: profileError } = await fetchProfile(session.user.id);
+
+                    if (profileError) {
+                        console.error("Error fetching profile:", profileError);
                     } else {
                         setProfile(profile);
                     }
-
-                    setLoading(false);
-                });
-            } else {
+                }
+            } catch {
+                setUser(null);
+                setProfile(null);
+            } finally {
                 setLoading(false);
             }
-        });
+        };
+
+        void restoreSession();
 
         // Listen for changes (login, logout, refresh)
         const {
             data: { subscription },
         } = supabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
+            if (!session) setProfile(null);
             setLoading(false);
         });
 

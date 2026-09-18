@@ -6,10 +6,11 @@ import { Button, Flex } from "@radix-ui/themes";
 
 import { useModal } from "@/contexts/ModalContext";
 import { AuthData } from "@/components/profile/AuthData";
+import { AuthDebug } from "@/components/profile/AuthDebug";
 
 export default function SettingsPage() {
     const { openModal } = useModal();
-    const [loading, setLoading] = useState(false);
+    const [, setLoading] = useState(false);
 
     const handleDelete = async () => {
         if (!confirm("Are you sure? This will permanently delete your account.")) return;
@@ -23,8 +24,8 @@ export default function SettingsPage() {
 
             alert("Your account has been deleted.");
             window.location.href = "/goodbye";
-        } catch (err: any) {
-            alert(err.message);
+        } catch (err: unknown) {
+            alert(err instanceof Error ? err.message : "Failed to delete account");
         } finally {
             setLoading(false);
         }
@@ -34,6 +35,8 @@ export default function SettingsPage() {
         <Flex direction="column" gap="4" align="start">
 
             <AuthData />
+
+            <AuthDebug />
 
             <Button
                 onClick={() => {
