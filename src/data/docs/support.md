@@ -6,6 +6,7 @@ date: 2026-08-16
 
 # Lyrite Support
 
+## [Migration Guide](/docs/migration-guide)
 
 ## Import/export issues
 
