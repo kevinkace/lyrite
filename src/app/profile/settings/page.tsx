@@ -1,78 +1,19 @@
-"use client";
+import { Flex } from "@radix-ui/themes";
 
-import { useState } from "react";
-
-import { Button, Flex } from "@radix-ui/themes";
-
-import { useModal } from "@/contexts/ModalContext";
 import { AuthData } from "@/components/profile/AuthData";
 import { AuthDebug } from "@/components/profile/AuthDebug";
+import { Pii } from "@/components/profile/Pii";
 
 export default function SettingsPage() {
-    const { openModal } = useModal();
-    const [, setLoading] = useState(false);
-
-    const handleDelete = async () => {
-        if (!confirm("Are you sure? This will permanently delete your account.")) return;
-        setLoading(true);
-
-        try {
-            const res = await fetch("/api/delete-account", { method: "POST" });
-            const data = await res.json();
-
-            if (!res.ok) throw new Error(data.error || "Failed to delete account");
-
-            alert("Your account has been deleted.");
-            window.location.href = "/goodbye";
-        } catch (err: unknown) {
-            alert(err instanceof Error ? err.message : "Failed to delete account");
-        } finally {
-            setLoading(false);
-        }
-    };
 
     return (
         <Flex direction="column" gap="4" align="start">
 
             <AuthData />
 
+            <Pii />
+
             <AuthDebug />
-
-            <Button
-                onClick={() => {
-                    openModal({
-                        type: "downloadPII",
-                        title : "Download PII",
-                        props: {
-                            onDownload: () => {
-                                console.log("Downloading PII...");
-                            },
-                        },
-                    });
-                }}
-            >
-                Download PII
-            </Button>
-
-            <Button
-                onClick={() => {
-                    openModal({
-                        type: "confirm",
-                        title: "Delete Account",
-                        props: {
-                            description : "Delete ALL your songs and account info.",
-                            confirmRequirement : "delete account",
-                            confirmCta : "Delete my account",
-                            onConfirm: () => {
-                                handleDelete();
-                            },
-                        },
-                    });
-                }}
-                color="red"
-            >
-                Delete Account
-            </Button>
         </Flex>
     );
 }

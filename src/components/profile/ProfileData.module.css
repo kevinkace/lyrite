@@ -6,4 +6,8 @@
   h4 {
     margin: 0 0 0.6em;
   }
+  p {
+    opacity: 0.8;
+    font-size: 0.9em;
+  }
 }

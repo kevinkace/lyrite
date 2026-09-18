@@ -1,9 +1,11 @@
 "use client";
 
-import { Button, Card, Flex, Text } from "@radix-ui/themes";
+import { Button, Card, Flex } from "@radix-ui/themes";
 
 import { env } from "@/lib/env";
 import { supabase } from "@/lib/supabase/client";
+
+import css from "./ProfileData.module.css";
 
 export function AuthDebug() {
     if (process.env.NODE_ENV !== "development") return null;
@@ -28,16 +30,15 @@ export function AuthDebug() {
     };
 
     return (
-        <Card size="3" variant="surface">
-            <Flex direction="column" gap="2" align="start">
-                <Text weight="bold">Development auth tools</Text>
-                <Text size="2" color="gray">
-                    Force the next session restore to use an invalid refresh token.
-                </Text>
-                <Button color="amber" onClick={simulateInvalidRefreshToken}>
-                    Simulate invalid refresh token
-                </Button>
-            </Flex>
+        <Card size="3" variant="surface" className={css.card}>
+            <h4>Development auth tools</h4>
+
+            <p>
+                Force the next session restore to use an invalid refresh token.
+            </p>
+            <Button color="amber" onClick={simulateInvalidRefreshToken}>
+                Simulate invalid refresh token
+            </Button>
         </Card>
     );
 }
