@@ -77,7 +77,7 @@ export default function Table({ headers, collection, search = "", page, debug = 
                             value={searchValue}
                             placeholder="Search..."
                             onChange={(e) => setSearchValue(e.target.value)}
-                            size="3"
+                            size="2"
                         />
                     </div>
 
@@ -199,6 +199,7 @@ export default function Table({ headers, collection, search = "", page, debug = 
 
             <Pagination
                 currentPage={page}
+                totalPages={collection.pages}
                 hasMore={collection.hasMore}
                 setLoading={collection.setLoading}
             />

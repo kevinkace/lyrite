@@ -28,6 +28,8 @@ export function SongsProvider(props: SongsProviderProps) {
         pageSize: props.pageSize,
         search: props.search,
         initialData: props.initialSongs,
+        orderBy: "updated_at",
+        orderAscending: false,
     });
 
     return (
