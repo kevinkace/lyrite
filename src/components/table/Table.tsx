@@ -77,7 +77,7 @@ export default function Table({ headers, collection, search = "", page, debug = 
                             value={searchValue}
                             placeholder="Search..."
                             onChange={(e) => setSearchValue(e.target.value)}
-                            size="6"
+                            size="3"
                         />
                     </div>
 
