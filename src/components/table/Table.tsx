@@ -199,6 +199,7 @@ export default function Table({ headers, collection, search = "", page, debug = 
 
             <Pagination
                 currentPage={page}
+                totalPages={collection.pages}
                 hasMore={collection.hasMore}
                 setLoading={collection.setLoading}
             />

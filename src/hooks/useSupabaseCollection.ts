@@ -17,7 +17,7 @@ type UseSupabaseCollectionOptions<T> = {
     orderAscending?: boolean;
 };
 
-export function useSupabaseCollection<T>({
+export function useSupabaseCollection<T extends { id: string }>({
     table,
     userId,
     ids,
@@ -43,6 +43,8 @@ export function useSupabaseCollection<T>({
             setLoading(true);
             setError(null);
 
+            const currentPage = Math.max(page, 1);
+
             let dataQuery = supabase.from(table).select("*");
             let countQuery = supabase.from(table).select("*", { count: "exact", head: true });
 
@@ -51,15 +53,21 @@ export function useSupabaseCollection<T>({
                 countQuery = countQuery.in("id", ids);
             } else if (userId) {
                 dataQuery = dataQuery
-                    .eq("user_id", userId)
-                    .range((page - 1) * pageSize, page * pageSize - 1);
+                    .eq("user_id", userId);
 
                 countQuery = countQuery.eq("user_id", userId);
+            }
 
-                if (search && searchColumn) {
-                    dataQuery = dataQuery.ilike(searchColumn, `%${search}%`);
-                    countQuery = countQuery.ilike(searchColumn, `%${search}%`);
-                }
+            if (search && searchColumn) {
+                dataQuery = dataQuery.ilike(searchColumn, `%${search}%`);
+                countQuery = countQuery.ilike(searchColumn, `%${search}%`);
+            }
+
+            if (!ids || ids.length === 0) {
+                dataQuery = dataQuery.range(
+                    (currentPage - 1) * pageSize,
+                    currentPage * pageSize - 1
+                );
             }
 
             if (orderBy) {
@@ -91,13 +99,13 @@ export function useSupabaseCollection<T>({
         if (error) {
             setError(error.message);
         } else {
-            setItems((prev) => prev.filter((item: any) => item.id !== id));
+            setItems((prev) => prev.filter((item) => item.id !== id));
         }
     };
 
     const updateItemInState = (id: string, updates: Partial<T>) => {
         setItems((prev) =>
-            prev.map((item: any) => (item.id === id ? { ...item, ...updates } : item))
+            prev.map((item) => (item.id === id ? { ...item, ...updates } : item))
         );
     };
 
@@ -105,7 +113,7 @@ export function useSupabaseCollection<T>({
         let previous: T | undefined;
 
         setItems((prev) =>
-            prev.map((item: any) => {
+            prev.map((item) => {
                 if (item.id === id) {
                     previous = item;
                     return { ...item, ...updates };
@@ -118,7 +126,7 @@ export function useSupabaseCollection<T>({
 
         if (error && previous) {
             setItems((prev) =>
-                prev.map((item: any) => (item.id === id ? previous! : item))
+                prev.map((item) => (item.id === id ? previous! : item))
             );
             setError(error.message);
         }
