@@ -45,3 +45,4 @@ Schema changes are versioned migrations only — no dashboard edits, no bypassin
 - Run destructive Supabase operations without confirmation.
 - Introduce a new test runner or assume `npm run test` exists.
 - Run linting after every step, ask to run it at the end of work
+- Use Radix text components like <Text>
