@@ -44,11 +44,22 @@
     white-space: nowrap;
 }
 
+.tierActions {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    margin-top: 0.3em;
+}
+
 .links {
     display: flex;
     flex-direction: column;
     font-size: 0.9em;
     margin: 0.8em 0 0;
+}
+
+.newSong {
+    margin: 0.2em 0 0.6em;
 }
 
 .link {

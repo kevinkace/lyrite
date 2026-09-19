@@ -4,14 +4,16 @@ import { useEffect, useRef, useState } from "react";
 import Link  from "next/link";
 import { Button, Card, Flex, Separator } from "@radix-ui/themes";
 import { motion, AnimatePresence } from "framer-motion";
-import { FilePen, Settings, User, FilePlus } from "lucide-react";
+import { FilePen, Settings, User, FilePlus, ArrowRight } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
+import { useModal } from "@/contexts/ModalContext";
 
 import { userLinks } from "@/data/consts";
 
 import { Avatar } from "@/components/user/Avatar";
 import { TierBadge } from "@/components/layout/TierBadge";
+import { BasicButton } from "@/components/buttons/BasicButton";
 
 import css from "./UserMenu.module.css"
 
@@ -23,6 +25,7 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export default function UserMenu() {
     const { user, profile, signOut } = useAuth();
+    const { openModal } = useModal();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -73,7 +76,23 @@ export default function UserMenu() {
                                     <p className={css.username}>{user.user_metadata.preferred_username}</p>
                                     <p className={css.email}>{user.user_metadata.full_name}</p>
 
-                                    <TierBadge tier={profile.tier_name} />
+                                    <div className={css.tierActions}>
+                                        <TierBadge tier={profile.tier_name} />
+                                        <BasicButton
+                                            size="1"
+                                            variant="ghost"
+                                            onClick={() => {
+                                                setIsOpen(false);
+                                                openModal({
+                                                    type: "upgrade",
+                                                    title: "Plans",
+                                                });
+                                            }}
+                                        >
+                                            View Plans <ArrowRight />
+                                        </BasicButton>
+                                    </div>
+
                                 </div>
                             </Flex>
 
@@ -81,6 +100,14 @@ export default function UserMenu() {
 
                             <Flex gap="4" direction="column">
                                 <nav className={css.links}>
+
+                                    <Button asChild variant="surface" color="violet" radius="full" className={css.newSong}>
+                                        <Link href="/songs/new">
+                                            <FilePlus width="1em" height="auto" />
+                                            New song
+                                        </Link>
+                                    </Button>
+
                                     {userLinks.map(link =>
                                             <Link
                                                 key={link.href}
@@ -92,16 +119,6 @@ export default function UserMenu() {
                                             </Link>
                                         )}
                                 </nav>
-
-                                <Separator orientation="horizontal" size="4"/>
-
-
-                                <Button asChild={true} variant="surface" color="violet">
-                                    <Link href="/songs/new">
-                                        <FilePlus width="1em" height="auto" />
-                                        New song
-                                    </Link>
-                                </Button>
 
                                 <Separator orientation="horizontal" size="4"/>
 

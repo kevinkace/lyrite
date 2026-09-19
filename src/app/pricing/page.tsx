@@ -1,46 +1,13 @@
 import type { Metadata } from "next";
-import { Grid, Card } from "@radix-ui/themes";
-import clsx from "clsx";
+import { Flex } from "@radix-ui/themes";
 
 import Layout   from "@/components/layout/Layout";
 import Article from "@/components/layout/Article";
+import { TierInfo } from "@/components/tiers/TierInfo";
+
+import { pricingPlans } from "@/data/pricing";
 
 import css from "./Pricing.module.css";
-
-const pricing = [
-    {
-        level : "Free",
-        price : "0",
-        priceTime : "always",
-        feats : [
-            "10 Songs",
-            "2000 Characters per song",
-            "All formatting options"
-        ]
-    },
-    {
-        level : "Pro",
-        price : "5",
-        priceTime : "lifetime",
-        feats : [
-            "100 songs",
-            "5000 Characters per song*",
-            "All formatting options"
-        ],
-        tag : "Coming Soon!"
-    },
-    {
-        level : "Premium",
-        price : "10",
-        priceTime : "monthly",
-        feats : [
-            "1000 songs!",
-            "9999 Characters per song!",
-            "All formatting options"
-        ],
-        tag : "Coming Soon!"
-    }
-];
 
 export const metadata: Metadata = {
     title: "Lyrite features",
@@ -54,29 +21,11 @@ export default function PricingPage() {
             <p>Lyrite is a simple tool to format and organize your lyrics, and to help you sing better, faster, and more confidently.</p>
             <p>Lyrite will ALWAYS be free to use, but you can support the site and get additional features by signing up to a paid plan.</p>
 
-            <Grid columns="3" gap="6" justify="center" className={css.pricingCards}>
-                {pricing.map(({ level, price, priceTime, feats, tag }) => {
-                    return (
-                        <Card key={level} className={clsx(css[`card-${level}`], css.card)}>
-                            <h3>{level}</h3>
-                            <p className={css.price}>
-                                <strong>
-                                    <span className={css.currency}>$</span>
-                                    {price}
-                                </strong>
-                                <span className={css.priceTime}>{priceTime}</span>
-                            </p>
-
-                            <hr/>
-
-                            <ul>
-                                {feats.map((feat, idx)=> (<li key={level + idx}>{feat}</li>))}
-                            </ul>
-                            {tag && (<p className={css.tag}>{tag}</p>)}
-                        </Card>
-                    );
+            <Flex columns="3" gap="6" justify="center" className={css.pricingCards}>
+                {pricingPlans.map(({ tier }) => {
+                    return <TierInfo key={tier} tier={tier} />;
                 })}
-            </Grid>
+            </Flex>
         </Article>
     </Layout>;
 }

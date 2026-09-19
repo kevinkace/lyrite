@@ -1,4 +1,5 @@
 
 .tierBadge {
     padding: 0.2em 0.8em;
+    text-transform: uppercase;
 }
