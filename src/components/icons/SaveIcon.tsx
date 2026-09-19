@@ -28,10 +28,10 @@
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            aria-hidden="true"
+            aria-label={state}
+            role="img"
             className={css.saveIcon}
             data-state={state}
-            title={state}
             onAnimationEnd={() => {
                 if (state === "saved") onSavedAnimationEnd?.();
             }}
@@ -52,7 +52,7 @@
             </g>
             )}
 
-        {(state === "default" || state === "saved") && (
+        {state === "saved" && (
             <path
                 className={css.badge}
                 d="M35 14l3.5 3.5L45 9"
