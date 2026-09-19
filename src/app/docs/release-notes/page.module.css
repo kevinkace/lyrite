@@ -45,4 +45,6 @@
 
 .changeDescription {
     font-size: 0.9em;
+    margin-top:0.4em;
+    line-height: 1.2;
 }

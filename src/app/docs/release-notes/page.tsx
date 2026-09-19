@@ -1,5 +1,4 @@
-import Layout from "@/components/layout/Layout";
-import { Card, Flex, Badge, Heading, Text } from "@radix-ui/themes";
+import { Card, Flex, Badge, Heading } from "@radix-ui/themes";
 import type { Metadata } from "next";
 
 import { releases, type ChangeType } from "@/data/releases";
@@ -33,6 +32,16 @@ const getChangeLabel = (type: ChangeType) => {
     }
 };
 
+const formatReleaseDate = (date: string) => {
+    const [year, month, day] = date.split("-").map(Number);
+
+    return new Date(year, month - 1, day).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    });
+};
+
 export default function ReleaseNotesPage() {
     return (
             <div className={css.container}>
@@ -47,11 +56,7 @@ export default function ReleaseNotesPage() {
                                         v{release.version} - {release.title}
                                     </h2>
                                     <time dateTime={release.date} className={css.date}>
-                                        {new Date(release.date).toLocaleDateString("en-US", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric"
-                                        })}
+                                        {formatReleaseDate(release.date)}
                                     </time>
                                 </Flex>
 

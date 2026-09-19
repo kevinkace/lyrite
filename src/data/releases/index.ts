@@ -15,6 +15,26 @@ export type Release = {
 
 export const releases: Release[] = [
     {
+        version: "2.4.2",
+        date: "2026-09-19",
+        title: "Tier cleanup",
+        changes: [
+            {
+                type: "fix",
+                title: "Hide upgrade prompt when already Premium",
+            },
+            {
+                type : "improvement",
+                title : "Hide announce banner by default",
+                description: "This prevent flash of banner after previously closing. Added a button to profile to reset banner state."
+            },
+            {
+                type: "fix",
+                title: "Release note day was off by one",
+            },
+        ]
+    },
+    {
         version: "2.4.1",
         date: "2026-09-18",
         title: "Handle tier limitations",
