@@ -15,6 +15,17 @@ export type Release = {
 
 export const releases: Release[] = [
     {
+        version: "2.4.0",
+        date: "2026-09-18",
+        title: "Handle tier limitations",
+        changes: [
+            {
+                type: "improvement",
+                title: "See upgrade options when trying to create more song's that tier allows",
+            }
+        ]
+    },
+    {
         version: "2.2.0",
         date: "2026-09-16",
         title: "User tiers and Support",
