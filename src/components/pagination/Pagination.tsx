@@ -44,8 +44,8 @@ export default function Pagination({
                 Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
                     <Button
                         key={p}
-                        variant={"soft"}
-                        color={p === currentPage ? "" : "gray"}
+                        variant="soft"
+                        color={p === currentPage ? undefined : "gray"}
                         onClick={() => goToPage(p)}
                     >
                         {p}
