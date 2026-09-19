@@ -13,6 +13,8 @@ type UseSupabaseCollectionOptions<T> = {
     search?: string;
     initialData?: T[];
     searchColumn?: string;
+    orderBy?: string;
+    orderAscending?: boolean;
 };
 
 export function useSupabaseCollection<T>({
@@ -24,6 +26,8 @@ export function useSupabaseCollection<T>({
     search,
     initialData = [],
     searchColumn = "title",
+    orderBy,
+    orderAscending = true,
 }: UseSupabaseCollectionOptions<T>) {
     const [ items, setItems ]     = useState<T[]>(initialData);
     const [ loading, setLoading ] = useState(false);
@@ -58,6 +62,10 @@ export function useSupabaseCollection<T>({
                 }
             }
 
+            if (orderBy) {
+                dataQuery = dataQuery.order(orderBy, { ascending: orderAscending });
+            }
+
             const [{ data, error }, { count, error: countError }] = await Promise.all([
                 dataQuery,
                 countQuery
@@ -76,7 +84,7 @@ export function useSupabaseCollection<T>({
         };
 
         fetchData();
-    }, [table, userId, ids, page, search, pageSize, initialData.length, searchColumn]);
+    }, [table, userId, ids, page, search, pageSize, initialData.length, searchColumn, orderBy, orderAscending]);
 
     const deleteItem = async (id: string) => {
         const { error } = await supabase.from(table).delete().eq("id", id);
