@@ -15,6 +15,17 @@ export type Release = {
 
 export const releases: Release[] = [
     {
+        version: "2.4.4",
+        date: "2026-09-19",
+        title: "Table items count",
+        changes: [
+            {
+                type: "fix",
+                title: "Add next item when deleting an item from a table",
+            },
+        ]
+    },
+    {
         version: "2.4.3",
         date: "2026-09-19",
         title: "Table size and pagination",
