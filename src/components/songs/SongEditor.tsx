@@ -49,7 +49,7 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
         onSave?.();
 
         try {
-            if (song) {
+            if (!isNew && song) {
                 await updateSong(formData);
 
                 return;
