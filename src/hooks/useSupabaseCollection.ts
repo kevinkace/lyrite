@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase/client";
 
 type UseSupabaseCollectionOptions<T> = {
@@ -36,70 +36,70 @@ export function useSupabaseCollection<T extends { id: string }>({
     const [ pages, setPages ]     = useState<number>(1);
     const [ total, setTotal ]     = useState<number>(0);
 
+    const fetchData = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+
+        const currentPage = Math.max(page, 1);
+
+        let dataQuery = supabase.from(table).select("*");
+        let countQuery = supabase.from(table).select("*", { count: "exact", head: true });
+
+        if (ids && ids.length > 0) {
+            dataQuery = dataQuery.in("id", ids);
+            countQuery = countQuery.in("id", ids);
+        } else if (userId) {
+            dataQuery = dataQuery
+                .eq("user_id", userId);
+
+            countQuery = countQuery.eq("user_id", userId);
+        }
+
+        if (search && searchColumn) {
+            dataQuery = dataQuery.ilike(searchColumn, `%${search}%`);
+            countQuery = countQuery.ilike(searchColumn, `%${search}%`);
+        }
+
+        if (!ids || ids.length === 0) {
+            dataQuery = dataQuery.range(
+                (currentPage - 1) * pageSize,
+                currentPage * pageSize - 1
+            );
+        }
+
+        if (orderBy) {
+            dataQuery = dataQuery.order(orderBy, { ascending: orderAscending });
+        }
+
+        const [{ data, error }, { count, error: countError }] = await Promise.all([
+            dataQuery,
+            countQuery
+        ]);
+
+        if (error || countError) {
+            setError(error?.message || countError?.message || "An error occurred");
+        } else {
+            setItems(data || []);
+            setTotal(count || 0);
+            setHasMore(!ids && (data?.length ?? 0) === pageSize);
+            setPages(ids ? 1 : Math.ceil((count || 0) / pageSize));
+        }
+
+        setLoading(false);
+    }, [ids, orderAscending, orderBy, page, pageSize, search, searchColumn, table, userId]);
+
     useEffect(() => {
         if (initialData.length > 0) return;
 
-        const fetchData = async () => {
-            setLoading(true);
-            setError(null);
-
-            const currentPage = Math.max(page, 1);
-
-            let dataQuery = supabase.from(table).select("*");
-            let countQuery = supabase.from(table).select("*", { count: "exact", head: true });
-
-            if (ids && ids.length > 0) {
-                dataQuery = dataQuery.in("id", ids);
-                countQuery = countQuery.in("id", ids);
-            } else if (userId) {
-                dataQuery = dataQuery
-                    .eq("user_id", userId);
-
-                countQuery = countQuery.eq("user_id", userId);
-            }
-
-            if (search && searchColumn) {
-                dataQuery = dataQuery.ilike(searchColumn, `%${search}%`);
-                countQuery = countQuery.ilike(searchColumn, `%${search}%`);
-            }
-
-            if (!ids || ids.length === 0) {
-                dataQuery = dataQuery.range(
-                    (currentPage - 1) * pageSize,
-                    currentPage * pageSize - 1
-                );
-            }
-
-            if (orderBy) {
-                dataQuery = dataQuery.order(orderBy, { ascending: orderAscending });
-            }
-
-            const [{ data, error }, { count, error: countError }] = await Promise.all([
-                dataQuery,
-                countQuery
-            ]);
-
-            if (error || countError) {
-                setError(error?.message || countError?.message || "An error occurred");
-            } else {
-                setItems(data || []);
-                setTotal(count || 0);
-                setHasMore(!ids && (data?.length ?? 0) === pageSize);
-                setPages(ids ? 1 : Math.ceil((count || 0) / pageSize));
-            }
-
-            setLoading(false);
-        };
-
         fetchData();
-    }, [table, userId, ids, page, search, pageSize, initialData.length, searchColumn, orderBy, orderAscending]);
+    }, [fetchData, initialData.length]);
 
     const deleteItem = async (id: string) => {
         const { error } = await supabase.from(table).delete().eq("id", id);
         if (error) {
             setError(error.message);
         } else {
-            setItems((prev) => prev.filter((item) => item.id !== id));
+            await fetchData();
         }
     };
 

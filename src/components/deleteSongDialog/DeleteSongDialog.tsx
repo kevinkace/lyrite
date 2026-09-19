@@ -31,7 +31,7 @@ export default function DeleteSongDialog({
             <Dialog.Content >
                 <Dialog.Title>Delete song?</Dialog.Title>
                 <Dialog.Description>
-                    Are you sure you want to delete your song? This action cannot be undone.
+                    Are you sure you want to delete your song? This action cannot be undone.<br/>
 
                     <span className={css.songTitlePrompt}>
                         Delete: {" "}
