@@ -1,0 +1,20 @@
+.basicButton {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0;
+    border: 0;
+    font:inherit;
+    cursor: pointer;
+    background: none;
+    opacity: 0.6;
+
+    font-size: 0.7em;
+
+    transition: opacity 200ms;
+
+    &:hover {
+        opacity: 1;
+        text-decoration: underline;
+    }
+}
