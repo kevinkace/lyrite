@@ -87,7 +87,7 @@ export default function UserMenu() {
                                                 });
                                             }}
                                         >
-                                            View Plans <ArrowRight />
+                                            {profile.tier_name !== "premium" && <>View Plans <ArrowRight /></>}
                                         </BasicButton>
                                     </div>
 
