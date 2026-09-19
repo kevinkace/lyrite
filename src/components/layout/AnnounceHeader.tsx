@@ -6,31 +6,30 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button, Flex } from "@radix-ui/themes";
 
+import { ANNOUNCEMENT_STORAGE_KEY } from "@/data/announcement";
+
 import css from "./AnnounceHeader.module.css"
 
-const STORAGE_KEY = "announce-v2-closed";
 const PAGE_PATH = "/docs/announcing-lyrite-v2";
 
 export default function AnnounceHeader() {
     const pathname = usePathname();
-    const [open, setOpen] = useState(pathname !== PAGE_PATH);
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         try {
-            const saved = localStorage.getItem(STORAGE_KEY);
+            const saved = localStorage.getItem(ANNOUNCEMENT_STORAGE_KEY);
 
-            if (saved === "1") {
-                setOpen(false);
-            }
-        } catch (e) {
+            setOpen(saved === null && pathname !== PAGE_PATH);
+        } catch {
             // ignore (SSR safety)
         }
-    }, []);
+    }, [pathname]);
 
     function handleClose() {
         try {
-            localStorage.setItem(STORAGE_KEY, "1");
-        } catch (e) {
+            localStorage.setItem(ANNOUNCEMENT_STORAGE_KEY, "1");
+        } catch {
             // ignore
         }
         setOpen(false);

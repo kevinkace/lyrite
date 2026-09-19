@@ -1,8 +1,9 @@
 import { Flex } from "@radix-ui/themes";
 
-import { AuthData } from "@/components/profile/AuthData";
-import { AuthDebug } from "@/components/profile/AuthDebug";
-import { Pii } from "@/components/profile/Pii";
+import { AuthData }            from "@/components/profile/AuthData";
+import { AuthDebug }           from "@/components/profile/AuthDebug";
+import { Pii }                 from "@/components/profile/Pii";
+import { ClearAnnounceButton } from "@/components/profile/ClearAnnounceButton";
 
 export default function SettingsPage() {
 
@@ -14,6 +15,9 @@ export default function SettingsPage() {
             <Pii />
 
             <AuthDebug />
+
+            <ClearAnnounceButton />
+
         </Flex>
     );
 }
