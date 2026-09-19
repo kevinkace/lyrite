@@ -12,7 +12,12 @@ import css from "./Upgrade.module.css";
 
 export default function Upgrade({ closeModal }: { closeModal: () => void; }) {
     const { profile } = useAuth();
-    const nextPlan = getNextTier(profile?.tier_name);
+
+    if (!profile) {
+        return null;
+    }
+
+    const nextPlan = getNextTier(profile.tier_name);
 
     return (
         <Flex direction="column" gap="3">

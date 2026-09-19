@@ -28,7 +28,7 @@ export const pricingPlans: PricingPlan[] = [
         priceTime : "lifetime",
         feats : [
             "100 songs",
-            "5000 Characters per song*",
+            "5000 Characters per song",
             "All formatting options"
         ],
         tag : "Coming Soon!"
@@ -47,12 +47,23 @@ export const pricingPlans: PricingPlan[] = [
     }
 ];
 
-export const pricingPlanFromTier = (_tier) => {
-    return pricingPlans.find(({ tier }) => (tier === _tier));
+export const songCountLimitForTier = (tier: UserTierName): number => {
+    switch (tier) {
+        case "pro":
+            return 100;
+        case "premium":
+            return 1000;
+        default:
+            return 10;
+    }
+};
+
+export const pricingPlanFromTier = (_tier : UserTierName) : PricingPlan => {
+    return pricingPlans.find(({ tier }) => (tier === _tier))!;
 }
 
-export const getNextTier = (tier) => {
+export const getNextTier = (tier : UserTierName) : PricingPlan => {
     return pricingPlans.find((pp, idx) => {
         return pricingPlans[idx - 1]?.tier === tier;
-    });
+    })!;
 }

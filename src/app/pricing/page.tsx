@@ -21,7 +21,7 @@ export default function PricingPage() {
             <p>Lyrite is a simple tool to format and organize your lyrics, and to help you sing better, faster, and more confidently.</p>
             <p>Lyrite will ALWAYS be free to use, but you can support the site and get additional features by signing up to a paid plan.</p>
 
-            <Flex columns="3" gap="6" justify="center" className={css.pricingCards}>
+            <Flex gap="6" justify="center" className={css.pricingCards}>
                 {pricingPlans.map(({ tier }) => {
                     return <TierInfo key={tier} tier={tier} />;
                 })}

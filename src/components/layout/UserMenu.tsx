@@ -79,8 +79,6 @@ export default function UserMenu() {
                                     <div className={css.tierActions}>
                                         <TierBadge tier={profile.tier_name} />
                                         <BasicButton
-                                            size="1"
-                                            variant="ghost"
                                             onClick={() => {
                                                 setIsOpen(false);
                                                 openModal({

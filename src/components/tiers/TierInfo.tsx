@@ -2,11 +2,13 @@
 import { Card } from "@radix-ui/themes";
 import clsx from "clsx";
 
+import type { UserTierName } from "@/types";
+
 import { pricingPlanFromTier } from "@/data/pricing";
 
 import css from "./TierInfo.module.css";
 
-export const TierInfo = ({tier}) => {
+export const TierInfo = ({tier} : { tier : UserTierName}) => {
     const { level, price, priceTime, tag, feats } = pricingPlanFromTier(tier);
 
     return (
