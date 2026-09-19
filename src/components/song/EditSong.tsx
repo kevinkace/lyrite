@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Card, IconButton } from "@radix-ui/themes";
-import { ChevronDown, SlidersHorizontal, Save } from "lucide-react";
+import { Button, Card } from "@radix-ui/themes";
+import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 
@@ -13,6 +13,7 @@ import { useEditing } from "@/contexts/EditingContext";
 import { getfontFamilyCSS } from "@/lib/fonts";
 
 import Toolbar from "@/components/song/Toolbar";
+import {SaveIcon } from "@/components/icons/SaveIcon";
 
 import css from "./EditSong.module.css";
 
@@ -22,7 +23,24 @@ export default function EditSong() {
     const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
 
     const [ showTools, setShowTools ]     = useState(false);
-    const [ showLoading, setShowLoading ] = useState(false);
+    const [ saveStatus, setSaveStatus ] = useState<"idle" | "saving" | "saved">("idle");
+
+    useEffect(() => {
+        if (!dirty || !song) return;
+
+        const timeout = setTimeout(async () => {
+            setSaveStatus("saving");
+
+            try {
+                await saveSong();
+                setSaveStatus("saved");
+            } catch {
+                setSaveStatus("idle");
+            }
+        }, 800);
+
+        return () => clearTimeout(timeout);
+    }, [dirty, saveSong, song]);
 
     useEffect(() => {
         if (loading) {
@@ -43,44 +61,11 @@ export default function EditSong() {
         </>);
 
         setHeaderUserContent(<>
-            <IconButton
-                variant="ghost"
-                size="2"
-                radius="full"
-                className={clsx(
-                    css.save,
-                    {
-                        [css.loadingSave]: showLoading,
-                        [css.saveClean]: !dirty
-                    }
-                )}
-                disabled={showLoading}
-                onClick={() => {
-                    if (!dirty) return;
-
-                    saveSong();
-
-                    setShowLoading(true);
-                    setTimeout(() => setShowLoading(false), 1000);
-                }}
-            >
-                <Save />
-
-                {dirty && !showLoading ?
-                    (<motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.25 }}
-                    >
-                        <div className={css.unsavedChangesIndicator}>
-                            *
-                        </div>
-                    </motion.div>) :
-                null}
-            </IconButton>
-
-            {/* unsaved changes indicator */}
+            <SaveIcon
+                dirty={dirty}
+                saveStatus={saveStatus}
+                onSavedAnimationEnd={() => setSaveStatus("idle")}
+            />
 
             <Button variant="surface" size="2" radius="full" onClick={() => {
                 setSelectedColor(null);
@@ -98,7 +83,7 @@ export default function EditSong() {
             setHeaderContent(null);
             setHeaderUserContent(null);
         };
-    }, [setHeaderContent, song, loading, showTools, showLoading]);
+    }, [dirty, loading, saveStatus, selectedColor, setHeaderContent, setHeaderUserContent, setSelectedColor, song, startLoading, stopLoading, showTools]);
 
     if (loading) return <p>Loading…</p>;
     if (!song) return <p>Song not found</p>;

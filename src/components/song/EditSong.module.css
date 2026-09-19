@@ -39,18 +39,6 @@
     cursor: crosshair;
 }
 
-.save {
-    position: relative;
-
-    svg {
-        height: 1.3em;
-        stroke-width: 1.5px;
-    }
-}
-
-.saveClean {
-    filter: saturate(0);
-}
 
 .unsavedChangesIndicator {
     position: absolute;
@@ -82,7 +70,6 @@
         transform: rotate(360deg);
     }
 }
-
 
 
 

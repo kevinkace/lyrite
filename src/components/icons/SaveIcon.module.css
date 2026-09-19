@@ -1,0 +1,50 @@
+.saveIcon {
+    height: 2em;
+    transition: opacity 0.2s ease;
+}
+
+.saveIcon[data-state="unsaved"] {
+    opacity: 0.8;
+
+    :global(#asterisk) {
+        color: #e35f5f;
+    }
+}
+
+
+.saveIcon[data-state="saving"] {
+  opacity: 1;
+}
+
+/* one-shot: show check at full opacity, then settle to 80% */
+.saveIcon[data-state="saved"] {
+  animation: savedFadeOut 1.1s ease forwards;
+}
+
+
+@keyframes savedFadeOut {
+  0% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.circle {
+  transform-origin: 24px 24px;
+  stroke-dasharray: 80 46; /* arc + gap, tweak to taste */
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

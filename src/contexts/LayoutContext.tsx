@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useCallback, useContext, useState, ReactNode } from "react";
 
 type LayoutContextType = {
   headerContent: ReactNode;
@@ -23,9 +23,9 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
 
   const [loadingCount, setLoadingCount] = useState(0);
 
-  const startLoading = () => setLoadingCount((count) => count + 1);
-  const stopLoading = () => setLoadingCount((count) => Math.max(0, count - 1));
-  const stopLoadingAll = () => setLoadingCount(0);
+  const startLoading = useCallback(() => setLoadingCount((count) => count + 1), []);
+  const stopLoading = useCallback(() => setLoadingCount((count) => Math.max(0, count - 1)), []);
+  const stopLoadingAll = useCallback(() => setLoadingCount(0), []);
 
   const isLoading = loadingCount > 0;
 
