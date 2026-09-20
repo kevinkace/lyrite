@@ -16,10 +16,19 @@ export default async function UserSongsPage({ children, params, searchParams }: 
         10
     );
     const search = Array.isArray(sp?.search) ? sp?.search[0] : sp?.search || "";
+    const sortParam = Array.isArray(sp?.sort) ? sp?.sort[0] : sp?.sort;
+    const sort = sortParam === "none" ? "" : sortParam;
+    const direction = Array.isArray(sp?.direction) ? sp?.direction[0] : sp?.direction;
 
     return (
         <UserProvider userId={userId}>
-            <SongsProvider userId={userId} page={page} search={search}>
+            <SongsProvider
+                userId={userId}
+                page={page}
+                search={search}
+                sort={sort}
+                sortAscending={direction !== "desc"}
+            >
                 {children}
             </SongsProvider>
         </UserProvider>

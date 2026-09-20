@@ -24,6 +24,7 @@ import css from "./Table.module.css";
 type TableProps = {
     headers: TableHeader[];
     collection: AnySupabaseCollection;
+    defaultSort?: string;
     search?: string;
     page?: number;
     debug?: boolean;
@@ -37,7 +38,7 @@ const icons: Record<DisplayType, LucideIcon> = {
     grid: LayoutGrid,
 };
 
-export default function Table({ headers, collection, search = "", page, debug = false }: TableProps) {
+export default function Table({ headers, collection, defaultSort, search = "", page, debug = false }: TableProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -65,6 +66,25 @@ export default function Table({ headers, collection, search = "", page, debug = 
 
         router.push(`?${params.toString()}`);
     }, [ debouncedSearch, search, router, searchParams ]);
+
+    const handleSort = (key: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+        const currentSort = params.get("sort") || defaultSort;
+        const currentDirection = params.get("direction") === "asc" ? "asc" : "desc";
+
+        if (currentSort !== key) {
+            params.set("sort", key);
+            params.set("direction", "asc");
+        } else if (currentDirection === "asc") {
+            params.set("direction", "desc");
+        } else {
+            params.set("sort", "none");
+            params.delete("direction");
+        }
+
+        params.set("page", "1");
+        router.push(`?${params.toString()}`);
+    };
 
     return (
         <Flex gap="4" direction="column">
@@ -163,7 +183,20 @@ export default function Table({ headers, collection, search = "", page, debug = 
                                     key={header.key}
                                     align={header.align || "left"}
                                 >
-                                    {header.label}
+                                    {header.sortable ? (
+                                        <button
+                                            type="button"
+                                            className={css.sortButton}
+                                            onClick={() => handleSort(header.key)}
+                                        >
+                                            {header.label}
+                                            {(searchParams.get("sort") || defaultSort) === header.key && searchParams.get("sort") !== "none" && (
+                                                <span aria-label={`${searchParams.get("direction") === "asc" ? "ascending" : "descending"} sort`}>
+                                                    {searchParams.get("direction") === "asc" ? "↑" : "↓"}
+                                                </span>
+                                            )}
+                                        </button>
+                                    ) : header.label}
                                 </TableUI.ColumnHeaderCell>
                             ))}
                             { debug && <TableUI.ColumnHeaderCell align="left">DEBUG</TableUI.ColumnHeaderCell> }
@@ -179,7 +212,7 @@ export default function Table({ headers, collection, search = "", page, debug = 
 
                                 {headers.map((header) => (
                                     <TableUI.Cell key={header.key + item.id}>
-                                        <TableCell item={item} header={header} label={false} align="center" />
+                                        <TableCell item={item} header={header} label={false} />
                                     </TableUI.Cell>
                                 ))}
 

@@ -25,6 +25,8 @@ export function UsersProvider(props: UsersProviderProps) {
         search: props.search,
         searchColumn: "name", // e.g. search by name instead of title
         initialData: props.initialUsers,
+        orderBy: props.sort,
+        orderAscending: props.sortAscending,
     });
 
     return (

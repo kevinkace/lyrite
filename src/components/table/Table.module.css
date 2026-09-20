@@ -29,6 +29,22 @@
     text-transform: uppercase;
 }
 
+.sortButton {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.sortButton:hover {
+    text-decoration: underline;
+}
+
 .displayTypeToggle {
     svg {
         height: 1.4em;
