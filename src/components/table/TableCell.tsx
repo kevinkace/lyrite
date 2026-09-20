@@ -22,6 +22,12 @@ export default function TableCell({
     let content = (item as any)[header.key];
 
     const key = header.key + item.id;
+    const align = header.align || "left";
+    const alignClass = {
+        left: css.alignLeft,
+        center: css.alignCenter,
+        right: css.alignRight
+    }[align];
 
     if (header.key === "lyrics" && content.length > MAX_LYRIC_LEN) {
         content = content.slice(0, MAX_LYRIC_LEN) + "..."
@@ -54,7 +60,7 @@ export default function TableCell({
         }
 
         return (
-            <div key={key} align={header.align || "left"}>
+            <div key={key} className={alignClass}>
                 <SwitchEl />
             </div>
         );
@@ -62,7 +68,7 @@ export default function TableCell({
 
     if (header.actions) {
         return (
-            <div key={key} align={header.align || "left"}>
+            <div key={key} className={alignClass}>
                 {Object.entries(header.actions).map(([actionName, action]) => action(item, key))}
             </div>
         );
@@ -72,5 +78,5 @@ export default function TableCell({
         return <span key={key} className={css.cellId}>{content}</span>;
     }
 
-    return <div key={key} align={header.align || "left"}>{content}</div>;
+    return <div key={key} className={alignClass}>{content}</div>;
 }

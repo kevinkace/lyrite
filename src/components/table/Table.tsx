@@ -38,57 +38,65 @@ type SortDirection = "asc" | "desc";
 type SortState = {
     key: string | null;
     direction: SortDirection | null;
+    arrow: string | null;
 };
 
 const SORT_NONE = "none";
 
-const sortArrows = {
-    asc : "↑",
-    desc : "↓",
-    none : "x"
-};
-
-function getSortState(searchParams: URLSearchParams, defaultSort?: string): SortState {
-    const key = searchParams.get("sort");
-
-    if (key === SORT_NONE) {
-        return { key: null, direction: null, arrow : "x" };
-    }
-
-    const direction = searchParams.get("direction") === "asc" ? "asc" : "desc";
-
-    return {
-        key: key || defaultSort || null,
-        direction,
-        arrow : sortArrows[direction]
-
+class SortStateMachine {
+    private static readonly arrows: Record<SortDirection, string> = {
+        asc: "↑",
+        desc: "↓"
     };
-}
 
-function getNextSortState(
-    currentState: SortState,
-    key: string,
-    firstDirection : SortDirection = "asc"
-): SortState {
-    if (currentState.key !== key) {
-        return {
-            key,
-            direction: firstDirection,
-            arrow : sortArrows[firstDirection]
+    private static readonly noneState: SortState = {
+        key: null,
+        direction: null,
+        arrow: "x"
+    };
+
+    readonly state: SortState;
+
+    constructor(searchParams: URLSearchParams, defaultSort?: string) {
+        const key = searchParams.get("sort");
+
+        if (key === SORT_NONE) {
+            this.state = SortStateMachine.noneState;
+            return;
+        }
+
+        const direction = searchParams.get("direction") === "asc" ? "asc" : "desc";
+        const activeKey = key || defaultSort || null;
+
+        this.state = {
+            key: activeKey,
+            direction: activeKey ? direction : null,
+            arrow: activeKey ? SortStateMachine.arrows[direction] : null
         };
     }
 
-    if (currentState.direction === firstDirection) {
-        const direction = firstDirection === "asc" ? "desc" : "asc";
+    next(key: string, firstDirection: SortDirection = "asc"): SortState {
+        if (this.state.key !== key) {
+            return this.createState(key, firstDirection);
+        }
 
+        if (this.state.direction === firstDirection) {
+            return this.createState(
+                key,
+                firstDirection === "asc" ? "desc" : "asc"
+            );
+        }
+
+        return SortStateMachine.noneState;
+    }
+
+    private createState(key: string, direction: SortDirection): SortState {
         return {
             key,
             direction,
-            arrow : sortArrows[direction]
+            arrow: SortStateMachine.arrows[direction]
         };
     }
-
-    return { key: null, direction: null, arrow : "X" };
 }
 
 const icons: Record<DisplayType, LucideIcon> = {
@@ -99,7 +107,8 @@ const icons: Record<DisplayType, LucideIcon> = {
 export default function Table({ headers, collection, defaultSort, search = "", page, debug = false }: TableProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const sortState = getSortState(searchParams, defaultSort);
+    const sortMachine = new SortStateMachine(searchParams, defaultSort);
+    const sortState = sortMachine.state;
 
     const [searchValue, setSearchValue] = useState(search || "");
     const debouncedSearch = useDebounce(searchValue, 500);
@@ -130,11 +139,7 @@ export default function Table({ headers, collection, defaultSort, search = "", p
         const params = new URLSearchParams(searchParams.toString());
         const header = headers.find(({ key: headerKey }) => headerKey === key);
 
-        const nextState = getNextSortState(
-            sortState,
-            key,
-            header?.defaultSortDirection
-        );
+        const nextState = sortMachine.next(key, header?.defaultSortDirection);
 
         if (!nextState.key) {
             params.set("sort", SORT_NONE);
@@ -147,6 +152,11 @@ export default function Table({ headers, collection, defaultSort, search = "", p
         params.set("page", "1");
         router.push(`?${params.toString()}`);
     };
+
+    const getNextSortState = (header: TableHeader) => sortMachine.next(
+        header.key,
+        header.defaultSortDirection
+    );
 
     return (
         <Flex gap="4" direction="column">
@@ -252,13 +262,20 @@ export default function Table({ headers, collection, defaultSort, search = "", p
                                             onClick={() => handleSort(header.key)}
                                         >
                                             {header.label}
-                                            {sortState.key === header.key && (
-                                                <span aria-label={`${sortState.direction === "asc" ? "ascending" : "descending"} sort`}>
-                                                    {sortState.arrow}
-                                                    {/* show next arrow */}
-
+                                            <span className={css.sortWrapper}>
+                                                <span
+                                                    className={css.sortArrowCurrent}
+                                                    aria-label={sortState.key === header.key ? `${sortState.direction} sort` : undefined}
+                                                >
+                                                    {sortState.key === header.key ? sortState.arrow : null}
                                                 </span>
-                                            )}
+                                                <span
+                                                    className={css.sortArrowNext}
+                                                    aria-label={`next sort: ${getNextSortState(header).arrow}`}
+                                                >
+                                                    {getNextSortState(header).arrow}
+                                                </span>
+                                            </span>
                                         </button>
                                     ) : header.label}
                                 </TableUI.ColumnHeaderCell>
