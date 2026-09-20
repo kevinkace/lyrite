@@ -33,6 +33,64 @@ type TableProps = {
 const DISPLAY_TYPES = ["table", "grid"] as const;
 type DisplayType = typeof DISPLAY_TYPES[number];
 
+type SortDirection = "asc" | "desc";
+
+type SortState = {
+    key: string | null;
+    direction: SortDirection | null;
+};
+
+const SORT_NONE = "none";
+
+const sortArrows = {
+    asc : "↑",
+    desc : "↓",
+    none : "x"
+};
+
+function getSortState(searchParams: URLSearchParams, defaultSort?: string): SortState {
+    const key = searchParams.get("sort");
+
+    if (key === SORT_NONE) {
+        return { key: null, direction: null, arrow : "x" };
+    }
+
+    const direction = searchParams.get("direction") === "asc" ? "asc" : "desc";
+
+    return {
+        key: key || defaultSort || null,
+        direction,
+        arrow : sortArrows[direction]
+
+    };
+}
+
+function getNextSortState(
+    currentState: SortState,
+    key: string,
+    firstDirection : SortDirection = "asc"
+): SortState {
+    if (currentState.key !== key) {
+        return {
+            key,
+            direction: firstDirection,
+            arrow : sortArrows[firstDirection]
+        };
+    }
+
+    if (currentState.direction === firstDirection) {
+        const direction = firstDirection === "asc" ? "desc" : "asc";
+
+        return {
+            key,
+            direction,
+            arrow : sortArrows[direction]
+        };
+    }
+
+    return { key: null, direction: null, arrow : "X" };
+}
+
 const icons: Record<DisplayType, LucideIcon> = {
     table: Table2,
     grid: LayoutGrid,
@@ -41,6 +99,7 @@ const icons: Record<DisplayType, LucideIcon> = {
 export default function Table({ headers, collection, defaultSort, search = "", page, debug = false }: TableProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const sortState = getSortState(searchParams, defaultSort);
 
     const [searchValue, setSearchValue] = useState(search || "");
     const debouncedSearch = useDebounce(searchValue, 500);
@@ -69,21 +128,20 @@ export default function Table({ headers, collection, defaultSort, search = "", p
 
     const handleSort = (key: string) => {
         const params = new URLSearchParams(searchParams.toString());
-        const currentSort = params.get("sort");
-        const currentDirection = params.get("direction") === "asc" ? "asc" : "desc";
         const header = headers.find(({ key: headerKey }) => headerKey === key);
 
-        const defaultSortDirection = header?.defaultSortDirection || "asc";
-        const afterDefault = defaultSortDirection === "asc" ? "desc" : "asc";
+        const nextState = getNextSortState(
+            sortState,
+            key,
+            header?.defaultSortDirection
+        );
 
-        if (currentSort !== key) {
-            params.set("sort", key);
-            params.set("direction", defaultSortDirection);
-        } else if (currentDirection === defaultSortDirection) {
-            params.set("direction", afterDefault);
-        } else {
-            params.set("sort", "none");
+        if (!nextState.key) {
+            params.set("sort", SORT_NONE);
             params.delete("direction");
+        } else {
+            params.set("sort", nextState.key);
+            params.set("direction", nextState.direction!);
         }
 
         params.set("page", "1");
@@ -194,9 +252,11 @@ export default function Table({ headers, collection, defaultSort, search = "", p
                                             onClick={() => handleSort(header.key)}
                                         >
                                             {header.label}
-                                            {(searchParams.get("sort") || defaultSort) === header.key && searchParams.get("sort") !== "none" && (
-                                                <span aria-label={`${searchParams.get("direction") === "asc" ? "ascending" : "descending"} sort`}>
-                                                    {searchParams.get("direction") === "asc" ? "↑" : "↓"}
+                                            {sortState.key === header.key && (
+                                                <span aria-label={`${sortState.direction === "asc" ? "ascending" : "descending"} sort`}>
+                                                    {sortState.arrow}
+                                                    {/* show next arrow */}
+
                                                 </span>
                                             )}
                                         </button>
