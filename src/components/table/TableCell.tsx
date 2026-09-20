@@ -53,12 +53,16 @@ export default function TableCell({
             </Flex>);
         }
 
-        return <SwitchEl />;
+        return (
+            <div key={key} align={header.align || "left"}>
+                <SwitchEl />
+            </div>
+        );
     }
 
     if (header.actions) {
         return (
-            <div key={key}>
+            <div key={key} align={header.align || "left"}>
                 {Object.entries(header.actions).map(([actionName, action]) => action(item, key))}
             </div>
         );
@@ -68,5 +72,5 @@ export default function TableCell({
         return <span key={key} className={css.cellId}>{content}</span>;
     }
 
-    return content;
+    return <div key={key} align={header.align || "left"}>{content}</div>;
 }

@@ -161,7 +161,8 @@ export default function Table({ headers, collection, search = "", page, debug = 
                             {headers.map((header) => (
                                 <TableUI.ColumnHeaderCell
                                     key={header.key}
-                                    align={header.align || "left"}>
+                                    align={header.align || "left"}
+                                >
                                     {header.label}
                                 </TableUI.ColumnHeaderCell>
                             ))}
@@ -178,7 +179,7 @@ export default function Table({ headers, collection, search = "", page, debug = 
 
                                 {headers.map((header) => (
                                     <TableUI.Cell key={header.key + item.id}>
-                                        <TableCell item={item} header={header} label={false} />
+                                        <TableCell item={item} header={header} label={false} align="center" />
                                     </TableUI.Cell>
                                 ))}
 
