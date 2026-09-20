@@ -225,6 +225,7 @@ export type TableHeader = {
     label: string;
     key: string;
     sortable?: boolean;
+    defaultSortDirection?: "asc" | "desc";
     align?: "left" | "center" | "right";
     href?: (item: Song | Profile) => string;
     type?: "date" | "check" | "id";

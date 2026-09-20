@@ -69,14 +69,18 @@ export default function Table({ headers, collection, defaultSort, search = "", p
 
     const handleSort = (key: string) => {
         const params = new URLSearchParams(searchParams.toString());
-        const currentSort = params.get("sort") || defaultSort;
+        const currentSort = params.get("sort");
         const currentDirection = params.get("direction") === "asc" ? "asc" : "desc";
+        const header = headers.find(({ key: headerKey }) => headerKey === key);
+
+        const defaultSortDirection = header?.defaultSortDirection || "asc";
+        const afterDefault = defaultSortDirection === "asc" ? "desc" : "asc";
 
         if (currentSort !== key) {
             params.set("sort", key);
-            params.set("direction", "asc");
-        } else if (currentDirection === "asc") {
-            params.set("direction", "desc");
+            params.set("direction", defaultSortDirection);
+        } else if (currentDirection === defaultSortDirection) {
+            params.set("direction", afterDefault);
         } else {
             params.set("sort", "none");
             params.delete("direction");

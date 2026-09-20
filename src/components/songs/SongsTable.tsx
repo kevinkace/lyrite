@@ -42,14 +42,16 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
                             key   : "created_at",
                             type  : "date",
                             align : "center",
-                            sortable : true
+                            sortable : true,
+                            defaultSortDirection : "desc"
                         },
                         {
                             label : "Updated",
                             key   : "updated_at",
                             type  : "date",
                             align : "center",
-                            sortable : true
+                            sortable : true,
+                            defaultSortDirection : "desc"
                         },
                         ...(editControls ?
                             [
