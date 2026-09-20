@@ -17,6 +17,7 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
             <Suspense fallback={<div>Loading songs...</div>}>
                 <Table
                     collection={songsCollection}
+                    defaultSort="updated_at"
                     search={songsCollection.search || ""}
                     page={songsCollection.page}
                     headers={[
@@ -24,26 +25,33 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
                             label : "Title",
                             key   : "title",
                             href : (song) => `/songs/${song.id}`,
+                            sortable : true
                         },
                         {
                             label : "Artist",
                             key   : "artist",
+                            sortable : true
                         },
                         {
                             label : "Lyrics",
                             key   : "lyrics",
+                            sortable : true
                         },
                         {
                             label : "Created",
                             key   : "created_at",
                             type  : "date",
                             align : "center",
+                            sortable : true,
+                            defaultSortDirection : "desc"
                         },
                         {
                             label : "Updated",
                             key   : "updated_at",
                             type  : "date",
                             align : "center",
+                            sortable : true,
+                            defaultSortDirection : "desc"
                         },
                         ...(editControls ?
                             [

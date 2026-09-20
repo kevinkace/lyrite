@@ -52,6 +52,8 @@ export type UsersProviderProps = {
     children: ReactNode;
     page?: number;
     search?: string;
+    sort?: string;
+    sortAscending?: boolean;
     pageSize?: number;
     initialUsers?: Profile[];
 }
@@ -185,6 +187,8 @@ export type SongsProviderProps = {
     ids?: string[];
     page?: number;
     search?: string;
+    sort?: string;
+    sortAscending?: boolean;
     pageSize?: number;
     initialSongs?: Song[];
 };
@@ -220,6 +224,8 @@ export type RadixVariant = ButtonProps["variant"];
 export type TableHeader = {
     label: string;
     key: string;
+    sortable?: boolean;
+    defaultSortDirection?: "asc" | "desc";
     align?: "left" | "center" | "right";
     href?: (item: Song | Profile) => string;
     type?: "date" | "check" | "id";

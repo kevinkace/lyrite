@@ -29,6 +29,62 @@
     text-transform: uppercase;
 }
 
+.alignLeft {
+    text-align: left;
+}
+
+.alignCenter {
+    text-align: center;
+}
+
+.alignRight {
+    text-align: right;
+}
+
+.sortButton {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.sortButton:hover {
+    text-decoration: underline;
+}
+
+.sortWrapper {
+    display: block;
+    position: relative;
+    height: 1.3em;
+}
+
+.sortArrowCurrent,
+.sortArrowNext {
+    display: block;
+    min-width: 1ch;
+    transition: opacity 200ms;
+}
+
+.sortArrowNext {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.sortButton:hover .sortArrowCurrent {
+    opacity: 0;
+}
+
+.sortButton:hover .sortArrowNext {
+    opacity: 1;
+}
+
 .displayTypeToggle {
     svg {
         height: 1.4em;

@@ -28,8 +28,8 @@ export function SongsProvider(props: SongsProviderProps) {
         pageSize: props.pageSize,
         search: props.search,
         initialData: props.initialSongs,
-        orderBy: "updated_at",
-        orderAscending: false,
+        orderBy: props.sort === undefined ? "updated_at" : props.sort || undefined,
+        orderAscending: props.sort === undefined ? false : props.sortAscending,
     });
 
     return (

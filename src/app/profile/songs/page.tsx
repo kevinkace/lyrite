@@ -14,6 +14,9 @@ function ProfileSongsContent() {
 
     const page = parseInt(searchParams.get("page") ?? "1", 10);
     const search = searchParams.get("search") ?? "";
+    const sortParam = searchParams.get("sort");
+    const sort = sortParam === "none" ? "" : sortParam ?? undefined;
+    const direction = searchParams.get("direction");
 
     if (!user) return <div>Please log in to view your songs.</div>;
 
@@ -22,6 +25,8 @@ function ProfileSongsContent() {
             userId={user.id}
             page={page}
             search={search}
+            sort={sort}
+            sortAscending={direction !== "desc"}
             pageSize={pageSize}
         >
             <SongsTable editControls />
