@@ -60,13 +60,14 @@
 .sortWrapper {
     display: block;
     position: relative;
-    height: 01.4em;
+    height: 1.3em;
 }
 
 .sortArrowCurrent,
 .sortArrowNext {
     display: block;
     min-width: 1ch;
+    transition: opacity 200ms;
 }
 
 .sortArrowNext {

@@ -11,7 +11,7 @@ import {
     SegmentedControl
 } from "@radix-ui/themes";
 
-import { Table2, LayoutGrid, Search } from "lucide-react";
+import { Table2, LayoutGrid, Search, ArrowDown, ArrowUp, X } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import Pagination from "@/components/pagination/Pagination";
@@ -38,21 +38,21 @@ type SortDirection = "asc" | "desc";
 type SortState = {
     key: string | null;
     direction: SortDirection | null;
-    arrow: string | null;
+    arrow: LucideIcon | null;
 };
 
 const SORT_NONE = "none";
 
 class SortStateMachine {
-    private static readonly arrows: Record<SortDirection, string> = {
-        asc: "↑",
-        desc: "↓"
+    private static readonly arrows: Record<SortDirection, LucideIcon> = {
+        asc: ArrowUp,
+        desc: ArrowDown
     };
 
     private static readonly noneState: SortState = {
         key: null,
         direction: null,
-        arrow: "x"
+        arrow: X
     };
 
     readonly state: SortState;
@@ -267,13 +267,21 @@ export default function Table({ headers, collection, defaultSort, search = "", p
                                                     className={css.sortArrowCurrent}
                                                     aria-label={sortState.key === header.key ? `${sortState.direction} sort` : undefined}
                                                 >
-                                                    {sortState.key === header.key ? sortState.arrow : null}
+                                                    {(() => {
+                                                        const CurrentArrow = sortState.key === header.key
+                                                            ? sortState.arrow
+                                                            : null;
+                                                        return CurrentArrow && <CurrentArrow />;
+                                                    })()}
                                                 </span>
                                                 <span
                                                     className={css.sortArrowNext}
-                                                    aria-label={`next sort: ${getNextSortState(header).arrow}`}
+                                                    aria-label="next sort"
                                                 >
-                                                    {getNextSortState(header).arrow}
+                                                    {(() => {
+                                                        const NextArrow = getNextSortState(header).arrow;
+                                                        return NextArrow && <NextArrow />;
+                                                    })()}
                                                 </span>
                                             </span>
                                         </button>
