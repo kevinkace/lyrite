@@ -15,6 +15,17 @@ export type Release = {
 
 export const releases: Release[] = [
     {
+        version: "2.5.1",
+        date: "2026-09-21",
+        title: "Security Updates",
+        changes: [
+            {
+                type: "improvement",
+                title: "RLS access rules and tests"
+            },
+        ]
+    },
+    {
         version: "2.5.0",
         date: "2026-09-20",
         title: "Table column sort",

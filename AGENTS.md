@@ -9,13 +9,14 @@ npm run dev              # dev server
 npm run build            # production build
 npm run lint             # lint
 npx tsc --noEmit         # type-check
+npm run test:rls         # Vitest database/RLS tests (requires Supabase env vars)
 npm run test:e2e         # Playwright end-to-end tests
 npm run test:e2e:ui      # Playwright UI mode
 npm run test:e2e:debug   # Playwright debug mode
 ```
-There is no `npm run test` — E2E via Playwright (`test:e2e*`) is the only test suite.
+There is no `npm run test`. Vitest (`test:rls`) covers database/RLS behavior, and Playwright (`test:e2e*`) covers browser behavior.
 
-**Before finishing any task:** run `npm run lint` and `npx tsc --noEmit`. Run `npm run test:e2e` for changes touching auth, songs, or tier logic.
+**Before finishing any task:** run `npm run lint` and `npx tsc --noEmit`. Run `npm run test:rls` for database/RLS changes and `npm run test:e2e` for changes touching auth, songs, or tier logic.
 
 ## Conventions
 - Server Components by default; add `"use client"` only when you need state, effects, or browser APIs.
@@ -43,6 +44,5 @@ Schema changes are versioned migrations only — no dashboard edits, no bypassin
 - Disable RLS to work around a bug — fix the policy or query.
 - Hardcode API keys, credentials, or tokens.
 - Run destructive Supabase operations without confirmation.
-- Introduce a new test runner or assume `npm run test` exists.
 - Run linting after every step, ask to run it at the end of work
 - Use Radix text components like <Text>
