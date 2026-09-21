@@ -19,7 +19,7 @@ export function UsersProvider(props: UsersProviderProps) {
         total,
         deleteItem: deleteUser,
     } = useSupabaseCollection<Profile>({
-        table: "profiles",
+        table: "public_profiles",
         page: props.page,
         pageSize: props.pageSize,
         search: props.search,
