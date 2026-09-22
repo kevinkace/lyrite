@@ -100,6 +100,32 @@ describe("songs RLS", () => {
         expectRlsError(error);
     });
 
+    it("rejects an owner trying to mark a song as featured", async () => {
+        const row = songRow(owner.user.id);
+        const { error: insertError } = await owner.client.from("songs").insert(row);
+        expect(insertError).toBeNull();
+
+        try {
+            const { error: updateError } = await owner.client
+                .from("songs")
+                .update({ featured: true })
+                .eq("id", row.id);
+
+            expect(updateError?.message).toContain("Users cannot change song featured status");
+
+            const { data: unchangedSong, error: selectError } = await owner.client
+                .from("songs")
+                .select("featured")
+                .eq("id", row.id)
+                .single();
+
+            expect(selectError).toBeNull();
+            expect(unchangedSong?.featured).toBe(false);
+        } finally {
+            await supabaseAdmin.from("songs").delete().eq("id", row.id);
+        }
+    });
+
     it("rejects unauthenticated reads and writes", async () => {
         const anonClient = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL!,

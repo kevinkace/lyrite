@@ -1,20 +1,28 @@
+
+import { FilePen, Settings, User, List } from "lucide-react";
+
 import { RadixColor } from "@/types";
 
 export const userLinks = [
     {
         href: "/profile",
-        label: "profile",
-        icon: "profile"
+        label: "Profile",
+        icon: <User />
     },
     {
         href: "/profile/songs",
-        label: "my songs",
-        icon: "file"
+        label: "Songs",
+        icon: <FilePen />
     },
+    // {
+    //     href: "/profile/set-lists",
+    //     label : "Set Lists",
+    //     icon : <List />
+    // },
     {
         href: "/profile/settings",
-        label: "settings",
-        icon: "settings"
+        label: "Settings",
+        icon: <Settings />
     }
 ];
 

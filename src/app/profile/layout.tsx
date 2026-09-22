@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import Link from "next/link";
 import {
     Avatar,
     Box,
@@ -23,6 +22,7 @@ import { useAuth }   from "@/contexts/AuthContext";
 import { userLinks } from "@/data/consts";
 
 import Layout from "@/components/layout/Layout";
+import UserLinks from "@/components/layout/UserLinks";
 
 import css from "./layout.module.css";
 
@@ -82,17 +82,9 @@ export default function ProfileLayout({ children }: { children: React.ReactNode;
                         </Flex>
                     </Card>
 
-                    <nav className={css.nav}>
-                        {userLinks.map((link) => (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                className={link.href === currentPath ? css.navLinkActive : css.navLink}
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
-                    </nav>
+                    <div className={css.nav}>
+                        <UserLinks />
+                    </div>
                 </Box>
 
                 {/* Full-height separator */}
@@ -121,18 +113,9 @@ export default function ProfileLayout({ children }: { children: React.ReactNode;
                             transition={{ duration: 0.25 }}
                             className={css.mobileNav}
                         >
-                            {userLinks.map((link) => (
-                                <Link
-                                    key={link.href}
-                                    href={link.href}
-                                    className={link.href === currentPath ? css.navLinkActive : css.navLink}
-                                    onClick={() => {
-                                        setShowMobileNav(false);
-                                    }}
-                                >
-                                    {link.label}
-                                </Link>
-                            ))}
+                            <UserLinks
+                                onLinkClick={() => setShowMobileNav(false)}
+                            />
                         </motion.nav>}
 
                     </AnimatePresence>
