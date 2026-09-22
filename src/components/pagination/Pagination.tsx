@@ -40,7 +40,7 @@ export default function Pagination({
                 Prev
             </Button>
 
-            {totalPages &&
+            {totalPages ?
                 Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
                     <Button
                         key={p}
@@ -50,7 +50,8 @@ export default function Pagination({
                     >
                         {p}
                     </Button>
-                ))
+                )) :
+                null
             }
 
             {!totalPages && (currentPage)}
