@@ -37,6 +37,34 @@ test.describe('Existing Song Functionality', () => {
       await expect(page.locator('[data-testid="edit-song"]')).toBeVisible();
     });
 
+    test('should hide tools when logged-in user is not the owner', async ({ page }) => {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost:54321';
+      const projectId = supabaseUrl.match(/https?:\/\/([^.]+)/)?.[1] || 'localhost';
+
+      await page.addInitScript(({ projectId }) => {
+        const authKey = `sb-${projectId}-auth-token`;
+
+        localStorage.setItem(authKey, JSON.stringify({
+          access_token: 'mock-token',
+          token_type: 'bearer',
+          expires_in: 3600,
+          expires_at: Math.floor(Date.now() / 1000) + 3600,
+          refresh_token: 'mock-refresh-token',
+          user: { id: 'not-the-owner', email: 'test@example.com', aud: 'authenticated', role: 'authenticated' }
+        }));
+      }, { projectId });
+
+      await page.route('**/rest/v1/songs*', async route => {
+        await route.fulfill({
+          json: { ...mockExistingSong, user_id: 'owner-user-id' }
+        });
+      });
+
+      await page.goto('/songs/existing-song-id');
+
+      await expect(page.getByRole('button', { name: /tools/i })).toHaveCount(0);
+    });
+
     test('should handle invalid song ID', async ({ page }) => {
       // Mock 404 response for invalid song
       await page.route('**/rest/v1/songs*', async route => {

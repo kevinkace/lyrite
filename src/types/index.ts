@@ -102,6 +102,7 @@ export type Song = {
     lyrics: string;
     lyrics_parsed: LyricParsed[];
     style: SheetStyle;
+    featured: boolean;
     is_public: boolean;
     user_id: string;
     created_at: string;

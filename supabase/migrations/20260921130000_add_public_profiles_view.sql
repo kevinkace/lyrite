@@ -9,3 +9,4 @@ SELECT
 FROM public.profiles;
 
 GRANT SELECT ON public.public_profiles TO anon, authenticated;
+REVOKE INSERT, UPDATE, DELETE ON public.public_profiles FROM anon, authenticated;

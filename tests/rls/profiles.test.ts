@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { createClient } from "@supabase/supabase-js";
 
 import {
     createAuthedUser,
@@ -58,10 +59,10 @@ describe("profiles RLS", () => {
             .update({ username })
             .eq("id", otherUser.user.id);
 
-        expectRlsError(error);
+        expect(error).toBeNull();
 
         // verify data wasn't updated
-        const { data: profile, error: readError } = await owner.client
+        const { data: profile, error: readError } = await otherUser.client
             .from("profiles")
             .select("username")
             .eq("id", otherUser.user.id)
@@ -77,7 +78,7 @@ describe("profiles RLS", () => {
             .update({ tier_name: "premium" })
             .eq("id", owner.user.id);
 
-        expect(error).toBeNull();
+        expectRlsError(error);
 
         const { data, error: readError } = await owner.client
             .from("profiles")
@@ -87,5 +88,62 @@ describe("profiles RLS", () => {
 
         expect(readError).toBeNull();
         expect(data?.tier_name).toBe("free");
+    });
+});
+
+describe("public_profiles view", () => {
+    it("allows anonymous users to read only public profile fields", async () => {
+        const anonClient = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+            { auth: { persistSession: false } },
+        );
+
+        const { data, error } = await anonClient
+            .from("public_profiles")
+            .select("*")
+            .eq("id", otherUser.user.id)
+            .single();
+
+        expect(error).toBeNull();
+        expect(data).toEqual({
+            id: otherUser.user.id,
+            username: null,
+            full_name: null,
+            avatar_url: null,
+            website: null,
+            created_at: expect.any(String),
+        });
+        expect(data).not.toHaveProperty("tier_name");
+    });
+
+    it("allows authenticated users to read another user's public profile", async () => {
+        const { data, error } = await owner.client
+            .from("public_profiles")
+            .select("id, username, full_name, avatar_url, website, created_at")
+            .eq("id", otherUser.user.id)
+            .single();
+
+        expect(error).toBeNull();
+        expect(data?.id).toBe(otherUser.user.id);
+        expect(data).not.toHaveProperty("tier_name");
+    });
+
+    it("does not allow writes through the public profile view", async () => {
+        const { error } = await owner.client
+            .from("public_profiles")
+            .update({ full_name: "Should not update" })
+            .eq("id", otherUser.user.id);
+
+        expect(error).not.toBeNull();
+
+        const { data, error: readError } = await otherUser.client
+            .from("public_profiles")
+            .select("full_name")
+            .eq("id", otherUser.user.id)
+            .single();
+
+        expect(readError).toBeNull();
+        expect(data?.full_name).not.toBe("Should not update");
     });
 });

@@ -4,10 +4,10 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 
 import type { User, AuthError } from "@supabase/supabase-js";
 
-import { env }          from "@/lib/env";
-import { supabase }     from "@/lib/supabase/client";
-import { fetchProfile } from "@/lib/supabase/profile";
-import { useError }     from "@/contexts/ErrorContext";
+import { env }             from "@/lib/env";
+import { supabase }        from "@/lib/supabase/client";
+import { fetchOwnProfile } from "@/lib/supabase/profile";
+import { useError }        from "@/contexts/ErrorContext";
 
 import type { AuthContextType, Profile } from "@/types";
 
@@ -64,10 +64,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 setUser(session?.user ?? null);
 
                 if (session?.user) {
-                    const { data: profile, error: profileError } = await fetchProfile(session.user.id);
+                    const { data: profile, error: profileError } = await fetchOwnProfile(session.user.id);
 
                     if (profileError) {
-                        console.error("Error fetching profile:", profileError);
+                        if (profileError.code === "PGRST116") {
+                            await supabase.auth.signOut();
+                            setUser(null);
+                        } else {
+                            console.error("Error fetching profile:", profileError.message);
+                        }
                     } else {
                         setProfile(profile);
                     }
@@ -110,7 +115,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { error };
     };
 
-    const signInWithEmail = async (email: string): Promise<{ error: AuthError | null; data?: any }> => {
+    const signInWithEmail = async (email: string): Promise<{ error: AuthError | null; data?: unknown }> => {
         setLoading(true);
 
         const { data, error } = await supabase.auth.signInWithOtp({

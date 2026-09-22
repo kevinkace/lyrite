@@ -50,134 +50,163 @@ WHERE id = 'ace29b57-c6e4-4d32-abc5-b97a2c96fbb5';
 -- file and pass user_id explicitly in the INSERT rows.
 ALTER TABLE public.songs DISABLE TRIGGER on_song_insert;
 
-INSERT INTO public.songs (id, title, artist, is_public, user_id, created_at, updated_at, slug, lyrics)
+INSERT INTO public.songs (id, title, artist, is_public, featured, user_id, created_at, updated_at, slug, lyrics, lyrics_parsed, style)
 VALUES
 (
   'e88ed752-4d37-4cf8-9862-d77c4c23668a',
-  'Fall In',
-  'Not Alive',
+  'Amazing Grace',
+  'John Newton',
+  true,
   true,
   'ace29b57-c6e4-4d32-abc5-b97a2c96fbb5',
   now(),
   now(),
-  'fall-in',
-  $$Monday comes and I can't be fucked
-give me another chance and I'll do it again
-Or maybe I can't or maybe I won't
-Thank god for the holes in my boat
+  'amazing-grace',
+  $$Amazing grace! how sweet the sound,
+  That saved a wretch; like me!
+I once was lost, but now am found,
+  Was blind, but now I see.
 
-(pre-chorus)
-sinking
-or bailing
-it won't help
+’Twas grace that taught my heart to fear,
+  And grace my fears relieved;
+How precious did that grace appear
+  The hour I first believed!
 
-(chorus)
-The water bites at my feet
-inching higher up my legs
-feeling the pull
-dive down you can't fight it
+The Lord hath promised good to me,
+  His word my hope secures;
+He will my shield and portion be
+  As long as life endures.
 
-(verse 2)
-weightless with a 1000 lbs of water above me
-infinite sinking swelling swaying
-colder through my veins
-but I'm leaving myself behind to become one
-
-(pre-chorus)
-sinking
-or bailing
-it won't help
-
-(chorus)
-The water bites at my feet
-inching higher up my legs
-feeling the pull
-dive down you can't fight it
-
-(outro)
-but the bottom$$
+When we’ve been there ten thousand years,
+  Bright shining as the sun,
+We’ve no less days to sing God’s praise
+  Than when we first begun.$$,
+  $json$
+  [
+    {"id": 0, "text": "Amazing grace! how sweet the sound,\n  That saved a wretch; like me!\nI once was lost, but now am found,\n  Was blind, but now I see.", "style": {"color": 3}},
+    {"id": 1, "text": "’Twas grace that taught my heart to fear,\n  And grace my fears relieved;\nHow precious did that grace appear\n  The hour I first believed!", "style": {"color": 5}},
+    {"id": 2, "text": "The Lord hath promised good to me,\n  His word my hope secures;\nHe will my shield and portion be\n  As long as life endures.", "style": {"color": 4}},
+    {"id": 3, "text": "When we’ve been there ten thousand years,\n  Bright shining as the sun,\nWe’ve no less days to sing God’s praise\n  Than when we first begun.", "style": {"color": 2}}
+  ]
+  $json$::jsonb,
+  '{"columns": 2, "fontSize": 30, "fontFamily": "Georgia"}'::jsonb
 ),
 (
   '1a3cde9f-97a9-4866-80e4-d94f8651a1ce',
-  'Am I',
-  'Not Alive',
+  'Singin'' in the Rain',
+  'Nacio Herb Brown',
+  true,
   true,
   'ace29b57-c6e4-4d32-abc5-b97a2c96fbb5',
   now(),
   now(),
-  'am-i',
-  $$Here we go again
-Down the path, down down down
-Is this better that a machine could do?
-Am I just a machine that can do better?
+  'singin''-in-the-rain',
+  $$I'm singin' in the rain,
+Just singin' in the rain,
+What a glorious feeling,
+I'm happy again!
+I'm laughing at clouds
+So dark up above,
+The sun's in my heart and I'm ready for love!
+Let the stormy clouds chase
+Everyone from the place,
+Come on with your rain,
+I've got a smile on my face!
+I'll walk down the lane
+With a happy refrain,
+Just singin', singin' in the rain!
 
-(pre-chorus)
-oh no oh no
-no no no
-yes yes yes
+Why am I smiling and why do I sing?
+Why does December seem sunny as Spring?
+Why do I get up each morning to start
+Happy and head-up with joy in my heart?
+Why is each new task a trifle to do?
+Because I am living a life full of you!
 
-(chorus)
-Who's a machine
-Whose machine is this
-Who's a machine
-Whose machine is this?
-
-(verse 2)
-Again we go again
-Up the path, up up up
-Is this better that a machine could do?
-Am I just a machine that can do better?
-
-(pre-chorus)
-oh no oh no
-no no no
-yes yes yes
-
-(chorus)
-Who's a machine
-Whose machine is this
-Who's a machine
-Whose machine is this?$$
+Hey, I'm singin' in the rain,
+Just singin' in the rain,
+What a glorious feeling,
+I'm happy again!
+I'm laughing at clouds
+So dark up above,
+The sun's in my heart and I'm ready for love!
+Let the stormy clouds chase
+Everyone from the place,
+Come on with your rain,
+I've got a smile on my face!
+I'll walk down the lane
+With a happy refrain,
+Just singin', singin' in the rain!$$,
+  $json$
+  [
+    {"id": 0, "text": "I'm singin' in the rain,\nJust singin' in the rain,\nWhat a glorious feeling,\nI'm happy again!", "style": {"color": 0}},
+    {"id": 1, "text": "I'm laughing at clouds\nSo dark up above,\nThe sun's in my heart and I'm ready for love!", "style": {"color": 2}},
+    {"id": 2, "text": "Let the stormy clouds chase\nEveryone from the place,\nCome on with your rain,\nI've got a smile on my face!", "style": {"color": 4}},
+    {"id": 3, "text": "I'll walk down the lane\nWith a happy refrain,\nJust singin', singin' in the rain!", "style": {"color": 0}},
+    {"id": 4, "text": "Why am I smiling and why do I sing?\nWhy does December seem sunny as Spring?", "style": {"color": 1}},
+    {"id": 5, "text": "Why do I get up each morning to start\nHappy and head-up with joy in my heart?", "style": {"color": 1}},
+    {"id": 6, "text": "Why is each new task a trifle to do?\nBecause I am living a life full of you!", "style": {"color": 1}},
+    {"id": 7, "text": "Hey, I'm singin' in the rain,\nJust singin' in the rain,\nWhat a glorious feeling,\nI'm happy again!", "style": {"color": 0}},
+    {"id": 8, "text": "I'm laughing at clouds\nSo dark up above,\nThe sun's in my heart and I'm ready for love!", "style": {"color": 2}},
+    {"id": 9, "text": "Let the stormy clouds chase\nEveryone from the place,\nCome on with your rain,\nI've got a smile on my face!", "style": {}},
+    {"id": 10, "text": "I'll walk down the lane\nWith a happy refrain,\nJust singin', singin' in the rain!", "style": {"color": 0}}
+  ]
+  $json$::jsonb,
+  '{"columns": 2, "fontSize": 30, "fontFamily": "Georgia"}'::jsonb
 ),
 (
   '0e68ea92-2635-45bf-8ff6-dd739f5246b5',
-  'Adherence',
-  'Not Alive',
+  'Take Me Out to the Ball Game',
+  'Jack Norworth',
+  true,
   true,
   'ace29b57-c6e4-4d32-abc5-b97a2c96fbb5',
   now(),
   now(),
-  'adherence',
-  $$I can't bring myself
-To do the things I need to do
-One thing after another
-Wasting away the hours in a day
+  'take-me-out-to-the-ball-game',
+  $$Katie Casey was baseball mad,
+Had the fever and had it bad.
+Just to root for the home town crew,
+Ev'ry sou[a]
+Katie blew.
 
-(pre-chorus)
-But what about
-If I just
+On a Saturday her young beau
+Called to see if she'd like to go
+To see a show, but Miss Kate said "No,
+I'll tell you what you can do:"
 
-(chorus)
-Turn it off
-Away from here
-I can't be near it
-Need to fear it
+(Chorus)
+Take me out to the ball game,
+Take me out with the crowd;
+Buy me some peanuts and Cracker Jack,
+I don't care if I never get back.
 
-(verse 2)
-Help me save myself
-I can't do it, I need you
-I need more help than you
-Wasting away the hours in a day
+Let me root, root, root for the home team
+If they don't win, it's a shame.
+For it's one, two, three strikes, you're out,
+At the old ball game.
 
-(pre-chorus)
-But what about
-If I just
+Katie Casey saw all the games,
+Knew the players by their first names.
+Told the umpire he was wrong,
+All along,
+Good and strong.
 
-(chorus)
-Turn it off
-Away from here
-I can't be near it
-Need to fear it$$
+When the score was just two to two,
+Katie Casey knew what to do,
+Just to cheer up the boys she knew,
+She made the gang sing this song:$$,
+  $json$
+  [
+  {"id": 0, "text": "Katie Casey was baseball mad,\nHad the fever and had it bad.\nJust to root for the home town crew,\nEv'ry sou[a]\nKatie blew.", "style": {"color": 2}},
+  {"id": 1, "text": "On a Saturday her young beau\nCalled to see if she'd like to go\nTo see a show, but Miss Kate said \"No,\nI'll tell you what you can do:\"", "style": {"color": 0}},
+  {"id": 2, "text": "(Chorus)\nTake me out to the ball game,\nTake me out with the crowd;\nBuy me some peanuts and Cracker Jack,\nI don't care if I never get back.", "style": {"color": 1}},
+  {"id": 3, "text": "Let me root, root, root for the home team\nIf they don't win, it's a shame.\nFor it's one, two, three strikes, you're out,\nAt the old ball game.", "style": {"color": 1}},
+  {"id": 4, "text": "Katie Casey saw all the games,\nKnew the players by their first names.\nTold the umpire he was wrong,\nAll along,\nGood and strong.", "style": {"color": 2}},
+  {"id": 5, "text": "When the score was just two to two,\nKatie Casey knew what to do,\nJust to cheer up the boys she knew,\nShe made the gang sing this song:", "style": {}}
+  ]
+  $json$::jsonb,
+  '{"columns": 2, "fontSize": 30, "fontFamily": "Georgia"}'::jsonb
 );
 
 ALTER TABLE public.songs ENABLE TRIGGER on_song_insert;

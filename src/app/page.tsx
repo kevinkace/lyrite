@@ -4,7 +4,6 @@ import { FilePlus } from "lucide-react";
 
 import { SongsProvider } from "@/contexts/SongsContext";
 
-import { env } from "@/lib/env";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 import Layout        from "@/components/layout/Layout";
@@ -13,15 +12,14 @@ import LoginOr       from "@/components/buttons/LoginOr";
 
 import css from "./page.module.css"
 
-const featuredIds = env.NEXT_PUBLIC_FEATURED_SONGS;
-
 export default async function HomePage() {
     const supabase = await createServerSupabaseClient();
 
     const { data : featuredSongs } = await supabase
         .from("songs")
         .select("*")
-        .in("id", featuredIds)
+        .eq("featured", true)
+        .order("created_at", { ascending: true })
         .limit(3);
 
     return (
