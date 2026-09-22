@@ -14,11 +14,11 @@ export const userLinks = [
         label: "Songs",
         icon: <FilePen />
     },
-    {
-        href: "/profile/set-lists",
-        label : "Set Lists",
-        icon : <List />
-    },
+    // {
+    //     href: "/profile/set-lists",
+    //     label : "Set Lists",
+    //     icon : <List />
+    // },
     {
         href: "/profile/settings",
         label: "Settings",
