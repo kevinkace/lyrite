@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebounce } from "@uidotdev/usehooks";
@@ -28,6 +28,7 @@ type TableProps = {
     search?: string;
     page?: number;
     debug?: boolean;
+    emptyState?: ReactNode;
 };
 
 const DISPLAY_TYPES = ["table", "grid"] as const;
@@ -104,7 +105,7 @@ const icons: Record<DisplayType, LucideIcon> = {
     grid: LayoutGrid,
 };
 
-export default function Table({ headers, collection, defaultSort, search = "", page, debug = false }: TableProps) {
+export default function Table({ headers, collection, defaultSort, search = "", page, debug = false, emptyState }: TableProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const sortMachine = new SortStateMachine(searchParams, defaultSort);
@@ -315,10 +316,10 @@ export default function Table({ headers, collection, defaultSort, search = "", p
                         ))}
                     </TableUI.Body>
 
-
                 </TableUI.Root>
             )}
 
+            {!collection.loading && items.length === 0 && emptyState}
 
             <Pagination
                 currentPage={page}

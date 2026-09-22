@@ -9,7 +9,7 @@ import SongsTable from "@/components/songs/SongsTable";
 const pageSize = 10;
 
 function ProfileSongsContent() {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const searchParams = useSearchParams();
 
     const page = parseInt(searchParams.get("page") ?? "1", 10);
@@ -18,7 +18,13 @@ function ProfileSongsContent() {
     const sort = sortParam === "none" ? "" : sortParam ?? undefined;
     const direction = searchParams.get("direction");
 
-    if (!user) return <div>Please log in to view your songs.</div>;
+    if (!user && !loading) {
+        return <div>Please log in to view your songs.</div>;
+    }
+
+    if (!user) {
+        return null;
+    }
 
     return (
         <SongsProvider
