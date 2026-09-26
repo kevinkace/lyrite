@@ -16,7 +16,7 @@ export const pricingPlans: PricingPlan[] = [
         price : "0",
         priceTime : "always",
         feats : [
-            "10 Songs",
+            "10 Songs · 3 setlists",
             "2000 Characters per song",
             "All formatting options"
         ]
@@ -27,7 +27,7 @@ export const pricingPlans: PricingPlan[] = [
         price : "5",
         priceTime : "lifetime",
         feats : [
-            "100 songs",
+            "100 songs · 10 setlists",
             "5000 Characters per song",
             "All formatting options"
         ],
@@ -39,7 +39,7 @@ export const pricingPlans: PricingPlan[] = [
         price : "10",
         priceTime : "monthly",
         feats : [
-            "1000 songs!",
+            "1000 songs · 100 setlists!",
             "9999 Characters per song!",
             "All formatting options"
         ],
