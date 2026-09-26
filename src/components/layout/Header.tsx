@@ -7,7 +7,6 @@ import { clsx } from "clsx";
 
 import { UserSection } from "@/components/layout/UserSection";
 import { MainNav }     from "@/components/layout/MainNav";
-// import { UserNav } from "@/components/layout/UserNav";
 
 import { useLayout } from "@/contexts/LayoutContext";
 
@@ -38,7 +37,6 @@ export default function Header() {
                 </h1>
 
                 <MainNav />
-                {/* <UserNav /> */}
                 {/* <ErrorButton /> */}
             </Flex>
 
