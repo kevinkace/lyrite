@@ -2,29 +2,21 @@
 
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { SongsProvider } from "@/contexts/SongsContext";
+
 import { useAuth }       from "@/contexts/AuthContext";
+import { SongsProvider } from "@/contexts/SongsContext";
+import { getCollectionParams } from "@/lib/collectionParams";
+
 import SongsTable from "@/components/songs/SongsTable";
 
 const pageSize = 10;
 
 function ProfileSongsContent() {
-    const { user, loading } = useAuth();
+    const { user } = useAuth();
     const searchParams = useSearchParams();
+    const { page, search, sort, sortAscending } = getCollectionParams(searchParams);
 
-    const page = parseInt(searchParams.get("page") ?? "1", 10);
-    const search = searchParams.get("search") ?? "";
-    const sortParam = searchParams.get("sort");
-    const sort = sortParam === "none" ? "" : sortParam ?? undefined;
-    const direction = searchParams.get("direction");
-
-    if (!user && !loading) {
-        return <div>Please log in to view your songs.</div>;
-    }
-
-    if (!user) {
-        return null;
-    }
+    if (!user) return null;
 
     return (
         <SongsProvider
@@ -32,7 +24,7 @@ function ProfileSongsContent() {
             page={page}
             search={search}
             sort={sort}
-            sortAscending={direction !== "desc"}
+            sortAscending={sortAscending}
             pageSize={pageSize}
         >
             <SongsTable editControls />
