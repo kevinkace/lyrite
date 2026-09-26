@@ -1,0 +1,15 @@
+.empty {
+    margin: 1em 0;
+
+    animation: fadeId 500ms;
+}
+
+@keyframes fadeId {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
