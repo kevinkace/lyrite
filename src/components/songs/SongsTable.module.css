@@ -27,35 +27,3 @@
 .error {
   margin-bottom: 1rem;
 }
-
-.pagination {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.pagination button {
-  padding: 0.4rem 0.8rem;
-  border: 1px solid #ccc;
-  background: #f9f9f9;
-  cursor: pointer;
-}
-
-.pagination button:hover {
-  background: #eee;
-}
-
-.newSong {
-  margin: 1em 0;
-
-  animation: fadeId 500ms;
-}
-
-@keyframes fadeId {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
