@@ -23,7 +23,7 @@ const links = [
 export const MainNav = () => {
     const pathname = usePathname();
 
-    if (/^\/songs/.test(pathname) || /^\/profile/.test(pathname)) {
+    if (/^\/(songs|setlists)/.test(pathname) || /^\/profile/.test(pathname)) {
         return null;
     }
 
