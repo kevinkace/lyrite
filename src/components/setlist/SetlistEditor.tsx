@@ -84,14 +84,10 @@ export default function SetlistEditor() {
                                 <strong>{index + 1}.</strong>
                                 <Link href={`/songs/${song.id}`}><strong>{song.title}</strong> - {song.artist}</Link>
                             </Flex>
-                            {isOwner && <Button variant="ghost" color="crimson" onClick={() => removeSong(id, song.id)} aria-label={`Remove ${song.title}`}>
-                                <Trash2 />
-                            </Button>}
                         </Flex>
                     </Card>
                 ))}
             </Flex>
-            <Link href="/setlists"><ArrowLeft /> Back to setlists</Link>
         </Flex>
     );
 }
