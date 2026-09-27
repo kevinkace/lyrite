@@ -3,6 +3,7 @@
         "ilike",
         "Lyrite",
         "Postgrest",
+        "Setlist",
         "setlists",
         "supabase"
     ]

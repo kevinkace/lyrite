@@ -15,6 +15,7 @@ type UseSupabaseCollectionOptions<T> = {
     searchColumn?: string;
     orderBy?: string;
     orderAscending?: boolean;
+    countRelation?: string;
 };
 
 export function useSupabaseCollection<T extends { id: string }>({
@@ -28,6 +29,7 @@ export function useSupabaseCollection<T extends { id: string }>({
     searchColumn = "title",
     orderBy,
     orderAscending = true,
+    countRelation,
 }: UseSupabaseCollectionOptions<T>) {
     const [ items, setItems ]     = useState<T[]>(initialData);
     const [ loading, setLoading ] = useState(false);
@@ -42,16 +44,19 @@ export function useSupabaseCollection<T extends { id: string }>({
 
         const currentPage = Math.max(page, 1);
 
-        let dataQuery = supabase.from(table).select("*");
-        let countQuery = supabase.from(table).select("*", { count: "exact", head: true });
+        let dataQuery = supabase
+            .from(table)
+            .select(countRelation ? `*, ${countRelation}(count)` : "*");
+
+        let countQuery = supabase
+            .from(table)
+            .select("*", { count: "exact", head: true });
 
         if (ids && ids.length > 0) {
             dataQuery = dataQuery.in("id", ids);
             countQuery = countQuery.in("id", ids);
         } else if (userId) {
-            dataQuery = dataQuery
-                .eq("user_id", userId);
-
+            dataQuery = dataQuery.eq("user_id", userId);
             countQuery = countQuery.eq("user_id", userId);
         }
 
@@ -68,25 +73,56 @@ export function useSupabaseCollection<T extends { id: string }>({
         }
 
         if (orderBy) {
-            dataQuery = dataQuery.order(orderBy, { ascending: orderAscending });
+            dataQuery = dataQuery.order(orderBy, {
+                ascending: orderAscending,
+            });
         }
 
-        const [{ data, error }, { count, error: countError }] = await Promise.all([
-            dataQuery,
-            countQuery
-        ]);
+        const [{ data, error }, { count, error: countError }] =
+            await Promise.all([
+                dataQuery,
+                countQuery,
+            ]);
 
         if (error || countError) {
-            setError(error?.message || countError?.message || "An error occurred");
+            setError(
+                error?.message ||
+                countError?.message ||
+                "An error occurred"
+            );
         } else {
-            setItems(data || []);
+            const items = (data || []).map((item) => {
+                if (!countRelation) return item;
+
+                const relation = item[countRelation] as
+                    | { count: number }[]
+                    | undefined;
+
+                return {
+                    ...item,
+                    [`${countRelation}_count`]: relation?.[0]?.count ?? 0,
+                };
+            });
+
+            setItems(items);
             setTotal(count || 0);
-            setHasMore(!ids && (data?.length ?? 0) === pageSize);
+            setHasMore(!ids && items.length === pageSize);
             setPages(ids ? 1 : Math.ceil((count || 0) / pageSize));
         }
 
         setLoading(false);
-    }, [ids, orderAscending, orderBy, page, pageSize, search, searchColumn, table, userId]);
+    }, [
+        countRelation,
+        ids,
+        orderAscending,
+        orderBy,
+        page,
+        pageSize,
+        search,
+        searchColumn,
+        table,
+        userId,
+    ]);
 
     useEffect(() => {
         if (initialData.length > 0) return;
@@ -96,6 +132,7 @@ export function useSupabaseCollection<T extends { id: string }>({
 
     const deleteItem = async (id: string) => {
         const { error } = await supabase.from(table).delete().eq("id", id);
+
         if (error) {
             setError(error.message);
         } else {
@@ -105,7 +142,9 @@ export function useSupabaseCollection<T extends { id: string }>({
 
     const updateItemInState = (id: string, updates: Partial<T>) => {
         setItems((prev) =>
-            prev.map((item) => (item.id === id ? { ...item, ...updates } : item))
+            prev.map((item) =>
+                item.id === id ? { ...item, ...updates } : item
+            )
         );
     };
 
@@ -118,15 +157,21 @@ export function useSupabaseCollection<T extends { id: string }>({
                     previous = item;
                     return { ...item, ...updates };
                 }
+
                 return item;
             })
         );
 
-        const { error } = await supabase.from(table).update(updates).eq("id", id);
+        const { error } = await supabase
+            .from(table)
+            .update(updates)
+            .eq("id", id);
 
         if (error && previous) {
             setItems((prev) =>
-                prev.map((item) => (item.id === id ? previous! : item))
+                prev.map((item) =>
+                    item.id === id ? previous! : item
+                )
             );
             setError(error.message);
         }

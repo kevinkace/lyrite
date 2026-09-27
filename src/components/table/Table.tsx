@@ -119,6 +119,7 @@ export default function Table({ headers, collection, defaultSort, search = "", p
     const items = ('items' in collection && collection.items) ||
                   ('users' in collection && collection.users) ||
                   ('songs' in collection && collection.songs) ||
+                  ('setlists' in collection && collection.setlists) ||
                   [];
 
     useEffect(() => {
@@ -218,15 +219,12 @@ export default function Table({ headers, collection, defaultSort, search = "", p
 
                                 <Link href={headers[0].href!(item)} className={css.cardHeader}>
                                     <h4 className={css.cardTitle}>{item.title}</h4>
-                                    <h5 className={css.cardArtist}>{item.artist}</h5>
+                                    {"artist" in item && <h5 className={css.cardArtist}>{item.artist}</h5>}
                                 </Link>
 
-                                <div className={css.cardContent}>
-                                    <TableCell
-                                        item={item}
-                                        header={{ key: "lyrics", label: "Lyrics" }}
-                                    />
-                                </div>
+                                {"lyrics" in item && <div className={css.cardContent}>
+                                    <TableCell item={item} header={{ key: "lyrics", label: "Lyrics" }} />
+                                </div>}
 
                                 <Flex className={css.cardFooter} align="center" justify="between">
                                     {publicHeader && (

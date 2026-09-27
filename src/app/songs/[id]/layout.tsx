@@ -11,7 +11,7 @@ export default function SongPage({ children, params }: { children: React.ReactNo
 
     useEffect(() => {
         loadSong({ id });
-    }, [id]);
+    }, [ id ]);
 
     return (
         <Layout>

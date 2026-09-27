@@ -91,10 +91,18 @@ export default function UserMenu() {
 
                             <Flex gap="4" direction="column" className={css.links}>
 
+
                                     <Button asChild variant="surface" color="violet" radius="full" className={css.newSong}>
                                         <Link href="/songs/new">
                                             <FilePlus width="1em" height="auto" />
                                             New song
+                                        </Link>
+                                    </Button>
+
+                                    <Button asChild variant="surface" color="violet" radius="full">
+                                        <Link href="/setlists/new">
+                                            <FilePlus width="1em" height="auto" />
+                                            New Setlist
                                         </Link>
                                     </Button>
 

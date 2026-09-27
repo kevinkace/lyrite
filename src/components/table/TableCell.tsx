@@ -7,7 +7,7 @@ import { formattedDay } from "@/lib/dates";
 
 import css from "./Table.module.css"
 
-import { Song, Profile, TableHeader } from "@/types";
+import { Song, Profile, Setlist, TableHeader } from "@/types";
 
 const MAX_LYRIC_LEN = 200;
 export default function TableCell({
@@ -15,7 +15,7 @@ export default function TableCell({
     header,
     label = false
 }: {
-    item: Song | Profile;
+    item: Song | Profile | Setlist;
     header: TableHeader;
     label?: boolean;
 }) {
@@ -29,7 +29,7 @@ export default function TableCell({
         right: css.alignRight
     }[align];
 
-    if (header.key === "lyrics" && content.length > MAX_LYRIC_LEN) {
+    if (header.key === "lyrics" && typeof content === "string" && content.length > MAX_LYRIC_LEN) {
         content = content.slice(0, MAX_LYRIC_LEN) + "..."
     }
 

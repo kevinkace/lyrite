@@ -117,6 +117,28 @@ export type SongsListProps = {
     songs: Song[];
 };
 
+/* ---------- Setlists ---------- */
+export type Setlist = {
+    id: string;
+    user_id: string;
+    title: string;
+    is_public: boolean;
+    created_at: string;
+    updated_at: string;
+    setlist_songs_count?: number;
+};
+
+export type SetlistSong = {
+    setlist_id: string;
+    song_id: string;
+    position: number;
+    song: Song;
+};
+
+export type SetlistsCollection = BaseSupabaseCollection & {
+    setlists: Setlist[];
+};
+
 /* ---------- Song Context ---------- */
 export type SongContextType = {
     song: Song | null;
@@ -180,7 +202,7 @@ export type SongsCollection = BaseSupabaseCollection &
     Pick<SongsContextType, 'songs' | 'deleteSong' | 'updateSong' | 'updateSongInState'>;
 
 // Union type for all collection types
-export type AnySupabaseCollection = UsersCollection | SongsCollection | SupabaseCollection;
+export type AnySupabaseCollection = UsersCollection | SongsCollection | SetlistsCollection | SupabaseCollection;
 
 export type SongsProviderProps = {
     children: ReactNode;
@@ -228,10 +250,10 @@ export type TableHeader = {
     sortable?: boolean;
     defaultSortDirection?: "asc" | "desc";
     align?: "left" | "center" | "right";
-    href?: (item: Song | Profile) => string;
+    href?: (item: Song | Profile | Setlist) => string;
     type?: "date" | "check" | "id";
-    update?: (item: Song | Profile, header: TableHeader) => (value: any) => void;
+    update?: (item: Song | Profile | Setlist, header: TableHeader) => (value: any) => void;
     actions?: {
-        [actionName: string]: (item: Song | Profile, key: string) => ReactNode;
+        [actionName: string]: (item: Song | Profile | Setlist, key: string) => ReactNode;
     };
 };

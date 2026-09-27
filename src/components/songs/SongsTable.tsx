@@ -5,7 +5,7 @@ import { FilePlus } from "lucide-react";
 
 import { useSongs } from "@/contexts/SongsContext";
 
-import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
+import DeleteDialog from "@/components/deleteDialog/DeleteDialog";
 import Table            from "@/components/table/Table";
 import CreateEmptyState from "@/components/table/CreateEmptyState";
 
@@ -78,7 +78,15 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
                                 key   : "actions",
                                 align : "center",
                                 actions : {
-                                    delete : (item, parentKey) => <DeleteSongDialog key={parentKey + "delete"} songId={item.id} title={(item as Song).title || "title"} onDelete={songsCollection.deleteSong}/>
+                                    delete : (item, parentKey) => (
+                                        <DeleteDialog
+                                            key={parentKey + "delete"}
+                                            id={item.id}
+                                            itemType="song"
+                                            title={(item as Song).title || "title"}
+                                            onDelete={songsCollection.deleteSong}
+                                        />
+                                    )
                                 }
                             }
                         ] as TableHeader[] :
