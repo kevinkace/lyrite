@@ -38,7 +38,7 @@ export default function TableCell({
     }
 
     if (header.href) {
-        return <Link key={key} href={header.href(item)}>
+        return <Link key={key} href={header.href(item)} className={css.tableLink}>
             {content}
         </Link>;
     }
