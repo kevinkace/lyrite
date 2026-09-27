@@ -226,17 +226,19 @@ export default function Table({ headers, collection, defaultSort, search = "", p
                                     <TableCell item={item} header={{ key: "lyrics", label: "Lyrics" }} />
                                 </div>}
 
-                                <Flex className={css.cardFooter} align="center" justify="between">
-                                    {publicHeader && (
-                                        <Flex gap="3" align="center">
-                                            <TableCell item={item} header={publicHeader} label={true}/>
-                                        </Flex>
-                                    )}
+                                {(publicHeader || actionsHeader) &&
+                                    <Flex className={css.cardFooter} align="center" justify="between">
+                                        {publicHeader && (
+                                            <Flex gap="3" align="center">
+                                                <TableCell item={item} header={publicHeader} label={true}/>
+                                            </Flex>
+                                        )}
 
-                                    {actionsHeader && (
-                                        <TableCell item={item} header={actionsHeader} />
-                                    )}
-                                </Flex>
+                                        {actionsHeader && (
+                                            <TableCell item={item} header={actionsHeader} />
+                                        )}
+                                    </Flex>
+                                }
                             </Card>
                         );
                     })}
