@@ -226,6 +226,10 @@ export default function Table({ headers, collection, defaultSort, search = "", p
                                     <TableCell item={item} header={{ key: "lyrics", label: "Lyrics" }} />
                                 </div>}
 
+                                {"setlist_songs_count" in item && <div className={css.cardContent}>
+                                    <TableCell item={item} header={{ key : "setlist_songs_count", label: "songs" }} />
+                                </div>}
+
                                 {(publicHeader || actionsHeader) &&
                                     <Flex className={css.cardFooter} align="center" justify="between">
                                         {publicHeader && (
