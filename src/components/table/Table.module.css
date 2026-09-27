@@ -4,6 +4,7 @@
 }
 
 .tableBody {
+    line-height: 1.2;
     transition: background 600ms ease-in-out;
 }
 
@@ -141,4 +142,13 @@
 
 .switchLabel {
     font-size: 0.9em;
+}
+
+.tableLink {
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline
+    }
 }
