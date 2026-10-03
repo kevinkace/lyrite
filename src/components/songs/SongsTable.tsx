@@ -10,7 +10,7 @@ import CreateEmptyState from "@/components/table/CreateEmptyState";
 
 import type { Song, TableHeader } from "@/types";
 
-export default function SongsTable({ editControls = false }: { editControls?: boolean }) {
+export default function SongsTable({ editControls = false, actions }: { editControls?: boolean }) {
     const songsCollection = useSongs();
 
     if (songsCollection.loading) {
@@ -23,6 +23,7 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
             defaultSort="updated_at"
             search={songsCollection.search || ""}
             page={songsCollection.page}
+            actions={actions}
             emptyState={editControls && songsCollection.total === 0 && (
                 <CreateEmptyState
                     message="Create your first song!"

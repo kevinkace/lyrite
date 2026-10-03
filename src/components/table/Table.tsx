@@ -105,7 +105,7 @@ const icons: Record<DisplayType, LucideIcon> = {
     grid: LayoutGrid,
 };
 
-export default function Table({ headers, collection, defaultSort, search = "", page, debug = false, emptyState }: TableProps) {
+export default function Table({ headers, actions, collection, defaultSort, search = "", page, debug = false, emptyState }: TableProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const sortMachine = new SortStateMachine(searchParams, defaultSort);
@@ -181,6 +181,8 @@ export default function Table({ headers, collection, defaultSort, search = "", p
                 </Flex>
 
                 <Flex gap="2" align="center" className={css.displayTypeToggle}>
+
+                    {actions}
 
                     <SegmentedControl.Root
                         value={displayType}

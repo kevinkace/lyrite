@@ -10,6 +10,7 @@ import { useSetlists } from "@/contexts/SetlistsContext";
 export default function SetlistForm() {
     const router = useRouter();
     const { createSetlist } = useSetlists();
+
     const [title, setTitle] = useState("");
     const [isPublic, setIsPublic] = useState(false);
     const [saving, setSaving] = useState(false);
@@ -19,6 +20,7 @@ export default function SetlistForm() {
         if (!title.trim()) return;
 
         setSaving(true);
+
         try {
             const setlist = await createSetlist(title.trim(), isPublic);
             router.push(`/setlists/${setlist.id}`);

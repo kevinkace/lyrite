@@ -10,6 +10,7 @@ import Confirm from "./Confirm";
 import DownloadPII from "./DownloadPII";
 import SongEditor from "./Editor";
 import Upgrade from "./Upgrade";
+import SetlistAddSong from "./SetlistAddSong";
 
 import css from "./ModalRoot.module.css";
 
@@ -21,7 +22,7 @@ export default function ModalRoot() {
         <AnimatePresence>
             {type && (
                 <Dialog.Root open onOpenChange={(open) => !open && closeModal()}>
-                    <Dialog.Content maxWidth="1200px" asChild>
+                    <Dialog.Content maxWidth="800px" asChild>
                         <motion.div
                             initial={{ opacity : 0, y : 20 }}
                             animate={{ opacity : 1, y : 0 }}
@@ -54,6 +55,13 @@ export default function ModalRoot() {
 
                             {type === "upgrade" && (
                                 <Upgrade closeModal={closeModal} />
+                            )}
+
+                            {type === "addSong" && (
+                                <SetlistAddSong
+                                    closeModal={closeModal}
+                                    onAdd={props?.onAdd as (songId: string) => Promise<void>}
+                                />
                             )}
                         </motion.div>
                     </Dialog.Content>

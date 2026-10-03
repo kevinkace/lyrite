@@ -8,7 +8,7 @@ type SetlistEditingContextType = {
     selectedSong: string;
     setSelectedSong: (songId: string) => void;
     saving: boolean;
-    addSong: (setlistId: string) => Promise<void>;
+    addSong: (setlistId: string, songId?: string) => Promise<void>;
     removeSong: (setlistId: string, songId: string) => Promise<void>;
 };
 
@@ -19,12 +19,12 @@ export function SetlistEditingProvider({ children }: { children: ReactNode }) {
     const [saving, setSaving] = useState(false);
     const { addSong: saveSong, removeSong } = useSetlist();
 
-    const addSong = async (setlistId: string) => {
-        if (!selectedSong) return;
+    const addSong = async (setlistId: string, songId = selectedSong) => {
+        if (!songId) return;
 
         setSaving(true);
         try {
-            await saveSong(setlistId, selectedSong);
+            await saveSong(setlistId, songId);
             setSelectedSong("");
         } finally {
             setSaving(false);
