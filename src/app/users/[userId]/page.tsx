@@ -4,7 +4,7 @@ import { Card, Flex } from "@radix-ui/themes";
 
 import { useUser } from "@/contexts/UserContext";
 
-import SongsTable from "@/components/songs/SongsTable";
+import SongsTableContainer from "@/components/songs/SongsTableContainer";
 import { Avatar } from "@/components/user/Avatar";
 
 import { formattedDay } from "@/lib/dates";
@@ -29,7 +29,7 @@ export default function UserSongsPage() {
       </Flex>
     </Card>
 
-      <SongsTable />
+      <SongsTableContainer />
     </>
   );
 }

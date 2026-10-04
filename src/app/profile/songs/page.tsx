@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { SongsProvider } from "@/contexts/SongsContext";
 import { useAuth }       from "@/contexts/AuthContext";
-import SongsTable from "@/components/songs/SongsTable";
+import SongsTableContainer from "@/components/songs/SongsTableContainer";
 
 const pageSize = 10;
 
@@ -35,7 +35,7 @@ function ProfileSongsContent() {
             sortAscending={direction !== "desc"}
             pageSize={pageSize}
         >
-            <SongsTable editControls />
+            <SongsTableContainer editControls />
         </SongsProvider>
     );
 }

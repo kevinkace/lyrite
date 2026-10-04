@@ -8,28 +8,26 @@ import {
 } from "@radix-ui/themes";
 import { Trash2 } from "lucide-react";
 
-import css from "./DeleteSongDialog.module.css";
+import css from "./RemoveSongDialog.module.css";
 
-type DeleteSongDialogProps = {
+type RemoveSongDialogProps = {
     songId: string;
     title: string;
     onDelete: (id: string) => void;
 };
 
-export default function DeleteSongDialog({
+export default function RemoveSongDialog({
     songId,
     title,
     onDelete,
-}: DeleteSongDialogProps) {
+}: RemoveSongDialogProps) {
     return (
         <Dialog.Root>
-
             <Dialog.Trigger>
                 <IconButton color="crimson">
                     <Trash2 />
                 </IconButton>
             </Dialog.Trigger>
-
             <Dialog.Content >
                 <Dialog.Title>Delete song?</Dialog.Title>
                 <Dialog.Description>
@@ -58,7 +56,6 @@ export default function DeleteSongDialog({
                     </Dialog.Close>
                 </Flex>
             </Dialog.Content>
-
         </Dialog.Root>
     );
 }
