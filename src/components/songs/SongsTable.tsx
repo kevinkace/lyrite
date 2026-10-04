@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import Link from "next/link";
-import { Button, Flex } from "@radix-ui/themes";
+import { Button, Flex, Switch } from "@radix-ui/themes";
 import { FilePlus } from "lucide-react";
 
 import { useSongs } from "@/contexts/SongsContext";
@@ -10,7 +10,7 @@ import { useSongs } from "@/contexts/SongsContext";
 import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
 import Table            from "@/components/table/Table";
 
-import type { Song, TableHeader } from "@/types";
+import type { TableHeader } from "@/types";
 
 import css from "./SongsTable.module.css";
 
@@ -51,6 +51,7 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
                         {
                             label : "Lyrics",
                             key   : "lyrics",
+                            truncate: 200,
                             sortable : true
                         },
                         {
@@ -75,18 +76,24 @@ export default function SongsTable({ editControls = false }: { editControls?: bo
                                     label : "Public",
                                     key   : "is_public",
                                     align : "center",
-                                    type  : "check",
-                                    update : (item, header) => (checked) => {
-                                        songsCollection.updateSong(item.id, { [header.key]: checked });
-                                    }
+                                    render: (item) => "is_public" in item ? (
+                                        <Switch
+                                            checked={item.is_public}
+                                            onCheckedChange={(checked) => songsCollection.updateSong(item.id, { is_public: checked })}
+                                        />
+                                    ) : null
                                 },
                                 {
                                     label : "Actions",
                                     key   : "actions",
                                     align : "center",
-                                    actions : {
-                                        delete : (item, parentKey) => <DeleteSongDialog key={parentKey + "delete"} songId={item.id} title={(item as Song).title || "title"} onDelete={songsCollection.deleteSong}/>
-                                    }
+                                    render: (item) => (
+                                        <DeleteSongDialog
+                                            songId={item.id}
+                                            title={"title" in item ? item.title : ""}
+                                            onDelete={songsCollection.deleteSong}
+                                        />
+                                    )
                                 }
                             ] as TableHeader[] :
                             []

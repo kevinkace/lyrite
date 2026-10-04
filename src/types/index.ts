@@ -229,9 +229,7 @@ export type TableHeader = {
     defaultSortDirection?: "asc" | "desc";
     align?: "left" | "center" | "right";
     href?: (item: Song | Profile) => string;
-    type?: "date" | "check" | "id";
-    update?: (item: Song | Profile, header: TableHeader) => (value: any) => void;
-    actions?: {
-        [actionName: string]: (item: Song | Profile, key: string) => ReactNode;
-    };
+    type?: "date" | "id";
+    truncate?: number;
+    render?: (item: Song | Profile) => ReactNode;
 };

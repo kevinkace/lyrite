@@ -1,5 +1,4 @@
 import { useEffect, useState, type ReactNode } from "react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebounce } from "@uidotdev/usehooks";
 import { clsx } from "clsx";
@@ -206,39 +205,17 @@ export default function Table({ headers, collection, defaultSort, search = "", p
             {displayType === "grid" && (
                 <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="4">
                     {items.map((item) => {
-                        if (!("title" in item)) {
-                            return null;
-                        }
-
-                        const publicHeader = headers.find(({ key }) => key === "is_public");
-                        const actionsHeader = headers.find(({ key }) => key === "actions");
-
                         return (
                             <Card className={css.card} key={item.id}>
-
-                                <Link href={headers[0].href!(item)} className={css.cardHeader}>
-                                    <h4 className={css.cardTitle}>{item.title}</h4>
-                                    <h5 className={css.cardArtist}>{item.artist}</h5>
-                                </Link>
-
-                                <div className={css.cardContent}>
-                                    <TableCell
-                                        item={item}
-                                        header={{ key: "lyrics", label: "Lyrics" }}
-                                    />
-                                </div>
-
-                                <Flex className={css.cardFooter} align="center" justify="between">
-                                    {publicHeader && (
-                                        <Flex gap="3" align="center">
-                                            <TableCell item={item} header={publicHeader} label={true}/>
-                                        </Flex>
-                                    )}
-
-                                    {actionsHeader && (
-                                        <TableCell item={item} header={actionsHeader} />
-                                    )}
-                                </Flex>
+                                {headers.map((header, index) => (
+                                    <div
+                                        key={header.key + item.id}
+                                        className={index === 0 ? css.cardHeader : css.cardField}
+                                    >
+                                        {index > 0 && <span className={css.cardLabel}>{header.label}</span>}
+                                        <TableCell item={item} header={header} />
+                                    </div>
+                                ))}
                             </Card>
                         );
                     })}
@@ -302,7 +279,7 @@ export default function Table({ headers, collection, defaultSort, search = "", p
 
                                 {headers.map((header) => (
                                     <TableUI.Cell key={header.key + item.id}>
-                                        <TableCell item={item} header={header} label={false} />
+                                        <TableCell item={item} header={header} />
                                     </TableUI.Cell>
                                 ))}
 

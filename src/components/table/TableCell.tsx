@@ -1,7 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
-import { Switch, Flex } from "@radix-ui/themes";
 
 import { formattedDay } from "@/lib/dates";
 
@@ -9,17 +9,14 @@ import css from "./Table.module.css"
 
 import { Song, Profile, TableHeader } from "@/types";
 
-const MAX_LYRIC_LEN = 200;
 export default function TableCell({
     item,
-    header,
-    label = false
+    header
 }: {
     item: Song | Profile;
     header: TableHeader;
-    label?: boolean;
 }) {
-    let content = (item as any)[header.key];
+    let content: ReactNode = (item as unknown as Record<string, ReactNode>)[header.key];
 
     const key = header.key + item.id;
     const align = header.align || "left";
@@ -29,49 +26,22 @@ export default function TableCell({
         right: css.alignRight
     }[align];
 
-    if (header.key === "lyrics" && content.length > MAX_LYRIC_LEN) {
-        content = content.slice(0, MAX_LYRIC_LEN) + "..."
+    if (typeof content === "string" && header.truncate && content.length > header.truncate) {
+        content = content.slice(0, header.truncate) + "...";
     }
 
-    if (header.type === "date") {
+    if (header.type === "date" && typeof content === "string") {
         content = formattedDay(content);
+    }
+
+    if (header.render) {
+        return <div key={key} className={alignClass}>{header.render(item)}</div>;
     }
 
     if (header.href) {
         return <Link key={key} href={header.href(item)}>
             {content}
         </Link>;
-    }
-
-    if (header.type === "check" && header.update) {
-        const SwitchEl = () => (<Switch
-            key={key}
-            checked={content}
-            onCheckedChange={header.update?.(item, header)}
-        />);
-
-        if (label) {
-            return (<Flex asChild align="center" gap="3">
-                <label>
-                    <SwitchEl />
-                    <span className={css.switchLabel}>{header.label}</span>
-                </label>
-            </Flex>);
-        }
-
-        return (
-            <div key={key} className={alignClass}>
-                <SwitchEl />
-            </div>
-        );
-    }
-
-    if (header.actions) {
-        return (
-            <div key={key} className={alignClass}>
-                {Object.entries(header.actions).map(([actionName, action]) => action(item, key))}
-            </div>
-        );
     }
 
     if (header.type === "id") {
