@@ -8,7 +8,6 @@ import { LayoutProvider } from "@/contexts/LayoutContext";
 import { SongProvider }   from "@/contexts/SongContext";
 
 import LoadingGate  from "@/components/layout/LoadingGate";
-import Loading      from "@/components/layout/LoadingBar";
 import ErrorModal   from "@/components/error/ErrorModal";
 import ModalRoot    from "@/components/modal/ModalRoot";
 import CookieBanner from "@/components/analytics/CookieBanner";
@@ -33,7 +32,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                         <LoadingGate>
 
                             <LayoutProvider>
-                                <Loading />
                                 {children}
                             </LayoutProvider>
 
