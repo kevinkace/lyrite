@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import { Flex, Button } from "@radix-ui/themes";
 
 import { PaginationProps } from "@/types";
@@ -9,33 +8,14 @@ export default function Pagination({
     currentPage,
     totalPages,
     hasMore,
-    setLoading
+    onPageChange
 }: PaginationProps) {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-
-    const goToPage = (page: number) => {
-        if (setLoading) setLoading(true);
-
-        const params = new URLSearchParams(searchParams.toString());
-        // unset page if going to first page
-        if (page === 1) {
-            params.delete("page");
-        } else {
-            params.set("page", page.toString());
-        }
-
-        router.push(`?${params.toString()}`);
-    };
-
-    if (!currentPage) return null;
-
     return (
         <Flex justify="center" gap="2" mt="4" align="center">
             <Button
                 variant="soft"
                 disabled={currentPage === 1}
-                onClick={() => goToPage(currentPage - 1)}
+                onClick={() => onPageChange(currentPage - 1)}
             >
                 Prev
             </Button>
@@ -46,7 +26,7 @@ export default function Pagination({
                         key={p}
                         variant="soft"
                         color={p === currentPage ? undefined : "gray"}
-                        onClick={() => goToPage(p)}
+                        onClick={() => onPageChange(p)}
                     >
                         {p}
                     </Button>
@@ -61,7 +41,7 @@ export default function Pagination({
                 disabled={
                     totalPages ? currentPage === totalPages : !hasMore
                 }
-                onClick={() => goToPage(currentPage + 1)}
+                onClick={() => onPageChange(currentPage + 1)}
             >
                 Next
             </Button>

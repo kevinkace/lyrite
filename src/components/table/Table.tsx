@@ -1,4 +1,3 @@
-import { useRouter, useSearchParams } from "next/navigation";
 import { clsx } from "clsx";
 
 import { Table as TableUI } from "@radix-ui/themes";
@@ -16,104 +15,35 @@ type TableProps = {
     headers: TableHeader[];
     items: (Song | Profile)[];
     loading?: boolean;
-    defaultSort?: string;
+    sort?: string;
+    sortAscending?: boolean;
+    onSort?: (column: string, defaultDirection?: SortDirection) => void;
     debug?: boolean;
 };
 
 type SortDirection = "asc" | "desc";
-
-type SortState = {
-    key: string | null;
-    direction: SortDirection | null;
-    arrow: LucideIcon | null;
-};
-
-const SORT_NONE = "none";
-
-class SortStateMachine {
-    private static readonly arrows: Record<SortDirection, LucideIcon> = {
+export default function Table({
+    headers,
+    items,
+    loading = false,
+    sort,
+    sortAscending = false,
+    onSort,
+    debug = false
+}: TableProps) {
+    const arrows: Record<SortDirection, LucideIcon> = {
         asc: ArrowUp,
         desc: ArrowDown
     };
 
-    private static readonly noneState: SortState = {
-        key: null,
-        direction: null,
-        arrow: X
+    const getNextArrow = (header: TableHeader) => {
+        const firstDirection = header.defaultSortDirection ?? "asc";
+        if (sort !== header.key) return arrows[firstDirection];
+        if (sortAscending === (firstDirection === "asc")) {
+            return arrows[firstDirection === "asc" ? "desc" : "asc"];
+        }
+        return X;
     };
-
-    readonly state: SortState;
-
-    constructor(searchParams: URLSearchParams, defaultSort?: string) {
-        const key = searchParams.get("sort");
-
-        if (key === SORT_NONE) {
-            this.state = SortStateMachine.noneState;
-            return;
-        }
-
-        const direction = searchParams.get("direction") === "asc" ? "asc" : "desc";
-        const activeKey = key || defaultSort || null;
-
-        this.state = {
-            key: activeKey,
-            direction: activeKey ? direction : null,
-            arrow: activeKey ? SortStateMachine.arrows[direction] : null
-        };
-    }
-
-    next(key: string, firstDirection: SortDirection = "asc"): SortState {
-        if (this.state.key !== key) {
-            return this.createState(key, firstDirection);
-        }
-
-        if (this.state.direction === firstDirection) {
-            return this.createState(
-                key,
-                firstDirection === "asc" ? "desc" : "asc"
-            );
-        }
-
-        return SortStateMachine.noneState;
-    }
-
-    private createState(key: string, direction: SortDirection): SortState {
-        return {
-            key,
-            direction,
-            arrow: SortStateMachine.arrows[direction]
-        };
-    }
-}
-
-export default function Table({ headers, items, loading = false, defaultSort, debug = false }: TableProps) {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const sortMachine = new SortStateMachine(searchParams, defaultSort);
-    const sortState = sortMachine.state;
-
-    const handleSort = (key: string) => {
-        const params = new URLSearchParams(searchParams.toString());
-        const header = headers.find(({ key: headerKey }) => headerKey === key);
-
-        const nextState = sortMachine.next(key, header?.defaultSortDirection);
-
-        if (!nextState.key) {
-            params.set("sort", SORT_NONE);
-            params.delete("direction");
-        } else {
-            params.set("sort", nextState.key);
-            params.set("direction", nextState.direction!);
-        }
-
-        params.set("page", "1");
-        router.push(`?${params.toString()}`);
-    };
-
-    const getNextSortState = (header: TableHeader) => sortMachine.next(
-        header.key,
-        header.defaultSortDirection
-    );
 
     return (
         <TableUI.Root className={css.table}>
@@ -125,31 +55,26 @@ export default function Table({ headers, items, loading = false, defaultSort, de
                                     key={header.key}
                                     align={header.align || "left"}
                                 >
-                                    {header.sortable ? (
+                                    {header.sortable && onSort ? (
                                         <button
                                             type="button"
                                             className={css.sortButton}
-                                            onClick={() => handleSort(header.key)}
+                                            onClick={() => onSort(header.key, header.defaultSortDirection)}
                                         >
                                             {header.label}
                                             <span className={css.sortWrapper}>
                                                 <span
                                                     className={css.sortArrowCurrent}
-                                                    aria-label={sortState.key === header.key ? `${sortState.direction} sort` : undefined}
+                                                    aria-label={sort === header.key ? `${sortAscending ? "asc" : "desc"} sort` : undefined}
                                                 >
-                                                    {(() => {
-                                                        const CurrentArrow = sortState.key === header.key
-                                                            ? sortState.arrow
-                                                            : null;
-                                                        return CurrentArrow && <CurrentArrow />;
-                                                    })()}
+                                                    {sort === header.key && (sortAscending ? <ArrowUp /> : <ArrowDown />)}
                                                 </span>
                                                 <span
                                                     className={css.sortArrowNext}
                                                     aria-label="next sort"
                                                 >
                                                     {(() => {
-                                                        const NextArrow = getNextSortState(header).arrow;
+                                                        const NextArrow = getNextArrow(header);
                                                         return NextArrow && <NextArrow />;
                                                     })()}
                                                 </span>

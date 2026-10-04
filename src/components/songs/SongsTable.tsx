@@ -1,68 +1,61 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button, Card, Flex, Grid, IconButton, SegmentedControl, Switch, TextField } from "@radix-ui/themes";
-import { FilePlus, LayoutGrid, Search, Table2 } from "lucide-react";
+import { Button, Card, Flex, Grid, SegmentedControl, Switch } from "@radix-ui/themes";
+import { FilePlus, LayoutGrid, Table2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useDebounce } from "@uidotdev/usehooks";
 
 import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
-import Table            from "@/components/table/Table";
+import SearchInput from "@/components/search/SearchInput";
+import Table from "@/components/table/Table";
 import TableCell from "@/components/table/TableCell";
-import Pagination from "@/components/pagination/Pagination";
 
-import type { Profile, Song, SongsCollection, TableHeader } from "@/types";
+import type { Profile, Song, TableHeader } from "@/types";
 
 import css from "./SongsTable.module.css";
 
 const DISPLAY_TYPES = ["table", "grid"] as const;
 type DisplayType = typeof DISPLAY_TYPES[number];
-
 const icons: Record<DisplayType, LucideIcon> = {
     table: Table2,
     grid: LayoutGrid,
 };
 
 type SongsTableProps = {
-    collection: SongsCollection;
-    editControls?: boolean;
+    songs: Song[];
+    loading?: boolean;
+    error?: string | null;
+    searchValue: string;
+    onSearchChange: (value: string) => void;
+    onRemove?: (song: Song) => void;
+    onTogglePublic?: (song: Song, isPublic: boolean) => void;
+    onSort?: (column: string, defaultDirection?: "asc" | "desc") => void;
+    sort?: string;
+    sortAscending?: boolean;
+    showCreateSong?: boolean;
 };
 
-export default function SongsTable(props: SongsTableProps) {
-    return (
-        <Suspense fallback={<div>Loading songs...</div>}>
-            <SongsTableContent {...props} />
-        </Suspense>
-    );
-}
-
-function SongsTableContent({ collection: songsCollection, editControls = false }: SongsTableProps) {
-    const router = useRouter();
-    const searchParams = useSearchParams();
+export default function SongsTable({
+    songs,
+    loading = false,
+    error,
+    searchValue,
+    onSearchChange,
+    onRemove,
+    onTogglePublic,
+    onSort,
+    sort,
+    sortAscending = false,
+    showCreateSong = false
+}: SongsTableProps) {
     const [displayType, setDisplayType] = useState<DisplayType>("table");
-    const [searchValue, setSearchValue] = useState(songsCollection.search || "");
-    const debouncedSearch = useDebounce(searchValue, 500);
 
     useEffect(() => {
         if (window.innerWidth < 768) {
             setDisplayType("grid");
         }
     }, []);
-
-    useEffect(() => {
-        setSearchValue(songsCollection.search || "");
-    }, [songsCollection.search]);
-
-    useEffect(() => {
-        if (debouncedSearch === (songsCollection.search || "")) return;
-
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("search", debouncedSearch);
-        params.set("page", "1");
-        router.push(`?${params.toString()}`);
-    }, [debouncedSearch, router, searchParams, songsCollection.search]);
 
     const headers: TableHeader[] = [
         {
@@ -98,18 +91,20 @@ function SongsTableContent({ collection: songsCollection, editControls = false }
             sortable: true,
             defaultSortDirection: "desc"
         },
-        ...(editControls ? [
+        ...(onTogglePublic ? [
             {
                 label: "Public",
                 key: "is_public",
                 align: "center" as const,
-                render: (item: Song | Profile) => "is_public" in item ? (
+                render: (item: Song | Profile) => "title" in item ? (
                     <Switch
                         checked={item.is_public}
-                        onCheckedChange={(checked) => songsCollection.updateSong(item.id, { is_public: checked })}
+                        onCheckedChange={(checked) => onTogglePublic(item, checked)}
                     />
                 ) : null
-            },
+            }
+        ] : []),
+        ...(onRemove ? [
             {
                 label: "Actions",
                 key: "actions",
@@ -118,7 +113,7 @@ function SongsTableContent({ collection: songsCollection, editControls = false }
                     <DeleteSongDialog
                         songId={item.id}
                         title={item.title}
-                        onDelete={songsCollection.deleteSong}
+                        onDelete={() => onRemove(item)}
                     />
                 ) : null
             }
@@ -127,7 +122,7 @@ function SongsTableContent({ collection: songsCollection, editControls = false }
 
     const gridContent = displayType === "grid" ? (
         <Grid columns={{ initial: "1", sm: "2", md: "3" }} gap="4">
-            {songsCollection.songs.map((song) => (
+            {songs.map((song) => (
                 <Card className={css.card} key={song.id}>
                     {headers.map((header, index) => (
                         <div
@@ -143,7 +138,7 @@ function SongsTableContent({ collection: songsCollection, editControls = false }
         </Grid>
     ) : undefined;
 
-    const emptyState = editControls && songsCollection.total === 0 && (
+    const emptyState = showCreateSong && songs.length === 0 && (
         <Flex align="center" justify="center" direction="column" className={css.newSong}>
             <p>Create your first song!</p>
             <Button asChild variant="surface" color="violet" radius="full" size="3">
@@ -158,22 +153,11 @@ function SongsTableContent({ collection: songsCollection, editControls = false }
     return (
         <Flex gap="4" direction="column">
             <Flex gap="2" align="center" justify="between">
-                <Flex gap="2" align="center">
-                    <div className={css.searchWrapper}>
-                        <TextField.Root
-                            type="text"
-                            name="search"
-                            value={searchValue}
-                            placeholder="Search..."
-                            onChange={(event) => setSearchValue(event.target.value)}
-                            size="2"
-                        />
-                    </div>
-                    <IconButton variant="soft" color="gray" aria-label="Search songs">
-                        <Search />
-                    </IconButton>
-                </Flex>
-
+                <SearchInput
+                    value={searchValue}
+                    onChange={onSearchChange}
+                    ariaLabel="Search songs"
+                />
                 <SegmentedControl.Root
                     value={displayType}
                     onValueChange={(value) => setDisplayType(value as DisplayType)}
@@ -192,22 +176,18 @@ function SongsTableContent({ collection: songsCollection, editControls = false }
                 </SegmentedControl.Root>
             </Flex>
 
-            {songsCollection.error && <p className={css.error}>{songsCollection.error}</p>}
+            {error && <p className={css.error}>{error}</p>}
             {displayType === "grid" ? gridContent : (
                 <Table
                     headers={headers}
-                    items={songsCollection.songs}
-                    loading={songsCollection.loading}
-                    defaultSort="updated_at"
+                    items={songs}
+                    loading={loading}
+                    sort={sort}
+                    sortAscending={sortAscending}
+                    onSort={onSort}
                 />
             )}
-            {!songsCollection.loading && songsCollection.songs.length === 0 && emptyState}
-            <Pagination
-                currentPage={songsCollection.page}
-                totalPages={songsCollection.pages}
-                hasMore={songsCollection.hasMore}
-                setLoading={songsCollection.setLoading}
-            />
+            {!loading && songs.length === 0 && emptyState}
         </Flex>
     );
 }

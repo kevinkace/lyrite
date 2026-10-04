@@ -73,10 +73,19 @@ function UsersTableContent({ collection }: { collection: UsersCollection }) {
             {collection.error && <p className={css.error}>{collection.error}</p>}
             <Table headers={headers} items={collection.users} loading={collection.loading} />
             <Pagination
-                currentPage={collection.page}
+                currentPage={collection.page ?? 1}
                 totalPages={collection.pages}
                 hasMore={collection.hasMore}
-                setLoading={collection.setLoading}
+                onPageChange={(page) => {
+                    collection.setLoading(true);
+                    const params = new URLSearchParams(searchParams.toString());
+                    if (page === 1) {
+                        params.delete("page");
+                    } else {
+                        params.set("page", page.toString());
+                    }
+                    router.push(`?${params.toString()}`);
+                }}
             />
         </Flex>
     );

@@ -144,6 +144,8 @@ export type SongsContextType = {
     error: string | null;
     page?: number;
     search?: string;
+    sort?: string;
+    sortAscending?: boolean;
     hasMore: boolean;
     pages: number;
     total: number;
@@ -211,10 +213,10 @@ export type EditingContextType = {
 
 /* ---------- Pagination ---------- */
 export type PaginationProps = {
-    currentPage?: number;
-    totalPages?: number;
-    hasMore?: boolean;
-    setLoading?: (loading: boolean) => void;
+    currentPage: number;
+    totalPages: number;
+    hasMore: boolean;
+    onPageChange: (page: number) => void;
 };
 
 /* ---------- Radix UI ---------- */

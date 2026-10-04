@@ -45,6 +45,41 @@ SET
   tier_name = 'premium'
 WHERE id = 'ace29b57-c6e4-4d32-abc5-b97a2c96fbb5';
 
+-- Add a repeatable set of demo accounts with song counts ranging from zero to ten.
+INSERT INTO auth.users (
+  id,
+  email,
+  encrypted_password,
+  raw_user_meta_data,
+  is_sso_user,
+  is_anonymous,
+  created_at,
+  updated_at
+)
+SELECT
+  md5('lyrite-demo-user-' || generated.user_number::text)::uuid,
+  format('demo%s@example.com', lpad(generated.user_number::text, 2, '0')),
+  '$2a$10$dummy.password.hash.for.seed.user',
+  jsonb_build_object('full_name', format('Demo User %s', lpad(generated.user_number::text, 2, '0'))),
+  false,
+  false,
+  now(),
+  now()
+FROM generate_series(1, 15) AS generated(user_number)
+ON CONFLICT (id) DO UPDATE SET
+  email = EXCLUDED.email,
+  encrypted_password = EXCLUDED.encrypted_password,
+  raw_user_meta_data = EXCLUDED.raw_user_meta_data,
+  updated_at = EXCLUDED.updated_at;
+
+UPDATE public.profiles AS profile
+SET
+  full_name = format('Demo User %s', lpad(generated.user_number::text, 2, '0')),
+  username = NULL,
+  website = NULL
+FROM generate_series(1, 15) AS generated(user_number)
+WHERE profile.id = md5('lyrite-demo-user-' || generated.user_number::text)::uuid;
+
 -- The song row trigger derives user_id from auth.uid(), which is unavailable
 -- inside a local db reset seed transaction. Disable the trigger for this seed
 -- file and pass user_id explicitly in the INSERT rows.
@@ -478,6 +513,62 @@ Then hold me close and let it be.$$,
   $json$::jsonb,
   '{"columns": 2, "fontSize": 30, "fontFamily": "Georgia"}'::jsonb
 );
+
+WITH demo_users AS (
+  SELECT
+    generated.user_number,
+    (generated.user_number - 1) % 11 AS song_count,
+    md5('lyrite-demo-user-' || generated.user_number::text)::uuid AS user_id
+  FROM generate_series(1, 15) AS generated(user_number)
+)
+INSERT INTO public.songs (
+  id,
+  title,
+  artist,
+  is_public,
+  featured,
+  user_id,
+  slug,
+  lyrics,
+  lyrics_parsed,
+  style
+)
+SELECT
+  md5(format('lyrite-demo-song-%s-%s', demo_users.user_number, generated.song_number))::uuid,
+  format(
+    'Demo Song %s-%s',
+    lpad(demo_users.user_number::text, 2, '0'),
+    lpad(generated.song_number::text, 2, '0')
+  ),
+  format('Demo Artist %s', lpad(demo_users.user_number::text, 2, '0')),
+  true,
+  false,
+  demo_users.user_id,
+  format('demo-user-%s-song-%s',
+    lpad(demo_users.user_number::text, 2, '0'),
+    lpad(generated.song_number::text, 2, '0')
+  ),
+  format(
+    'Verse one of demo song %s-%s, a melody carried through the day.%s'
+    'Verse two brings a new refrain, and lets the final notes fade away.',
+    lpad(demo_users.user_number::text, 2, '0'),
+    lpad(generated.song_number::text, 2, '0'),
+    E'\n\n'
+  ),
+  NULL,
+  '{"columns": 2, "fontSize": 30, "fontFamily": "Georgia"}'::jsonb
+FROM demo_users
+CROSS JOIN LATERAL generate_series(1, demo_users.song_count) AS generated(song_number)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  artist = EXCLUDED.artist,
+  is_public = EXCLUDED.is_public,
+  featured = EXCLUDED.featured,
+  user_id = EXCLUDED.user_id,
+  slug = EXCLUDED.slug,
+  lyrics = EXCLUDED.lyrics,
+  lyrics_parsed = EXCLUDED.lyrics_parsed,
+  style = EXCLUDED.style;
 
 ALTER TABLE public.songs ENABLE TRIGGER on_song_insert;
 

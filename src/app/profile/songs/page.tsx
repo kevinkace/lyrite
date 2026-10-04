@@ -35,7 +35,7 @@ function ProfileSongsContent() {
             sortAscending={direction !== "desc"}
             pageSize={pageSize}
         >
-            <SongsTableContainer editControls />
+            <SongsTableContainer canEdit />
         </SongsProvider>
     );
 }

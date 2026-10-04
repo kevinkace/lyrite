@@ -7,6 +7,8 @@ import Layout from "@/components/layout/Layout";
 import SongsTableContainer from "@/components/songs/SongsTableContainer";
 import { SongsProvider } from "@/contexts/SongsContext";
 
+const pageSize = 10;
+
 function SongsPageContent() {
     const searchParams = useSearchParams();
     const page = parseInt(searchParams.get("page") ?? "1", 10);
@@ -25,6 +27,7 @@ function SongsPageContent() {
                     search={search}
                     sort={sort}
                     sortAscending={direction !== "desc"}
+                    pageSize={pageSize}
                 >
                     <SongsTableContainer />
                 </SongsProvider>
