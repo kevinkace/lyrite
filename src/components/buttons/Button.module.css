@@ -18,3 +18,30 @@
         text-decoration: underline;
     }
 }
+
+.itemLink {
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+
+    }
+}
+
+.songLink {
+    text-decoration: none;
+
+    &.songLinkStacked {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.itemTitle {
+    font-weight: bold;
+}
+
+.itemArtist {
+    font-size: 0.85em;
+    color: var(--color-text);
+}
