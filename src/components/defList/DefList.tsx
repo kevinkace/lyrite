@@ -1,7 +1,7 @@
 import { Text } from "@radix-ui/themes";
 import { clsx } from "clsx";
 
-import { formattedDate } from "@/lib/dates";
+import { DateDisplay } from "@/components/dates/DateDisplay";
 
 import  css from "./DefList.module.css";
 
@@ -10,9 +10,7 @@ export function DefList({ items }: { items: Array<{ key : string, label: string;
         <dl className={css.dl}>
             {items.map(({ key, label, value }) => {
 
-                if (key.includes("_at") && value) {
-                    value = formattedDate(value);
-                }
+                const dateType = key.includes("_at") && value;
 
                 return (
                     <div key={label} className={css.row}>
@@ -27,7 +25,8 @@ export function DefList({ items }: { items: Array<{ key : string, label: string;
                             {[css.id] : key === "id"}
                         )}>
                             <Text size="2">
-                                {String(value ?? "—")}
+                                {dateType && <DateDisplay style="long">{value}</DateDisplay>}
+                                {!dateType && String(value ?? "—")}
                             </Text>
                         </dd>
                     </div>

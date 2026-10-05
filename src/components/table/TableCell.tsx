@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 
-import { formattedDay } from "@/lib/dates";
+import { DateDisplay } from "@/components/dates/DateDisplay";
 
 import css from "./Table.module.css"
 
@@ -26,18 +26,22 @@ export default function TableCell({
         right: css.alignRight
     }[align];
 
+    // Lyrics
     if (typeof content === "string" && header.truncate && content.length > header.truncate) {
         content = content.slice(0, header.truncate) + "...";
     }
 
+    // dates
     if (header.type === "date" && typeof content === "string") {
-        content = formattedDay(content);
+        content = <DateDisplay style="long">{content}</DateDisplay>;
     }
 
+    // actions, buttons, switches
     if (header.render) {
         return <div key={key} className={alignClass}>{header.render(item)}</div>;
     }
 
+    // links
     if (header.href) {
         return <Link key={key} href={header.href(item)}>
             {content}

@@ -10,7 +10,7 @@ import { useUser }       from "@/contexts/UserContext";
 import SongsTableContainer from "@/components/songs/SongsTableContainer";
 import { Avatar }          from "@/components/user/Avatar";
 
-import { formattedDay }      from "@/lib/dates";
+import { DateDisplay }      from "@/components/dates/DateDisplay";
 import { normalizePageSize } from "@/lib/pagination";
 
 import css from "./page.module.css";
@@ -41,8 +41,8 @@ function UserSongsPageContent() {
           <div>
             <h1 className={css.userName}>{profile?.username || profile?.full_name}</h1>
             <Flex gap="3" className={css.profileStats}>
-              <div>joined: {formattedDay(profile?.created_at)}</div>
-              <div>last seen: {formattedDay(profile?.updated_at)}</div>
+              <div>joined: <DateDisplay>{profile?.created_at}</DateDisplay></div>
+              <div>last seen: <DateDisplay>{profile?.updated_at}</DateDisplay></div>
             </Flex>
           </div>
         </Flex>
