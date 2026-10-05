@@ -187,7 +187,6 @@ export default function SongsTable({
                     onSort={onSort}
                 />)
             }
-            test
 
             {!loading && songs.length === 0 && emptyState}
         </Flex>
