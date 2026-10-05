@@ -144,6 +144,8 @@ export type SongsContextType = {
     error: string | null;
     page?: number;
     search?: string;
+    sort?: string;
+    sortAscending?: boolean;
     hasMore: boolean;
     pages: number;
     total: number;
@@ -211,10 +213,10 @@ export type EditingContextType = {
 
 /* ---------- Pagination ---------- */
 export type PaginationProps = {
-    currentPage?: number;
-    totalPages?: number;
-    hasMore?: boolean;
-    setLoading?: (loading: boolean) => void;
+    currentPage: number;
+    totalPages: number;
+    hasMore: boolean;
+    onPageChange: (page: number) => void;
 };
 
 /* ---------- Radix UI ---------- */
@@ -229,9 +231,7 @@ export type TableHeader = {
     defaultSortDirection?: "asc" | "desc";
     align?: "left" | "center" | "right";
     href?: (item: Song | Profile) => string;
-    type?: "date" | "check" | "id";
-    update?: (item: Song | Profile, header: TableHeader) => (value: any) => void;
-    actions?: {
-        [actionName: string]: (item: Song | Profile, key: string) => ReactNode;
-    };
+    type?: "date" | "id";
+    truncate?: number;
+    render?: (item: Song | Profile) => ReactNode;
 };

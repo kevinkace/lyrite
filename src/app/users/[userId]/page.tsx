@@ -1,35 +1,63 @@
 "use client";
 
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { Card, Flex } from "@radix-ui/themes";
 
-import { useUser } from "@/contexts/UserContext";
+import { SongsProvider } from "@/contexts/SongsContext";
+import { useUser }       from "@/contexts/UserContext";
 
-import SongsTable from "@/components/songs/SongsTable";
-import { Avatar } from "@/components/user/Avatar";
+import SongsTableContainer from "@/components/songs/SongsTableContainer";
+import { Avatar }          from "@/components/user/Avatar";
 
-import { formattedDay } from "@/lib/dates";
+import { DateDisplay }      from "@/components/dates/DateDisplay";
+import { normalizePageSize } from "@/lib/pagination";
 
 import css from "./page.module.css";
 
 export default function UserSongsPage() {
-  const { profile } = useUser();
+  return (
+    <Suspense fallback={<div>Loading user songs...</div>}>
+      <UserSongsPageContent />
+    </Suspense>
+  );
+}
+
+function UserSongsPageContent() {
+  const { id, profile } = useUser();
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get("page") ?? "1", 10);
+  const pageSize = normalizePageSize(searchParams.get("pageSize"));
+  const search = searchParams.get("search") ?? "";
+  const sortParam = searchParams.get("sort");
+  const sort = sortParam === "none" ? "" : sortParam ?? undefined;
+  const direction = searchParams.get("direction");
 
   return (
     <>
-    <Card size="3" className={css.profileCard}>
-      <Flex gap="5" align="center">
-        <Avatar profile={profile} size="7" />
-        <div>
-          <h1 className={css.userName}>{profile?.username || profile?.full_name}</h1>
-          <Flex gap="3" className={css.profileStats}>
-            <div>joined: {formattedDay(profile?.created_at)}</div>
-            <div>last seen: {formattedDay(profile?.updated_at)}</div>
-          </Flex>
-        </div>
-      </Flex>
-    </Card>
+      <Card size="3" className={css.profileCard}>
+        <Flex gap="5" align="center">
+          <Avatar profile={profile} size="7" />
+          <div>
+            <h1 className={css.userName}>{profile?.username || profile?.full_name}</h1>
+            <Flex gap="3" className={css.profileStats}>
+              <div>joined: <DateDisplay>{profile?.created_at}</DateDisplay></div>
+              <div>last seen: <DateDisplay>{profile?.updated_at}</DateDisplay></div>
+            </Flex>
+          </div>
+        </Flex>
+      </Card>
 
-      <SongsTable />
+      <SongsProvider
+        userId={id ?? undefined}
+        page={page}
+        pageSize={pageSize}
+        search={search}
+        sort={sort}
+        sortAscending={direction !== "desc"}
+      >
+        <SongsTableContainer />
+      </SongsProvider>
     </>
   );
 }

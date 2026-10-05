@@ -1,0 +1,43 @@
+.card {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 0;
+  background: #2224;
+}
+
+.cardHeader {
+  padding: var(--space-2) var(--space-4) var(--space-1);
+  background: #0003;
+  text-decoration: none;
+  color: inherit;
+
+  > * {
+    transition: transform 200ms;
+  }
+
+  &:hover {
+    background: #0006;
+    > * {
+      transform: translateX(0.3em);
+    }
+  }
+}
+
+.cardContent {
+  padding: var(--space-3) var(--space-4);
+
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.cardFooter {
+
+  background: #0003;
+  padding: var(--space-2) var(--space-4) var(--space-2);
+}
+
+.dates {
+  margin-top: 0.7em;
+  opacity: 0.8;
+  font-size: 0.9em;
+}

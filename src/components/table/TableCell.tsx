@@ -1,25 +1,22 @@
 "use client";
 
-import Link from "next/link";
-import { Switch, Flex } from "@radix-ui/themes";
+import type { ReactNode } from "react";
 
-import { formattedDay } from "@/lib/dates";
+import { DateDisplay } from "@/components/dates/DateDisplay";
+import { ItemLink } from "@/components/buttons/ItemLink";
 
 import css from "./Table.module.css"
 
 import { Song, Profile, TableHeader } from "@/types";
 
-const MAX_LYRIC_LEN = 200;
 export default function TableCell({
     item,
-    header,
-    label = false
+    header
 }: {
     item: Song | Profile;
     header: TableHeader;
-    label?: boolean;
 }) {
-    let content = (item as any)[header.key];
+    let content: ReactNode = (item as unknown as Record<string, ReactNode>)[header.key];
 
     const key = header.key + item.id;
     const align = header.align || "left";
@@ -29,49 +26,26 @@ export default function TableCell({
         right: css.alignRight
     }[align];
 
-    if (header.key === "lyrics" && content.length > MAX_LYRIC_LEN) {
-        content = content.slice(0, MAX_LYRIC_LEN) + "..."
+    // Lyrics
+    if (typeof content === "string" && header.truncate && content.length > header.truncate) {
+        content = content.slice(0, header.truncate) + "...";
     }
 
-    if (header.type === "date") {
-        content = formattedDay(content);
+    // dates
+    if (header.type === "date" && typeof content === "string") {
+        content = <DateDisplay style="long">{content}</DateDisplay>;
     }
 
+    // actions, buttons, switches
+    if (header.render) {
+        return <div key={key} className={alignClass}>{header.render(item)}</div>;
+    }
+
+    // links
     if (header.href) {
-        return <Link key={key} href={header.href(item)}>
+        return <ItemLink key={key} href={header.href(item)}>
             {content}
-        </Link>;
-    }
-
-    if (header.type === "check" && header.update) {
-        const SwitchEl = () => (<Switch
-            key={key}
-            checked={content}
-            onCheckedChange={header.update?.(item, header)}
-        />);
-
-        if (label) {
-            return (<Flex asChild align="center" gap="3">
-                <label>
-                    <SwitchEl />
-                    <span className={css.switchLabel}>{header.label}</span>
-                </label>
-            </Flex>);
-        }
-
-        return (
-            <div key={key} className={alignClass}>
-                <SwitchEl />
-            </div>
-        );
-    }
-
-    if (header.actions) {
-        return (
-            <div key={key} className={alignClass}>
-                {Object.entries(header.actions).map(([actionName, action]) => action(item, key))}
-            </div>
-        );
+        </ItemLink>;
     }
 
     if (header.type === "id") {

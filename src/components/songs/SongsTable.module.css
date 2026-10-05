@@ -1,6 +1,8 @@
 .wrapper {
 }
 
+
+
 .table {
   width: 100%;
   margin-top: 1rem;
@@ -24,24 +26,14 @@
   line-height: 1;
 }
 
-.error {
-  margin-bottom: 1rem;
-}
+.displayTypeToggle {
+  svg {
+    height: 1.4em;
+  }
 
-.pagination {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.pagination button {
-  padding: 0.4rem 0.8rem;
-  border: 1px solid #ccc;
-  background: #f9f9f9;
-  cursor: pointer;
-}
-
-.pagination button:hover {
-  background: #eee;
+  :global(.rt-SegmentedControlItemLabel) {
+    padding: var(--space-1) var(--space-2);
+  }
 }
 
 .newSong {

@@ -1,4 +1,3 @@
-// components/LoadingGate.tsx
 "use client";
 
 import { useEffect } from "react";

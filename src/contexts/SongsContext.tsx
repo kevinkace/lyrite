@@ -9,6 +9,8 @@ import type { Song, SongsContextType, SongsProviderProps } from "@/types";
 const SongsContext = createContext<SongsContextType | undefined>(undefined);
 
 export function SongsProvider(props: SongsProviderProps) {
+    const sort = props.sort === undefined ? "updated_at" : props.sort;
+    const sortAscending = props.sort === undefined ? false : props.sortAscending ?? true;
     const {
         items: songs,
         loading,
@@ -41,6 +43,8 @@ export function SongsProvider(props: SongsProviderProps) {
                 error,
                 page: props.page,
                 search: props.search,
+                sort,
+                sortAscending,
                 hasMore,
                 pages,
                 total,

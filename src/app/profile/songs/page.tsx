@@ -2,17 +2,21 @@
 
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+
 import { SongsProvider } from "@/contexts/SongsContext";
 import { useAuth }       from "@/contexts/AuthContext";
-import SongsTable from "@/components/songs/SongsTable";
 
-const pageSize = 10;
+import SongsTableContainer from "@/components/songs/SongsTableContainer";
+
+import { normalizePageSize } from "@/lib/pagination";
 
 function ProfileSongsContent() {
     const { user, loading } = useAuth();
     const searchParams = useSearchParams();
 
     const page = parseInt(searchParams.get("page") ?? "1", 10);
+    const pageSize = normalizePageSize(searchParams.get("pageSize"));
+
     const search = searchParams.get("search") ?? "";
     const sortParam = searchParams.get("sort");
     const sort = sortParam === "none" ? "" : sortParam ?? undefined;
@@ -35,7 +39,7 @@ function ProfileSongsContent() {
             sortAscending={direction !== "desc"}
             pageSize={pageSize}
         >
-            <SongsTable editControls />
+            <SongsTableContainer canEdit />
         </SongsProvider>
     );
 }

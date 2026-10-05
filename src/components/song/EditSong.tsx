@@ -7,21 +7,21 @@ import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 
 import { useSong }    from "@/contexts/SongContext";
-import { useLayout }  from "@/contexts/LayoutContext";
 import { useEditing } from "@/contexts/EditingContext";
 import { useAuth }    from "@/contexts/AuthContext";
+import { useLayout }  from "@/contexts/LayoutContext";
 
 import { getfontFamilyCSS } from "@/lib/fonts";
 
 import Toolbar from "@/components/song/Toolbar";
-import {SaveIcon } from "@/components/icons/SaveIcon";
+import { SaveIcon } from "@/components/icons/SaveIcon";
 
 import css from "./EditSong.module.css";
 
 export default function EditSong() {
     const { song, loading, saveSong, dirty } = useSong();
     const { user } = useAuth();
-    const { setHeaderContent, setHeaderUserContent, startLoading, stopLoading } = useLayout();
+    const { setHeaderContent, setHeaderUserContent } = useLayout();
     const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
 
     const isOwner = !!song && !!user && song.user_id === user.id;
@@ -46,12 +46,6 @@ export default function EditSong() {
     }, [dirty, saveSong, song]);
 
     useEffect(() => {
-        if (loading) {
-            startLoading();
-        } else {
-            stopLoading();
-        }
-
         if (loading || !song) {
             setHeaderContent(null);
             setHeaderUserContent(null);
@@ -94,7 +88,7 @@ export default function EditSong() {
             setHeaderContent(null);
             setHeaderUserContent(null);
         };
-    }, [dirty, isOwner, loading, saveStatus, selectedColor, setHeaderContent, setHeaderUserContent, setSelectedColor, showTools, song, startLoading, stopLoading]);
+    }, [dirty, isOwner, loading, saveStatus, selectedColor, setHeaderContent, setHeaderUserContent, setSelectedColor, showTools, song ]);
 
     if (loading) return <p>Loading…</p>;
     if (!song) return <p>Song not found</p>;

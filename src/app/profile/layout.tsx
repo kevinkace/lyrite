@@ -16,7 +16,6 @@ import { PanelRightOpen } from "lucide-react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import { useLayout } from "@/contexts/LayoutContext";
 import { useAuth }   from "@/contexts/AuthContext";
 
 import { userLinks } from "@/data/consts";
@@ -29,24 +28,12 @@ import css from "./layout.module.css";
 
 export default function ProfileLayout({ children }: { children: React.ReactNode; }) {
     const { user, loading } = useAuth();
-    const { startLoading, stopLoading } = useLayout();
     const router = useRouter();
     const currentPath = usePathname();
 
     const [ showMobileNav, setShowMobileNav ] = useState(false);
 
     const pageTitle = userLinks.find(link => link.href === currentPath)?.label || "Profile";
-
-    useEffect(() => {
-        if (loading) {
-            startLoading();
-        } else {
-            stopLoading();
-        }
-        return () => {
-            stopLoading();
-        };
-    }, [loading]);
 
     useEffect(() => {
         if (!loading && !user) {

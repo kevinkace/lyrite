@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 type LayoutContextType = {
   headerContent: ReactNode;
@@ -8,11 +8,6 @@ type LayoutContextType = {
 
   headerUserContent: ReactNode;
   setHeaderUserContent: (content: ReactNode) => void;
-
-  isLoading: boolean;
-  startLoading: () => void;
-  stopLoading: () => void;
-  stopLoadingAll: () => void;
 }
 
 const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
@@ -21,14 +16,6 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
   const [headerContent, setHeaderContent] = useState<ReactNode>(null);
   const [headerUserContent, setHeaderUserContent] = useState<ReactNode>(null);
 
-  const [loadingCount, setLoadingCount] = useState(0);
-
-  const startLoading = useCallback(() => setLoadingCount((count) => count + 1), []);
-  const stopLoading = useCallback(() => setLoadingCount((count) => Math.max(0, count - 1)), []);
-  const stopLoadingAll = useCallback(() => setLoadingCount(0), []);
-
-  const isLoading = loadingCount > 0;
-
   return (
     <LayoutContext.Provider value={{
       headerContent,
@@ -36,11 +23,6 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
 
       headerUserContent,
       setHeaderUserContent,
-
-      isLoading,
-      startLoading,
-      stopLoading,
-      stopLoadingAll
     }}>
       {children}
     </LayoutContext.Provider>

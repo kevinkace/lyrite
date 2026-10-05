@@ -1,14 +1,35 @@
 "use client";
 
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+
 import UsersTable from "@/components/user/UsersTable";
+
 import { UsersProvider } from "@/contexts/UsersContext";
 
-export default function UsersPage() {
+import { normalizePageSize } from "@/lib/pagination";
+
+function UsersPageContent() {
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get("page") ?? "1", 10);
+  const pageSize = normalizePageSize(searchParams.get("pageSize"));
+  const search = searchParams.get("search") ?? "";
+  const sortParam = searchParams.get("sort");
+  const sort = sortParam === "none" ? undefined : sortParam ?? undefined;
+  const direction = searchParams.get("direction");
 
   return (
-    <UsersProvider page={0} search="" pageSize={20}>
+    <UsersProvider page={page} search={search} sort={sort} sortAscending={direction !== "desc"} pageSize={pageSize}>
         <h1>Users</h1>
         <UsersTable />
     </UsersProvider>
+  );
+}
+
+export default function UsersPage() {
+  return (
+    <Suspense fallback={<div>Loading users...</div>}>
+      <UsersPageContent />
+    </Suspense>
   );
 }
