@@ -6,7 +6,7 @@
 }
 
 .cardHeader {
-  padding: var(--space-3);
+  padding: var(--space-2) var(--space-4) var(--space-1);
   background: #0003;
   text-decoration: none;
   color: inherit;
@@ -23,15 +23,15 @@
   }
 }
 
-.cardField {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding: var(--space-2) var(--space-3);
+.cardContent {
+  padding: var(--space-3) var(--space-4);
+
+  font-size: 0.9em;
+  opacity: 0.8;
 }
 
-.cardLabel {
-  color: var(--gray-11);
-  font-size: var(--font-size-1);
+.dates {
+  margin-top: 0.7em;
+  opacity: 0.8;
+  font-size: 0.9em;
 }
