@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase/client";
+
+import { supabase }          from "@/lib/supabase/client";
+import { DEFAULT_PAGE_SIZE } from "@/lib/pagination";
 
 type UseSupabaseCollectionOptions<T> = {
     table: string;
@@ -22,7 +24,7 @@ export function useSupabaseCollection<T extends { id: string }>({
     userId,
     ids,
     page = 0,
-    pageSize = 20,
+    pageSize = DEFAULT_PAGE_SIZE,
     search,
     initialData = [],
     searchColumn = "title",

@@ -1,19 +1,33 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useDebounce } from "@uidotdev/usehooks";
 
 import Pagination from "@/components/pagination/Pagination";
 import SongsTable from "@/components/songs/SongsTable";
 
 import { useSongs } from "@/contexts/SongsContext";
 
+import { useTableSearch } from "@/hooks/useTableSearch";
+
+import {
+    createPageChangeHandler,
+    createPageSizeChangeHandler,
+    normalizePageSize
+} from "@/lib/pagination";
+
 import type { Song } from "@/types";
 
 type SongsTableContainerProps = {
     canEdit?: boolean;
 };
+
+/**
+ * controller/adapter layer
+ * pageSize, handlers for sort, pageSize, delete, is public
+ * pulls songs from useSongs
+ * passes a bag of props to tables
+ */
 
 export default function SongsTableContainer({ canEdit = false }: SongsTableContainerProps) {
     return (
@@ -27,21 +41,8 @@ function SongsTableContainerContent({ canEdit }: SongsTableContainerProps) {
     const collection = useSongs();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [searchValue, setSearchValue] = useState(collection.search || "");
-    const debouncedSearch = useDebounce(searchValue, 500);
-
-    useEffect(() => {
-        setSearchValue(collection.search || "");
-    }, [collection.search]);
-
-    useEffect(() => {
-        if (debouncedSearch === (collection.search || "")) return;
-
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("search", debouncedSearch);
-        params.set("page", "1");
-        router.push(`?${params.toString()}`);
-    }, [collection.search, debouncedSearch, router, searchParams]);
+    const pageSize = normalizePageSize(searchParams.get("pageSize"));
+    const { searchValue, setSearchValue } = useTableSearch(collection.search);
 
     const handleSort = (column: string, defaultDirection: "asc" | "desc" = "asc") => {
         const isCurrentSort = collection.sort === column;
@@ -64,17 +65,17 @@ function SongsTableContainerContent({ canEdit }: SongsTableContainerProps) {
         router.push(`?${params.toString()}`);
     };
 
-    const handlePageChange = (page: number) => {
-        collection.setLoading(true);
+    const handlePageChange = createPageChangeHandler(
+        searchParams.toString(),
+        collection.setLoading,
+        router.push
+    );
 
-        const params = new URLSearchParams(searchParams.toString());
-        if (page === 1) {
-            params.delete("page");
-        } else {
-            params.set("page", page.toString());
-        }
-        router.push(`?${params.toString()}`);
-    };
+    const handlePageSizeChange = createPageSizeChangeHandler(
+        searchParams.toString(),
+        collection.setLoading,
+        router.push
+    );
 
     const handleRemove = (song: Song) => collection.deleteSong(song.id);
     const handleTogglePublic = (song: Song, isPublic: boolean) =>
@@ -94,6 +95,8 @@ function SongsTableContainerContent({ canEdit }: SongsTableContainerProps) {
                 sort={collection.sort}
                 sortAscending={collection.sortAscending}
                 showCreateSong={canEdit}
+                pageSize={pageSize}
+                onPageSizeChange={handlePageSizeChange}
             />
             {collection.page !== undefined && (
                 <Pagination

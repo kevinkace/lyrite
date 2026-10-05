@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button, Card, Flex, Grid, SegmentedControl, Switch } from "@radix-ui/themes";
+import { Button, Flex, SegmentedControl, Switch } from "@radix-ui/themes";
 import { FilePlus, LayoutGrid, Table2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
-import SearchInput from "@/components/search/SearchInput";
-import Table from "@/components/table/Table";
-import TableCell from "@/components/table/TableCell";
+import SearchInput      from "@/components/search/SearchInput";
+import Table            from "@/components/table/Table";
+import SongsGrid        from "@/components/songs/SongsGrid";
+import PageSize         from "@/components/pagination/PageSize";
 
 import type { Profile, Song, TableHeader } from "@/types";
 
@@ -34,8 +35,15 @@ type SongsTableProps = {
     sort?: string;
     sortAscending?: boolean;
     showCreateSong?: boolean;
+    pageSize: number;
+    onPageSizeChange: (pageSize: number) => void;
 };
 
+/***
+ * UI layer
+ * table vs grid vs empty
+ * headers, sorting handlers, search
+ */
 export default function SongsTable({
     songs,
     loading = false,
@@ -47,7 +55,9 @@ export default function SongsTable({
     onSort,
     sort,
     sortAscending = false,
-    showCreateSong = false
+    showCreateSong = false,
+    pageSize,
+    onPageSizeChange
 }: SongsTableProps) {
     const [displayType, setDisplayType] = useState<DisplayType>("table");
 
@@ -121,21 +131,7 @@ export default function SongsTable({
     ];
 
     const gridContent = displayType === "grid" ? (
-        <Grid columns={{ initial: "1", sm: "2", md: "3" }} gap="4">
-            {songs.map((song) => (
-                <Card className={css.card} key={song.id}>
-                    {headers.map((header, index) => (
-                        <div
-                            key={header.key + song.id}
-                            className={index === 0 ? css.cardHeader : css.cardField}
-                        >
-                            {index > 0 && <span className={css.cardLabel}>{header.label}</span>}
-                            <TableCell item={song} header={header} />
-                        </div>
-                    ))}
-                </Card>
-            ))}
-        </Grid>
+       <SongsGrid songs={songs} headers={headers} />
     ) : undefined;
 
     const emptyState = showCreateSong && songs.length === 0 && (
@@ -177,16 +173,22 @@ export default function SongsTable({
             </Flex>
 
             {error && <p className={css.error}>{error}</p>}
-            {displayType === "grid" ? gridContent : (
-                <Table
+
+            <PageSize pageSize={pageSize} onPageSizeChange={onPageSizeChange} />
+
+            {displayType === "grid" ?
+                gridContent :
+                (<Table
                     headers={headers}
                     items={songs}
                     loading={loading}
                     sort={sort}
                     sortAscending={sortAscending}
                     onSort={onSort}
-                />
-            )}
+                />)
+            }
+            test
+
             {!loading && songs.length === 0 && emptyState}
         </Flex>
     );

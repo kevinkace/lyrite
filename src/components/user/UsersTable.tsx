@@ -1,18 +1,31 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useDebounce } from "@uidotdev/usehooks";
-import { Flex, IconButton, TextField } from "@radix-ui/themes";
-import { Search } from "lucide-react";
+import { Flex } from "@radix-ui/themes";
 
 import { useUsers } from "@/contexts/UsersContext";
 
-import Table from "@/components/table/Table";
-import Pagination from "@/components/pagination/Pagination";
+import { useTableSearch } from "@/hooks/useTableSearch";
+
+import Table       from "@/components/table/Table";
+import Pagination  from "@/components/pagination/Pagination";
+import PageSize    from "@/components/pagination/PageSize";
+import SearchInput from "@/components/search/SearchInput";
+
 import css from "@/components/table/Table.module.css";
 
+import {
+    createPageChangeHandler,
+    createPageSizeChangeHandler,
+    normalizePageSize
+} from "@/lib/pagination";
+
 import type { TableHeader, UsersCollection } from "@/types";
+
+/**
+ *
+ */
 
 export default function UsersTable() {
     const collection = useUsers();
@@ -27,21 +40,18 @@ export default function UsersTable() {
 function UsersTableContent({ collection }: { collection: UsersCollection }) {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [searchValue, setSearchValue] = useState(collection.search || "");
-    const debouncedSearch = useDebounce(searchValue, 500);
-
-    useEffect(() => {
-        setSearchValue(collection.search || "");
-    }, [collection.search]);
-
-    useEffect(() => {
-        if (debouncedSearch === (collection.search || "")) return;
-
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("search", debouncedSearch);
-        params.set("page", "1");
-        router.push(`?${params.toString()}`);
-    }, [collection.search, debouncedSearch, router, searchParams]);
+    const pageSize = normalizePageSize(searchParams.get("pageSize"));
+    const handlePageChange = createPageChangeHandler(
+        searchParams.toString(),
+        collection.setLoading,
+        router.push
+    );
+    const handlePageSizeChange = createPageSizeChangeHandler(
+        searchParams.toString(),
+        collection.setLoading,
+        router.push
+    );
+    const { searchValue, setSearchValue } = useTableSearch(collection.search);
 
     const headers: TableHeader[] = [
         {
@@ -55,37 +65,23 @@ function UsersTableContent({ collection }: { collection: UsersCollection }) {
 
     return (
         <Flex gap="4" direction="column">
-            <Flex gap="2" align="center">
-                <div className={css.searchWrapper}>
-                    <TextField.Root
-                        type="text"
-                        name="search"
-                        value={searchValue}
-                        placeholder="Search..."
-                        onChange={(event) => setSearchValue(event.target.value)}
-                        size="2"
-                    />
-                </div>
-                <IconButton variant="soft" color="gray" aria-label="Search users">
-                    <Search />
-                </IconButton>
-            </Flex>
+            <SearchInput
+                value={searchValue}
+                onChange={setSearchValue}
+                ariaLabel="Search users"
+            />
+
             {collection.error && <p className={css.error}>{collection.error}</p>}
+
+            <PageSize pageSize={pageSize} onPageSizeChange={handlePageSizeChange} />
+
             <Table headers={headers} items={collection.users} loading={collection.loading} />
+
             <Pagination
                 currentPage={collection.page ?? 1}
                 totalPages={collection.pages}
                 hasMore={collection.hasMore}
-                onPageChange={(page) => {
-                    collection.setLoading(true);
-                    const params = new URLSearchParams(searchParams.toString());
-                    if (page === 1) {
-                        params.delete("page");
-                    } else {
-                        params.set("page", page.toString());
-                    }
-                    router.push(`?${params.toString()}`);
-                }}
+                onPageChange={handlePageChange}
             />
         </Flex>
     );
