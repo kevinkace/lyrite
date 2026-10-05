@@ -3,7 +3,6 @@
 import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import Pagination from "@/components/pagination/Pagination";
 import SongsTable from "@/components/songs/SongsTable";
 
 import { useSongs } from "@/contexts/SongsContext";
@@ -87,25 +86,26 @@ function SongsTableContainerContent({ canEdit }: SongsTableContainerProps) {
                 songs={collection.songs}
                 loading={collection.loading}
                 error={collection.error}
+
                 searchValue={searchValue}
                 onSearchChange={setSearchValue}
+
                 onRemove={canEdit ? handleRemove : undefined}
                 onTogglePublic={canEdit ? handleTogglePublic : undefined}
+
                 onSort={handleSort}
                 sort={collection.sort}
                 sortAscending={collection.sortAscending}
+
                 showCreateSong={canEdit}
+
                 pageSize={pageSize}
+                currentPage={collection.page}
+                totalPages={collection.pages}
+                hasMore={collection.hasMore}
                 onPageSizeChange={handlePageSizeChange}
+                onPageChange={handlePageChange}
             />
-            {collection.page !== undefined && (
-                <Pagination
-                    currentPage={collection.page}
-                    totalPages={collection.pages}
-                    hasMore={collection.hasMore}
-                    onPageChange={handlePageChange}
-                />
-            )}
         </>
     );
 }

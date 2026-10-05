@@ -12,6 +12,7 @@ type PageSizeProps = {
 export default function PageSize({ pageSize, onPageSizeChange }: PageSizeProps) {
     return (
         <Flex align="center" gap="2">
+            show:
             <Select.Root
                 value={pageSize.toString()}
                 onValueChange={(value) => onPageSizeChange(Number(value))}

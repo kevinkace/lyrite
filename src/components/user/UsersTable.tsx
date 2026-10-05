@@ -9,11 +9,10 @@ import { useUsers } from "@/contexts/UsersContext";
 import { useTableSearch } from "@/hooks/useTableSearch";
 
 import Table       from "@/components/table/Table";
+import TableError  from "@/components/table/TableError";
 import Pagination  from "@/components/pagination/Pagination";
 import PageSize    from "@/components/pagination/PageSize";
 import SearchInput from "@/components/search/SearchInput";
-
-import css from "@/components/table/Table.module.css";
 
 import {
     createPageChangeHandler,
@@ -59,21 +58,31 @@ function UsersTableContent({ collection }: { collection: UsersCollection }) {
             key: "full_name",
             href: (user) => `/users/${user.id}`
         },
-        { label: "ID", key: "id", type: "id" as const },
-        { label: "Joined", key: "created_at", type: "date" as const }
+        {
+            label: "ID",
+            key: "id",
+            type: "id" as const
+        },
+        {
+            label: "Joined",
+            key: "created_at",
+            type: "date" as const
+        }
     ];
 
     return (
         <Flex gap="4" direction="column">
-            <SearchInput
-                value={searchValue}
-                onChange={setSearchValue}
-                ariaLabel="Search users"
-            />
+            <Flex gap="2" align="center" justify="between">
+                <SearchInput
+                    value={searchValue}
+                    onChange={setSearchValue}
+                    ariaLabel="Search users"
+                />
 
-            {collection.error && <p className={css.error}>{collection.error}</p>}
+                <PageSize pageSize={pageSize} onPageSizeChange={handlePageSizeChange} />
+            </Flex>
 
-            <PageSize pageSize={pageSize} onPageSizeChange={handlePageSizeChange} />
+            {collection.error && <TableError>{collection.error}</TableError>}
 
             <Table headers={headers} items={collection.users} loading={collection.loading} />
 

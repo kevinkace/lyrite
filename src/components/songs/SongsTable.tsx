@@ -2,16 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button, Flex, SegmentedControl, Switch } from "@radix-ui/themes";
+import { Button, Flex, SegmentedControl, Separator } from "@radix-ui/themes";
 import { FilePlus, LayoutGrid, Table2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import DeleteSongDialog from "@/components/deleteSongDialog/DeleteSongDialog";
 import SearchInput      from "@/components/search/SearchInput";
 import Table            from "@/components/table/Table";
+import TableError       from "@/components/table/TableError";
 import SongsGrid        from "@/components/songs/SongsGrid";
 import PageSize         from "@/components/pagination/PageSize";
 import PublicSwitch     from "@/components/publicSwitch/PublicSwitch";
+import Pagination       from "@/components/pagination/Pagination";
 
 import type { Profile, Song, TableHeader } from "@/types";
 
@@ -38,6 +40,10 @@ type SongsTableProps = {
     showCreateSong?: boolean;
     pageSize: number;
     onPageSizeChange: (pageSize: number) => void;
+    onPageChange: () => void;
+    currentPage: number;
+    hasMore: boolean;
+    totalPage: number;
 };
 
 /***
@@ -58,7 +64,11 @@ export default function SongsTable({
     sortAscending = false,
     showCreateSong = false,
     pageSize,
-    onPageSizeChange
+    onPageSizeChange,
+    onPageChange,
+    currentPage,
+    hasMore,
+    totalPages
 }: SongsTableProps) {
     const [displayType, setDisplayType] = useState<DisplayType>("table");
 
@@ -168,27 +178,32 @@ export default function SongsTable({
                     onChange={onSearchChange}
                     ariaLabel="Search songs"
                 />
-                <SegmentedControl.Root
-                    value={displayType}
-                    onValueChange={(value) => setDisplayType(value as DisplayType)}
-                    className={css.displayTypeToggle}
-                >
-                    {DISPLAY_TYPES.map((type) => {
-                        const Icon = icons[type];
-                        return (
-                            <SegmentedControl.Item value={type} key={type}>
-                                <Flex align="center" justify="center">
-                                    <Icon />
-                                </Flex>
-                            </SegmentedControl.Item>
-                        );
-                    })}
-                </SegmentedControl.Root>
+
+                <Flex gap="2" align="center">
+                    <PageSize pageSize={pageSize} onPageSizeChange={onPageSizeChange} />
+
+                    <Separator orientation="vertical" size="1" />
+
+                    <SegmentedControl.Root
+                        value={displayType}
+                        onValueChange={(value) => setDisplayType(value as DisplayType)}
+                        className={css.displayTypeToggle}
+                    >
+                        {DISPLAY_TYPES.map((type) => {
+                            const Icon = icons[type];
+                            return (
+                                <SegmentedControl.Item value={type} key={type}>
+                                    <Flex align="center" justify="center">
+                                        <Icon />
+                                    </Flex>
+                                </SegmentedControl.Item>
+                            );
+                        })}
+                    </SegmentedControl.Root>
+                </Flex>
             </Flex>
 
-            {error && <p className={css.error}>{error}</p>}
-
-            <PageSize pageSize={pageSize} onPageSizeChange={onPageSizeChange} />
+            {error && <TableError>{error}</TableError>}
 
             {displayType === "grid" ?
                 (<SongsGrid
@@ -206,6 +221,13 @@ export default function SongsTable({
                     onSort={onSort}
                 />)
             }
+
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                hasMore={hasMore}
+                onPageChange={onPageChange}
+            />
 
             {!loading && songs.length === 0 && emptyState}
         </Flex>
