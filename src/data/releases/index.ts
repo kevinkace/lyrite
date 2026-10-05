@@ -15,6 +15,31 @@ export type Release = {
 
 export const releases: Release[] = [
     {
+        version: "2.5.2",
+        date: "2026-10-05",
+        title: "Consistent song tables",
+        changes: [
+            {
+                type: "improvement",
+                title: "Consistent date formatting across the app",
+            },
+            {
+                type: "improvement",
+                title: "Refined public song controls and table layout",
+                description: "The public/private switch, search, and table layout now work together more consistently.",
+            },
+            {
+                type: "developer",
+                title: "Simplified song and table state management",
+                description: "SongsProvider is now page-agnostic and configured through props. Removed loading-state tracking and moved page-specific logic out of Table.",
+            },
+            {
+                type: "developer",
+                title: "Expanded seed data and updated agent guidance",
+            },
+        ]
+    },
+    {
         version: "2.5.1",
         date: "2026-09-21",
         title: "Security Updates",
