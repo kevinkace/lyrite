@@ -25,6 +25,7 @@
     --color-3-text: #8979dc; /* darker violet */
     --color-4-text: #52afbb; /* darker cyan */
 
+    --color-text: rgb(237, 238, 240);
 }
 
 .radix-themes {
