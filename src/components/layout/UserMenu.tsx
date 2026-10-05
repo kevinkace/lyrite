@@ -71,17 +71,19 @@ export default function UserMenu() {
 
                                     <div className={css.tierActions}>
                                         <TierBadge tier={profile.tier_name} />
-                                        <BasicButton
-                                            onClick={() => {
-                                                setIsOpen(false);
-                                                openModal({
-                                                    type: "upgrade",
-                                                    title: "Plans",
-                                                });
-                                            }}
-                                        >
-                                            {profile.tier_name !== "premium" && <>View Plans <ArrowRight /></>}
-                                        </BasicButton>
+                                        {profile.tier_name !== "premium" && <BasicButton
+                                                onClick={() => {
+                                                    setIsOpen(false);
+                                                    openModal({
+                                                        type: "upgrade",
+                                                        title: "Plans",
+                                                    });
+                                                }}
+                                            >
+                                                View Plans
+                                                <ArrowRight />
+                                            </BasicButton>
+                                        }
                                     </div>
 
                                 </div>
