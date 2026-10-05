@@ -3,9 +3,9 @@ import { clsx } from "clsx";
 
 import css from "./Button.module.css";
 
-export const ItemLink = ({ href, title } ) => {
+export const ItemLink = ({ href, children } ) => {
     return <Link href={href} className={css.itemLink}>
-        {title}
+        {children}
     </Link>;
 }
 

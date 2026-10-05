@@ -1,9 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Link from "next/link";
 
 import { DateDisplay } from "@/components/dates/DateDisplay";
+import { ItemLink } from "@/components/buttons/ItemLink";
 
 import css from "./Table.module.css"
 
@@ -43,9 +43,9 @@ export default function TableCell({
 
     // links
     if (header.href) {
-        return <Link key={key} href={header.href(item)}>
+        return <ItemLink key={key} href={header.href(item)}>
             {content}
-        </Link>;
+        </ItemLink>;
     }
 
     if (header.type === "id") {
