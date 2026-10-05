@@ -11,6 +11,7 @@ import SearchInput      from "@/components/search/SearchInput";
 import Table            from "@/components/table/Table";
 import SongsGrid        from "@/components/songs/SongsGrid";
 import PageSize         from "@/components/pagination/PageSize";
+import PublicSwitch     from "@/components/publicSwitch/PublicSwitch";
 
 import type { Profile, Song, TableHeader } from "@/types";
 
@@ -61,6 +62,33 @@ export default function SongsTable({
 }: SongsTableProps) {
     const [displayType, setDisplayType] = useState<DisplayType>("table");
 
+    const isGrid = displayType === "grid";
+
+    const renderPublicSwitch = (item: Song | Profile) => (
+        "title" in item ? (
+            <PublicSwitch
+                checked={item.is_public}
+                onCheckedChange={(checked) => onTogglePublic(item, checked)}
+                showLabel={isGrid}
+                direction={isGrid ? "row-reverse" : "row"}
+                size={isGrid ? "2" : ""}
+            />
+        ) :
+        null
+    );
+
+    const renderRemoveButton = (item: Song | Profile) => (
+        "title" in item ? (
+            <DeleteSongDialog
+                songId={item.id}
+                title={item.title}
+                onDelete={() => onRemove(item)}
+                size={isGrid && "1"}
+            />
+        ) :
+        null
+    );
+
     useEffect(() => {
         if (window.innerWidth < 768) {
             setDisplayType("grid");
@@ -106,12 +134,7 @@ export default function SongsTable({
                 label: "Public",
                 key: "is_public",
                 align: "center" as const,
-                render: (item: Song | Profile) => "title" in item ? (
-                    <Switch
-                        checked={item.is_public}
-                        onCheckedChange={(checked) => onTogglePublic(item, checked)}
-                    />
-                ) : null
+                render: renderPublicSwitch
             }
         ] : []),
         ...(onRemove ? [
@@ -119,20 +142,11 @@ export default function SongsTable({
                 label: "Actions",
                 key: "actions",
                 align: "center" as const,
-                render: (item: Song | Profile) => "title" in item ? (
-                    <DeleteSongDialog
-                        songId={item.id}
-                        title={item.title}
-                        onDelete={() => onRemove(item)}
-                    />
-                ) : null
+                render: renderRemoveButton
             }
         ] : [])
     ];
 
-    const gridContent = displayType === "grid" ? (
-       <SongsGrid songs={songs} headers={headers} />
-    ) : undefined;
 
     const emptyState = showCreateSong && songs.length === 0 && (
         <Flex align="center" justify="center" direction="column" className={css.newSong}>
@@ -177,7 +191,12 @@ export default function SongsTable({
             <PageSize pageSize={pageSize} onPageSizeChange={onPageSizeChange} />
 
             {displayType === "grid" ?
-                gridContent :
+                (<SongsGrid
+                    songs={songs}
+                    headers={headers}
+                    onTogglePublic={onTogglePublic ? renderPublicSwitch : null}
+                    onRemove={onRemove ? renderRemoveButton : null}
+                />) :
                 (<Table
                     headers={headers}
                     items={songs}

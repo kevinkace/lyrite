@@ -6,7 +6,7 @@ import { DateDisplay } from "@/components/dates/DateDisplay";
 
 import css from "./SongsGrid.module.css";
 
-export default function SongsGrid({ songs, headers }) {
+export default function SongsGrid({ songs, headers, onRemove, onTogglePublic }) {
     const headerByKey = useMemo(
         () => Object.fromEntries(headers.map(h => [h.key, h])),
         [headers]
@@ -39,9 +39,10 @@ export default function SongsGrid({ songs, headers }) {
                     </Flex>
                 </div>
 
-                <div className={css.cardFooter}>
-
-                </div>
+                {(onRemove || onTogglePublic) && <Flex className={css.cardFooter} justify="between" align="center">
+                    {onRemove && onRemove(song)}
+                    {onTogglePublic && onTogglePublic(song)}
+                </Flex>}
 
             </Card>
         ))}

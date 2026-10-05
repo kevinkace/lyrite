@@ -7,6 +7,8 @@ import { Flex, Button, TextField, TextArea, Text, Switch } from "@radix-ui/theme
 import { useSong }  from "@/contexts/SongContext";
 import { useError } from "@/contexts/ErrorContext";
 
+import PublicSwitch from "@/components/publicSwitch/PublicSwitch";
+
 import { getErrorMessage } from "@/lib/getErrorMessage";
 
 import css from "./SongEdit.module.css";
@@ -104,15 +106,13 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
             />
 
             <Text as="label">
-                <Flex gap="2">
-                    <Switch
-                        // `name` not supported
-                        // name="isPublic"
-                        checked={formData.is_public}
-                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_public: checked }))}
-                    />
-                    public?
-                </Flex>
+                <PublicSwitch
+                    // `name` not supported
+                    // name="isPublic"
+                    checked={formData.is_public}
+                    onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_public: checked }))}
+                    showLabel={true}
+                />
 
                 <Text size="2" color="gray" mt="1">
                     Public songs can be viewed by other users.

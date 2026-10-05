@@ -14,18 +14,20 @@ type DeleteSongDialogProps = {
     songId: string;
     title: string;
     onDelete: (id: string) => void;
+    size: string;
 };
 
 export default function DeleteSongDialog({
     songId,
     title,
     onDelete,
+    size = ""
 }: DeleteSongDialogProps) {
     return (
         <Dialog.Root>
 
             <Dialog.Trigger>
-                <IconButton color="crimson">
+                <IconButton color="crimson" size={size} variant={"soft"}>
                     <Trash2 />
                 </IconButton>
             </Dialog.Trigger>

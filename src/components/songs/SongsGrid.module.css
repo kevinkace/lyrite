@@ -30,6 +30,12 @@
   opacity: 0.8;
 }
 
+.cardFooter {
+
+  background: #0003;
+  padding: var(--space-2) var(--space-4) var(--space-2);
+}
+
 .dates {
   margin-top: 0.7em;
   opacity: 0.8;
