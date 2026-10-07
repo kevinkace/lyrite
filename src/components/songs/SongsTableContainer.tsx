@@ -100,7 +100,7 @@ function SongsTableContainerContent({ canEdit }: SongsTableContainerProps) {
                 showCreateSong={canEdit}
 
                 pageSize={pageSize}
-                currentPage={collection.page}
+                currentPage={collection.page ?? 1}
                 totalPages={collection.pages}
                 hasMore={collection.hasMore}
                 onPageSizeChange={handlePageSizeChange}

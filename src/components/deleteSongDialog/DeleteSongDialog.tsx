@@ -1,5 +1,6 @@
 "use client";
 
+import type { ComponentProps } from "react";
 import {
     Dialog,
     Button,
@@ -14,14 +15,14 @@ type DeleteSongDialogProps = {
     songId: string;
     title: string;
     onDelete: (id: string) => void;
-    size: string;
+    size?: ComponentProps<typeof IconButton>["size"];
 };
 
 export default function DeleteSongDialog({
     songId,
     title,
     onDelete,
-    size = ""
+    size
 }: DeleteSongDialogProps) {
     return (
         <Dialog.Root>

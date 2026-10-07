@@ -40,10 +40,10 @@ type SongsTableProps = {
     showCreateSong?: boolean;
     pageSize: number;
     onPageSizeChange: (pageSize: number) => void;
-    onPageChange: () => void;
+    onPageChange: (page: number) => void;
     currentPage: number;
     hasMore: boolean;
-    totalPage: number;
+    totalPages: number;
 };
 
 /***
@@ -78,10 +78,10 @@ export default function SongsTable({
         "title" in item ? (
             <PublicSwitch
                 checked={item.is_public}
-                onCheckedChange={(checked) => onTogglePublic(item, checked)}
+                onCheckedChange={(checked: boolean) => onTogglePublic?.(item, checked)}
                 showLabel={isGrid}
                 direction={isGrid ? "row-reverse" : "row"}
-                size={isGrid ? "2" : ""}
+                size={isGrid ? "2" : undefined}
             />
         ) :
         null
@@ -92,8 +92,8 @@ export default function SongsTable({
             <DeleteSongDialog
                 songId={item.id}
                 title={item.title}
-                onDelete={() => onRemove(item)}
-                size={isGrid && "1"}
+                onDelete={() => onRemove?.(item)}
+                size={isGrid ? "1" : undefined}
             />
         ) :
         null
