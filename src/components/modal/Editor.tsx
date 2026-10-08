@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Button } from "@radix-ui/themes";
+import { Dialog, Flex, Button } from "@radix-ui/themes";
 
 import SongEditor from "../songs/SongEditor";
 
@@ -11,6 +11,10 @@ export default function Editor({
 }) {
     return (
         <Flex direction="column" gap="3">
+
+            <Dialog.Description>
+                Edit the song lyrics below, then save your changes.
+            </Dialog.Description>
 
             <SongEditor onSave={closeModal} />
 

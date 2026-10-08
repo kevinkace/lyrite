@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Flex, Button, TextField, Text } from "@radix-ui/themes";
+import { Dialog, Flex, Button, TextField, Text } from "@radix-ui/themes";
 
 export default function ConfirmDelete({
     onConfirm,
@@ -9,14 +9,14 @@ export default function ConfirmDelete({
     confirmCta = "Confirm",
     cancelCta = "Cancel",
 
-    description,
+    description = "Review this action before confirming.",
 
     confirmRequirement
 }: {
     onConfirm?: () => void;
     closeModal: () => void;
 
-    description? : string;
+    description?: string;
 
     confirmCta? : string;
     cancelCta? : string;
@@ -29,9 +29,9 @@ export default function ConfirmDelete({
     return (
         <Flex direction="column" gap="4">
 
-            {description && <Text size="2">
+            <Dialog.Description>
                 {description}
-            </Text>}
+            </Dialog.Description>
 
             {confirmRequirement && (
                 <>

@@ -29,7 +29,7 @@ export default function ErrorModal() {
                     </Flex>
                 </Dialog.Title>
 
-                <p>{error}</p>
+                <Dialog.Description>{error}</Dialog.Description>
 
                 <Flex justify="end">
                     <Button color="red" onClick={() => setError(null)}>

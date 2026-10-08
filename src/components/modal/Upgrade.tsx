@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Button } from "@radix-ui/themes";
+import { Dialog, Flex, Button } from "@radix-ui/themes";
 
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -14,16 +14,20 @@ export default function Upgrade({ closeModal }: { closeModal: () => void; }) {
     const { profile } = useAuth();
 
     if (!profile) {
-        return null;
+        return (
+            <Dialog.Description>
+                Plan information is unavailable.
+            </Dialog.Description>
+        );
     }
 
     const nextPlan = getNextTier(profile.tier_name);
 
     return (
         <Flex direction="column" gap="3">
-            <p>
+            <Dialog.Description>
                 This feature is available on a paid plan. Choose a plan below to get more songs and more room for your lyrics.
-            </p>
+            </Dialog.Description>
 
             <div className={css.plan}>
                 {nextPlan ? (

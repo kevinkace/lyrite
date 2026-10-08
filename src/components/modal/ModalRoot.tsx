@@ -38,7 +38,11 @@ export default function ModalRoot() {
                                 </IconButton>
                             </Flex>
 
-                            {type === "error" && <p>{props?.message as React.ReactNode}</p>}
+                            {type === "error" && (
+                                <Dialog.Description>
+                                    {props?.message as React.ReactNode}
+                                </Dialog.Description>
+                            )}
 
                             {type === "confirm" && (
                                 <Confirm {...props} closeModal={closeModal} />
