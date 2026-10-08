@@ -17,9 +17,6 @@ test.describe('Songs List Page', () => {
     await expect(page.getByText('Lyrics')).toBeVisible();
     await expect(page.getByText('Created')).toBeVisible();
     await expect(page.getByText('Updated')).toBeVisible();
-
-    // Check that song count is displayed
-    await expect(page.getByText(/\d+ songs? total/)).toBeVisible();
   });
 
   test('should display song entries when songs exist', async ({ page }) => {

@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { mockAuth } from './helpers/mock-auth';
 
 test.describe('Existing Song Functionality', () => {
   // Mock song data for testing
@@ -13,15 +14,13 @@ test.describe('Existing Song Functionality', () => {
     user_id: 'mock-user-id'
   };
 
-  // Helper function to mock authentication
-  const mockAuth = async (page : import('@playwright/test').Page) => {
-    await page.addInitScript(() => {
-      localStorage.setItem('supabase.auth.token', JSON.stringify({
-        access_token: 'mock-token',
-        user: { id: 'mock-user-id' }
-      }));
+    test('should authenticate a user with mockAuth', async ({ page }) => {
+      await mockAuth(page);
+      await page.goto('/songs/new');
+
+      await expect(page.getByRole('heading', { level: 1, name: 'New Song' })).toBeVisible();
+      await expect(page.locator('[data-testid="song-editor"]')).toBeVisible();
     });
-  };
 
     test('should display song edit interface', async ({ page }) => {
       // Mock the song data API call
@@ -38,21 +37,7 @@ test.describe('Existing Song Functionality', () => {
     });
 
     test('should hide tools when logged-in user is not the owner', async ({ page }) => {
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost:54321';
-      const projectId = supabaseUrl.match(/https?:\/\/([^.]+)/)?.[1] || 'localhost';
-
-      await page.addInitScript(({ projectId }) => {
-        const authKey = `sb-${projectId}-auth-token`;
-
-        localStorage.setItem(authKey, JSON.stringify({
-          access_token: 'mock-token',
-          token_type: 'bearer',
-          expires_in: 3600,
-          expires_at: Math.floor(Date.now() / 1000) + 3600,
-          refresh_token: 'mock-refresh-token',
-          user: { id: 'not-the-owner', email: 'test@example.com', aud: 'authenticated', role: 'authenticated' }
-        }));
-      }, { projectId });
+      await mockAuth(page, 'not-the-owner');
 
       await page.route('**/rest/v1/songs*', async route => {
         await route.fulfill({
@@ -62,7 +47,9 @@ test.describe('Existing Song Functionality', () => {
 
       await page.goto('/songs/existing-song-id');
 
-      await expect(page.getByRole('button', { name: /tools/i })).toHaveCount(0);
+      await expect(page.getByRole('heading', { name: 'Existing Song Title' })).toBeVisible();
+      await expect(page.getByRole('link', { name: 'New song' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'tools', exact: true })).toHaveCount(0);
     });
 
     test('should handle invalid song ID', async ({ page }) => {
@@ -126,5 +113,37 @@ test.describe('Existing Song Functionality', () => {
       // Test save error handling
       // This depends on your EditSong component implementation
       // await expect(page.locator('[data-testid="error-modal"]')).toBeVisible();
+    });
+
+
+    test('should disable form fields when saving', async ({ page }) => {
+      await mockAuth(page);
+
+      // Mock the song creation API call
+      await page.route('**/rest/v1/songs', async route => {
+        if (route.request().method() === 'POST') {
+          await route.fulfill({
+            json: { id: 'new-song-id', ...JSON.parse(route.request().postData() || '{}') }
+          });
+        } else {
+          await route.abort();
+        }
+      });
+
+      await page.goto('/songs/new');
+
+      // Fill required fields first
+      await page.getByPlaceholder('Title').fill('Test');
+      await page.getByPlaceholder('Artist').fill('Test');
+      await page.getByPlaceholder('Lyrics').fill('Test');
+
+      // Start submission
+      const saveButton = page.getByRole('button', { name: 'Save Song' });
+      await saveButton.click();
+
+      // Check if fields get disabled during saving
+      await expect(page.getByPlaceholder('Title')).toBeDisabled();
+      await expect(page.getByPlaceholder('Artist')).toBeDisabled();
+      await expect(page.getByPlaceholder('Lyrics')).toBeDisabled();
     });
 });

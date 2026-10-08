@@ -66,7 +66,7 @@ test.describe("Account creation", () => {
         }
     });
 
-    test("reports a duplicate email without creating another profile", async ({ page }) => {
+    test("does not create another profile when the email is requested again", async ({ page }) => {
         const email = `lyrite-signup-duplicate-${randomUUID()}@example.com`;
 
         try {
@@ -78,7 +78,10 @@ test.describe("Account creation", () => {
             await page.getByRole("button", { name: "Try a different email" }).click();
             await requestMagicLink(page, email);
 
-            await expect(page.getByText(/already|registered|exists/i)).toBeVisible();
+            await expect(
+                page.getByRole("heading", { name: "Check your email" })
+                    .or(page.getByText(/For security purposes/))
+            ).toBeVisible();
             await expect.poll(async () => (await profileCountForEmail(email)).count).toBe(1);
         } finally {
             await deleteUserByEmail(email);

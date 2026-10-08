@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { mockAuth } from './helpers/mock-auth';
 
 test.describe('New Song Creation', () => {
     // Mock song data for testing
@@ -8,13 +9,18 @@ test.describe('New Song Creation', () => {
         lyrics: 'Verse 1\nThis is a test song\nWith some lyrics\n\nChorus\nTest chorus here\nSing along',
     };
 
-    // Helper function to mock authentication
-    const mockAuth = async (page : import('@playwright/test').Page) => {
-        await page.addInitScript(() => {
-            localStorage.setItem('supabase.auth.token', JSON.stringify({
-                access_token: 'mock-token',
-                user: { id: 'mock-user-id' }
-            }));
+    const mockAuthenticatedUser = async (page: import('@playwright/test').Page) => {
+        await mockAuth(page);
+        await page.route('**/rest/v1/songs*', async route => {
+            if (route.request().method() !== 'HEAD') {
+                await route.continue();
+                return;
+            }
+
+            await route.fulfill({
+                status: 200,
+                headers: { 'content-range': '0-0/0' }
+            });
         });
     };
 
@@ -25,7 +31,7 @@ test.describe('New Song Creation', () => {
     });
 
     test('should load new song form when authenticated', async ({ page }) => {
-        await mockAuth(page);
+        await mockAuthenticatedUser(page);
         await page.goto('/songs/new');
 
         // Check page loads
@@ -35,7 +41,7 @@ test.describe('New Song Creation', () => {
     });
 
     test('should show validation errors for empty required fields', async ({ page }) => {
-        await mockAuth(page);
+        await mockAuthenticatedUser(page);
         await page.goto('/songs/new');
 
         // Try to submit empty form
@@ -48,7 +54,7 @@ test.describe('New Song Creation', () => {
     });
 
     test('should enforce title, artist and lyrics length limits in the form', async ({ page }) => {
-        await mockAuth(page);
+        await mockAuthenticatedUser(page);
         await page.goto('/songs/new');
 
         await expect(page.getByPlaceholder('Title')).toHaveAttribute('maxlength', '100');
@@ -57,7 +63,7 @@ test.describe('New Song Creation', () => {
     });
 
     test('should successfully submit form with valid data', async ({ page }) => {
-        await mockAuth(page);
+        await mockAuthenticatedUser(page);
         await page.goto('/songs/new');
 
         // Fill out the form
