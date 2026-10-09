@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { pick } from "lodash";
 
-import { Flex, Button, TextField, TextArea, Text, Switch } from "@radix-ui/themes";
+import { Flex, Button, TextField, TextArea, Text } from "@radix-ui/themes";
 
 import { useSong }  from "@/contexts/SongContext";
 import { useError } from "@/contexts/ErrorContext";
@@ -20,7 +20,15 @@ const fallback = {
     is_public: false
 };
 
-export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean; onSave?: () => void }) {
+export default function SongEditor({
+    isNew = false,
+    isAnonymous = false,
+    onSave
+}: {
+    isNew?: boolean;
+    isAnonymous?: boolean;
+    onSave?: () => void;
+}) {
     const router = useRouter();
 
     const { setError } = useError();
@@ -105,19 +113,19 @@ export default function SongEditor({ isNew = false, onSave }: { isNew?: boolean;
                 onChange={(e) => setFormData(prev => ({ ...prev, lyrics: e.target.value }))}
             />
 
-            <Text as="label">
-                <PublicSwitch
-                    // `name` not supported
-                    // name="isPublic"
-                    checked={formData.is_public}
-                    onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_public: checked }))}
-                    showLabel={true}
-                />
+            {!isAnonymous && (
+                <Text as="label">
+                    <PublicSwitch
+                        checked={formData.is_public}
+                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_public: checked }))}
+                        showLabel={true}
+                    />
 
-                <Text size="2" color="gray" mt="1">
-                    Public songs can be viewed by other users.
+                    <Text size="2" color="gray" mt="1">
+                        Public songs can be viewed by other users.
+                    </Text>
                 </Text>
-            </Text>
+            )}
 
             <Flex justify="center">
                 <Button

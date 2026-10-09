@@ -24,7 +24,8 @@ export default function EditSong() {
     const { setHeaderContent, setHeaderUserContent } = useLayout();
     const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
 
-    const isOwner = !!song && !!user && song.user_id === user.id;
+    const isAnonymousSong = !!song && !song.user_id;
+    const isOwner = isAnonymousSong || (!!song && !!user && song.user_id === user.id);
     const [ showTools, setShowTools ]     = useState(false);
     const [ saveStatus, setSaveStatus ] = useState<"idle" | "saving" | "saved">("idle");
 
@@ -66,11 +67,13 @@ export default function EditSong() {
         }
 
         setHeaderUserContent(<>
-            <SaveIcon
-                dirty={dirty}
-                saveStatus={saveStatus}
-                onSavedAnimationEnd={() => setSaveStatus("idle")}
-            />
+            {!isAnonymousSong && (
+                <SaveIcon
+                    dirty={dirty}
+                    saveStatus={saveStatus}
+                    onSavedAnimationEnd={() => setSaveStatus("idle")}
+                />
+            )}
 
             <Button variant="surface" size="2" radius="full" onClick={() => {
                 setSelectedColor(null);
@@ -88,7 +91,7 @@ export default function EditSong() {
             setHeaderContent(null);
             setHeaderUserContent(null);
         };
-    }, [dirty, isOwner, loading, saveStatus, selectedColor, setHeaderContent, setHeaderUserContent, setSelectedColor, showTools, song ]);
+    }, [dirty, isAnonymousSong, isOwner, loading, saveStatus, selectedColor, setHeaderContent, setHeaderUserContent, setSelectedColor, showTools, song ]);
 
     if (loading) return <p>Loading…</p>;
     if (!song) return <p>Song not found</p>;

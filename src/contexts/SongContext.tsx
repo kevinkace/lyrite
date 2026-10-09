@@ -12,6 +12,37 @@ import { defaultStyles } from "@/data/consts";
 
 import { NewSong, Song, SongContextType, LyricParsed, LoadSongProps } from "@/types";
 
+const LOCAL_SONG_KEY = "lyrite:anonymous-song";
+
+function readLocalSong(): Song | null {
+    const raw = window.localStorage.getItem(LOCAL_SONG_KEY);
+
+    if (!raw) return null;
+
+    let parsed: unknown;
+
+    try {
+        parsed = JSON.parse(raw);
+    } catch {
+        throw new Error("The saved local song could not be read because the data is invalid.");
+    }
+
+    if (
+        !parsed ||
+        typeof parsed !== "object" ||
+        Array.isArray(parsed) ||
+        !("id" in parsed) ||
+        typeof parsed.id !== "string"
+    ) {
+        throw new Error("The saved local song could not be read because the data is invalid.");
+    }
+
+    return parsed as Song;
+}
+
+function writeLocalSong(song: Song) {
+    window.localStorage.setItem(LOCAL_SONG_KEY, JSON.stringify(song));
+}
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
@@ -42,6 +73,15 @@ export function SongProvider({ children }: { children: ReactNode; }) {
         setLoading(true);
 
         try {
+            if (id) {
+                const localSong = readLocalSong();
+
+                if (localSong?.id === id) {
+                    setSong(localSong);
+                    return localSong;
+                }
+            }
+
             let query = supabase.from("songs").select("*");
 
             if (id) {
@@ -61,8 +101,8 @@ export function SongProvider({ children }: { children: ReactNode; }) {
             setSong(data as Song);
 
             return data as Song;
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : String(err));
             setSong(null);
         } finally {
             setLoading(false);
@@ -71,7 +111,27 @@ export function SongProvider({ children }: { children: ReactNode; }) {
     };
 
     const createSong = async ({ song }: { song: NewSong }) => {
-        if (!user?.id) throw new Error("No user provided");
+        if (!user?.id) {
+            const id = crypto.randomUUID();
+            const now = new Date().toISOString();
+            const localSong: Song = {
+                ...song,
+                id,
+                slug: id,
+                lyrics_parsed: parseLyrics(song.lyrics),
+                style: defaultStyles,
+                featured: false,
+                user_id: "",
+                created_at: now,
+                updated_at: now
+            };
+
+            writeLocalSong(localSong);
+            setSong(localSong);
+            setDirty(false);
+
+            return localSong;
+        }
 
         const { data, error } = await supabase
             .from("songs")
@@ -96,6 +156,21 @@ export function SongProvider({ children }: { children: ReactNode; }) {
             throw new Error("No song to update");
         }
 
+        if (!song.user_id) {
+            const updated = {
+                ...song,
+                ...updatedSong,
+                lyrics_parsed: parseLyrics(updatedSong.lyrics),
+                updated_at: new Date().toISOString()
+            };
+
+            writeLocalSong(updated);
+            setSong(updated);
+            setDirty(false);
+
+            return updated;
+        }
+
         const { data, error } = await supabase
             .from("songs")
             .update({
@@ -116,6 +191,21 @@ export function SongProvider({ children }: { children: ReactNode; }) {
 
     const saveSong = async () => {
         if (!song) throw new Error("No song to save");
+
+        if (!song.user_id) {
+            const updated = { ...song, updated_at: new Date().toISOString() };
+
+            try {
+                writeLocalSong(updated);
+            } catch (err) {
+                setError(err instanceof Error ? err.message : String(err));
+                throw err;
+            }
+
+            setSong(updated);
+            setDirty(false);
+            return;
+        }
 
         const { error } = await supabase
             .from("songs")

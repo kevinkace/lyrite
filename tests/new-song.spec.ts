@@ -24,10 +24,39 @@ test.describe('New Song Creation', () => {
         });
     };
 
-    test('should redirect to login if not authenticated', async ({ page }) => {
+    test('should show the new song form when not authenticated', async ({ page }) => {
         await page.goto('/songs/new');
 
-        await expect(page).toHaveURL('/login');
+        await expect(page.getByRole('heading', { level: 1, name: 'New Song' })).toBeVisible();
+        await expect(page.locator('[data-testid="song-editor"]')).toBeVisible();
+        await expect(page.getByRole('switch')).toHaveCount(0);
+    });
+
+    test('should save an anonymous song locally and show a signup CTA', async ({ page }) => {
+        await page.goto('/songs/new');
+
+        await page.getByPlaceholder('Title').fill(mockSong.title);
+        await page.getByPlaceholder('Artist').fill(mockSong.artist);
+        await page.getByPlaceholder('Lyrics').fill(mockSong.lyrics);
+        await page.getByTestId('save-song-button').click();
+
+        await expect(page).toHaveURL(/\/songs\/[0-9a-f-]+$/i);
+        await expect(page.getByRole('link', { name: 'Sign up to save' })).toBeVisible();
+
+        const storedSong = await page.evaluate((id) => {
+            const song = JSON.parse(localStorage.getItem('lyrite:anonymous-song') ?? 'null');
+            return song?.id === id ? song : null;
+        }, page.url().split('/').pop());
+
+        expect(storedSong).toMatchObject({
+            title: mockSong.title,
+            artist: mockSong.artist,
+            lyrics: mockSong.lyrics
+        });
+
+        await page.reload();
+        await expect(page.getByRole('heading', { name: mockSong.title })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sign up to save' })).toBeVisible();
     });
 
     test('should load new song form when authenticated', async ({ page }) => {
@@ -38,6 +67,7 @@ test.describe('New Song Creation', () => {
         await expect(page.getByRole('heading', { level: 1, name: 'New Song' })).toBeVisible();
 
         await expect(page.locator('[data-testid="song-editor"]')).toBeVisible();
+        await expect(page.getByRole('switch')).toHaveCount(1);
     });
 
     test('should show validation errors for empty required fields', async ({ page }) => {

@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState }  from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Flex, Card } from "@radix-ui/themes";
 
 import { useAuth }  from "@/contexts/AuthContext";
@@ -13,17 +12,9 @@ import { songCountLimitForTier } from "@/data/pricing";
 import css from "./page.module.css";
 
 export default function NewSongPage() {
-    const router = useRouter();
-
     const { user, profile, loading } = useAuth();
     const { openModal } = useModal();
     const [canCreateSong, setCanCreateSong] = useState<boolean | null>(null);
-
-    useEffect(() => {
-        if (!user && !loading) {
-            router.replace("/login");
-        }
-    }, [user, loading, router]);
 
     useEffect(() => {
         if (!user || !profile) return;
@@ -53,7 +44,7 @@ export default function NewSongPage() {
         void checkSongLimit();
     }, [profile, user, openModal]);
 
-    if (loading || !user || !profile || canCreateSong === null) return null;
+    if (loading || (user && (!profile || canCreateSong === null))) return null;
 
     return (
         <>
@@ -61,7 +52,7 @@ export default function NewSongPage() {
                 <h1>New Song</h1>
 
                 <Card size="4" className={css.card}>
-                    <SongEditor isNew={true}/>
+                    <SongEditor isNew isAnonymous={!user} />
                 </Card>
             </Flex>
         </>
