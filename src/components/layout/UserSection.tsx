@@ -41,6 +41,7 @@ export const UserSection = () => {
 
             {!user && !loading && (
                 <Flex gap="2" align="center">
+                    {headerUserContent}
                     {loggedOutLinks.map((link) => (
                         <Button
                             key={link.href}

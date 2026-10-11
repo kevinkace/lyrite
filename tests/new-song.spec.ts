@@ -42,6 +42,11 @@ test.describe('New Song Creation', () => {
 
         await expect(page).toHaveURL(/\/songs\/[0-9a-f-]+$/i);
         await expect(page.getByRole('link', { name: 'Sign up to save' })).toBeVisible();
+        const toolsButton = page.getByRole('button', { name: 'tools', exact: true });
+        await expect(toolsButton).toBeVisible();
+        await expect(page.locator('[data-tools="font-size"]')).toBeHidden();
+        await toolsButton.click();
+        await expect(page.locator('[data-tools="font-size"]')).toBeVisible();
 
         const storedSong = await page.evaluate((id) => {
             const song = JSON.parse(localStorage.getItem('lyrite:anonymous-song') ?? 'null');
@@ -57,6 +62,8 @@ test.describe('New Song Creation', () => {
         await page.reload();
         await expect(page.getByRole('heading', { name: mockSong.title })).toBeVisible();
         await expect(page.getByRole('link', { name: 'Sign up to save' })).toBeVisible();
+        await expect(page.getByRole('button', { name: 'tools', exact: true })).toBeVisible();
+        await expect(page.locator('[data-tools="font-size"]')).toBeHidden();
     });
 
     test('should load new song form when authenticated', async ({ page }) => {
