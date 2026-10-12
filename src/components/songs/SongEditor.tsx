@@ -127,7 +127,8 @@ export default function SongEditor({
                 </Text>
             )}
 
-            <Flex justify="center">
+            <Flex justify="center" direction="column" align="center">
+                <p className={css.info}>Enter your song details and lyrics here.<br/> After saving, you can format the lyrics.</p>
                 <Button
                     size="4"
                     variant="soft"
