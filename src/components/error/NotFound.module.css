@@ -1,0 +1,15 @@
+.notFound {
+    min-height: 50vh;
+}
+
+.notFound h1,
+.notFound p {
+    margin: 0;
+}
+
+.code {
+    color: var(--accent-9);
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 1;
+}

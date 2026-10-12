@@ -1,8 +1,13 @@
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
 
 import { env } from "../env";
 
-export const supabase = createClient(
+export const supabase = createBrowserClient(
     env.NEXT_PUBLIC_SUPABASE_URL,
-    env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    {
+        cookieOptions: {
+            secure: process.env.NODE_ENV === "production",
+        },
+    }
 );

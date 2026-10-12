@@ -5,7 +5,7 @@ export const mockAuth = async (page: Page, userId = 'mock-user-id') => {
   const projectId = new URL(supabaseUrl).hostname.split('.')[0];
 
   await page.addInitScript(({ projectId, userId }) => {
-    localStorage.setItem(`sb-${projectId}-auth-token`, JSON.stringify({
+    const session = {
       access_token: 'mock-token',
       token_type: 'bearer',
       expires_in: 3600,
@@ -20,7 +20,13 @@ export const mockAuth = async (page: Page, userId = 'mock-user-id') => {
         user_metadata: {},
         created_at: new Date().toISOString()
       }
-    }));
+    };
+    const value = btoa(JSON.stringify(session))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+
+    document.cookie = `sb-${projectId}-auth-token=base64-${value}; Path=/; SameSite=Lax`;
   }, { projectId, userId });
 
   await page.route('**/rest/v1/profiles*', async route => {

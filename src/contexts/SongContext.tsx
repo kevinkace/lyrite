@@ -4,71 +4,32 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import merge from "lodash/merge";
 
 import { supabase } from "@/lib/supabase/client";
+import { parseLyrics } from "@/lib/songs";
 
 import { useError } from "./ErrorContext";
 import { useAuth } from "./AuthContext";
 
 import { defaultStyles } from "@/data/consts";
 
-import { NewSong, Song, SongContextType, LyricParsed, LoadSongProps } from "@/types";
+import { NewSong, Song, SongContextType, LyricParsed } from "@/types";
 
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
 
-function parseLyrics(raw: string): LyricParsed[] {
-    return raw.split(/\n{2,}/).map((section, i) => ({
-        id: i,
-        text: section.trim(),
-        style: {},
-    }));
-}
-
-export function SongProvider({ children }: { children: ReactNode; }) {
-    const [song, setSong] = useState<Song | null>(null);
+export function SongProvider({
+    children,
+    initialSong = null,
+}: {
+    children: ReactNode;
+    initialSong?: Song | null;
+}) {
+    const [song, setSong] = useState<Song | null>(initialSong);
     const [dirty, setDirty] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const { setError } = useError();
 
     const { user } = useAuth();
-
-    const loadSong = async ({ id, user_id : userId, slug }: LoadSongProps) => {
-        if (!id && (!slug || !userId)) {
-            console.warn("Missing identifiers for loadSong", { id, userId, slug });
-
-            return;
-        }
-
-        setLoading(true);
-
-        try {
-            let query = supabase.from("songs").select("*");
-
-            if (id) {
-                query = query.eq("id", id);
-            } else {
-                query = query.eq("user_id", userId).eq("slug", slug);
-            }
-
-            const { data, error } = await query.single();
-
-            if (error) throw error;
-
-            // Fallbacks for dev data
-            if (!data.lyrics_parsed) data.lyrics_parsed = parseLyrics(data.lyrics);
-            if (!data.style) data.style = defaultStyles;
-
-            setSong(data as Song);
-
-            return data as Song;
-        } catch (err: any) {
-            setError(err.message);
-            setSong(null);
-        } finally {
-            setLoading(false);
-            setDirty(false);
-        }
-    };
 
     const createSong = async ({ song }: { song: NewSong }) => {
         if (!user?.id) throw new Error("No user provided");
@@ -175,7 +136,6 @@ export function SongProvider({ children }: { children: ReactNode; }) {
                 loading,
                 dirty,
                 setLoading,
-                loadSong,
                 createSong,
                 saveSong,
                 updateSong,

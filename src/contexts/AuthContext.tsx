@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { useRouter } from "next/navigation";
 
 import type { User, AuthError } from "@supabase/supabase-js";
 
@@ -18,6 +19,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [profile, setProfile] = useState<Profile | null>(null);
     const [loading, setLoading] = useState(true);
     const { setError } = useError();
+    const router = useRouter();
 
     useEffect(() => {
         // Check for OAuth errors in URL parameters
@@ -52,6 +54,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // On mount, check for an existing session
         const restoreSession = async () => {
             try {
+                const projectId = new URL(env.NEXT_PUBLIC_SUPABASE_URL).hostname.split(".")[0];
+                const legacyStorageKey = `sb-${projectId}-auth-token`;
+                const legacySession = window.localStorage.getItem(legacyStorageKey);
+
+                if (legacySession) {
+                    const storedSession: unknown = JSON.parse(legacySession);
+                    if (
+                        typeof storedSession === "object" &&
+                        storedSession !== null &&
+                        "access_token" in storedSession &&
+                        typeof storedSession.access_token === "string" &&
+                        "refresh_token" in storedSession &&
+                        typeof storedSession.refresh_token === "string"
+                    ) {
+                        const { error: migrationError } = await supabase.auth.setSession({
+                            access_token: storedSession.access_token,
+                            refresh_token: storedSession.refresh_token,
+                        });
+
+                        if (migrationError) throw migrationError;
+
+                        window.localStorage.removeItem(legacyStorageKey);
+                        router.refresh();
+                    } else {
+                        console.error("Unable to migrate the stored Supabase session: invalid session data");
+                        window.localStorage.removeItem(legacyStorageKey);
+                    }
+                }
+
                 const { data: { session }, error } = await supabase.auth.getSession();
 
                 if (error) {
@@ -77,7 +108,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                         setProfile(profile);
                     }
                 }
-            } catch {
+            } catch (error) {
+                console.error("Unable to restore the Supabase session:", error);
                 setUser(null);
                 setProfile(null);
             } finally {
@@ -97,7 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
 
         return () => subscription.unsubscribe();
-    }, []);
+    }, [router, setError]);
 
     const signInWithProvider = async (provider: 'github' | 'google' | 'facebook' | 'azure'): Promise<{ error: AuthError | null }> => {
         setLoading(true);

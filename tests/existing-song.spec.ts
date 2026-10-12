@@ -1,19 +1,30 @@
 import { test, expect } from '@playwright/test';
+import { createClient } from '@supabase/supabase-js';
+import { randomUUID } from 'node:crypto';
 import { mockAuth } from './helpers/mock-auth';
 
-test.describe('Existing Song Functionality', () => {
-  // Mock song data for testing
-  const mockExistingSong = {
-    id: 'existing-song-id',
-    title: 'Existing Song Title',
-    artist: 'Existing Artist',
-    lyrics: 'Verse 1\nThis is an existing song\nWith existing lyrics\n\nChorus\nExisting chorus here\nSing along',
-    is_public: true,
-    created_at: '2024-01-01T00:00:00Z',
-    updated_at: '2024-01-02T00:00:00Z',
-    user_id: 'mock-user-id'
-  };
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Song route tests require NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY');
+}
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+async function findPublicSong() {
+  const { data, error } = await supabase
+    .from('songs')
+    .select('id, title')
+    .eq('is_public', true)
+    .limit(1)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+}
+
+test.describe('Song routes', () => {
     test('should authenticate a user with mockAuth', async ({ page }) => {
       await mockAuth(page);
       await page.goto('/songs/new');
@@ -22,99 +33,50 @@ test.describe('Existing Song Functionality', () => {
       await expect(page.locator('[data-testid="song-editor"]')).toBeVisible();
     });
 
-    test('should display song edit interface', async ({ page }) => {
-      // Mock the song data API call
-      await page.route('**/rest/v1/songs*', async route => {
-        await route.fulfill({
-          json: mockExistingSong
-        });
-      });
+    test('should render a public song loaded on the server', async ({ page }) => {
+      const song = await findPublicSong();
+      if (!song) {
+        test.skip(true, 'Requires at least one public song in the test Supabase project');
+        return;
+      }
+      const response = await page.goto(`/songs/${song.id}`);
 
-      // Navigate to a song page
-      await page.goto('/songs/existing-song-id');
-
+      expect(response?.status()).toBe(200);
       await expect(page.locator('[data-testid="edit-song"]')).toBeVisible();
     });
 
-    test('should hide tools when logged-in user is not the owner', async ({ page }) => {
+    test('should hide tools for a non-owner of a public song', async ({ page }) => {
+      const song = await findPublicSong();
+      if (!song) {
+        test.skip(true, 'Requires at least one public song in the test Supabase project');
+        return;
+      }
       await mockAuth(page, 'not-the-owner');
 
-      await page.route('**/rest/v1/songs*', async route => {
-        await route.fulfill({
-          json: { ...mockExistingSong, user_id: 'owner-user-id' }
-        });
-      });
+      await page.goto(`/songs/${song.id}`);
 
-      await page.goto('/songs/existing-song-id');
-
-      await expect(page.getByRole('heading', { name: 'Existing Song Title' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: song.title })).toBeVisible();
       await expect(page.getByRole('link', { name: 'New song' })).toBeVisible();
       await expect(page.getByRole('button', { name: 'tools', exact: true })).toHaveCount(0);
     });
 
     test('should handle invalid song ID', async ({ page }) => {
-      // Mock 404 response for invalid song
-      await page.route('**/rest/v1/songs*', async route => {
-        await route.fulfill({
-          status: 404,
-          json: { error: 'Song not found' }
-        });
-      });
+      const response = await page.goto('/songs/laskdjf');
 
-      await page.goto('/songs/invalid-song-id');
-
-      // await expect(page.locator('[data-testid="error-modal"]')).toBeVisible();
+      expect(response?.status()).toBe(404);
+      await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
+      await expect(page.getByText('404', { exact: true })).toBeVisible();
+      await expect(page.locator('[data-testid="error-modal"]')).toHaveCount(0);
     });
 
-    test('should handle network errors when loading song', async ({ page }) => {
-      // Mock network failure
-      await page.route('**/rest/v1/songs*', route => {
-        route.abort('failed');
-      });
+    test('should show 404 for a valid UUID with no matching song', async ({ page }) => {
+      const response = await page.goto(`/songs/${randomUUID()}`);
 
-      await page.goto('/songs/existing-song-id');
-
-      // Should handle error gracefully
-      await expect(page.locator('[data-testid="error-modal"]')).toBeVisible();
+      expect(response?.status()).toBe(404);
+      await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
+      await expect(page.getByText('404', { exact: true })).toBeVisible();
+      await expect(page.locator('[data-testid="error-modal"]')).toHaveCount(0);
     });
-
-    test('should handle malformed song data', async ({ page }) => {
-      // Mock malformed response
-      await page.route('**/rest/v1/songs*', async route => {
-        await route.fulfill({
-          json: { ...mockExistingSong, lyrics: null }
-        });
-      });
-
-      await page.goto('/songs/existing-song-id');
-
-      // Should handle malformed data gracefully
-      await expect(page.locator('[data-testid="error-modal"]')).toBeVisible();
-    });
-
-    test('should handle save errors when editing', async ({ page }) => {
-      await mockAuth(page);
-
-      await page.route('**/rest/v1/songs*', async route => {
-        if (route.request().method() === 'GET') {
-          await route.fulfill({
-            json: { ...mockExistingSong, user_id: 'mock-user-id' }
-          });
-        } else if (route.request().method() === 'PATCH') {
-          await route.fulfill({
-            status: 500,
-            json: { error: 'Save failed' }
-          });
-        }
-      });
-
-      await page.goto('/songs/existing-song-id');
-
-      // Test save error handling
-      // This depends on your EditSong component implementation
-      // await expect(page.locator('[data-testid="error-modal"]')).toBeVisible();
-    });
-
 
     test('should disable form fields when saving', async ({ page }) => {
       await mockAuth(page);

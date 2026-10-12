@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, Flex } from "@radix-ui/themes";
+import { Button, Card } from "@radix-ui/themes";
 
 import { env } from "@/lib/env";
 import { supabase } from "@/lib/supabase/client";
@@ -17,15 +17,25 @@ export function AuthDebug() {
 
         const projectId = new URL(env.NEXT_PUBLIC_SUPABASE_URL).hostname.split(".")[0];
         const authKey = `sb-${projectId}-auth-token`;
-        const storedSession = window.localStorage.getItem(authKey);
+        document.cookie
+            .split(";")
+            .map(cookie => cookie.trim().split("=")[0])
+            .filter(name => name === authKey || name.startsWith(`${authKey}.`))
+            .forEach(name => {
+                document.cookie = `${name}=; Path=/; Max-Age=0; SameSite=Lax`;
+            });
 
-        if (!storedSession) return;
+        const invalidSession = {
+            ...session,
+            expires_at: Math.floor(Date.now() / 1000) - 60,
+            refresh_token: "invalid-refresh-token",
+        };
+        const encodedSession = btoa(JSON.stringify(invalidSession))
+            .replace(/\+/g, "-")
+            .replace(/\//g, "_")
+            .replace(/=+$/, "");
 
-        const sessionData = JSON.parse(storedSession);
-        sessionData.expires_at = Math.floor(Date.now() / 1000) - 60;
-        sessionData.refresh_token = "invalid-refresh-token";
-
-        window.localStorage.setItem(authKey, JSON.stringify(sessionData));
+        document.cookie = `${authKey}=base64-${encodedSession}; Path=/; SameSite=Lax`;
         window.location.reload();
     };
 
