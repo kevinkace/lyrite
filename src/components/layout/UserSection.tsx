@@ -1,6 +1,7 @@
 "use client";
 
 import Link             from "next/link";
+import { usePathname }  from "next/navigation";
 import { FilePlus }     from "lucide-react";
 import { Flex, Button } from "@radix-ui/themes";
 
@@ -21,6 +22,8 @@ const loggedOutLinks = [
 export const UserSection = () => {
     const { user, loading } = useAuth();
     const { headerUserContent } = useLayout();
+    const pathname = usePathname();
+    const isSongEditPage = /^\/songs\/[^/]+$/.test(pathname) && pathname !== "/songs/new";
 
     return (
         <>
@@ -42,17 +45,21 @@ export const UserSection = () => {
             {!user && !loading && (
                 <Flex gap="2" align="center">
                     {headerUserContent}
-                    {loggedOutLinks.map((link) => (
-                        <Button
-                            key={link.href}
-                            asChild
-                            variant={link.variant as RadixVariant}
-                            color={link.color as RadixColor}
-                            data-testid={`header-${sanitizeTestId(link.label)}-button`}
-                        >
-                            <Link href={link.href}>{link.label}</Link>
-                        </Button>
-                    ))}
+                    {loggedOutLinks.map((link) => {
+                        const label = isSongEditPage ? "Sign up to save" : link.label;
+
+                        return (
+                            <Button
+                                key={link.href}
+                                asChild
+                                variant={link.variant as RadixVariant}
+                                color={link.color as RadixColor}
+                                data-testid={`header-${sanitizeTestId(label)}-button`}
+                            >
+                                <Link href={link.href}>{label}</Link>
+                            </Button>
+                        );
+                    })}
                 </Flex>
             )}
         </>
