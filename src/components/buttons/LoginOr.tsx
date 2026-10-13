@@ -9,16 +9,15 @@ import { useAuth }   from "@/contexts/AuthContext";
 export default function LoginOr(props: ButtonProps) {
     const { user, loading } = useAuth();
 
-    if (loading) {
-        return null;
+    if (loading || !user) {
+        return <Button asChild={true} size="4" variant="soft" {...props}>
+            <Link href="/login">Create a free account</Link>
+        </Button>;
     }
 
     return (
         <Button asChild={true} size="4" variant="soft" {...props}>
-            {user ?
-                <Link href="/profile/songs"><FilePen /> My songs</Link> :
-                <Link href="/login">Create a free account</Link>
-            }
+                <Link href="/profile/songs"><FilePen /> My songs</Link>
         </Button>
     );
 }
