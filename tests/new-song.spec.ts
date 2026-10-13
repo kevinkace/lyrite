@@ -41,6 +41,10 @@ test.describe('New Song Creation', () => {
         await page.getByTestId('save-song-button').click();
 
         await expect(page).toHaveURL(/\/songs\/[0-9a-f-]+$/i);
+        await expect(page.getByRole('link', {
+            name: 'Your songs are saved on this device only! Create a free account to sync them across devices.'
+        })).toHaveAttribute('href', '/login');
+        await expect(page.getByRole('link', { name: /Your songs are saved/ }).locator('u')).toHaveText('free account');
         await expect(page.getByRole('link', { name: 'Sign up to save' })).toBeVisible();
         const toolsButton = page.getByRole('button', { name: 'tools', exact: true });
         await expect(toolsButton).toBeVisible();
