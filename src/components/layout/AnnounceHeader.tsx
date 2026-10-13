@@ -6,29 +6,34 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button, Flex } from "@radix-ui/themes";
 
-import { ANNOUNCEMENT_STORAGE_KEY } from "@/data/announcement";
+import { useSong } from "@/contexts/SongContext";
+import { ANNOUNCEMENT_BANNERS } from "@/data/announcement";
 
-import css from "./AnnounceHeader.module.css"
-
-const PAGE_PATH = "/docs/announcing-lyrite-v2";
+import css from "./AnnounceHeader.module.css";
 
 export default function AnnounceHeader() {
     const pathname = usePathname();
+    const { song } = useSong();
+    const isAnonymousSong = pathname.startsWith("/songs/")
+        && pathname !== "/songs/new"
+        && !!song
+        && !song.user_id;
+    const banner = isAnonymousSong ? ANNOUNCEMENT_BANNERS.anonymousSong : ANNOUNCEMENT_BANNERS.release;
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
         try {
-            const saved = localStorage.getItem(ANNOUNCEMENT_STORAGE_KEY);
+            const saved = localStorage.getItem(banner.storageKey);
 
-            setOpen(saved === null && pathname !== PAGE_PATH);
+            setOpen(saved === null && (!banner.excludedPath || pathname !== banner.excludedPath));
         } catch {
             // ignore (SSR safety)
         }
-    }, [pathname]);
+    }, [banner, pathname]);
 
     function handleClose() {
         try {
-            localStorage.setItem(ANNOUNCEMENT_STORAGE_KEY, "1");
+            localStorage.setItem(banner.storageKey, "1");
         } catch {
             // ignore
         }
@@ -50,12 +55,10 @@ export default function AnnounceHeader() {
                         justify="center"
                         gap="6"
                     >
-                        <Link href={PAGE_PATH}>
-                            <strong>NEW!</strong>
-                            {" "}
-                            Announcing Lyrite version 2!
-                            {" "}
-                            <u>read more</u>
+                        <Link href={banner.href}>
+                            {banner.prefix && <strong>{banner.prefix}</strong>}
+                            <span dangerouslySetInnerHTML={{ __html: banner.message }} />
+                            {banner.suffix && <u className={css.suffix}>{banner.suffix}</u>}
                         </Link>
 
                         <Button
