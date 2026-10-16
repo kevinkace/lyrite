@@ -6,23 +6,23 @@ type LayoutContextType = {
   headerContent: ReactNode;
   setHeaderContent: (content: ReactNode) => void;
 
-  headerUserContent: ReactNode;
-  setHeaderUserContent: (content: ReactNode) => void;
+  setHeaderToolsContent: ReactNode;
+  setHeaderToolsContent: (content: ReactNode) => void;
 }
 
 const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
 
 export function LayoutProvider({ children }: { children: ReactNode }) {
   const [headerContent, setHeaderContent] = useState<ReactNode>(null);
-  const [headerUserContent, setHeaderUserContent] = useState<ReactNode>(null);
+  const [headerToolsContent, setHeaderToolsContent] = useState<ReactNode>(null);
 
   return (
     <LayoutContext.Provider value={{
       headerContent,
       setHeaderContent,
 
-      headerUserContent,
-      setHeaderUserContent,
+      headerToolsContent,
+      setHeaderToolsContent,
     }}>
       {children}
     </LayoutContext.Provider>

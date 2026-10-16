@@ -7,8 +7,7 @@ import { clsx } from "clsx";
 
 import { UserSection } from "@/components/layout/UserSection";
 import { MainNav }     from "@/components/layout/MainNav";
-// import { UserNav } from "@/components/layout/UserNav";
-
+import { UserNav } from "@/components/layout/UserNav";
 import { useLayout } from "@/contexts/LayoutContext";
 
 // import ErrorButton from "@/components/error/ErrorButton";
@@ -19,6 +18,7 @@ import css from "./Header.module.css";
 export default function Header() {
     const { headerContent } = useLayout();
     const pathname = usePathname();
+    const { headerToolsContent } = useLayout();
 
     return (
         <header className={css.header}>
@@ -38,8 +38,11 @@ export default function Header() {
                 </h1>
 
                 <MainNav />
-                {/* <UserNav /> */}
                 {/* <ErrorButton /> */}
+
+
+
+                {headerToolsContent}
             </Flex>
 
             {headerContent && (
@@ -54,9 +57,12 @@ export default function Header() {
                 </div>
             )}
 
-            <div className={css.right}>
+            <Flex gap="1" align="center" className={css.right}>
+                <UserNav />
+
+a
                 <UserSection />
-            </div>
+            </Flex>
 
         </header>
     );

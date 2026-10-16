@@ -1,21 +1,38 @@
 "use client";
+
 import Link from "next/link";
+import { Flex, Button, Separator } from "@radix-ui/themes";
 
 import { useAuth } from "@/contexts/AuthContext";
+import { sanitizeTestId } from "@/lib/utils";
 
-import css from "./Header.module.css";
-
-// maybe used in the header beside logo
 export const UserNav = () => {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
 
-    if (!user) return null;
-
+    const label = "Login";
     return (
-        <nav className={css.userNav}>
-            <Link href="/profile/songs" className={css.userNavLink}>
-                my songs
-            </Link>
-        </nav>
+        <Flex gap="2" align="center">
+            <Button
+                asChild
+                variant="soft"
+                color="iris"
+                data-testid={`header-my-songs-button`}
+            >
+                <Link href="/profile/songs">
+                    New Song
+                </Link>
+            </Button>
+
+            <Button
+                asChild
+                variant="soft"
+                color="iris"
+                data-testid={`header-my-songs-button`}
+            >
+                <Link href="/profile/songs">
+                    My Songs
+                </Link>
+            </Button>
+        </Flex>
     );
 };

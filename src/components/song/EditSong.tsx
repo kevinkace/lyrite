@@ -21,7 +21,7 @@ import css from "./EditSong.module.css";
 export default function EditSong() {
     const { song, loading, saveSong, dirty } = useSong();
     const { user } = useAuth();
-    const { setHeaderContent, setHeaderUserContent } = useLayout();
+    const { setHeaderContent, setHeaderToolsContent } = useLayout();
     const { setSectionColor, selectedColor, setSelectedColor } = useEditing();
 
     const isAnonymousSong = !!song && !song.user_id;
@@ -49,7 +49,7 @@ export default function EditSong() {
     useEffect(() => {
         if (loading || !song) {
             setHeaderContent(null);
-            setHeaderUserContent(null);
+            setHeaderToolsContent(null);
 
             return;
         }
@@ -60,13 +60,13 @@ export default function EditSong() {
         </>);
 
         if (!isOwner) {
-            setHeaderUserContent(null);
+            setHeaderToolsContent(null);
             setShowTools(false);
 
             return;
         }
 
-        setHeaderUserContent(<>
+        setHeaderToolsContent(<>
             {!isAnonymousSong && (
                 <SaveIcon
                     dirty={dirty}
@@ -89,9 +89,9 @@ export default function EditSong() {
 
         return () => {
             setHeaderContent(null);
-            setHeaderUserContent(null);
+            setHeaderToolsContent(null);
         };
-    }, [dirty, isAnonymousSong, isOwner, loading, saveStatus, selectedColor, setHeaderContent, setHeaderUserContent, setSelectedColor, showTools, song ]);
+    }, [dirty, isAnonymousSong, isOwner, loading, saveStatus, selectedColor, setHeaderContent, setHeaderToolsContent, setSelectedColor, showTools, song ]);
 
     if (loading) return <p>Loading…</p>;
     if (!song) return <p>Song not found</p>;
