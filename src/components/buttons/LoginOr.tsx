@@ -2,9 +2,11 @@
 
 import { Button, type ButtonProps } from "@radix-ui/themes";
 import Link                         from "next/link";
-import { ListMusic }                  from "lucide-react";
+import { ListMusic }                from "lucide-react";
 
 import { useAuth }   from "@/contexts/AuthContext";
+
+import css from "./LoginOr.module.css";
 
 export default function LoginOr(props: ButtonProps) {
     const { user, loading } = useAuth();
@@ -14,7 +16,7 @@ export default function LoginOr(props: ButtonProps) {
     }
 
     return (
-        <Button asChild={true} size="4" variant="soft" {...props}>
+        <Button asChild={true} size="4" variant="classic" className={css.loginOr} {...props}>
             {user ?
                 <Link href="/profile/songs">
                     <ListMusic size={28} />

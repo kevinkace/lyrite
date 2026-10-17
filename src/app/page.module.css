@@ -63,3 +63,16 @@
 .ctaButtons {
     margin-bottom: 1em;
 }
+
+.feat {
+    width: 100%;
+}
+
+.how {
+    display: flex;
+    gap: 0.4em;
+    align-items: baseline;
+    margin: 0 0 0.4em;
+    font-size: 1.6em;
+    opacity: 0.8;
+}

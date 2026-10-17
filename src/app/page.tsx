@@ -1,6 +1,5 @@
-import Link from "next/link";
-import { Button, Flex } from "@radix-ui/themes";
-import { FilePlus } from "lucide-react";
+import { Flex } from "@radix-ui/themes";
+import { CornerRightDown } from "lucide-react";
 
 import { SongsProvider } from "@/contexts/SongsContext";
 
@@ -51,7 +50,13 @@ export default async function HomePage() {
                         <LoginOr data-testid="home-create-account-cta" />
                     </Flex>
 
-                    <FeaturedSongs />
+                    <Flex gap="2" direction="column" className={css.feat}>
+                        <h3 className={css.how}>
+                            See how it works
+                            <CornerRightDown strokeWidth={4} size={18}/>
+                        </h3>
+                        <FeaturedSongs />
+                    </Flex>
                 </div>
             </SongsProvider>
         </Layout>

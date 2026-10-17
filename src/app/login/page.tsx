@@ -21,10 +21,10 @@ import css from "./page.module.css";
 const emailReg = /^[\w.!#$%&'*+/=?^`{|}~-]+@[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?(?:\.[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?)*$/i;
 
 const loginProviders = [
-    { name: "GitHub", icon: <GithubIcon />, provider: "github" as const },
     { name: "Google", icon: <GoogleG />, provider: "google" as const },
     { name: "Facebook", icon: <FacebookF />, provider: "facebook" as const },
     { name: "Microsoft", icon: <MicrosoftIcon />, provider: "azure" as const },
+    { name: "GitHub", icon: <GithubIcon />, provider: "github" as const },
 ];
 
 export default function LoginPage() {
