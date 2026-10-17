@@ -11,7 +11,7 @@ export const userLinks = [
     },
     {
         href: "/profile/songs",
-        label: "Songs",
+        label: "My Songs",
         icon: <FilePen />
     },
     // {

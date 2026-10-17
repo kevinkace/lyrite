@@ -1,6 +1,5 @@
-import Link from "next/link";
-import { Button, Flex } from "@radix-ui/themes";
-import { FilePlus } from "lucide-react";
+import { Flex } from "@radix-ui/themes";
+import { CornerRightDown } from "lucide-react";
 
 import { SongsProvider } from "@/contexts/SongsContext";
 
@@ -48,18 +47,16 @@ export default async function HomePage() {
                         justify="center"
                         className={css.ctaButtons}
                     >
-                        <Button asChild size="4" variant="surface" color="violet">
-                            <Link href="/songs/new" data-testid="home-new-song-cta">
-                                <FilePlus width="1em" height="auto" />
-                                Start a new song
-                            </Link>
-                        </Button>
-
-
                         <LoginOr data-testid="home-create-account-cta" />
                     </Flex>
 
-                    <FeaturedSongs />
+                    <Flex gap="2" direction="column" className={css.feat}>
+                        <h3 className={css.how}>
+                            See how it works
+                            <CornerRightDown strokeWidth={4}/>
+                        </h3>
+                        <FeaturedSongs />
+                    </Flex>
                 </div>
             </SongsProvider>
         </Layout>

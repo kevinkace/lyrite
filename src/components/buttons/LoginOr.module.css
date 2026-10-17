@@ -1,0 +1,11 @@
+.loginOr {
+    opacity: 0.8;
+    font-size: 1.4em;
+    --base-button-height: unset;
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+
+    svg {
+        height: unset;
+    }
+}
