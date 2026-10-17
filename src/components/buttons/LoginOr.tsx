@@ -2,7 +2,7 @@
 
 import { Button, type ButtonProps } from "@radix-ui/themes";
 import Link                         from "next/link";
-import { ListMusic }                from "lucide-react";
+import { ListMusic, FilePen }       from "lucide-react";
 
 import { useAuth }   from "@/contexts/AuthContext";
 
@@ -19,8 +19,8 @@ export default function LoginOr(props: ButtonProps) {
         <Button asChild={true} size="4" variant="classic" className={css.loginOr} {...props}>
             {user ?
                 <Link href="/profile/songs">
-                    <ListMusic size={28} />
-                    My songs
+                    <FilePen size={28} />
+                    My Songs
                 </Link> :
                 <Link href="/login">
                     <ListMusic size={28} />
