@@ -53,7 +53,7 @@ export default async function HomePage() {
                     <Flex gap="2" direction="column" className={css.feat}>
                         <h3 className={css.how}>
                             See how it works
-                            <CornerRightDown strokeWidth={4} size={18}/>
+                            <CornerRightDown strokeWidth={4}/>
                         </h3>
                         <FeaturedSongs />
                     </Flex>

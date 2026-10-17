@@ -36,6 +36,23 @@ test.describe('Existing Song Functionality', () => {
       await expect(page.locator('[data-testid="edit-song"]')).toBeVisible();
     });
 
+    test('should hide song title and artist after navigating home', async ({ page }) => {
+      await page.route('**/rest/v1/songs*', async route => {
+        await route.fulfill({
+          json: mockExistingSong
+        });
+      });
+
+      await page.goto('/songs/existing-song-id');
+      await expect(page.getByRole('heading', { name: 'Existing Song Title' })).toBeVisible();
+
+      await page.getByTestId('header-logo-link').click();
+
+      await expect(page).toHaveURL('/');
+      await expect(page.getByRole('heading', { name: 'Existing Song Title' })).toHaveCount(0);
+      await expect(page.getByRole('heading', { name: 'Existing Artist' })).toHaveCount(0);
+    });
+
     test('should hide tools when logged-in user is not the owner', async ({ page }) => {
       await mockAuth(page, 'not-the-owner');
 

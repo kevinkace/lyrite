@@ -19,6 +19,7 @@ import css from "./Header.module.css";
 export default function Header() {
     const { headerContent } = useLayout();
     const pathname = usePathname();
+    const isSongDetailPage = /^\/songs\/(?!new$)[^/]+$/.test(pathname);
 
     return (
         <header className={css.header}>
@@ -42,7 +43,7 @@ export default function Header() {
                 {/* <ErrorButton /> */}
             </Flex>
 
-            {headerContent && (
+            {isSongDetailPage && headerContent && (
                 <div className={css.center}>
                     <Flex
                         align={{ initial: 'start', sm: 'center' }}
