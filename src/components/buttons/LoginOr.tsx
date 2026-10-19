@@ -16,12 +16,16 @@ export default function LoginOr(props: ButtonProps) {
         <Button asChild={true} size="4" variant="classic" className={clsx(css.loginOr, css.spin)} {...props}>
             {user ?
                 <Link href="/profile/songs">
-                    <FilePen size={28} />
-                    My Songs
+                    <span>
+                        <FilePen size={28} />
+                        My Songs
+                    </span>
                 </Link> :
                 <Link href="/login">
-                    <ListMusic size={28} />
-                    Get started for free
+                    <span>
+                        <ListMusic size={28} />
+                        Get started for free
+                    </span>
                 </Link>
             }
         </Button>

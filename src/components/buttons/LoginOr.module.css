@@ -17,15 +17,30 @@
 
     overflow: hidden;
 
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6em;
+
+        filter: drop-shadow(1px 1px 3px black)
+    }
+
+    &:hover:after {
+        animation-duration: 2s;
+    }
+
     &::after {
         content: "";
         position: absolute;
-        inset: -250%;
+        inset: -280%;
         z-index: -1;
         padding: 2px;
         margin: 1em 2em 0 0;
 
-        opacity: 0.9;
+        opacity: 0.8;
+
+        transition: animation-duration 1s;
 
         background-image:
             radial-gradient(circle, var(--cyan-a8), transparent 10%),
