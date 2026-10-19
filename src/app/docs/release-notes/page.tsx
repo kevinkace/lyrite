@@ -1,4 +1,4 @@
-import { Card, Flex, Badge, Heading } from "@radix-ui/themes";
+import { Card, Flex, Grid, Badge, Heading } from "@radix-ui/themes";
 import type { Metadata } from "next";
 
 import { releases, type ChangeType } from "@/data/releases";
@@ -54,15 +54,21 @@ export default function ReleaseNotesPage() {
 
                                 <Flex direction="column" gap="3">
                                     {release.changes.map((change, index) => (
-                                        <Flex key={index} align="center" gap="4" className={css.changeItem}>
+                                        <Grid
+                                            key={index}
+                                            align="center"
+                                            columns="auto auto"
+                                            gap="4"
+                                            className={css.changeItem}
+                                        >
                                             <Badge color={getChangeColor(change.type)} size="2">
                                                 {getChangeLabel(change.type)}
                                             </Badge>
                                             <div>
-                                            <h3 className={css.changeTitle}>{change.title}</h3>
-                                            {change.description && <p className={css.changeDescription}>{change.description}</p>}
+                                                <h3 className={css.changeTitle}>{change.title}</h3>
+                                                {change.description && <p className={css.changeDescription}>{change.description}</p>}
                                             </div>
-                                        </Flex>
+                                        </Grid>
                                     ))}
                                 </Flex>
                             </Flex>
