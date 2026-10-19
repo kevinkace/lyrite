@@ -1,5 +1,4 @@
 .loginOr {
-    opacity: 0.8;
     font-size: 1.4em;
     --base-button-height: unset;
     padding-top: var(--space-4);
@@ -9,3 +8,46 @@
         height: unset;
     }
 }
+
+.spin {
+    position: relative;
+    min-width: 10em;
+
+    background: none;
+
+    overflow: hidden;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -250%;
+        z-index: -1;
+        padding: 2px;
+        margin: 1em 2em 0 0;
+
+        opacity: 0.9;
+
+        background-image:
+            radial-gradient(circle, var(--cyan-a8), transparent 10%),
+            conic-gradient(
+                var(--cyan-9),
+                var(--violet-9),
+                var(--violet-9),
+                var(--cyan-9)
+            );
+        pointer-events: none;
+        animation: rotate 7s linear infinite;
+    }
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(1turn);
+    }
+}
+/*
+@media (prefers-reduced-motion: reduce) {
+    .spin::after {
+        animation: none;
+    }
+} */
