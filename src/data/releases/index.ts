@@ -35,6 +35,10 @@ export const releases: Release[] = [
                 type: "developer",
                 title: "Expanded existing-song test coverage",
             },
+            {
+                type: "improvement",
+                title: "Cleaner grid for release notes"
+            }
         ]
     },
     {
