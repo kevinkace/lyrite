@@ -9,14 +9,10 @@ import { useAuth }   from "@/contexts/AuthContext";
 import css from "./LoginOr.module.css";
 
 export default function LoginOr(props: ButtonProps) {
-    const { user, loading } = useAuth();
-
-    if (loading) {
-        return null;
-    }
+    const { user } = useAuth();
 
     return (
-        <Button asChild={true} size="4" variant="classic" className={css.loginOr} {...props}>
+        <Button asChild={true} size="4" variant="classic" className={css.loginOr} {...props} color="plum">
             {user ?
                 <Link href="/profile/songs">
                     <FilePen size={28} />
