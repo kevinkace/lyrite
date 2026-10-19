@@ -1,7 +1,7 @@
 import { Card, Flex, Grid, Badge, Heading } from "@radix-ui/themes";
 import type { Metadata } from "next";
 
-import { releases, type ChangeType } from "@/data/releases";
+import { releases, type ChangeType } from "@/data/release-notes";
 
 import { formatReleaseDate } from "@/lib/dates";
 
