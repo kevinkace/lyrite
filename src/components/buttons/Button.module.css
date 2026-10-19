@@ -20,11 +20,14 @@
 }
 
 .itemLink {
+    display: inline-block; /* needed for table link line height??? */
+
     font-weight: bold;
     text-decoration: none;
+    line-height: 1;
 
     &:hover {
-
+        text-decoration: underline;
     }
 }
 
