@@ -15,6 +15,33 @@ export type Release = {
 
 export const releases: Release[] = [
     {
+        version: "2.5.3",
+        date: "2026-10-19",
+        title: "Ship polish",
+        changes: [
+            {
+                type: "improvement",
+                title: "Polished the landing page and sign-in experience",
+            },
+            {
+                type: "fix",
+                title: "Clear song title when navigating away from song page",
+            },
+            {
+                type: "fix",
+                title: "Corrected style precedence between Radix UI and app styles",
+            },
+            {
+                type: "developer",
+                title: "Expanded existing-song test coverage",
+            },
+            {
+                type: "improvement",
+                title: "Cleaner grid for release notes"
+            }
+        ]
+    },
+    {
         version: "2.5.2",
         date: "2026-10-05",
         title: "Consistent song tables",
